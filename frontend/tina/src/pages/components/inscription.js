@@ -1,11 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './header';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
+import axios from 'axios';
+
+
 
 export default function Inscription() {
+
+  const [customers, setCustomers] = useState([
+    {
+      firstName: "",
+      lastName: "",
+      username: "",
+      email: "",
+      phone: "",
+      password: ""
+    }
+  ]);
+
+  const handleChange = (evt) => {
+    setCustomers({ ...customers, [evt.target.dataset.id]: evt.target.value });
+    console.log(customers);
+  };
+
+  const affichage = () => {
+    console.log(customers);
+  }
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    axios.post('http://127.0.0.1:8000/api/customers/', customers)
+      .then((response) => {
+        console.log(response.data);
+        // Do something with the response, e.g. show a success message or redirect to another page
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle errors, e.g. show an error message or log the error
+      });
+  };
+
   return (
     <>
       <Header />
@@ -17,33 +54,33 @@ export default function Inscription() {
                 <Card.Body>
                   <h2 className="text-center mb-4">Tina Coiffure</h2>
                   <Card.Title className="text-center mb-4">Inscription</Card.Title>
-                  <Form>
+                  <Form onSubmit={affichage}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control type="text" placeholder="Nom" />
+                      <Form.Control type="text" placeholder="Nom" value={customers.firstName} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Control type="text" placeholder="Prénom" />
+                      <Form.Control type="text" placeholder="Prénom" value={customers.lastName} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control type="text" placeholder="Pseudo" />
+                      <Form.Control type="text" placeholder="Pseudo" value={customers.username} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control type="email" placeholder="Email" />
+                      <Form.Control type="email" placeholder="Email" value={customers.email} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control type="email" placeholder="Num. téléphone, nom d'utilisateur ou e-mail" />
+                      <Form.Control type="text" placeholder="+ 41 076 000 00 00" value={customers.phone} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Control type="password" placeholder="Mot de passe (8 caractères minimum)" />
+                      <Form.Control type="password" placeholder="Mot de passe (8 caractères minimum)" value={customers.password} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Control type="password" placeholder="Confirmer mot de passe" />
+                      <Form.Control type="password" placeholder="Confirmer mot de passe"/>
                     </Form.Group>
                     <Button variant="primary" type="submit" className='w-100 border-0"' style={{ backgroundColor: "black", border: 0 }}>
                       S'inscrire
