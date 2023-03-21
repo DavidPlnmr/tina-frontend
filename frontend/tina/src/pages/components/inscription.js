@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 
-export default function Connexion() {
+export default function Inscription() {
   return (
     <>
       <Header />
@@ -16,23 +16,40 @@ export default function Connexion() {
               <Card className="border-0" style={{ backgroundColor: "#b8aaa0", marginTop: "-150px" }}>
                 <Card.Body>
                   <h2 className="text-center mb-4">Tina Coiffure</h2>
-                  <Card.Title className="text-center mb-4">Connexion</Card.Title>
+                  <Card.Title className="text-center mb-4">Inscription</Card.Title>
                   <Form>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Control type="text" placeholder="Nom" />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Control type="text" placeholder="Prénom" />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Control type="text" placeholder="Pseudo" />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Control type="email" placeholder="Email" />
+                    </Form.Group>
+
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Control type="email" placeholder="Num. téléphone, nom d'utilisateur ou e-mail" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Control type="password" placeholder="Mot de passe" />
-                      <Form.Text className="text-muted">
-                        <Link class="nav-link" href="/">Mot de passe oublié ?</Link>
-                      </Form.Text>
+                      <Form.Control type="password" placeholder="Mot de passe (8 caractères minimum)" />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Control type="password" placeholder="Confirmer mot de passe" />
                     </Form.Group>
                     <Button variant="primary" type="submit" className='w-100 border-0"' style={{ backgroundColor: "black", border: 0 }}>
-                      Se connecter
+                      S'inscrire
                     </Button>
                     <Form.Text className="text-muted">
-                        <Link class="nav-link" href="/components/inscription">Vous n'avez pas de compte ?</Link>
+                        <Link class="nav-link" href="/components/connexion">Vous avez déjà un compte ?</Link>
                     </Form.Text>
                   </Form>
                 </Card.Body>

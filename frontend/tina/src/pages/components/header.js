@@ -33,26 +33,22 @@ export default function Header() {
                     <div class="collapse navbar-collapse justify-content-end" >
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <li class="nav-item active">
+                                <Link href="/" class="nav-link">Nos sevices</Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link href="/" class="nav-link">Prendre rendez-vous</Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link href="/" class="nav-link">Qui sommes nous ?</Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link href="/" class="nav-link">Produits</Link>
+                            </li>
+                            <li class="nav-item">
                                 <Link href="/components/connexion" class="nav-link">Connexion</Link>
                             </li>
                             <li class="nav-item">
-                                <Link href="/" class="nav-link">Nos services</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link href="/" class="nav-link">Nos services</Link>
-                            </li>
-                            <li class="nav-item">
-                            <Dropdown >
-                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor:"#b8aaa0", border:0}}>
-                                    Menu
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    <Dropdown.Item href="/connexion">Connexion</Dropdown.Item>
-                                    <Dropdown.Item href="/inscription">Inscription</Dropdown.Item>
-                                    <Dropdown.Item href="/something-else">Something else</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                                <Link href="/components/inscription" class="nav-link">Inscription</Link>
                             </li>
                         </ul>
                     </div>
