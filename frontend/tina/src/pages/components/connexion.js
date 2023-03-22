@@ -4,8 +4,35 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { setCookie } from 'nookies';
 
 export default function Connexion() {
+  const router = useRouter();
+  
+  const [user, setUser] = useState({
+    username: "",
+    password: ""
+  });
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    const response = await fetch('http://127.0.0.1:8000/api/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user)
+    });
+    const data = await response.json();
+    setCookie(null, 'csrftoken', data.token, { maxAge: 86400, path: '/' });
+    router.push('/');
+  };
+
+  const handleChange = (evt) => {
+    setUser({ ...user, [evt.target.dataset.id]: evt.target.value });
+  };
+
   return (
     <>
       <Header />
@@ -17,13 +44,13 @@ export default function Connexion() {
                 <Card.Body>
                   <h2 className="text-center mb-4">Tina Coiffure</h2>
                   <Card.Title className="text-center mb-4">Connexion</Card.Title>
-                  <Form>
+                  <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control type="email" placeholder="Num. téléphone, nom d'utilisateur ou e-mail" />
+                      <Form.Control data-id="username" value={user.username} type="text" placeholder="Num. téléphone, nom d'utilisateur ou e-mail" onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Control type="password" placeholder="Mot de passe" />
+                      <Form.Control data-id="password" value={user.password} type="password" placeholder="Mot de passe" onChange={handleChange}/>
                       <Form.Text className="text-muted">
                         <Link class="nav-link" href="/">Mot de passe oublié ?</Link>
                       </Form.Text>
