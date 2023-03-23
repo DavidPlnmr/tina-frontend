@@ -26,6 +26,10 @@ export default function Connexion() {
     });
     const data = await response.json();
     setCookie(null, 'csrftoken', data.token, { maxAge: 86400, path: '/' });
+    setCookie(null, 'email', data.email, { maxAge: 86400, path: '/' });
+    setCookie(null, 'username', data.username, { maxAge: 86400, path: '/' });
+    setCookie(null, 'last_name', data.last_name, { maxAge: 86400, path: '/' });
+    setCookie(null, 'first_name', data.first_name, { maxAge: 86400, path: '/' });
     router.push('/');
   };
 
@@ -46,13 +50,13 @@ export default function Connexion() {
                   <Card.Title className="text-center mb-4">Connexion</Card.Title>
                   <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control data-id="username" value={user.username} type="text" placeholder="Num. téléphone, nom d'utilisateur ou e-mail" onChange={handleChange}/>
+                      <Form.Control data-id="username" value={user.username} type="text" placeholder="Nom d'utilisateur" onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                       <Form.Control data-id="password" value={user.password} type="password" placeholder="Mot de passe" onChange={handleChange}/>
                       <Form.Text className="text-muted">
-                        <Link class="nav-link" href="/">Mot de passe oublié ?</Link>
+                        <Link class="nav-link" href="/">Problème de connexion ?</Link>
                       </Form.Text>
                     </Form.Group>
                     <Button variant="primary" type="submit" className='w-100 border-0"' style={{ backgroundColor: "black", border: 0 }}>

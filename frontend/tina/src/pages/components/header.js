@@ -1,27 +1,29 @@
 import { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
-import { parseCookies } from 'nookies';
+import { parseCookies,destroyCookie } from 'nookies';
 
 export default function Header() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({email:"", username:"", last_name:"", first_name:""});
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const cookies = parseCookies();
-    const token = cookies.csrftoken;
+    setToken(cookies.csrftoken);
 
-    if (token) {
-      fetch('http://127.0.0.1:8000/api/customers/', {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setUser(data.username);
-        });
+    if (token){
+      setUser({email: cookies.email, username: cookies.username, last_name: cookies.last_name, first_name: cookies.first_name});
     }
-  }, []);
+  }, [token]);
+
+  const handleLogout = () => {
+    destroyCookie(null, 'csrftoken');
+    destroyCookie(null, 'email');
+    destroyCookie(null, 'username');
+    destroyCookie(null, 'last_name');
+    destroyCookie(null, 'first_name');
+    setToken(null);
+  };
 
   return (
     <>
@@ -72,16 +74,17 @@ export default function Header() {
                     Produits
                   </Link>
                 </li>
-                {user ? (
+                {token ? (
                   <Dropdown>
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                      {user}
+                      {user.username}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
                       <Dropdown.Item href="#/action-1">Mon profil</Dropdown.Item>
                       <Dropdown.Item href="#/action-2">Mes rendez-vous</Dropdown.Item>
                       <Dropdown.Item href="#/action-3">Mes commandes</Dropdown.Item>
+                      <Dropdown.Item href="#/action-3" onClick={handleLogout}>Se déconnecter</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 ) : (
