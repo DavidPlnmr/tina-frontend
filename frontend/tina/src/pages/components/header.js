@@ -74,9 +74,10 @@ export default function Header() {
                     Produits
                   </Link>
                 </li>
+                <li class="nav-item">
                 {token ? (
-                  <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                  <Dropdown class="nav-link">
+                    <Dropdown.Toggle as="span" variant="success" className="nav-link">
                       {user.username}
                     </Dropdown.Toggle>
 
@@ -84,23 +85,17 @@ export default function Header() {
                       <Dropdown.Item href="#/action-1">Mon profil</Dropdown.Item>
                       <Dropdown.Item href="#/action-2">Mes rendez-vous</Dropdown.Item>
                       <Dropdown.Item href="#/action-3">Mes commandes</Dropdown.Item>
-                      <Dropdown.Item href="#/action-3" onClick={handleLogout}>Se déconnecter</Dropdown.Item>
+                      <Dropdown.Item href="#/action-4" onClick={handleLogout}>Se déconnecter</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 ) : (
                   <>
-                    <li class="nav-item">
                       <Link href="/components/connexion" class="nav-link">
-                        Connexion
+                        S'identifier
                       </Link>
-                    </li>
-                    <li class="nav-item">
-                      <Link href="/components/inscription" class="nav-link">
-                        Inscription
-                      </Link>
-                    </li>
                   </>
                 )}
+                </li>
               </ul>
             </div>
           </div>
