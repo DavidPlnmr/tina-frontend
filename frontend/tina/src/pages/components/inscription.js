@@ -5,8 +5,13 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import axios from 'axios';
+import { setCookie } from 'nookies';
+import { useRouter } from 'next/router';
+
 
 export default function Inscription() {
+
+  const router = useRouter();
 
   const [customers, setCustomers] = useState([
     {
@@ -19,16 +24,34 @@ export default function Inscription() {
     }
   ]);
 
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const handleChange = (evt) => {
     setCustomers({ ...customers, [evt.target.dataset.id]: evt.target.value });
     console.log(customers);
   };
 
+  const handleConfirmPasswordChange = (evt) => {
+    setConfirmPassword(evt.target.value);
+  };
+
    const handleSubmit =  (evt) => {
     evt.preventDefault();
+
+    if (customers.password !== confirmPassword) {
+      alert("Les deux mots de passe ne sont pas identiques !");
+      return;
+    }
+
     axios.post('http://127.0.0.1:8000/api/customers/create', customers)
       .then((response) => {
         console.log(response.data);
+        setCookie(null, 'csrftoken', response.data.token, { maxAge: 86400, path: '/' });
+        setCookie(null, 'email', response.data.email, { maxAge: 86400, path: '/' });
+        setCookie(null, 'username', response.data.username, { maxAge: 86400, path: '/' });
+        setCookie(null, 'last_name', response.data.last_name, { maxAge: 86400, path: '/' });
+        setCookie(null, 'first_name', response.data.first_name, { maxAge: 86400, path: '/' });
+        router.push('/');
       })
       .catch((error) => {
         console.log(error);
@@ -72,7 +95,7 @@ export default function Inscription() {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Control type="password" placeholder="Confirmer mot de passe"/>
+                      <Form.Control data-id="confirmPassword" type="password" placeholder="Confirmer mot de passe" onChange={handleConfirmPasswordChange}/>
                     </Form.Group>
                     <Button variant="primary" type="submit" className='w-100 border-0"' style={{ backgroundColor: "black", border: 0 }}>
                       S'inscrire
