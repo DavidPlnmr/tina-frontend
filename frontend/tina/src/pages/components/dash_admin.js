@@ -7,6 +7,9 @@ export default function Accueil() {
   return (
     <>
         <Header/>
+        <ul>
+            <li></li>
+        </ul>
     </>
   );
 }
