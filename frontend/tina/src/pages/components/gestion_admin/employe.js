@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import Header from './header';
 
 
-export default function Accueil() {
+export default function Employe() {
   return (
     <>
         <Header/>
-        <ul>
-            <li></li>
-        </ul>
     </>
   );
 }
