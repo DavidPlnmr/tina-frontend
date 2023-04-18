@@ -65,7 +65,7 @@ export default function Header() {
                   </Link>
                 </li>
                 <li class="nav-item">
-                  <Link href="/components/dash_admin" class="nav-link">
+                  <Link href="/components/gestion_admin/dash_admin" class="nav-link">
                     Admin
                   </Link>
                 </li>

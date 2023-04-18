@@ -28,7 +28,6 @@ export default function Inscription() {
 
   const handleChange = (evt) => {
     setCustomers({ ...customers, [evt.target.dataset.id]: evt.target.value });
-    console.log(customers);
   };
 
   const handleConfirmPasswordChange = (evt) => {
