@@ -15,7 +15,7 @@ export default function Dash() {
                 </Link>
             </li>
             <li>
-                <Link href="./services" class="nav-link">
+                <Link href="./gestion_services/menu_services" class="nav-link">
                     Gestion des services Services
                 </Link>
             </li>
