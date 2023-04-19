@@ -71,7 +71,7 @@ const cookies = parseCookies();
             allDaySlot: false,
             slotDuration: '00:15:00',
             slotEventOverlap: false,
-            slotMinTime: '08:00:00',
+            slotMinTime: '09:00:00',
             slotMaxTime: '19:00:00',
             headerToolbar: {
                 start: 'prev,next today',
@@ -119,12 +119,11 @@ const cookies = parseCookies();
         <style type="text/css">
             {`
                   .fc-event-main {
-                    background-color: #a0a0a0; /* gris clair */ !important
-                    color: #a0a0a0; /* couleur de texte grisé */
-                    display: none; /* masque les événements */
+                    background-color: green; /* gris clair */ !important
+                    color: white; /* couleur de texte grisé */
                 }
                 .fc-timegrid-event {
-                    background-color: #a0a0a0; /* gris clair */ !important
+                    background-color: green; /* gris clair */ !important
                 }
                 
             `}
