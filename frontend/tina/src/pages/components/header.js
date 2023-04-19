@@ -60,7 +60,7 @@ export default function Header() {
                   </Link>
                 </li>
                 <li class="nav-item">
-                  <Link href="/components/prise_rendez_vous/rendez_vous" class="nav-link">
+                  <Link href="/components/prise_rendez_vous/serviceRDV" class="nav-link">
                     Prendre rendez-vous
                   </Link>
                 </li>
