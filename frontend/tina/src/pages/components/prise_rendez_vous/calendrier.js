@@ -96,10 +96,10 @@ const cookies = parseCookies();
             locale: 'fr', // définit la langue du calendrier en français
             eventContent: function(info) {
                 const available = info.event.extendedProps.available;
-                const backgroundColor = available ? 'green' : 'gray'; // Détermine la couleur de fond en fonction de la disponibilité
+                const backgroundColor = available ? 'green' : 'green'; // Détermine la couleur de fond en fonction de la disponibilité
                 const textColor = available ? 'white' : 'black'; // Détermine la couleur du texte en fonction de la disponibilité
                 return {
-                  html: `<div style="background-color: ${backgroundColor}; color: ${textColor};">${info.timeText}</div>`,
+                  html: `<b><div style="text-align: center; background-color: ${backgroundColor}; color: white;">${info.event.start.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</div></b>`,
                 };
               },
           });
@@ -120,7 +120,7 @@ const cookies = parseCookies();
             {`
                   .fc-event-main {
                     background-color: green; /* gris clair */ !important
-                    color: white; /* couleur de texte grisé */
+                    color: white; 
                 }
                 .fc-timegrid-event {
                     background-color: green; /* gris clair */ !important
