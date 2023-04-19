@@ -2,20 +2,26 @@ import { useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Header from '../header';
 import { useRouter, Router } from 'next/router';
+import axios from 'axios';
+import { parseCookies } from 'nookies';
 
 export default function RecapRdv() {
     const [services, setServices] = useState({});
     const [coiffeurs, setCoiffeurs] = useState({});
     const [heureDepart, setHeureDepart] = useState();
     const [heureFin, setHeureFin] = useState();
-    const [appointment , setAppointment] = useState({id: null, date: null, time: null, employee: null, service: null, customer: null, informations: null, statut : "pending"});
+    const [appointment , setAppointment] = useState({date: null, time: null, employee: null, service: null, customer: null});
+    const [myDate , setMyDate] = useState();
     const router = useRouter();
     const param = router.query;
+    const cookies = parseCookies();
+
 
     useEffect(() => {
         console.log(param);
         setServices(JSON.parse(param.service));
         setCoiffeurs(JSON.parse(param.employee));
+        setMyDate(param.date);
     }, []);
 
     useEffect(() => {
@@ -39,9 +45,30 @@ export default function RecapRdv() {
             const formattedEndTime = endDate.toLocaleTimeString('fr-FR', { hour12: false });
             setHeureFin(formattedEndTime);
             console.log(formattedEndTime);
-        }
-        
+            // format date from dd/mm/yyyy to yyyy-mm-dd
+            const splitDate = myDate.split("/");
+            const formattedDate = splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
+            setAppointment({...appointment, date: formattedDate, time: heureDepart, employee: coiffeurs.id, service: services.id});
+        }        
     } , [services]);
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        
+        console.log(appointment.date);
+        axios.post('http://127.0.0.1:8000/api/appointments/create', appointment, {
+            headers: {
+                Authorization: `Token ` + cookies.csrftoken,
+            },
+            })
+            .then((response) => {
+            console.log(response.data);
+            })
+            .catch((error) => {
+                console.log("error");
+            console.log(error);
+            });
+    }
 
         
   return (
@@ -58,6 +85,10 @@ export default function RecapRdv() {
                     <tr>
                     <td>Coiffeur</td>
                     <td>{coiffeurs.first_name + " " + coiffeurs.last_name}</td>
+                    </tr>
+                    <tr>
+                    <td>Date</td>
+                    <td>{myDate}</td>
                     </tr>
                     <tr>
                     <td>Heure de départ</td>

@@ -16,13 +16,12 @@ export default function Calendrier() {
   const event = useRef(false);
   const cookies = parseCookies();
   const router = useRouter();
-
   const param  = router.query;
 
-const handleClick = (time) => {
+const handleClick = (time, date) => {
   router.push({
     pathname: "/components/prise_rendez_vous/recap_rdv",
-    query: { time: time, service: param.service, employee: param.employee },
+    query: { time: time, service: param.service, employee: param.employee, date: date },
   });
 };
 
@@ -31,7 +30,7 @@ const handleClick = (time) => {
     console.log(param);
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/appointment_available/?service=1', {
+        const response = await axios.get('http://127.0.0.1:8000/api/appointment_available/?service=' + JSON.parse(param.service).id, {
           headers: {
             Authorization: 'Token ' + cookies.csrftoken,
           },
@@ -74,7 +73,7 @@ const handleClick = (time) => {
       });
 
       calendar.setOption('eventClick', (info) => {
-        handleClick(info.event.start.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }));
+        handleClick(info.event.start.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }), info.event.start.toLocaleDateString());
       });
     }
   }, [events]);

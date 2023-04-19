@@ -17,7 +17,7 @@ export default function Rdv_employee() {
         const cookies = parseCookies();
         axios.get('http://127.0.0.1:8000/api/employees/', {
             headers: {
-                Authorization: 'Token '  + cookies.csrftoken,
+                Authorization: 'Token ' + cookies.csrftoken,
             },
             })
             .then((response) => {
