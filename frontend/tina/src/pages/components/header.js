@@ -60,7 +60,7 @@ export default function Header() {
                   </Link>
                 </li>
                 <li class="nav-item">
-                  <Link href="/" class="nav-link">
+                  <Link href="/components/prise_rendez_vous/calendrier" class="nav-link">
                     Prendre rendez-vous
                   </Link>
                 </li>
@@ -95,7 +95,7 @@ export default function Header() {
                   </Dropdown>
                 ) : (
                   <>
-                      <Link href="/components/connexion" class="nav-link">
+                      <Link href="/components/identification/connexion" class="nav-link">
                         S'identifier
                       </Link>
                   </>
