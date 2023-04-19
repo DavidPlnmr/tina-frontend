@@ -88,17 +88,17 @@ export default function Formulaire_services() {
         //boucle for pour envoyer les services
         for (let i = 1; i <= compteur; ++i) {
             if (i == 1){
-                if(service1.type_of_service !=null && service1.name != '' && service1.price != 0 && service1.price_student != 0 && service1.duration != 0){
+                if(service1.type_of_service !=null && service1.name != '' && service1.price != 0 && service1.duration != 0){
                     postService(service1);
                 }
             }
             else if (i == 2){
-                if(service2.type_of_service !=null && service2.name != '' && service2.price != 0 && service2.price_student != 0 && service2.duration != 0){
+                if(service2.type_of_service !=null && service2.name != '' && service2.price != 0 && service2.duration != 0){
                     postService(service2);
                 }
             }
             else if (i == 3){
-                if (service3.type_of_service !=null && service3.name != '' && service3.price != 0 && service3.price_student != 0 && service3.duration != 0){
+                if (service3.type_of_service !=null && service3.name != '' && service3.price != 0 && service3.duration != 0){
                     postService(service3);
                 }
             }
