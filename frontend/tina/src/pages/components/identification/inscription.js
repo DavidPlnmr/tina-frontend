@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Header from './header';
+//import { Header } from '../header';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
@@ -7,6 +7,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { setCookie } from 'nookies';
 import { useRouter } from 'next/router';
+import Header from '../header';
 
 
 export default function Inscription() {
@@ -59,7 +60,7 @@ export default function Inscription() {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
         <div className="container">
           <div className="row justify-content-center">
@@ -100,7 +101,7 @@ export default function Inscription() {
                       S'inscrire
                     </Button>
                     <Form.Text className="text-muted">
-                        <Link class="nav-link" href="/components/connexion">Vous avez déjà un compte ?</Link>
+                        <Link class="nav-link" href="/components/identification/connexion">Vous avez déjà un compte ?</Link>
                     </Form.Text>
                   </Form>
                 </Card.Body>
