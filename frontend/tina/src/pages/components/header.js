@@ -30,7 +30,7 @@ export default function Header() {
       <style type="text/css">
         {`
             .navbar {
-                background-color: #b8aaa0;
+                background-color: #232627;
                 color: #fff;
                 min-height: 90px;
             }

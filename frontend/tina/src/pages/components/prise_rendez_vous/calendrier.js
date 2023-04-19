@@ -6,15 +6,29 @@ import listPlugin from '@fullcalendar/list';
 import Header from '../header';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
+import { useRouter, Router } from 'next/router';
+
 
 export default function Calendrier() {
   const [calendar, setCalendar] = useState(null);
   const calendarEl = useRef(null);
   const [events, setEvents] = useState([]);  
   const event = useRef(false);
-const cookies = parseCookies();
+  const cookies = parseCookies();
+  const router = useRouter();
+
+  const param  = router.query;
+
+const handleClick = (time) => {
+  router.push({
+    pathname: "/components/prise_rendez_vous/recap_rdv",
+    query: { time: time, service: param.service, employee: param.employee },
+  });
+};
 
   useEffect(() => {
+    console.log("param : ");
+    console.log(param);
     const fetchAppointments = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/appointment_available/?service=1', {
@@ -52,12 +66,15 @@ const cookies = parseCookies();
          if (event.current) return;
         event.current = true;
       calendar.addEventSource(events);
-      console.log(events);
       // Ajouter la classe 'event-passe' aux événements passés
       const maintenant = new Date();
       const eventsPasse = calendar.getEvents().filter((event) => event.start < maintenant);
       eventsPasse.forEach((event) => {
         event.setProp('classNames', ['event-passe']);
+      });
+
+      calendar.setOption('eventClick', (info) => {
+        handleClick(info.event.start.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }));
       });
     }
   }, [events]);
@@ -66,6 +83,7 @@ const cookies = parseCookies();
 
     if (calendarEl.current !== null) {
         const newCalendar = new Calendar(calendarEl.current, {
+          
             initialView: 'timeGridWeek',
             firstDay: 1,
             allDaySlot: false,
@@ -113,6 +131,8 @@ const cookies = parseCookies();
       };
     }
   }, [calendarEl]);
+
+  
 
   return (
     <>

@@ -4,7 +4,7 @@ import styles from "./CardService.module.scss";
 import Header from "@/pages/components/header";
 import axios from "axios";
 import {parseCookies} from "nookies";
-import Router from "next/router";
+import {Router, useRouter} from "next/router";
 
 // Composant qui affiche une liste de types de service et leurs services associés
 export default function ServiceRDV() {
@@ -18,6 +18,9 @@ export default function ServiceRDV() {
 
     // Cookies
     const cookies = parseCookies();
+
+    // Router
+    const router = useRouter();
 
     // Fonction pour récupérer les types de service
     const fetchTypeOfService = () => {
@@ -53,7 +56,8 @@ export default function ServiceRDV() {
 
     // Fonction appelée lorsqu'un service est choisi
     const handleChooseService = (service) => {
-        Router.push({
+        console.log(service);
+        router.push({
             pathname: "/components/prise_rendez_vous/rdv_employee",
             query: { service: JSON.stringify(service) }
         });
