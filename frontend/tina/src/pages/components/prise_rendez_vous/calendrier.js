@@ -17,18 +17,18 @@ const cookies = parseCookies();
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/appointments/', {
+        const response = await axios.get('http://127.0.0.1:8000/api/appointment_available/?service=1', {
           headers: {
             Authorization: 'Token ' + cookies.csrftoken,
           },
         });
         const appointments = response.data;
-        const newEvents = appointments.map(appointment => {
-            
-            console.log("heure : "  + appointment.time);
-            const startTime = `${appointment.date}T${appointment.time}`;
+        const newEvents = appointments.flatMap(appointment => {
+          return appointment.hours.map(hour => {
+            const startTime = `${appointment.date}T${hour}`;
             const endTime = new Date(startTime);
-            endTime.setMinutes(endTime.getMinutes() + 30);
+            endTime.setMinutes(endTime.getMinutes() + 15);
+          
             return {
               title: `Rendez-vous avec ${appointment.customer}`,
               start: startTime,
@@ -37,6 +37,7 @@ const cookies = parseCookies();
               allDay: false,
             };
           });
+        });
           setEvents(newEvents);
       } catch (error) {
         console.error(error);
@@ -70,6 +71,8 @@ const cookies = parseCookies();
             allDaySlot: false,
             slotDuration: '00:15:00',
             slotEventOverlap: false,
+            slotMinTime: '08:00:00',
+            slotMaxTime: '19:00:00',
             headerToolbar: {
                 start: 'prev,next today',
                 center: 'title',
