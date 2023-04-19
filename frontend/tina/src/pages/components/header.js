@@ -95,7 +95,7 @@ export default function Header() {
                   </Dropdown>
                 ) : (
                   <>
-                      <Link href="/components/connexion" class="nav-link">
+                      <Link href="/components/identification/connexion" class="nav-link">
                         S'identifier
                       </Link>
                   </>

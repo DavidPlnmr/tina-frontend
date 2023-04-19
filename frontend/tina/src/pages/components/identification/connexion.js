@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Header from './header';
+import Header from '../header';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
@@ -68,7 +68,7 @@ export default function Connexion() {
                       Se connecter
                     </Button>
                     <Form.Text className="text-muted">
-                        <Link class="nav-link" href="/components/inscription">Vous n'avez pas de compte ?</Link>
+                        <Link class="nav-link" href="/components/identification/inscription">Vous n'avez pas de compte ?</Link>
                     </Form.Text>
                   </Form>
                 </Card.Body>
