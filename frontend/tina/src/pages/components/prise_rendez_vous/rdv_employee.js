@@ -2,13 +2,16 @@ import { useEffect, useState, useRef } from 'react';
 import Header from '../header';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
+import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 export default function Rdv_employee() {
 
     const [lstEmployee, setLstEmployee] = useState([]);
     const dataFetchedRef = useRef(false);
     let lstCompEmployee = [];
-    
+    const router = useRouter();
+    const { service_json } = router.query;
     
     const fetchEmployee = () => {
         const cookies = parseCookies();
@@ -18,16 +21,24 @@ export default function Rdv_employee() {
             },
             })
             .then((response) => {
-                console.log(response.data);
                 setLstEmployee(response.data);
             })
             .catch((error) => {
                 console.log(error);
             });
     };
+
+    const handleOnClick = (e) => {
+        console.log(e);
+        Router.push({
+            pathname: '/components/prise_rendez_vous/calendrier',
+            query: { employee: JSON.stringify(e), service: service_json},
+        })
+
+    };
+
     const loadEmployee = () => {
         lstEmployee.map((e) => {
-            console.log(e);
             lstCompEmployee.push(
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <br></br>
@@ -36,7 +47,14 @@ export default function Rdv_employee() {
                         <div class="card-body justify-content-center">
                             <h5 class="card-title text-center font-weight-bold">{e.first_name} {e.last_name}</h5>
                             <div class="text-center">
-                                <button type="button" class="btn btn-primary">Choisir</button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-primary"
+                                    data-id={"btn "+e.id}
+                                    
+                                    onClick={() => handleOnClick(e)}>
+                                        Choisir
+                                </button>
                             </div>
                         </div>
                     </div>
