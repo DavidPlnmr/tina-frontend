@@ -11,13 +11,13 @@ export default function Rdv_employee() {
     const dataFetchedRef = useRef(false);
     let lstCompEmployee = [];
     const router = useRouter();
-    const { service_json } = router.query;
+    const service_json = router.query;
     
     const fetchEmployee = () => {
         const cookies = parseCookies();
         axios.get('http://127.0.0.1:8000/api/employees/', {
             headers: {
-                Authorization: 'Token '  + cookies.csrftoken,
+                Authorization: 'Token ' + cookies.csrftoken,
             },
             })
             .then((response) => {
@@ -29,10 +29,9 @@ export default function Rdv_employee() {
     };
 
     const handleOnClick = (e) => {
-        console.log(e);
-        Router.push({
+        router.push({
             pathname: '/components/prise_rendez_vous/calendrier',
-            query: { employee: JSON.stringify(e), service: service_json},
+            query: { employee: JSON.stringify(e), service: service_json.service},
         })
 
     };
@@ -65,6 +64,8 @@ export default function Rdv_employee() {
      };
     
     useEffect(() => {
+        console.log(service_json);
+
         if (dataFetchedRef.current) return;
         dataFetchedRef.current = true;
         fetchEmployee();
