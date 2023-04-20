@@ -42,9 +42,10 @@ export default function Rdv_employee() {
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <br></br>
                     <div class="card">
-                        <img class="card-img-top" src="https://placehold.co/286x180" alt="Placeholder"/>
                         <div class="card-body justify-content-center">
+                            <ul></ul>
                             <h5 class="card-title text-center font-weight-bold">{e.first_name} {e.last_name}</h5>
+                            <br></br>
                             <div class="text-center">
                                 <button 
                                     type="button" 
