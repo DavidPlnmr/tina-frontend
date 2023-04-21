@@ -103,6 +103,7 @@ export default function ServiceRDV() {
                             <div
                               className={styles.bouttonChoisir}
                               onClick={() => handleChooseService(service)}
+                              style={{ cursor: "pointer" }}
                             >
                               <p className={styles.textBoutton}>Choisir</p>
                             </div>
