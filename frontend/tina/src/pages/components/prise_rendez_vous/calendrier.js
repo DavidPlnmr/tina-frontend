@@ -109,7 +109,7 @@ export default function Calendrier() {
         headerToolbar: {
           start: "prev,next today",
           center: "title",
-          end: "dayGridMonth,timeGridWeek",
+          end: "timeGridWeek",
         },
         views: {
           timeGridWeek: {

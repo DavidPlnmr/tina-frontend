@@ -92,7 +92,7 @@ export default function Header() {
                 </li>
                 <li class="nav-item">
                   {token ? (
-                    <Dropdown class="nav-link">
+                    <Dropdown class="nav-link" style={{ cursor: "pointer" }}>
                       <Dropdown.Toggle
                         as="span"
                         variant="success"
@@ -102,17 +102,17 @@ export default function Header() {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">
-                          Mon profil
+                        <Dropdown.Item>
+                        <Link href="#" style={{textDecoration: "none", color:"black"}}>Mon profil</Link>
                         </Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">
-                          Mes rendez-vous
+                        <Dropdown.Item >
+                        <Link href="/components/CRUD_client/calendrier_client" style={{textDecoration: "none", color:"black"}}>Mes rendez-vous</Link>
                         </Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">
-                          Mes commandes
+                        <Dropdown.Item>
+                          <Link href="#" style={{textDecoration: "none", color:"black"}}>Mes commandes</Link>
                         </Dropdown.Item>
-                        <Dropdown.Item href="#/action-4" onClick={handleLogout}>
-                          Se déconnecter
+                        <Dropdown.Item>
+                        <Link href="/" onClick={handleLogout} style={{textDecoration: "none", color:"black"}}>Se déconnecter</Link>
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
