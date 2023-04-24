@@ -14,7 +14,6 @@ export default function Header() {
   const [token, setToken] = useState(null);
   const router = useRouter();
 
-
   useEffect(() => {
     const cookies = parseCookies();
     setToken(cookies.csrftoken);
@@ -44,8 +43,6 @@ export default function Header() {
       router.push("/");
     });
   };
-  
-  
 
   return (
     <>

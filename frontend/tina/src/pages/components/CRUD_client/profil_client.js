@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import Header from '../header';
 import axios from 'axios';
-import { parseCookies } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
+import { useRouter } from 'next/router';
 
 export default function ProfilClient() {
   const [customer, setCustomer] = useState({ username: "", email: "", first_name: "", last_name: "" }); 
   const cookies = parseCookies();
+  const router = useRouter();
 
 useEffect(() => {
     const fetchCusto = async () => {
@@ -33,24 +35,53 @@ useEffect(() => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     console.log(customer);
-    // axios put
-    // axios.put(
-    //   "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
-    //   customer,
-    //   {
-    //     headers: {
-    //       Authorization: "Token " + cookies.csrftoken,
-    //     },
-    //   }
-    // )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+
+    if (customer.password !== "") {
+      if (customer.password === customer.confirm_password) {
+        axios.patch(
+          "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
+          customer,
+          {
+            headers: {
+              Authorization: "Token " + cookies.csrftoken,
+            },
+          }
+        )
+        .then((response) => {
+          setCookie(null, "username", customer.username, { maxAge: 86400, path: "/" });
+          setCookie(null, "email", customer.email, { maxAge: 86400, path: "/" });
+          setCookie(null, "first_name", customer.first_name, { maxAge: 86400, path: "/" });
+          setCookie(null, "last_name", customer.last_name, { maxAge: 86400, path: "/" });
+          router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      } else {
+        alert("Les mots de passe ne correspondent pas");
+      }
+    } else { 
+      axios.patch(
+        "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
+        customer,
+        {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+          },
+        }
+      )
+      .then((response) => {
+        setCookie(null, "username", customer.username, { maxAge: 86400, path: "/" });
+        setCookie(null, "email", customer.email, { maxAge: 86400, path: "/" });
+        setCookie(null, "first_name", customer.first_name, { maxAge: 86400, path: "/" });
+        setCookie(null, "last_name", customer.last_name, { maxAge: 86400, path: "/" });
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
   };
-  
 
   return (
     <>
@@ -82,12 +113,16 @@ useEffect(() => {
                   <input type="text" data-id="last_name" className="form-control" id="prenom" value={customer.last_name} onChange={handleChange} required />
                 </div>
                 <div className="mb-3">
+                  <label htmlFor="tel_number" className="form-label">Numéro de téléphone :</label>
+                  <input type="text" data-id="tel_number" className="form-control" id="tel_number" value={customer.tel_number} onChange={handleChange} required />
+                </div>
+                <div className="mb-3">
                   <label htmlFor="pass" className="form-label">Nouveau mot de passe :</label>
-                  <input type="password" className="form-control" id="pass" />
+                  <input type="password" className="form-control" data-id="password" value={customer.password} onChange={handleChange}/>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="confirmPas" className="form-label">Confirmer le nouveau mot de passe :</label>
-                  <input type="password" className="form-control" id="confirmPas" />
+                  <input type="password" className="form-control" id="confirmPas" data-id="confirm_password" value={customer.confirm_password} onChange={handleChange}/>
                 </div>
                 <button type="submit" className="btn btn-primary" style={{backgroundColor: "#232627", border:0}}>Modifier</button> <br/><br/>
               </form>
