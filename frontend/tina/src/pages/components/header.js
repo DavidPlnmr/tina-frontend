@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Link from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
+import { useRouter } from "next/router";
 
 export default function Header() {
   const [user, setUser] = useState({
@@ -11,6 +12,8 @@ export default function Header() {
     first_name: "",
   });
   const [token, setToken] = useState(null);
+  const router = useRouter();
+
 
   useEffect(() => {
     const cookies = parseCookies();
@@ -27,13 +30,22 @@ export default function Header() {
   }, [token]);
 
   const handleLogout = () => {
-    destroyCookie(null, "csrftoken");
-    destroyCookie(null, "email");
-    destroyCookie(null, "username");
-    destroyCookie(null, "last_name");
-    destroyCookie(null, "first_name");
-    setToken(null);
+    Promise.all([
+      destroyCookie(null, "id"),
+      destroyCookie(null, "csrftoken"),
+      destroyCookie(null, "email"),
+      destroyCookie(null, "username"),
+      destroyCookie(null, "last_name"),
+      destroyCookie(null, "first_name"),
+    ]).then(() => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+      router.push("/");
+    });
   };
+  
+  
 
   return (
     <>
@@ -56,8 +68,8 @@ export default function Header() {
             <div class="collapse navbar-collapse ">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li>
-                  <h2 href="#" class="navbar-header">
-                    Tina Coiffure
+                  <h2 class="navbar-header">
+                    <Link href="/" class="nav-link">Tina Coiffure</Link>
                   </h2>
                 </li>
               </ul>
@@ -103,13 +115,10 @@ export default function Header() {
 
                       <Dropdown.Menu>
                         <Dropdown.Item>
-                        <Link href="#" style={{textDecoration: "none", color:"black"}}>Mon profil</Link>
+                        <Link href="/components/CRUD_client/profil_client" style={{textDecoration: "none", color:"black"}}>Mon profil</Link>
                         </Dropdown.Item>
                         <Dropdown.Item >
                         <Link href="/components/CRUD_client/calendrier_client" style={{textDecoration: "none", color:"black"}}>Mes rendez-vous</Link>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Link href="#" style={{textDecoration: "none", color:"black"}}>Mes commandes</Link>
                         </Dropdown.Item>
                         <Dropdown.Item>
                         <Link href="/" onClick={handleLogout} style={{textDecoration: "none", color:"black"}}>Se déconnecter</Link>
