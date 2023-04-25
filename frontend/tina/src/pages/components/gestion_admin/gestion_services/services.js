@@ -1,9 +1,66 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../../header';
 import Link from 'next/link';
+import { parseCookies } from 'nookies';
+import axios from 'axios';
 
 
 export default function Services() {
+  const [lstServices, setLstServices] = useState([]);
+  const [lstTypesOfService, setLstTypesOfService] = useState([]);
+
+  const fetchTypeOfService = () => {
+        const cookies = parseCookies();
+        axios.get('http://127.0.0.1:8000/api/typesofservice/', {
+            headers: {
+                Authorization: 'Token '  + cookies.csrftoken,
+            },
+            })
+            .then((response) => {
+                setLstTypesOfService(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+  const fetchServices = () => {
+      const cookies = parseCookies();
+      axios.get('http://127.0.0.1:8000/api/services/', {
+          headers: {
+              Authorization: 'Token '  + cookies.csrftoken,
+          },
+          })
+          .then((response) => {
+              setLstServices(response.data);
+              console.log(response.data);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  };
+  const loadComponents = () => {
+    let lstComponents = [];
+    lstServices.map((s) => {
+      lstComponents.push(      
+        <div class="row">
+          <p>{s.name}</p>
+          <p>{s.description}</p>
+          <p>{s.price}</p>
+          <p>{s.duration}</p>
+          <p>{s.type_of_service}</p>
+        </div>
+      );
+    });
+    return lstComponents;
+  };
+
+  useEffect(() => {
+    fetchServices();
+    fetchTypeOfService();
+
+  }, []);
+
   return (
     <>
       <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
@@ -34,39 +91,38 @@ export default function Services() {
         </nav>
 
         <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
-          <div class="container text-center">
-            <div class="row align-items-center">
-              <div class="col">
-                <div class="card" style={{width: "18rem"}}>
-                  <img src="https://placehold.co/350x150" class="card-img-top" alt="placeholder"></img>
-                  <div class="card-body">
-                    <h5 class="card-title">Nom du service à chopper</h5>
-                    <p class="card-text">Description du service</p>
-                    <a href="#" class="btn btn-primary">Choisir</a>
+          <div class="container">
+
+
+            {/* partie à remplacer par le loop de services */}
+            {loadComponents()}
+
+            <div class="row">
+              <div class="col-lg-8 col-md-10 col-sm-12">
+                <br></br>
+                <div class="card">
+                  <div class="card-body justify-content-center">
+                    <ul></ul>
+                    <h5 class="card-title text-center font-weight-bold">Demander à Milaz le code</h5>
+                    <br></br>
+                    <div class="text-center">
+                      <button 
+                        type="button" 
+                        class="btn btn-primary"
+                        data-id={"btn "}        
+                        onClick={() => console.log("bouton service clic")}>
+                        Choisir
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col">
-                <div class="card" style={{width: "18rem"}}>
-                    <img src="https://placehold.co/350x150" class="card-img-top" alt="placeholder"></img>
-                    <div class="card-body">
-                      <h5 class="card-title">Nom du service à chopper</h5>
-                      <p class="card-text">Description du service</p>
-                      <a href="#" class="btn btn-primary">Choisir</a>
-                    </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card" style={{width: "18rem"}}>
-                    <img src="https://placehold.co/350x150" class="card-img-top" alt="placeholder"></img>
-                    <div class="card-body">
-                      <h5 class="card-title">Nom du service à chopper</h5>
-                      <p class="card-text">Description du service</p>
-                      <a href="#" class="btn btn-primary">Choisir</a>
-                    </div>
-                </div>
-              </div>
             </div>
+
+
+
+
+
           </div>
         </div>
 
