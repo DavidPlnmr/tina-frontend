@@ -48,10 +48,12 @@ export default function Formulaire_typesofservice() {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     </ul>
-                    <button type="button" class="btn btn-outline-dark">Options</button>
-                    <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-                    </ul>
-                    <button type="button" class="btn btn-outline-dark">Modifier</button>
+                    <button type="button" class="btn btn-outline-dark">
+                    <Link href="/components/gestion_admin/gestion_services/services" class="nav-link">
+                        Modifier
+                    </Link>
+                    </button>
+                    
                     <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                     </ul>
                     <button type="button" class="btn btn-primary">
