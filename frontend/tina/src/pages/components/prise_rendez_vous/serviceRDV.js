@@ -4,6 +4,7 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { Card, Button } from "react-bootstrap";
+import Footer from "@/pages/components/footer";
 
 export default function ServiceRDV() {
     // Defining state variables and a ref variable
@@ -150,6 +151,7 @@ export default function ServiceRDV() {
                         ))}
                 </div>
             </div>
+            <Footer /> {/* Render the Footer component */}
         </>
     );
 }
