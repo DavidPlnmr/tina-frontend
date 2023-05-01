@@ -13,6 +13,7 @@ export default function Header() {
   });
   const [token, setToken] = useState(null);
   const router = useRouter();
+  const cookies = parseCookies();
 
   useEffect(() => {
     const cookies = parseCookies();
@@ -36,6 +37,7 @@ export default function Header() {
       destroyCookie(null, "username"),
       destroyCookie(null, "last_name"),
       destroyCookie(null, "first_name"),
+      destroyCookie(null, "role"),
     ]).then(() => {
       setTimeout(() => {
         window.location.reload();
@@ -81,14 +83,13 @@ export default function Header() {
                     Prendre rendez-vous
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link
-                    href="/components/gestion_admin/dash_admin"
-                    class="nav-link"
-                  >
-                    Admin
-                  </Link>
-                </li>
+                {token && cookies.role === "admin" && (
+                  <li class="nav-item">
+                    <Link href="/components/gestion_admin/dash_admin" class="nav-link">
+                      Admin
+                    </Link>
+                  </li>
+                )}
                 <li class="nav-item">
                   <Link href="/" class="nav-link">
                     Qui sommes nous ?
@@ -112,10 +113,10 @@ export default function Header() {
 
                       <Dropdown.Menu>
                         <Dropdown.Item>
-                        <Link href="/components/CRUD_client/profil_client" style={{textDecoration: "none", color:"black"}}>Mon profil</Link>
+                        <Link href="/components/CRUD_utilisateur/profil_utilisateur" style={{textDecoration: "none", color:"black"}}>Mon profil</Link>
                         </Dropdown.Item>
                         <Dropdown.Item >
-                        <Link href="/components/CRUD_client/calendrier_client" style={{textDecoration: "none", color:"black"}}>Mes rendez-vous</Link>
+                        <Link href="/components/CRUD_utilisateur/calendrier_utilisateur" style={{textDecoration: "none", color:"black"}}>Mes rendez-vous</Link>
                         </Dropdown.Item>
                         <Dropdown.Item>
                         <Link href="/" onClick={handleLogout} style={{textDecoration: "none", color:"black"}}>Se déconnecter</Link>

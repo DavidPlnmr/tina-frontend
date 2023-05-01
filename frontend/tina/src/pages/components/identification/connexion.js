@@ -39,6 +39,7 @@ export default function Connexion() {
         maxAge: 86400,
         path: "/",
       });
+      setCookie(null, 'role', data.role, { maxAge: 86400, path: '/' });
       router.push("/");
     } else {
       alert("Identifiants incorrects");

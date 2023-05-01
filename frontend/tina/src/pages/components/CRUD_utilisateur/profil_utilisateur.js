@@ -4,35 +4,56 @@ import axios from 'axios';
 import { parseCookies, setCookie } from 'nookies';
 import { useRouter } from 'next/router';
 
-export default function ProfilClient() {
+export default function ProfilUtilisateurs() {
   const [customer, setCustomer] = useState({ username: "", email: "", first_name: "", last_name: "" }); 
   const cookies = parseCookies();
   const router = useRouter();
 
+  const fetchCusto = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
+        {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+          },
+        }
+      );
+      setCustomer(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEmp = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/employees/" + cookies.id + "/",
+        {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+          },
+        }
+      );
+      setCustomer(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 useEffect(() => {
-    const fetchCusto = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
-          {
-            headers: {
-              Authorization: "Token " + cookies.csrftoken,
-            },
-          }
-        );
-        setCustomer(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  if (cookies.role === "customer") {
     fetchCusto();
+  } else if (cookies.role === "employee") {
+    fetchEmp();
+  }
   }, []);
 
   const handleChange = (evt) => {
-    setCustomer({ ...customer, [evt.target.dataset.id]: evt.target.value });
+      setCustomer({ ...customer, [evt.target.dataset.id]: evt.target.value });
   };
 
-  const handleSubmit = (evt) => {
+  const submitCusto = (evt) => {
     evt.preventDefault();
     console.log(customer);
 
@@ -81,12 +102,72 @@ useEffect(() => {
         console.log(error);
       });
     }
+  }
+
+  const submitEmp = (evt) => {
+    evt.preventDefault();
+
+    if (customer.password !== "") {
+      if (customer.password === customer.confirm_password) {
+        axios.patch(
+          "http://127.0.0.1:8000/api/employees/" + cookies.id + "/",
+          customer,
+          {
+            headers: {
+              Authorization: "Token " + cookies.csrftoken,
+            },
+          }
+        )
+        .then((response) => {
+          setCookie(null, "username", customer.username, { maxAge: 86400, path: "/" });
+          setCookie(null, "email", customer.email, { maxAge: 86400, path: "/" });
+          setCookie(null, "first_name", customer.first_name, { maxAge: 86400, path: "/" });
+          setCookie(null, "last_name", customer.last_name, { maxAge: 86400, path: "/" });
+          router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      } else {
+        alert("Les mots de passe ne correspondent pas");
+      }
+    } else {
+      axios.patch(
+        "http://127.0.0.1:8000/api/employees/" + cookies.id + "/",
+        customer,
+        {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+          },
+        }
+      )
+      .then((response) => {
+        setCookie(null, "username", customer.username, { maxAge: 86400, path: "/" });
+        setCookie(null, "email", customer.email, { maxAge: 86400, path: "/" });
+        setCookie(null, "first_name", customer.first_name, { maxAge: 86400, path: "/" });
+        setCookie(null, "last_name", customer.last_name, { maxAge: 86400, path: "/" });
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  }
+
+
+  const handleSubmit = (evt) => {
+    if (cookies.role === "customer") {
+      submitCusto(evt);
+    }
+    else if (cookies.role === "employee") {
+      submitEmp(evt);
+    }
   };
 
   return (
     <>
       <Header />
-      <div className="container d-flex justify-content-center" style={{marginTop: "10%"}}>
+      <div className="container d-flex justify-content-center" style={{marginTop: "5%"}}>
         <div className="card mb-3" style={{ width: "800px" }}>
           <div className="row g-0">
             <div className="col-md-5 col-lg-4 col-xl-3" style={{backgroundColor: "#232627"}}>
@@ -112,10 +193,12 @@ useEffect(() => {
                   <label htmlFor="prenom" className="form-label">Prénom :</label>
                   <input type="text" data-id="last_name" className="form-control" id="prenom" value={customer.last_name} onChange={handleChange} required />
                 </div>
+                {cookies.role === "customer" && (
                 <div className="mb-3">
                   <label htmlFor="tel_number" className="form-label">Numéro de téléphone :</label>
                   <input type="text" data-id="tel_number" className="form-control" id="tel_number" value={customer.tel_number} onChange={handleChange} required />
                 </div>
+                )}
                 <div className="mb-3">
                   <label htmlFor="pass" className="form-label">Nouveau mot de passe :</label>
                   <input type="password" className="form-control" data-id="password" value={customer.password} onChange={handleChange}/>

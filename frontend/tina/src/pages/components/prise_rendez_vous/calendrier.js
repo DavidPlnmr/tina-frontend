@@ -16,6 +16,8 @@ export default function Calendrier() {
   const cookies = parseCookies();
   const router = useRouter();
   const param = router.query;
+    const [screenHeight, setScreenHeight] = useState(0);
+
 
   const handleClick = (time, date) => {
     router.push({
@@ -97,9 +99,13 @@ export default function Calendrier() {
   }, [events]);
 
   useEffect(() => {
+    const widthThreshold = 600; // Seuil de largeur d'écran en pixels
+    const sizeScreen = window.innerWidth;
+    const initialView = sizeScreen < widthThreshold ? "timeGridDay" : "timeGridWeek";
+  
     if (calendarEl.current !== null) {
       const newCalendar = new Calendar(calendarEl.current, {
-        initialView: "timeGridWeek",
+        initialView,
         firstDay: 1,
         allDaySlot: false,
         slotDuration: "00:15:00",
@@ -109,7 +115,7 @@ export default function Calendrier() {
         headerToolbar: {
           start: "prev,next today",
           center: "title",
-          end: "timeGridWeek",
+          end: initialView,
         },
         views: {
           timeGridWeek: {
@@ -124,25 +130,37 @@ export default function Calendrier() {
               meridiem: "narrow",
             },
           },
+          timeGridDay: {
+            type: "timeGrid",
+            duration: { days: 1 },
+            buttonText: "Jour",
+            contentHeight: 500,
+            slotLabelFormat: {
+              hour: "numeric",
+              minute: "2-digit",
+              omitZeroMinute: false,
+              meridiem: "narrow",
+            },
+          },
         },
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
         locale: "fr", // définit la langue du calendrier en français
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
           const backgroundColor = available ? "green" : "green"; // Détermine la couleur de fond en fonction de la disponibilité
-          const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
+          const textColor = available ? "white" : "white"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
-            html: `<b><div style="text-align: center; background-color: ${backgroundColor}; color: white;">${info.event.start.toLocaleTimeString(
+            html: `<b><div style="text-align: center; background-color: ${backgroundColor}; color: ${textColor};">${info.event.start.toLocaleTimeString(
               [],
               { hour: "numeric", minute: "2-digit" }
             )}</div></b>`,
           };
         },
       });
-
+  
       setCalendar(newCalendar);
       newCalendar.render();
-
+  
       return () => {
         newCalendar.destroy();
       };

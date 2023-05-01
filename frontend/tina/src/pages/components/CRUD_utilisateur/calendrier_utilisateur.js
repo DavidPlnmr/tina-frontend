@@ -5,6 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import Header from "../header";
 import axios from "axios";
+import { addMinutes } from 'date-fns';
 import { parseCookies } from "nookies";
 
 
@@ -53,12 +54,34 @@ export default function CalendrierClient() {
                       },
                     }
                   );
+
+                  const response4 = await axios.get(
+                    "http://127.0.0.1:8000/api/customers/" + appointment.customer + "/",
+                    {
+                      headers: {
+                        Authorization: "Token " + cookies.csrftoken,
+                      },
+                    }
+                  );
+
                     const employee = response3.data;
+                    const customer = response4.data;
+                    let myTitle = "";
+                    const start = new Date(`${appointment.date}T${appointment.time}`);
+                    const end = addMinutes(start, service.duration.slice(3, 5));
+                    console.log(start);
+                    console.log(end);
+                    if (cookies.role === "customer") {
+                      myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name}`;
+                    } else if (cookies.role === "employee") {
+                      myTitle = `Service : ${service.name} avec le client ${customer.first_name} ${customer.last_name}`;
+                    }
                   // Create event object with service info
                   return {
                     id: appointment.id,
-                    title: `Service : ${service.name} avec ${employee.first_name} ${employee.last_name}`,
-                    start: `${appointment.date}T${appointment.time}`,
+                    title: myTitle,
+                    start: start.toISOString(),
+                    end: end.toISOString(),
                     allDay: false,
                     service: service, // add service info to event object
                   };
@@ -104,7 +127,7 @@ export default function CalendrierClient() {
     useEffect(() => {
       if (calendarEl.current !== null) {
         const newCalendar = new Calendar(calendarEl.current, {
-          initialView: "timeGridWeek",
+          initialView: "listWeek",
           firstDay: 1,
           allDaySlot: false,
           slotDuration: "00:15:00",
@@ -114,7 +137,7 @@ export default function CalendrierClient() {
           headerToolbar: {
             start: "prev,next today",
             center: "title",
-            end: "timeGridWeek,listWeek",
+            end: "listWeek",
           },
           views: {
             timeGridWeek: {
@@ -130,17 +153,14 @@ export default function CalendrierClient() {
               },
             },
           },
-          plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+          plugins: [listPlugin],
           locale: "fr", // définit la langue du calendrier en français
           eventContent: function (info) {
             const available = info.event.extendedProps.available;
-            const backgroundColor = available ? "green" : "green"; // Détermine la couleur de fond en fonction de la disponibilité
+            const backgroundColor = available ? "#1AA7EC" : "#1AA7EC"; // Détermine la couleur de fond en fonction de la disponibilité
             const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
             return {
-              html: `<div style="text-align: center; background-color: ${backgroundColor}; color: white; font-size:12px;"><b><div>${info.event.start.toLocaleTimeString(
-                [],
-                { hour: "numeric", minute: "2-digit" }
-              )}</div><br><div >${info.event.title}</div></b></div>`,
+              html: `<div style="text-align: center; background-color: ${backgroundColor}; color: white; font-size:12px;"><div >${info.event.title}</div></b></div>`,
             };
           },
         });
@@ -159,11 +179,11 @@ export default function CalendrierClient() {
         <style type="text/css">
           {`
                     .fc-event-main {
-                      background-color: green; /* gris clair */ !important
+                      background-color: #1AA7EC; /* gris clair */ !important
                       color: white; 
                   }
                   .fc-timegrid-event {
-                      background-color: green; /* gris clair */ !important
+                      background-color: #1AA7EC; /* gris clair */ !important
                   }
                   
               `}
