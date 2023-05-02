@@ -44,6 +44,10 @@ export default function Formulaire_services() {
 
     const [compteur, setCompteur] = useState(0);
 
+    const [listTypeOfService, setListTypeOfService] = useState([]);
+
+    const dataFetchedRef = useRef(false);
+
     const addService = (evt) => {
         evt.preventDefault();
         setCompteur(compteur + 1);
@@ -59,10 +63,6 @@ export default function Formulaire_services() {
             }
         ]);
     };
-
-    const [listTypeOfService, setListTypeOfService] = useState([]);
-
-    const dataFetchedRef = useRef(false);
 
 
     //Formattage des minutes pour le submit

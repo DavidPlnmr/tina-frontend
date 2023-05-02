@@ -2,24 +2,87 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Modal } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
 
 export default function Services() {
   const [lstServices, setLstServices] = useState([]);
   const [lstTypesOfService, setLstTypesOfService] = useState([]);
+  const router = useRouter();
+
   const [buttonModify, setButtonModify] = useState(
-    "btn btn-outline-dark"
+    "btn btn-outline-primary"
   );
   const [modificationMode, setModificationMode] = useState(
     ""
   );
-  const [mode, setMode] = useState(true);
+  const [buttonDelete, setButtonDelete] = useState(
+    "btn btn-outline-danger"
+  );
+  const [modeModify, setModeModify] = useState('');
+  const [btnChooseService, setBtnChooseService] = useState(
+    "btn btn-dark"
+  );
 
-  const router = useRouter();
+  const handleClickModify = (evt) => {
+    console.log("Mode Modification");
+    if (modeModify != 'modify') {
+      setModeModify(modeModify => 'modify');
+    } else {
+      setModeModify(modeModify => '');
+    }
+  };
 
+  const handleClickDelete = (evt) => {
+    console.log("Mode Suppression");
+    if (modeModify != 'delete') {
+      setModeModify(modeModify => 'delete');
+    } else {
+      setModeModify(modeModify => '');
+    }
+  };
 
+  //partie de la modal
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const errorMessage = (newName) => {
+    document.getElementById("notification_delete").removeAttribute("hidden");
+    const serviceError = document.getElementById("service_error");
+    serviceError.textContent = newName;
+    //après 3 secondes, on cache la notification
+    setTimeout(function () {
+      document.getElementById("notification_delete").setAttribute("hidden", "hidden");
+    }, 3000);
+
+  };
+
+  const handleConfirmDelete = () => {
+    handleClose();
+    let s = infoModify.service;
+    lstServices.splice(lstServices.indexOf(s), 1);
+    const cookies = parseCookies();
+    axios.delete('http://127.0.0.1:8000/api/services/'+s.id+'/', {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                console.log(response.data);
+                errorMessage(s.name);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+  };
+
+  const [infoModify, setInfoModify] = useState({
+    service: {},
+    typeOfService: {},
+  });//[service, typeOfService]
 
   const fetchTypeOfService = () => {
     const cookies = parseCookies();
@@ -36,6 +99,7 @@ export default function Services() {
         console.log(error);
       });
   };
+
   const fetchServices = () => {
     const cookies = parseCookies();
     axios.get('http://127.0.0.1:8000/api/services/', {
@@ -52,19 +116,18 @@ export default function Services() {
       });
   };
 
-  const handleClickModify = (evt) => {
-    console.log("Mode Modification");
-    setMode(mode => !mode);
-  };
-
   const handleChooseService = (service, typeOfService) => {
-    console.log("Service choisi", service, typeOfService, mode);
-    router.push({
-      pathname: '/components/gestion_admin/gestion_services/form_services',
-      query: { typeOfService: JSON.stringify(typeOfService), service: JSON.stringify(service), mode: mode },
-    })
+    setInfoModify({ service: service, typeOfService: typeOfService });
+    if (modeModify === 'modify') {
+      console.log("Modification du service " + service.name);
+      router.push({
+        pathname: '/components/gestion_admin/gestion_services/form_services_modify',
+        query: { typeOfService: JSON.stringify(typeOfService), service: JSON.stringify(service) },
+      })
+    } else if (modeModify === 'delete') {
+      handleShow();
+    }
   };
-
 
   //Partie du code de milaz
 
@@ -76,40 +139,90 @@ export default function Services() {
   };
   // Function to get price without cents
   const priceWithoutCent = (price) => {
-    return price.split(".")[0];
-  }
+    if (typeof price !== "string") {
+      return price;
+    }
+    const splitPrice = price.split(".");
+    if (splitPrice.length === 1) {
+      return splitPrice[0];
+    }
+    return splitPrice[0];
+  };
+
   // Setting number of columns for services
   const numCols = lstTypesOfService ? Math.floor(12 / lstTypesOfService.length) : 4;
   // Function to get the minimum price for a type of service
   const minPriceForATypeOfService = (lstTypeOfService) => {
-    return priceWithoutCent
-      (lstServices
-        .filter((service) => service.type_of_service === lstTypeOfService.id)
-        .sort((a, b) => a.price - b.price)[0].price);
+    let val = 0;
+    val = priceWithoutCent(lstServices
+      .filter((service) => service.type_of_service === lstTypeOfService.id)
+      .sort((a, b) => a.price - b.price)[0]?.price || 0)
+    return val;
   }
+
+  useEffect(() => {
+    console.log("refresh");
+  }, [lstServices]);
 
   useEffect(() => {
     fetchServices();
     fetchTypeOfService();
-    if (mode) {
+  }, []);
+
+  useEffect(() => {
+    if (modeModify === 'delete') {
       //changer le bouton
-      setButtonModify(buttonModify => "btn btn-outline-dark");
+      setButtonDelete(buttonDelete => "btn btn-danger");
+      setButtonModify(buttonModify => "btn btn-outline-primary");
+      setBtnChooseService(btnChooseService => "btn btn-danger");
       //changer la navbar
-      setModificationMode(modificationMode => "");
-    } else {
+      setModificationMode(modificationMode => "MODE SUPPRESSION");
+    } else if (modeModify === 'modify') {
       //changer le bouton
-      setButtonModify(buttonModify => "btn btn-dark");
+      setButtonModify(buttonModify => "btn btn-primary");
+      setButtonDelete(buttonDelete => "btn btn-outline-danger");
+      setBtnChooseService(btnChooseService => "btn btn-primary");
       //changer la navbar
       setModificationMode(modificationMode => "MODE MODIFICATION");
+    } else if (modeModify === '') {
+      setModificationMode(modificationMode => "");
+      setButtonModify(buttonModify => "btn btn-outline-primary");
+      setButtonDelete(buttonDelete => "btn btn-outline-danger");
+      setBtnChooseService(btnChooseService => "btn btn-dark");
     }
-
-  }, [mode]);
+  }, [modeModify]);
 
   return (
     <>
+      {/* Modal pour la suppression */}
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+          <Modal.Header closeButton>
+            <Modal.Title>SUPPRESSION</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Voulez-vous vraiment supprimer ce service ?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-secondary" onClick={handleClose}>
+              Annuler
+            </Button>
+            <Button variant="danger" onClick={handleConfirmDelete}>
+              Supprimer
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+      
       {/* Nav Bar pour les services */}
-      <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
+      <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#b8aaa0" }}>
         <ul></ul>
+
+        {/* Notification de suppression */}
+      <div id="notification_delete" className="alert alert-warning" role="alert" hidden>
+        <h4 className="alert-heading">Service supprimé</h4>
+        <p>Le service " <a id='service_error'> </a> " a été supprimé</p>
+
+      </div>
         <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
           <div class="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
             <div class="collapse navbar-collapse" id="text">
@@ -120,9 +233,12 @@ export default function Services() {
               </i>
             </div>
             <div class="collapse navbar-collapse" id="buttons">
-              <ul class="navbar-nav ms-auto mb-2 mb-lg-0"></ul>
+              <ul class="navbar-nav ms-auto"></ul>
+              <button type="button" class={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
+              <ul class="navbar-nav ms-1"></ul>
               <button type="button" class={buttonModify} onClick={handleClickModify}>Modifier</button>
-              <button type="button" class="btn btn-primary ms-lg-2">
+              <ul class="navbar-nav ms-1"></ul>
+              <button type="button" class="btn btn-primary">
                 <Link href="/components/gestion_admin/gestion_services/form_typesofservice" class="nav-link">
                   Ajouter
                 </Link>
@@ -165,20 +281,14 @@ export default function Services() {
                                   <Card.Text className="mb-1">{service.name}</Card.Text> {/* Display the name of the service */}
                                   <Card.Text className="mb-2">{formatDuration(service.duration)} minutes, CHF {priceWithoutCent(service.price)}.-</Card.Text> {/* Display the duration and price of the service */}
                                 </div>
+
                                 <Button
-                                  variant="primary"
-                                  style={{
-                                    background: "#232627",
-                                    alignSelf: "flex-end",
-                                    borderColor: "#232627",
-                                    transition: "all 0.2s ease-in-out",
-                                  }}
+                                  id='btnChooseService'
+                                  className={btnChooseService}
                                   onClick={() => handleChooseService(service, typeOfService)}
-                                  onMouseOver={(e) => (e.target.style.background = "#383a3d")}
-                                  onMouseOut={(e) => (e.target.style.background = "#232627")}
-                                  disabled={mode}
+                                  disabled={modeModify === '' ? true : false}
                                 >
-                                  Choisir
+                                  {modeModify === 'delete' ? 'Supprimer' : modeModify === 'modify' ? 'Modifier' : 'Choisir'}
                                 </Button> {/* Button to choose a service */}
                               </div>
                             ))}
@@ -192,19 +302,6 @@ export default function Services() {
               ))}
           </div>
         </div>
-
-        {/* Pagination */}
-
-        {/* <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </nav> */}
-
       </div>
     </>
   );
