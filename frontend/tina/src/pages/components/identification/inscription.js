@@ -46,11 +46,13 @@ export default function Inscription() {
     axios.post('http://127.0.0.1:8000/api/customers/create', customers)
       .then((response) => {
         console.log(response.data);
+        setCookie(null, "id", response.data.id, { maxAge: 86400, path: "/" });
         setCookie(null, 'csrftoken', response.data.token, { maxAge: 86400, path: '/' });
         setCookie(null, 'email', response.data.email, { maxAge: 86400, path: '/' });
         setCookie(null, 'username', response.data.username, { maxAge: 86400, path: '/' });
         setCookie(null, 'last_name', response.data.last_name, { maxAge: 86400, path: '/' });
         setCookie(null, 'first_name', response.data.first_name, { maxAge: 86400, path: '/' });
+        setCookie(null, 'role', response.data.role, { maxAge: 86400, path: '/' });
         router.push('/');
       })
       .catch((error) => {

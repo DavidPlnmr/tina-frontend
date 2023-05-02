@@ -27,6 +27,7 @@ export default function Connexion() {
 
     if (response.ok) {
       const data = await response.json();
+      setCookie(null, "id", data.id, { maxAge: 86400, path: "/" });
       setCookie(null, "csrftoken", data.token, { maxAge: 86400, path: "/" });
       setCookie(null, "email", data.email, { maxAge: 86400, path: "/" });
       setCookie(null, "username", data.username, { maxAge: 86400, path: "/" });
@@ -38,6 +39,7 @@ export default function Connexion() {
         maxAge: 86400,
         path: "/",
       });
+      setCookie(null, 'role', data.role, { maxAge: 86400, path: '/' });
       router.push("/");
     } else {
       alert("Identifiants incorrects");
