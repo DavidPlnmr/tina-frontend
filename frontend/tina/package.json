@@ -25,5 +25,8 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "18.2.0",
     "sass": "^1.62.0"
+  },
+  "devDependencies": {
+    "cypress": "^12.11.0"
   }
 }

@@ -7,6 +7,12 @@
 
 # testing
 /coverage
+cypress.env.json
+coverage
+cypress/dummy/.env
+cypress/videos
+cypress/screenshots
+.env
 
 # next.js
 /.next/
