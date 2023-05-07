@@ -7,6 +7,7 @@ import Header from "../header";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useRouter, Router } from "next/router";
+import Footer from "../footer";
 
 export default function Calendrier() {
   const [calendar, setCalendar] = useState(null);
@@ -182,13 +183,14 @@ export default function Calendrier() {
             `}
       </style>
       <Header />
-      <div className="container">
+      <div className="container" style={{minHeight: "100vh"}}>
         <div
           ref={calendarEl}
           className="mx-auto"
           style={{ marginTop: "100px", marginBottom: "100px" }}
         ></div>
       </div>
+      <Footer />
     </>
   );
 }

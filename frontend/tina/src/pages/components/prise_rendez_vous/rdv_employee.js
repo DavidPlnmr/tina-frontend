@@ -52,7 +52,7 @@ export default function Rdv_employee() {
                                     type="button" 
                                     class="btn btn-primary"
                                     data-id={"btn "+e.id}
-                                    
+                                    style={{backgroundColor: "#232627", border: "none"}}
                                     onClick={() => handleOnClick(e)}>
                                         Choisir
                                 </button>

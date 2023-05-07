@@ -6,6 +6,7 @@ import axios from "axios";
 import { addMinutes } from 'date-fns';
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import Footer from "../footer";
 
 
 export default function CalendrierClient() {
@@ -210,6 +211,7 @@ export default function CalendrierClient() {
             style={{ marginTop: "100px", marginBottom: "100px" }}
           ></div>
         </div>
+        <Footer />
       </>
   );
 }
