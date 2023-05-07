@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 export default function Footer() {
     return (
-        <footer className="bg-dark text-light py-3">
+        <footer className="bg-dark text-light py-3" style={{position: "fixed", bottom: 0, left: 0, width: "100%"}}>
             <Container>
                 <Row className="align-items-center">
                     {/* Column for the general conditions link */}

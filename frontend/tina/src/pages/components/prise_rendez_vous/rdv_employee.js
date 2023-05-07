@@ -4,6 +4,7 @@ import { parseCookies } from 'nookies';
 import axios from 'axios';
 import Router from 'next/router';
 import { useRouter } from 'next/router';
+import Footer from '../footer';
 
 export default function Rdv_employee() {
 
@@ -83,6 +84,7 @@ export default function Rdv_employee() {
             </div>
         </div>
         <br></br>
+        <Footer/>
     </>
   );
 }
