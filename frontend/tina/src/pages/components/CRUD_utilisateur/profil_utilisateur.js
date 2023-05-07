@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from '../header';
 import axios from 'axios';
-import { parseCookies, setCookie } from 'nookies';
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
 import { useRouter } from 'next/router';
 
 export default function ProfilUtilisateurs() {
@@ -44,7 +44,7 @@ export default function ProfilUtilisateurs() {
 useEffect(() => {
   if (cookies.role === "customer") {
     fetchCusto();
-  } else if (cookies.role === "employee") {
+  } else if (cookies.role === "employee" || cookies.role === "admin") {
     fetchEmp();
   }
   }, []);
@@ -159,10 +159,65 @@ useEffect(() => {
     if (cookies.role === "customer") {
       submitCusto(evt);
     }
-    else if (cookies.role === "employee") {
+    else if (cookies.role === "employee" || cookies.role === "admin") {
       submitEmp(evt);
     }
   };
+
+  const handleDelete = (evt) => {
+    evt.preventDefault();
+    let response;
+    if (confirm("Voulez-vous vraiment supprimer votre compte ?")) {
+      if (cookies.role === "customer") {
+        response = axios.delete(
+          "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
+          {
+            headers: {
+              Authorization: "Token " + cookies.csrftoken,
+            },
+          }
+        )
+        .then((response) => {
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      else if (cookies.role === "employee" || cookies.role === "admin") {
+        axios.delete(
+          "http://127.0.0.1:8000/api/employees/" + cookies.id + "/",
+          {
+            headers: {
+              Authorization: "Token " + cookies.csrftoken,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      
+      Promise.all([
+        destroyCookie(null, "id"),
+        destroyCookie(null, "csrftoken"),
+        destroyCookie(null, "email"),
+        destroyCookie(null, "username"),
+        destroyCookie(null, "last_name"),
+        destroyCookie(null, "first_name"),
+        destroyCookie(null, "role"),
+      ]).then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        router.push("/");
+        alert("Votre compte a bien été supprimé !");
+      });
+      
+    }
+  }
 
   return (
     <>
@@ -208,6 +263,7 @@ useEffect(() => {
                   <input type="password" className="form-control" id="confirmPas" data-id="confirm_password" value={customer.confirm_password} onChange={handleChange}/>
                 </div>
                 <button type="submit" className="btn btn-primary" style={{backgroundColor: "#232627", border:0}}>Modifier</button> <br/><br/>
+                <button className="btn btn-primary" onClick={handleDelete} style={{backgroundColor: "#C21A09", border:0}}>Supprimer mon compte</button>
               </form>
             </div>
           </div>

@@ -52,7 +52,6 @@ export default function Connexion() {
 
   return (
     <>
-      <Header />
       <div
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh", backgroundColor: "#b8aaa0" }}

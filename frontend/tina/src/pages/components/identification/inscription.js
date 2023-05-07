@@ -62,7 +62,6 @@ export default function Inscription() {
 
   return (
     <>
-      <Header/>
       <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
         <div className="container">
           <div className="row justify-content-center">

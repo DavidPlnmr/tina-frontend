@@ -118,6 +118,11 @@ export default function Header() {
                         <Dropdown.Item >
                         <Link href="/components/CRUD_utilisateur/calendrier_utilisateur" style={{textDecoration: "none", color:"black"}}>Mes rendez-vous</Link>
                         </Dropdown.Item>
+                        {token && cookies.role === "admin" && (
+                          <Dropdown.Item>
+                          <Link href="/" onClick={handleLogout} style={{textDecoration: "none", color:"black"}}>Ajout de disponibilités</Link>
+                          </Dropdown.Item>
+                          )}
                         <Dropdown.Item>
                         <Link href="/" onClick={handleLogout} style={{textDecoration: "none", color:"black"}}>Se déconnecter</Link>
                         </Dropdown.Item>
