@@ -40,7 +40,7 @@ export default function Dash() {
                     <div class="card">
                         <div class="card-body justify-content-center">
                             <ul></ul>
-                            <h5 class="card-title text-center font-weight-bold">Ajout des disponibilités</h5>
+                            <h5 class="card-title text-center font-weight-bold">Gestion des disponibilités</h5>
                             <h5 class="card-title text-center font-weight-bold" style={{color: "green"}}>Employé</h5>
                             <br></br>
                             <div class="text-center">

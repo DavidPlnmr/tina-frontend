@@ -6,6 +6,8 @@ import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { set } from 'date-fns';
+import { useRouter } from 'next/router';
+import { el } from 'date-fns/locale';
 
 export default function AjoutDispo() {
 
@@ -15,11 +17,12 @@ export default function AjoutDispo() {
         start_hour: "",
         end_hour: "",
         employee: "",
-        vacation: "0"
+        vacation: ""
     }
   ]);
 
   const  [employees, setEmployees] = useState([]);
+  const router = useRouter();
 
   const fetchEmployees = () => {
     const cookies = parseCookies();
@@ -44,21 +47,11 @@ export default function AjoutDispo() {
     fetchEmployees();
   } , []);
 
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   const handleSubmit =  (evt) => {
     const cookies = parseCookies();
 
     evt.preventDefault();
 
-    if (dispo.vacation == "on") {
-      setDispo({ ...dispo, vacation: "1" });
-    }
-
-    if (dispo.vacation == "") {
-      console.log("test");
-      setDispo({ ...dispo, vacation: "0" });
-    }
     console.log(dispo);
 
     axios.post('http://127.0.0.1:8000/api/employees/' + dispo.employee +'/disponibilities/', dispo, {
@@ -67,7 +60,14 @@ export default function AjoutDispo() {
       },
     })
     .then((response) => {
+      console.log(response);
       console.log(response.data);
+      if (response.data.vacation === false){
+        alert("Disponibilité ajoutée");
+      } else {
+        alert("Vacances ajoutées");
+      }
+      router.push("/components/gestion_admin/dash_admin");
     })
     .catch((error) => {
       console.log(error);
@@ -76,12 +76,7 @@ export default function AjoutDispo() {
   }
 
   const handleChange = (evt) => {
-    console.log(evt.target.value);
-    if (dispo.vacation == "" || evt.target.value == "off") {
-      setDispo({ ...dispo, [evt.target.dataset.id]: evt.target.value, vacation: "0" });
-    } else {
-      setDispo({ ...dispo, [evt.target.dataset.id]: evt.target.value, vacation: "1" });
-    }
+      setDispo({ ...dispo, [evt.target.dataset.id]: evt.target.value});
   };
 
   return (
@@ -93,22 +88,22 @@ export default function AjoutDispo() {
               <Card className="border-0" style={{ backgroundColor: "#b8aaa0", marginTop: "-150px" }}>
                 <Card.Body>
                   <h2 className="text-center mb-4">Tina Coiffure</h2>
-                  <Card.Title className="text-center mb-4">Ajout d'une disponibilité d'un employé</Card.Title>
+                  <Card.Title className="text-center mb-4">Ajout d'une disponibilité ou de vacances pour un employé</Card.Title>
                   <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
-                      <Form.Control data-id="date" type="date" placeholder="Date" value={dispo.date} onChange={handleChange}/>
+                      <Form.Control data-id="date" type="date" placeholder="Date" value={dispo.date} onChange={handleChange} required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <Form.Control data-id="start_hour" type="time" placeholder="Heure de début" value={dispo.start_hour} onChange={handleChange}/>
+                      <Form.Control data-id="start_hour" type="time" placeholder="Heure de début" value={dispo.start_hour} onChange={handleChange} required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <Form.Control data-id="end_hour" type="time" placeholder="Heure de fin" value={dispo.end_hour} onChange={handleChange}/>
+                      <Form.Control data-id="end_hour" type="time" placeholder="Heure de fin" value={dispo.end_hour} onChange={handleChange} required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <select className='form-select' onChange={handleChange} data-id="employee" > 
+                      <select className='form-select' onChange={handleChange} data-id="employee" required> 
                         {employees.map((employee) => (
                           <option value={employee.id} >{employee.first_name} {employee.last_name} {"(" + employee.username + ")"}</option>
                         ))}
@@ -116,9 +111,11 @@ export default function AjoutDispo() {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <label for="vacation" style={{marginRight: "7px"}}>Vacances ? : </label>
-                    <input type='checkbox' data-id="vacation" onChange={handleChange}/>
-                      
+                      <p>Qu'êtes vous en train d'ajouter ?</p>
+                      <label htmlFor="vacation-oui" style={{marginRight:"8px"}}>Vacances</label>
+                      <input type='radio' data-id="vacation" name="vacation" value={1} onChange={handleChange} style={{marginRight:"8px"}}/>
+                      <label htmlFor="vacation-non" style={{marginRight:"8px"}}>Disponibilités</label>
+                      <input type='radio' data-id="vacation" name="vacation" value={0} onChange={handleChange} required/>
                     </Form.Group>
 
                     <Button variant="primary" type="submit" className='w-100 border-0"' style={{ backgroundColor: "black", border: 0 }}>
