@@ -109,7 +109,7 @@ export default function AjoutMultipleDispo() {
           <Card className="border-0" style={{ backgroundColor: "#b8aaa0", marginTop: "-150px" }}>
             <Card.Body>
               <h2 className="text-center mb-4">Tina Coiffure</h2>
-              <Card.Title className="text-center mb-4">Ajout d'une disponibilité ou de vacances pour un employé</Card.Title>
+              <Card.Title className="text-center mb-4">Ajout de multiples disponibilités ou vacances</Card.Title>
               <Form>
                 <Form.Group className="mb-3">
                   <Form.Control data-id="start_date" type="date" placeholder="Date" value={dispo.start_date} onChange={handleChangeDispo} required/>
@@ -144,6 +144,14 @@ export default function AjoutMultipleDispo() {
                     <option value="friday">Friday</option>
                     <option value="saturday">Saturday</option>
                   </select>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <p>Qu'êtes vous en train d'ajouter ?</p>
+                      <label htmlFor="vacation-oui" style={{marginRight:"8px"}}>Vacances</label>
+                      <input type='radio' data-id="vacation" name="vacation" value={1} onChange={handleChange} style={{marginRight:"8px"}}/>
+                      <label htmlFor="vacation-non" style={{marginRight:"8px"}}>Disponibilités</label>
+                      <input type='radio' data-id="vacation" name="vacation" value={0} onChange={handleChange} required/>
                 </Form.Group>
 
                 <Button variant="primary" className='w-100 border-0"' onClick={handleSubmit} style={{ backgroundColor: "black", border: 0 }}>
