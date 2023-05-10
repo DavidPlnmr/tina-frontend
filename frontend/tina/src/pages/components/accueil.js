@@ -1,8 +1,18 @@
+import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Footer from "@/pages/components/footer";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
-import '@/styles/Accueil.module.css'
+import styles from '@/styles/Accueil.module.css'
 
+
+const products = [
+    { title: 'Shampoing', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
+    { title: 'Gels/Cires', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
+    { title: 'Laques', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
+    { title: 'Ciseaux', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
+    { title: 'Tondeuses', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
+    { title: 'Couleurs', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
+];
 
 export default function Accueil() {
     return (
@@ -11,29 +21,30 @@ export default function Accueil() {
                 <Carousel.Item>
                     <img src="/images/carousel/carousel_1.jpg" className="d-block w-100 h-50" alt="..." />
                     <Carousel.Caption>
-                        <h3>Slide 1</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <h3>Salon de coiffure et barbier</h3>
+                        <p>Profitez d'une expérience exceptionnelle dans notre salon de coiffure et barbier.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img src="/images/carousel/carousel_2.jpg" className="d-block w-100 " height={500} alt="..." />
                     <Carousel.Caption>
-                        <h3>Slide 2</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <h3>Des professionnels à votre service</h3>
+                        <p>Découvrez nos services de coiffure et de barbier pour hommes.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img src="/images/carousel/carousel_3.jpg" className="d-block w-100" height={500} alt="..." />
                     <Carousel.Caption>
-                        <h3>Slide 3</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <h3>Des produits de qualité</h3>
+                        <p>Utilisation de produits de qualité pour des résultats durables et éclatants.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
-            <br/>
+
             {/* Nos services */}
+                <br/>
             <Container>
-                <h2 className={"text-center"}>Nos services</h2>
+                <h2 className={"text-center text-primary"}>Nos services</h2>
                 <hr className="featurette-divider" />
                 <Row>
                     <div className="col-md-4">
@@ -92,62 +103,27 @@ export default function Accueil() {
             {/* Nos produits*/}
             <br/><br/>
             <Container>
-                <h2 className={"text-center"}>Nos produits</h2>
+                <h2 className="text-center">Nos produits</h2>
                 <hr className="featurette-divider" />
-                <br/>
-                <Row>
-                    <div className="col-md-4">
-                        <Card className="custom-card bg-dark text-white">
-                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
-                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
-                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
-                            </Card.ImgOverlay>
-                        </Card>
-                    </div>
-                    <div className="col-md-4">
-                        <Card className="custom-card bg-dark text-white">
-                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
-                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
-                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
-                            </Card.ImgOverlay>
-                        </Card>
-                    </div>
-                    <div className="col-md-4">
-                        <Card className="custom-card bg-dark text-white">
-                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
-                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
-                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
-                            </Card.ImgOverlay>
-                        </Card>
-                    </div>
-                </Row>
-                <Row>
-                    <div className="col-md-4">
-                        <Card className="custom-card bg-dark text-white">
-                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
-                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
-                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
-                            </Card.ImgOverlay>
-                        </Card>
-                    </div>
-                    <div className="col-md-4">
-                        <Card className="custom-card bg-dark text-white">
-                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
-                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
-                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
-                            </Card.ImgOverlay>
-                        </Card>
-                    </div>
-                    <div className="col-md-4">
-                        <Card className="custom-card bg-dark text-white">
-                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
-                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
-                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
-                            </Card.ImgOverlay>
-                        </Card>
-                    </div>
+                <br />
+
+                <Row className="row-cols-1 row-cols-md-3 g-4">
+                    {products.map((product, index) => (
+                        <div className="col" key={index}>
+                            <div className="card-container">
+                                <Card className="custom-card h-100" style={{ backgroundColor: product.backgroundColor }}>
+                                    <Card.Body className="d-flex align-items-center justify-content-center">
+                                        <Card.Title className="custom-card-title" style={{ color: product.textColor }}>
+                                            {product.title}
+                                        </Card.Title>
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                        </div>
+                    ))}
                 </Row>
             </Container>
+
             {/*adresse - email - phone*/}
             <br/><br/>
             <Container>
@@ -177,7 +153,6 @@ export default function Accueil() {
                 </Row>
                 <br/><br/>
             </Container>
-
             {/*Footer*/}
             <Footer />
         </>
