@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Footer from "@/pages/components/footer";
-import {Card, Container, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import '@/styles/Accueil.module.css'
 
 
 export default function Accueil() {
@@ -11,37 +11,37 @@ export default function Accueil() {
                 <Carousel.Item>
                     <img src="/images/carousel/carousel_1.jpg" className="d-block w-100 h-50" alt="..." />
                     <Carousel.Caption>
-                        <h3>First slide label</h3>
+                        <h3>Slide 1</h3>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img src="/images/carousel/carousel_2.jpg" className="d-block w-100 " height={500} alt="..." />
                     <Carousel.Caption>
-                        <h3>First slide label</h3>
+                        <h3>Slide 2</h3>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img src="/images/carousel/carousel_3.jpg" className="d-block w-100" height={500} alt="..." />
                     <Carousel.Caption>
-                        <h3>First slide label</h3>
+                        <h3>Slide 3</h3>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
-
-            {/* 3 boxes our services */}
+            <br/>
+            {/* Nos services */}
             <Container>
-                {/*Nos services at the center*/}
-
+                <h2 className={"text-center"}>Nos services</h2>
+                <hr className="featurette-divider" />
                 <Row>
                     <div className="col-md-4">
                         <div className="card">
                             <img src="https://i.pinimg.com/736x/ae/67/7a/ae677a18891ad058e1526f2b087028b6.jpg" className="card-img-top" alt="..." />
                             <div className="card-body">
-                                <h5 className="card-title">Cheveux</h5>
-                                <p>Coupe de cheveux</p>
+                                <h5 className="card-title">Coupe de cheveux personnalisée</h5>
+                                <p>Notre équipe de coiffeurs professionnels est spécialisée dans les coupes de cheveux pour hommes. Que vous souhaitiez un look classique ou un style plus moderne, nous sommes là pour vous aider à trouver la coupe parfaite qui reflète votre personnalité et votre style.</p>
                             </div>
                         </div>
                     </div>
@@ -49,23 +49,136 @@ export default function Accueil() {
                         <div className="card">
                             <img src="https://img.freepik.com/free-photo/handsome-man-cutting-beard-barber-shop-salon_1303-20931.jpg" className="card-img-top" alt="..." />
                             <div className="card-body">
-                                <h5 className="card-title">Barbe</h5>
-                                <p>Coupe de cheuveux</p>
+                                <h5 className="card-title">Taille de la barbe et rasage</h5>
+                                <p>Offrez-vous une expérience de rasage et de taille de la barbe de qualité supérieure. Nos barbiers experts sont formés pour sculpter et entretenir votre barbe avec précision, en utilisant des outils et des techniques traditionnelles pour un résultat impeccable.</p>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-4">
                         <div className="card">
-                            <img src="https://media.istockphoto.com/id/1154666732/photo/hairdresser-bleaching-hair-of-a-young-adult-man.jpg?s=612x612&w=0&k=20&c=yzW29xOTz4yIZEQpCKtD6R9nrkh3macvs0FB_DkhzuQ=" className="card-img-top" alt="..." />
+                            <img src="https://img.freepik.com/free-photo/crop-hairdresser-washing-hair-client_23-2147778780.jpg?w=1060&t=st=1683727994~exp=1683728594~hmac=3374aec0a5e05c5d2ecdc7fe13a9f1f3a1460f58533de981c23e6ad5442d5e56" className="card-img-top" alt="..." />
                             <div className="card-body">
                                 <h5 className="card-title">Coloration</h5>
-                                <p>Coupe de cheuveux</p>
+                                <p>Notre barber shop propose des services de coloration personnalisés pour les hommes, allant de la couverture des cheveux gris à des transformations audacieuses. Nous utilisons des produits de haute qualité et respectueux du cuir chevelu pour garantir des résultats durables et éclatants.</p>
                             </div>
                         </div>
                     </div>
                 </Row>
             </Container>
+            <br/><br/>
 
+            {/* Qui sommes-nous ?*/}
+            <Container>
+                <br/>
+                <Row>
+                    <div className="col-md-6">
+                        <img className="img-fluid" src="/images/carousel/carousel_1.jpg" alt="..." />
+                        {/*button on image*/}
+                        <div className="centered">
+                            <Button variant="outline-light">Qui sommes-nous ?</Button>
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <h2>Qui sommes-nous ?</h2>
+                        <p>Nous sommes une équipe de barbiers et de coiffeurs passionnés, engagés à offrir les meilleurs services pour les hommes dans une atmosphère détendue et accueillante. Nous comprenons l'importance d'une apparence soignée et d'un style qui reflète la personnalité de chacun. C'est pourquoi nous mettons tout en œuvre pour comprendre les besoins de nos clients et leur offrir des résultats impeccables.</p>
+
+                        <p>Notre gamme de services inclut des coupes de cheveux sur mesure, la taille et le rasage de la barbe, la coloration, les soins du visage pour hommes et bien d'autres prestations, conçues spécifiquement pour répondre aux besoins de notre clientèle masculine. Nous utilisons des produits de qualité supérieure et des techniques à la pointe de la mode pour garantir que vous repartiez de notre salon avec un look qui vous met en valeur et vous donne confiance en vous.</p>
+
+                        <p>Chez Tina Coiffure, nous croyons que chaque homme mérite une expérience de salon digne de ce nom. Venez nous rendre visite et découvrez pourquoi notre réputation d'excellence et de service client irréprochable fait de nous le barber shop de choix pour les hommes soucieux de leur apparence et de leur bien-être. Nous vous attendons avec impatience pour vous offrir l'expérience ultime en matière de coiffure et de soins pour hommes.</p>
+                    </div>
+                </Row>
+            </Container>
+
+            {/* Nos produits*/}
+            <br/><br/>
+            <Container>
+                <h2 className={"text-center"}>Nos produits</h2>
+                <hr className="featurette-divider" />
+                <br/>
+                <Row>
+                    <div className="col-md-4">
+                        <Card className="custom-card bg-dark text-white">
+                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
+                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
+                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
+                            </Card.ImgOverlay>
+                        </Card>
+                    </div>
+                    <div className="col-md-4">
+                        <Card className="custom-card bg-dark text-white">
+                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
+                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
+                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
+                            </Card.ImgOverlay>
+                        </Card>
+                    </div>
+                    <div className="col-md-4">
+                        <Card className="custom-card bg-dark text-white">
+                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
+                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
+                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
+                            </Card.ImgOverlay>
+                        </Card>
+                    </div>
+                </Row>
+                <Row>
+                    <div className="col-md-4">
+                        <Card className="custom-card bg-dark text-white">
+                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
+                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
+                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
+                            </Card.ImgOverlay>
+                        </Card>
+                    </div>
+                    <div className="col-md-4">
+                        <Card className="custom-card bg-dark text-white">
+                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
+                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
+                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
+                            </Card.ImgOverlay>
+                        </Card>
+                    </div>
+                    <div className="col-md-4">
+                        <Card className="custom-card bg-dark text-white">
+                            <Card.Img src="/images/carousel/carousel_1.jpg" alt="Card image" className="custom-card-img" />
+                            <Card.ImgOverlay className="d-flex align-items-center custom-card-overlay">
+                                <Card.Title className="custom-card-title">Shampoing</Card.Title>
+                            </Card.ImgOverlay>
+                        </Card>
+                    </div>
+                </Row>
+            </Container>
+            {/*adresse - email - phone*/}
+            <br/><br/>
+            <Container>
+                <br />
+                <Row>
+                    <div className="col-md-6">
+                        <Row>
+                            <Col xs={4} md={2}><p><strong>ADRESSE</strong></p></Col>
+                            <Col xs={1} md={1}><p>:</p></Col>
+                            <Col xs={7} md={9}><a className={"text-dark text-decoration-none text-decoration-underline"} target="_blank" href="https://goo.gl/maps/jHu3JBzorevPJ9qf6">Bd Carl-Vogt 47, 1205 Genève</a></Col>
+                        </Row>
+                    </div>
+                </Row>
+                <Row>
+                    <div className="col-md-6">
+                        <Row>
+                            <Col xs={4} md={2}><p><strong>EMAIL</strong></p></Col>
+                            <Col xs={1} md={1}><p>:</p></Col>
+                            <Col xs={7} md={9}><a className={"text-dark text-decoration-none"} href="mailto:tina.coiffure@hotmail.com">tina.coiffure@hotmail.com</a></Col>
+                        </Row>
+                        <Row>
+                            <Col xs={4} md={2}><p><strong>PHONE</strong></p></Col>
+                            <Col xs={1} md={1}><p>:</p></Col>
+                            <Col xs={7} md={9}><a className={"text-dark text-decoration-none"} href="tel:+41223202222">+41 22 320 22 22</a></Col>
+                        </Row>
+                    </div>
+                </Row>
+                <br/><br/>
+            </Container>
+
+            {/*Footer*/}
             <Footer />
         </>
     );

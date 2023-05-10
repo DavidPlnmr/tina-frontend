@@ -1,0 +1,29 @@
+.custom-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-card-img {
+    transition: transform 0.3s ease;
+}
+
+.custom-card:hover .custom-card-img {
+    transform: scale(1.1);
+}
+
+.custom-card-overlay {
+    transition: background-color 0.3s ease;
+}
+
+.custom-card:hover .custom-card-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.custom-card-title {
+    background-color: red;
+    transition: color 0.3s ease;
+}
+
+.custom-card:hover .custom-card-title {
+    color: #f8c94c;
+}
