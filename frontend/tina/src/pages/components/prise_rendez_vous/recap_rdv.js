@@ -101,6 +101,15 @@ export default function RecapRdv() {
               <td>Coiffeur</td>
               <td>{coiffeurs.first_name + " " + coiffeurs.last_name}</td>
             </tr>
+            {cookies.role == "employee" && (
+            <tr>
+              <td>Client</td>
+              <select>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+              </select>
+            </tr>
+            )}
             <tr>
               <td>Date</td>
               <td>{myDate}</td>
