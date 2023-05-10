@@ -21,15 +21,27 @@ export default function Calendrier() {
 
 
   const handleClick = (time, date) => {
-    router.push({
-      pathname: "/components/prise_rendez_vous/recap_rdv",
-      query: {
-        time: time,
-        service: param.service,
-        employee: param.employee,
-        date: date,
-      },
-    });
+    if (cookies.role === "customer") {
+      router.push({
+        pathname: "/components/prise_rendez_vous/recap_rdv",
+        query: {
+          time: time,
+          service: param.service,
+          employee: param.employee,
+          date: date,
+        },
+      });
+    } else {
+      router.push({
+        pathname: "/components/prise_rendez_vous/choix_client",
+        query: {
+          time: time,
+          service: param.service,
+          employee: param.employee,
+          date: date,
+        },
+      });
+    }
   };
 
   useEffect(() => {
