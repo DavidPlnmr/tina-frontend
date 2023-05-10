@@ -19,6 +19,7 @@ export default function RecapRdv() {
     employee: null,
     service: null,
     customer: null,
+    informations: null,
   });
   const [myDate, setMyDate] = useState();
   const router = useRouter();
@@ -87,6 +88,7 @@ export default function RecapRdv() {
       });
     }
     else if (cookies.role === "employee" && param.client == "") {
+      console.log(description);
       setAppointment({
         ...appointment,
         date: formattedDate,
@@ -103,6 +105,7 @@ export default function RecapRdv() {
     evt.preventDefault();
 
     console.log(appointment.date);
+    console.log(appointment);
     axios
       .post("http://127.0.0.1:8000/api/appointments/create", appointment, {
         headers: {
