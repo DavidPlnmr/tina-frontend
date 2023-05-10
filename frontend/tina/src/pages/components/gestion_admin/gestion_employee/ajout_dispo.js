@@ -8,6 +8,7 @@ import { parseCookies } from 'nookies';
 import { set } from 'date-fns';
 import { useRouter } from 'next/router';
 import { el } from 'date-fns/locale';
+import Link from 'next/link';
 
 export default function AjoutDispo() {
 
@@ -121,6 +122,7 @@ export default function AjoutDispo() {
                     <Button variant="primary" type="submit" className='w-100 border-0"' style={{ backgroundColor: "black", border: 0 }}>
                       Ajouter 
                     </Button>
+                    <Link href='./ajout_multiple_dispo' class="nav-link">Vous voulez en ajouter plusieurs ? cliquez ici !</Link>
                   </Form>
                 </Card.Body>
               </Card>

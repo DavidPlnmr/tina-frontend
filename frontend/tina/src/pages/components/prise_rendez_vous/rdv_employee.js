@@ -45,7 +45,7 @@ export default function Rdv_employee() {
                     <div class="card">
                         <div class="card-body justify-content-center">
                             <ul></ul>
-                            <h5 class="card-title text-center font-weight-bold">{e.first_name} {e.last_name}</h5>
+                            <h5 class="card-title text-center font-weight-bold">{e.first_name} {e.last_name} {e.username}</h5>
                             <br></br>
                             <div class="text-center">
                                 <button 

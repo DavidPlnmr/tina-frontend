@@ -76,22 +76,12 @@ export default function CalendrierClient() {
                     let myTitle = "";
                     const start = new Date(`${appointment.date}T${appointment.time}`);
                     const end = addMinutes(start, service.duration.slice(3, 5));
-                    let color = "#007bff";
-
                     if (cookies.role === "customer") {
-                      if (appointment.status === "pending") {
-                        myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} (cliquez pour gérer le rendez-vous)/grey`;
-                      }
-                      else if (appointment.status === "accepted") {
-                        myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} (cliquez pour gérer le rendez-vous)/#16B84E`;
-                      }
+                        myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} (cliquez pour gérer le rendez-vous)`;
+                      
                     } else if (cookies.role === "employee") {
-                      if (appointment.status === "pending") {
-                        myTitle = `Service : ${service.name} avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous) EN ATTENTE/grey`;
-                      }
-                      else if (appointment.status === "accepted") {
-                        myTitle = `Service : ${service.name} avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous) ACCEPTÉ/#16B84E`;
-                      }
+                        myTitle = `Service : ${service.name} avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
+                      
                     } 
                   
                   // Create event object with service info
@@ -168,10 +158,8 @@ export default function CalendrierClient() {
           plugins: [listPlugin],
           locale: "fr", // définit la langue du calendrier en français
           eventContent: function (info) {
-            console.log(info.event.title);
             const available = info.event.extendedProps.available;
-            const backgroundColorPerso = info.event.title.split("/")[1];
-            const backgroundColor = available ? backgroundColorPerso : backgroundColorPerso; // Détermine la couleur de fond en fonction de la disponibilité
+            const backgroundColor = available ? "#1338BE" : "#1338BE" ; // Détermine la couleur de fond en fonction de la disponibilité
             const title = info.event.title.split("/")[0];
             const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
             return {
