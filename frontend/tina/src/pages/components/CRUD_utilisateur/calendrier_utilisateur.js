@@ -16,6 +16,8 @@ export default function CalendrierClient() {
     const event = useRef(false);
     const cookies = parseCookies();
     const router = useRouter();
+    let customer = null;
+    let information = null;
 
     const handleClick = (id) => {
       router.push({
@@ -37,6 +39,7 @@ export default function CalendrierClient() {
               }
             );
             const appointments = response.data;
+            console.log(appointments);
       
             if (appointments.length > 0) {
               const newEvents = await Promise.all(
@@ -61,18 +64,24 @@ export default function CalendrierClient() {
                       },
                     }
                   );
-
-                  const response4 = await axios.get(
-                    "http://127.0.0.1:8000/api/customers/" + appointment.customer + "/",
-                    {
-                      headers: {
-                        Authorization: "Token " + cookies.csrftoken,
-                      },
+                    console.log(appointment.customer);
+                    let response4 = null;
+                    if (appointment.customer != null) {
+                       response4 = await axios.get(
+                        "http://127.0.0.1:8000/api/customers/" + appointment.customer + "/",
+                        {
+                          headers: {
+                            Authorization: "Token " + cookies.csrftoken,
+                          },
+                        }
+                      );
+                      customer = response4.data;
+                    } else {
+                       response4 = appointment.informations;
+                       information = response4;
                     }
-                  );
 
                     const employee = response3.data;
-                    const customer = response4.data;
                     let myTitle = "";
                     const start = new Date(`${appointment.date}T${appointment.time}`);
                     const end = addMinutes(start, service.duration.slice(3, 5));
@@ -80,7 +89,11 @@ export default function CalendrierClient() {
                         myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} (cliquez pour gérer le rendez-vous)`;
                       
                     } else if (cookies.role === "employee") {
+                      if (appointment.customer != null) {
                         myTitle = `Service : ${service.name} avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
+                      } else {
+                        myTitle = `Service : ${service.name} / informations : ${information} (cliquez pour gérer le rendez-vous)`;
+                      }
                       
                     } 
                   
@@ -160,7 +173,7 @@ export default function CalendrierClient() {
           eventContent: function (info) {
             const available = info.event.extendedProps.available;
             const backgroundColor = available ? "#1338BE" : "#1338BE" ; // Détermine la couleur de fond en fonction de la disponibilité
-            const title = info.event.title.split("/")[0];
+            const title = info.event.title;
             const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
             return {
               html: `<div style="text-align: center; background-color: ${backgroundColor}; color: white; font-size:12px;"><div >${title}</div></b></div>`,
