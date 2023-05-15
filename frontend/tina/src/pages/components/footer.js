@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       className="bg-dark text-light py-3"
-      style={{ bottom: 0, left: 0, width: "100%" }}
+      style={{ bottom: 0, left: 0, width: "100%", marginTop: "380px" }}
     >
       <Container>
         <Row className="align-items-center">
