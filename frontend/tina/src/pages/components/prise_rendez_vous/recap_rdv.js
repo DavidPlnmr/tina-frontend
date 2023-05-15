@@ -4,18 +4,22 @@ import Header from "../header";
 import { useRouter, Router } from "next/router";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { el } from "date-fns/locale";
 
 export default function RecapRdv() {
   const [services, setServices] = useState({});
   const [coiffeurs, setCoiffeurs] = useState({});
   const [heureDepart, setHeureDepart] = useState();
   const [heureFin, setHeureFin] = useState();
+  const [clients, setClients] = useState([]);
+  const [description, setDescription] = useState("");
   const [appointment, setAppointment] = useState({
     date: null,
     time: null,
     employee: null,
     service: null,
     customer: null,
+    informations: null,
   });
   const [myDate, setMyDate] = useState();
   const router = useRouter();
@@ -23,10 +27,18 @@ export default function RecapRdv() {
   const cookies = parseCookies();
 
   useEffect(() => {
-    console.log(param);
     setServices(JSON.parse(param.service));
     setCoiffeurs(JSON.parse(param.employee));
     setMyDate(param.date);
+    if (cookies.role === "employee") {
+      console.log(param.client);
+      if (param.client != "") {
+        setClients(JSON.parse(param.client));
+      }
+      else {
+        setDescription(param.description);
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -56,6 +68,8 @@ export default function RecapRdv() {
       const splitDate = myDate.split("/");
       const formattedDate =
         splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
+        if (cookies.role === "customer") {
+
       setAppointment({
         ...appointment,
         date: formattedDate,
@@ -63,6 +77,27 @@ export default function RecapRdv() {
         employee: coiffeurs.id,
         service: services.id,
       });
+    } else if (cookies.role === "employee" && param.client != "") {
+      setAppointment({
+        ...appointment,
+        date: formattedDate,
+        time: heureDepart,
+        employee: coiffeurs.id,
+        service: services.id,
+        customer: clients.id,
+      });
+    }
+    else if (cookies.role === "employee" && param.client == "") {
+      console.log(description);
+      setAppointment({
+        ...appointment,
+        date: formattedDate,
+        time: heureDepart,
+        employee: coiffeurs.id,
+        service: services.id,
+        informations: description,
+      });
+    }
     }
   }, [services]);
 
@@ -70,6 +105,7 @@ export default function RecapRdv() {
     evt.preventDefault();
 
     console.log(appointment.date);
+    console.log(appointment);
     axios
       .post("http://127.0.0.1:8000/api/appointments/create", appointment, {
         headers: {
@@ -89,7 +125,7 @@ export default function RecapRdv() {
   return (
     <>
       <Header />
-      <div className="container " style={{ marginTop: "270px" }}>
+      <div className="container " style={{ marginTop: "10%" }}>
         <h2>Récapitulatif du rendez-vous : </h2>
         <table class="table">
           <tbody>
@@ -101,6 +137,20 @@ export default function RecapRdv() {
               <td>Coiffeur</td>
               <td>{coiffeurs.first_name + " " + coiffeurs.last_name}</td>
             </tr>
+            {cookies.role === "employee" && clients != "" && (
+              <tr>
+                <td>Client</td>
+                <td>{clients.first_name + " " + clients.last_name}</td>
+              </tr>
+            )}
+
+            {cookies.role === "employee" && description != "" &&(
+              <tr>
+                <td>Description</td>
+                <td>{description}</td>
+              </tr>
+            )
+            }
             <tr>
               <td>Date</td>
               <td>{myDate}</td>

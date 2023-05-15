@@ -83,13 +83,6 @@ export default function Header() {
                     Prendre rendez-vous
                   </Link>
                 </li>
-                {token && cookies.role === "admin" && (
-                  <li class="nav-item">
-                    <Link href="/components/gestion_admin/dash_admin" class="nav-link">
-                      Admin
-                    </Link>
-                  </li>
-                )}
                 <li class="nav-item">
                   <Link href="/" class="nav-link">
                     Qui sommes nous ?

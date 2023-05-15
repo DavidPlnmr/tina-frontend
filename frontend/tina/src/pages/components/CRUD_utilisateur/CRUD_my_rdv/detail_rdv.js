@@ -167,54 +167,11 @@ export default function DetailRdv() {
       }
     } 
   };
-
-  const handleAccept = async (evt) => {
-    evt.preventDefault();
-    const result = confirm("Êtes-vous sûr de vouloir accepter le rendez-vous ?");
-    if (result === true) {
-      const response = await fetch("http://127.0.0.1:8000/api/appointments/" + resQuery.id + "/accept", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Token " + cookies.csrftoken,
-        }
-      });
-
-      if (response.ok) {
-        alert("Le rendez-vous a bien été accepté");
-        router.push("/components/CRUD_utilisateur/calendrier_utilisateur");
-      }
-  } else {
-    alert("Une erreur est survenue, le rendez-vous n'a pas été accepté. Veuillez réessayer.");
-  } 
-};
-
-  const handleRefuse = async (evt) => {
-    evt.preventDefault();
-    const result = confirm("Êtes-vous sûr de vouloir refuser le rendez-vous ?");
-    if (result === true) {
-      const response = await fetch("http://127.0.0.1:8000/api/appointments/" + resQuery.id + "/cancel", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Token " + cookies.csrftoken,
-        }
-      });
-
-      if (response.ok) {
-        alert("Le rendez-vous a bien été refusé");
-        router.push("/components/CRUD_utilisateur/calendrier_utilisateur");
-      }
-  } else {
-    alert("Une erreur est survenue, le rendez-vous n'a pas été refusé. Veuillez réessayer.");
-  }
-};
-
   
   return (
     <>
         <Header />
-        <div className="container " style={{ marginTop: "270px" }}>
+        <div className="container " style={{ marginTop: "10%" }}>
         <h2>Récapitulatif du rendez-vous : </h2>
         <table class="table">
           <tbody>
@@ -246,7 +203,6 @@ export default function DetailRdv() {
               <td>{heureFin}</td>
             </tr>
             <br />
-            {cookies.role == "customer" ? (
             <button
               type="button"
               class="btn btn-primary no-border"
@@ -255,27 +211,6 @@ export default function DetailRdv() {
             >
               Annuler le rendez-vous
             </button>
-            ) : (
-              <button
-              type="button"
-              class="btn btn-primary no-border"
-              style={{ backgroundColor: "#16B84E", borderColor: "#16B84E" }}
-              onClick={handleAccept}
-            >
-              Accepter le rendez-vous
-            </button>
-            )}
-            &nbsp;&nbsp;
-            {cookies.role == "employee" &&(
-              <button
-              type="button"
-              class="btn btn-primary no-border"
-              style={{ backgroundColor: "#C21A09", borderColor: "#C21A09" }}
-              onClick={handleRefuse}
-            >
-              Refuser le rendez-vous
-            </button>
-            )}
           </tbody>
         </table>
       </div>
