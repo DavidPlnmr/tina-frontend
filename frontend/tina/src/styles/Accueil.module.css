@@ -2,6 +2,65 @@
     background-color: blue;
 }
 
+.carouselCaption {
+    width: 70%;
+    right: 15%;
+}
+
+
+.carouselTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.carouselText {
+    font-size: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.carouselButton {
+    font-size: 0.8rem;
+    padding: 10px 20px;
+}
+
+.carouselButton:hover {
+    background-color: white;
+    color: black;
+}
+
+@media (min-width: 768px) {
+    /* pour les écrans moyens et grands */
+    .carouselTitle {
+        font-size: 2.5rem;
+    }
+
+    .carouselText {
+        font-size: 1.5rem;
+    }
+
+    .carouselButton {
+        font-size: 1.2rem;
+    }
+}
+
+
+
+
+.carouselCaptionCenter {
+    position: absolute;
+    right: 50%;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+
 .secondBackgroundColorGradient {
     background-color: #F5F5F5;
 }

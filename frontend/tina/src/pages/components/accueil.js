@@ -18,17 +18,37 @@ const products = [
 export default function Accueil() {
     return (
         <>
-
-
-            <video autoPlay loop muted className={"d-block w-100 position-relative videoFilter"}>
-                <source src="/images/carousel/tina_video.mp4" type="video/mp4" />
-            </video>
-
-
+            {/* Carousel avec 3 images*/}
+            <Carousel fade>
+                <Carousel.Item>
+                    <img src="/images/carousel/carousel_4.jpg" className="d-flex w-100" alt="..." />
+                    <Carousel.Caption className={styles.carouselCaption}>                        <h3 className={styles.carouselTitle}>Un style unique</h3>
+                        <p className={styles.carouselText}>Des coiffures sur mesure pour refléter votre personnalité</p>
+                        <Button variant="outline-light" className={styles.carouselButton}>Prendre rendez-vous</Button>
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <img src="/images/carousel/carousel_5.jpg" className="d-block w-100" alt="..." />
+                    <Carousel.Caption className={styles.carouselCaption}>
+                        <h3 className={styles.carouselTitle}>Le confort avant tout</h3>
+                        <p className={styles.carouselText}>Un espace détente pour une expérience agréable</p>
+                        <Button variant="outline-light" className={styles.carouselButton}>Prendre rendez-vous</Button>
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <img src="/images/carousel/carousel_6.jpg" className="d-block w-100" alt="..." />
+                    <Carousel.Caption className={styles.carouselCaption}>
+                        <h3 className={styles.carouselTitle}>Des professionnels à votre écoute</h3>
+                        <p className={styles.carouselText}>Une équipe dédiée à vos besoins en coiffure</p>
+                        <Button variant="outline-light" className={styles.carouselButton}>Prendre rendez-vous</Button>
+                    </Carousel.Caption>
+                </Carousel.Item>
+            </Carousel>
 
 
             {/* Nos services */}
-            <br/>
+            <br/><br/>
+
             <div className={styles.secondBackgroundColor}>
                 <Container>
                     <Fade triggerOnce direction="up">
@@ -68,7 +88,7 @@ export default function Accueil() {
                 </Container>
             </div>
 
-            <br/><br/>
+
 
             {/* Qui sommes-nous ?*/}
             <div class="bg-white py-5">
@@ -95,7 +115,7 @@ export default function Accueil() {
                             <div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
                                 <h2 class="font-weight-light">Une tradition revisitée</h2>
                                 <p class="font-italic text-muted mb-4">Chez Tina Coiffure, nous honorons la tradition du barber shop tout en l'adaptant aux exigences modernes. Nous combinons l'artisanat classique de la coiffure masculine avec les dernières tendances et techniques. Que vous recherchiez une coupe de cheveux classique, une taille de barbe précise ou un style plus audacieux, nous avons les compétences et l'expérience nécessaires pour répondre à vos besoins.</p>
-                                <a href="https://goo.gl/maps/jHu3JBzorevPJ9qf6" target="_blank" className="btn btn-light px-5 rounded-pill shadow-sm">Contactez-nous</a>
+                                <a href="https://goo.gl/maps/jHu3JBzorevPJ9qf6" target="_blank" className="btn btn-light px-5 rounded-pill shadow-sm">Prendre rendez-vous</a>
                             </div>
                         </div>
                     </div>
