@@ -3,6 +3,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Link from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+
 
 export default function Header() {
   const [user, setUser] = useState({
@@ -62,80 +64,29 @@ export default function Header() {
         `}
       </style>
       <header>
-        <nav class="navbar navbar-expand-lg navbar-dark">
-          <div class="container-fluid">
-            <div class="collapse navbar-collapse ">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li>
-                  <h2 class="navbar-header">
-                    <Link href="/" class="nav-link">Tina Coiffure</Link>
-                  </h2>
-                </li>
-              </ul>
-            </div>
-            <div class="collapse navbar-collapse justify-content-end">
-              <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <Link
-                    href="/components/prise_rendez_vous/serviceRDV"
-                    class="nav-link"
-                  >
-                    Prendre rendez-vous
-                  </Link>
-                </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link">
-                    Qui sommes nous ?
-                  </Link>
-                </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link">
-                    Produits
-                  </Link>
-                </li>
-                <li class="nav-item">
-                  {token ? (
-                    <Dropdown class="nav-link" style={{ cursor: "pointer" }}>
-                      <Dropdown.Toggle
-                        as="span"
-                        variant="success"
-                        className="nav-link"
-                      >
-                        {user.username}
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        <Dropdown.Item>
-                        <Link href="/components/CRUD_utilisateur/profil_utilisateur" style={{textDecoration: "none", color:"black"}}>Mon profil</Link>
-                        </Dropdown.Item>
-                        <Dropdown.Item >
-                        <Link href="/components/CRUD_utilisateur/calendrier_utilisateur" style={{textDecoration: "none", color:"black"}}>Mes rendez-vous</Link>
-                        </Dropdown.Item>
-                        {token && cookies.role === "admin" && (
-                          <Dropdown.Item>
-                          <Link href="/" onClick={handleLogout} style={{textDecoration: "none", color:"black"}}>Ajout de disponibilités</Link>
-                          </Dropdown.Item>
-                          )}
-                        <Dropdown.Item>
-                        <Link href="/" onClick={handleLogout} style={{textDecoration: "none", color:"black"}}>Se déconnecter</Link>
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  ) : (
-                    <>
-                      <Link
-                        href="/components/identification/connexion"
-                        class="nav-link"
-                      >
-                        S'identifier
-                      </Link>
-                    </>
+        <Navbar collapseOnSelect expand="lg" variant="dark">
+          <Navbar.Brand href="/" style={{marginLeft: "2%"}}><h4>Tina Coiffure</h4></Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="ms-auto" style={{marginRight: "2%"}}>
+              <Nav.Link href="/components/prise_rendez_vous/serviceRDV">Prendre rendez-vous</Nav.Link>
+              <Nav.Link href="/">Qui sommes nous ?</Nav.Link>
+              <Nav.Link href="/">Produits</Nav.Link>
+              {token ? (
+                <NavDropdown title={user.username} id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">Mon profil</NavDropdown.Item>
+                  <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">Mes rendez-vous</NavDropdown.Item>
+                  {token && cookies.role === "admin" && (
+                    <NavDropdown.Item onClick={handleLogout}>Ajout de disponibilités</NavDropdown.Item>
                   )}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+                  <NavDropdown.Item onClick={handleLogout}>Se déconnecter</NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <Nav.Link href="/components/identification/connexion">S'identifier</Nav.Link>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
       </header>
     </>
   );
