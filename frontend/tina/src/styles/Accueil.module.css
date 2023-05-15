@@ -1,0 +1,26 @@
+.mask {
+    background-color: blue;
+}
+
+.secondBackgroundColorGradient {
+    background-color: #F5F5F5;
+}
+
+.thirdBackgroundColorGradient {
+    background-color: #cecece;
+}
+
+.fourthBackgroundColorGradient {
+    background-color: #775B59;
+}
+
+.servicecard {
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.servicecard:hover {
+    transform: scale(1.05);
+    background-color: #f8f9fa; /* Cette couleur est un exemple, vous pouvez utiliser la couleur que vous préférez */
+}
+
+
