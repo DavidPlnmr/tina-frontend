@@ -24,6 +24,7 @@ export default function Home() {
         <Header />
         <Accueil />
       </main>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </>
   );
 }

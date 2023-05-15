@@ -150,6 +150,7 @@ export default function CalendrierClient() {
       const newCalendar = new Calendar(calendarEl.current, {
         initialView: "listWeek",
         firstDay: 1,
+        height: 'auto',
         allDaySlot: false,
         slotDuration: "00:15:00",
         slotEventOverlap: false,
@@ -176,6 +177,9 @@ export default function CalendrierClient() {
         },
         plugins: [listPlugin],
         locale: "fr", // définit la langue du calendrier en français
+        buttonText: {
+          today: 'aujourd\'hui'
+        },
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
           const backgroundColor = available ? "#1338BE" : "#1338BE"; // Détermine la couleur de fond en fonction de la disponibilité
@@ -198,12 +202,19 @@ export default function CalendrierClient() {
 
   return (
     <>
+    <style>
+      {`@media (max-width: 600px) {
+        .fc-today-button {
+          display: none;
+        }
+      }`}
+    </style>
       <Header />
       <div className="container">
         <div
           ref={calendarEl}
           className="mx-auto"
-          style={{ marginTop: "100px", marginBottom: "100px" }}
+          style={{ marginTop: "5%", marginBottom: "510px" }}
         ></div>
       </div>
       <Footer />
