@@ -125,7 +125,7 @@ export default function RecapRdv() {
   return (
     <>
       <Header />
-      <div className="container " style={{ marginTop: "270px" }}>
+      <div className="container " style={{ marginTop: "10%" }}>
         <h2>Récapitulatif du rendez-vous : </h2>
         <table class="table">
           <tbody>
