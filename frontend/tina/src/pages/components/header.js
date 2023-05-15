@@ -71,7 +71,6 @@ export default function Header() {
             <Nav className="ms-auto" style={{marginRight: "2%"}}>
               <Nav.Link href="/components/prise_rendez_vous/serviceRDV">Prendre rendez-vous</Nav.Link>
               <Nav.Link href="/">Qui sommes nous ?</Nav.Link>
-              <Nav.Link href="/">Produits</Nav.Link>
               {token ? (
                 <NavDropdown title={user.username} id="collasible-nav-dropdown">
                   <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">Mon profil</NavDropdown.Item>

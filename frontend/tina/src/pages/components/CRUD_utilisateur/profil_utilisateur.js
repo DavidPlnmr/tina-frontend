@@ -3,11 +3,14 @@ import Header from '../header';
 import axios from 'axios';
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
 import { useRouter } from 'next/router';
+import { set } from 'date-fns';
 
 export default function ProfilUtilisateurs() {
   const [customer, setCustomer] = useState({ username: "", email: "", first_name: "", last_name: "" }); 
   const cookies = parseCookies();
   const router = useRouter();
+  const [token, setToken] = useState(null);
+  const [role, setRole] = useState(null);
 
   const fetchCusto = async () => {
     try {
@@ -42,6 +45,8 @@ export default function ProfilUtilisateurs() {
   };
 
 useEffect(() => {
+  setToken(cookies.csrftoken);
+  setRole(cookies.role);
   if (cookies.role === "customer") {
     fetchCusto();
   } else if (cookies.role === "employee" || cookies.role === "admin") {
@@ -248,7 +253,7 @@ useEffect(() => {
                   <label htmlFor="prenom" className="form-label">Prénom :</label>
                   <input type="text" data-id="last_name" className="form-control" id="prenom" value={customer.last_name} onChange={handleChange} required />
                 </div>
-                {cookies.role === "customer" && (
+                {role === "customer" && (
                 <div className="mb-3">
                   <label htmlFor="tel_number" className="form-label">Numéro de téléphone :</label>
                   <input type="text" data-id="tel_number" className="form-control" id="tel_number" value={customer.tel_number} onChange={handleChange} required />
