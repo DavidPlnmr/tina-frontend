@@ -21,14 +21,14 @@ export default function Accueil() {
             {/* Carousel avec 3 images*/}
             <Carousel fade>
                 <Carousel.Item>
-                    <img src="/images/carousel/carousel_4.jpg" className="d-flex w-100" alt="..." />
+                    <img src="/images/carousel/carousel_1.jpg" className="d-flex w-100" alt="..." />
                     <Carousel.Caption className={styles.carouselCaption}>                        <h3 className={styles.carouselTitle}>Un style unique</h3>
                         <p className={styles.carouselText}>Des coiffures sur mesure pour refléter votre personnalité</p>
                         <Button variant="outline-light" className={styles.carouselButton}>Prendre rendez-vous</Button>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src="/images/carousel/carousel_5.jpg" className="d-block w-100" alt="..." />
+                    <img src="/images/carousel/carousel_2.jpg" className="d-block w-100" alt="..." />
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Le confort avant tout</h3>
                         <p className={styles.carouselText}>Un espace détente pour une expérience agréable</p>
@@ -36,7 +36,7 @@ export default function Accueil() {
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src="/images/carousel/carousel_6.jpg" className="d-block w-100" alt="..." />
+                    <img src="/images/carousel/carousel_3.jpg" className="d-block w-100" alt="..." />
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Des professionnels à votre écoute</h3>
                         <p className={styles.carouselText}>Une équipe dédiée à vos besoins en coiffure</p>
