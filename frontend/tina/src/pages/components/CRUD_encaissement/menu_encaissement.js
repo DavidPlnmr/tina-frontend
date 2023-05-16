@@ -7,7 +7,7 @@ export default function Menu_encaissement() {
     <>
         <Header/>
         <Encaissement/>
-
+        <Footer/>
     </>
   );
 }

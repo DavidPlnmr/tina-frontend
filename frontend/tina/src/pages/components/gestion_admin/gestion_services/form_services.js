@@ -103,7 +103,7 @@ export default function Formulaire_services() {
     const errorMessage = (newName) => {
         console.log("errorMessage");
         const serviceError = document.getElementById("service_error");
-        if (serviceError) {
+        if (!success) {
             serviceError.textContent = newName;
         }
           
@@ -122,8 +122,8 @@ export default function Formulaire_services() {
                 setSuccess(true);
             })
             .catch((error) => {
-                errorMessage(s.name);
                 setSuccess(false);
+                errorMessage(s.name);
                 console.log(error);
             });
 

@@ -4,7 +4,7 @@ import { parseCookies } from 'nookies';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { format, set } from 'date-fns';
+import { format, parse, set } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { refineEventDef } from '@fullcalendar/core/internal';
 
@@ -31,6 +31,7 @@ export default function Encaissement() {
     //variables pour la gestion des encaissements
     //Encaissements
     const [encaissements, setEncaissements] = useState([]);
+    const [encaissementsAffichage, setEncaissementsAffichage] = useState([]);
     //Service
     const [services, setServices] = useState([]);
     //Employee
@@ -45,6 +46,20 @@ export default function Encaissement() {
 
     //total amount
     const [totalAmount, setTotalAmount] = useState(0);
+
+    // Const pour la recherche et le tri
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [sortBy, setSortBy] = useState("");
+
+    // Handle search and sort functions for encaissements
+    const handleSearch = event => {
+        setSearchTerm(event.target.value);
+    };
+    const handleSort = (event) => {
+        setSortBy(event.target.value);
+    };
+
 
     //handleClick pour les boutons
     const handleClickModify = (evt) => {
@@ -124,6 +139,7 @@ export default function Encaissement() {
                 console.log(error);
             });
     };
+
     //Récupération des services
     const fetchServices = () => {
         const cookies = parseCookies();
@@ -140,6 +156,7 @@ export default function Encaissement() {
                 console.log(error);
             });
     };
+
     //Récupération des employees
     const fetchEmployees = () => {
         const cookies = parseCookies();
@@ -189,67 +206,66 @@ export default function Encaissement() {
         return newTime[0] + "h" + newTime[1];
     };
 
-    //Affichage des encaissements
-
-    const loadEncaissements = () => {
-        const lstComponentsEncaissements = [];
-        let encaissement = {
-            id: 0,
-            employee: 0,
-            service: 0,
-            date: "",
-            time: "",
-            amount: 0
-        };
-        let i = encaissements.length;
+    //Formatage des encaissements pour l'affichage
+    const formatEncaissements = (encaissements) => {
+        let newEncaissements = [];
         encaissements.map((e) => {
-            encaissement =
-            {
+            let newEncaissement = {
                 id: e.id,
-                employee: getEmployeeName(e.employee),
-                service: getServiceName(e.service),
                 date: formatDate(e.date),
                 time: formatTime(e.time),
-                amount: e.amount
-            }
-                ;
-            lstComponentsEncaissements.push(
-                <tr>
-                    <th scope="row">{encaissement.id}</th>
-                    <td>{encaissement.employee}</td>
-                    <td>{encaissement.service}</td>
-                    <td>{encaissement.date}</td>
-                    <td>{encaissement.time}</td>
-                    <td>{encaissement.amount}</td>
-                    <td>
-                        <Button
-                            id={encaissement.id}
-                            className={btnChoose}
-                            onClick={handleChoose}
-                            disabled={modeModify === '' ? true : false}
-                        >Choisir</Button>
-                    </td>
-                </tr>
-
-            );
-            i--;
+                service: getServiceName(e.service),
+                employee: getEmployeeName(e.employee),
+                amount: e.amount,
+            };
+            newEncaissements.push(newEncaissement);
         });
-        return lstComponentsEncaissements;
+        return newEncaissements;
     };
+
+    //Affichage des encaissements
     useEffect(() => {
         let total = 0;
         encaissements.map((e) => {
             total += parseInt(e.amount);
         });
         setTotalAmount(total);
+        setEncaissementsAffichage(formatEncaissements(encaissements));
+        setSearchResults(formatEncaissements(encaissements));
     }, [encaissements]);
 
     //UseEffect pour la récupération
     useEffect(() => {
-        fetchEncaissements();
         fetchServices();
         fetchEmployees();
+        fetchEncaissements();
     }, [refresh]);
+
+    //TODO : completer après avoir ajouter la création d'encaissement
+    useEffect(() => {
+        //Filter by searchTerm
+        let results = encaissementsAffichage.filter(e =>
+            e.employee.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.service.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        console.log("filter", results);
+
+        //Order by sort
+        results.sort((a, b) => {
+            if (sortBy === 'date') {
+                return a.date.localeCompare(b.date);
+            } else if (sortBy === 'time') {
+                return a.time.localeCompare(b.time);
+            } else if (sortBy === 'service') {
+                return a.service.localeCompare(b.service);
+            } else if (sortBy === 'employee') {
+                return a.employee.localeCompare(b.employee);
+            } else if (sortBy === 'amount') {
+                return a.amount - b.amount;
+            }
+        });
+        setSearchResults(results);
+    }, [searchTerm,sortBy]);
 
     //UseEffect pour la gestion des boutons
     useEffect(() => {
@@ -297,7 +313,7 @@ export default function Encaissement() {
 
 
             {/* Nav Bar pour les encaissements */}
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#b8aaa0" }}>
+            <div className="d-flex flex-column justify-content-start align-items-center" style={{backgroundColor: "#b8aaa0" }}>
                 <ul></ul>
 
                 {/* Notification de suppression */}
@@ -306,8 +322,8 @@ export default function Encaissement() {
                     <p>L'encaissement <a id='service_error'></a> a été supprimé</p>
 
                 </div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{backgroundColor: "#b8aaa0" }}>
+                    <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)",height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
                         <div class="collapse navbar-collapse" id="text">
                             <a class="navbar-brand">Gestion des encaissements</a>
                             <ul class="navbar-nav mx-auto my-auto mb-5 ms-lg-3"></ul>
@@ -329,8 +345,29 @@ export default function Encaissement() {
                         </div>
                     </div>
                 </nav>
+
+                {/* Barre de recherche */}
+                <nav class="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
+                    <form class="container" role="search">
+                        <div class="row mx-1">
+                            <select class="form-select" value={sortBy} aria-label="Default select example" data-id="filter" onChange={handleSort}>
+                                <option key='0' value='0'>Filtrer...</option>
+                                <option key='1' value='id'>ID</option>
+                                <option key='2' value='employee'>Employé</option>
+                                <option key='3' value='service'>Service</option>
+                                <option key='4' value='date'>Date</option>
+                                <option key='5' value='time'>Heure</option>
+                                <option key='6' value='amount'>Montant</option>
+                            </select>
+                        </div>
+                        <div class="row mx-1" >
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Rechercher" onChange={handleSearch}></input>
+                        </div>
+                    </form>
+                </nav>
+
                 {/* Total des encaissements */}
-                <table class="table table-striped mx-auto" style={{ backgroundColor: "#FFFFFF" }}>
+                <table class="table table-striped text-center mx-auto rounded" style={{boxShadow: "0 2px 4px rgba(0,0,0,.2)", width: "100vh", backgroundColor: "#FFFFFF" }}>
                     <thead>
                         <tr>
                             <th scope="col">Nombre d'encaissements</th>
@@ -344,6 +381,7 @@ export default function Encaissement() {
                         </tr>
                     </tbody>
                 </table>
+
                 {/* Liste des encaissements */}
                 <table class="table table-striped mx-auto" style={{ backgroundColor: "#FFFFFF" }}>
                     <thead>
@@ -357,10 +395,28 @@ export default function Encaissement() {
                         </tr>
                     </thead>
                     <tbody>
-                        {loadEncaissements()}
+                        {searchResults.map((encaissement) => (
+                            <tr key={encaissement.id}>
+                                <th scope="row">{encaissement.id}</th>
+                                <td>{encaissement.employee}</td>
+                                <td>{encaissement.service}</td>
+                                <td>{encaissement.date}</td>
+                                <td>{encaissement.time}</td>
+                                <td>{encaissement.amount}</td>
+                                <td>
+                                    <Button
+                                        id={encaissement.id}
+                                        className={btnChoose}
+                                        onClick={handleChoose}
+                                        disabled={modeModify === '' ? true : false}
+                                    >Choisir</Button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
+            <ul class="d-flex my-4"></ul>
         </>
     );
 }
