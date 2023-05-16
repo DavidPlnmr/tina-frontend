@@ -5,20 +5,50 @@ import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
-
-export default function Header() {
+/**
+ * Composant permettant de créer le header de l'application
+ * @function Header
+ * @returns {JSX.Element}
+ */
+function Header() {
+  /**
+   * @constant Header-user
+   * @default
+   * @description Les informations de l'utilisateur connecté.
+   */
   const [user, setUser] = useState({
     email: "",
     username: "",
     last_name: "",
     first_name: "",
   });
+
+  /**
+   * @constant Header-token
+   * @default null
+   * @description Le token de l'utilisateur connecté.
+   */
   const [token, setToken] = useState(null);
+
+  /**
+   * @constant Header-router
+   * @description Objet router pour la navigation.
+   */
   const router = useRouter();
+
+  /**
+   * @constant Header-cookies
+   * @type {object}
+   * @description Les cookies de l'utilisateur.
+   */
   const cookies = parseCookies();
 
+  /**
+   * useEffect pour définir le token et les informations de l'utilisateur.
+   * @function Header-useEffect
+   * @returns {void}
+   */
   useEffect(() => {
-    const cookies = parseCookies();
     setToken(cookies.csrftoken);
 
     if (token) {
@@ -31,6 +61,11 @@ export default function Header() {
     }
   }, [token]);
 
+  /**
+   * Gère la déconnexion de l'utilisateur.
+   * @function Header-handleLogout
+   * @returns {void}
+   */
   const handleLogout = () => {
     Promise.all([
       destroyCookie(null, "id"),
@@ -90,3 +125,5 @@ export default function Header() {
     </>
   );
 }
+
+export default Header;
