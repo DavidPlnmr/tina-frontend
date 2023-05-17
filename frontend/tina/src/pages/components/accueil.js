@@ -50,7 +50,7 @@ export default function Accueil() {
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Un style unique</h3>
                         <p className={styles.carouselText}>Des coiffures sur mesure pour refléter votre personnalité</p>
-                        <Button variant="outline-light" className={styles.carouselButton}>Prendre rendez-vous</Button>
+                        <Button variant="outline-light" href="/components/prise_rendez_vous/service_rdv" className={styles.carouselButton}>Prendre rendez-vous</Button>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
@@ -58,7 +58,7 @@ export default function Accueil() {
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Le confort avant tout</h3>
                         <p className={styles.carouselText}>Un espace détente pour une expérience agréable</p>
-                        <Button variant="outline-light" className={styles.carouselButton}>Prendre rendez-vous</Button>
+                        <Button variant="outline-light" href="/components/prise_rendez_vous/service_rdv" className={styles.carouselButton}>Prendre rendez-vous</Button>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
@@ -66,7 +66,7 @@ export default function Accueil() {
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Des professionnels à votre écoute</h3>
                         <p className={styles.carouselText}>Une équipe dédiée à vos besoins en coiffure</p>
-                        <Button variant="outline-light" className={styles.carouselButton}>Prendre rendez-vous</Button>
+                        <Button variant="outline-light" href="/components/prise_rendez_vous/service_rdv" className={styles.carouselButton}>Prendre rendez-vous</Button>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
@@ -136,7 +136,7 @@ export default function Accueil() {
                             <div className="col-lg-6"><i className="fa fa-leaf fa-2x mb-3 text-primary"></i>
                                 <h2 className="font-weight-light">Une tradition revisitée</h2>
                                 <p className="font-italic text-muted mb-4">Chez Tina Coiffure, nous honorons la tradition du barber shop tout en l'adaptant aux exigences modernes. Nous combinons l'artisanat classique de la coiffure masculine avec les dernières tendances et techniques. Que vous recherchiez une coupe de cheveux classique, une taille de barbe précise ou un style plus audacieux, nous avons les compétences et l'expérience nécessaires pour répondre à vos besoins.</p>
-                                <a href="/components/prise_rendez_vous/serviceRDV" className="btn btn-light px-5 rounded-pill shadow-sm">Prendre rendez-vous</a>
+                                <a href="/components/prise_rendez_vous/service_rdv" className="btn btn-light px-5 rounded-pill shadow-sm">Prendre rendez-vous</a>
                             </div>
                         </div>
                     </Fade>
