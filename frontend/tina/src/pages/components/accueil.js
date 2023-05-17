@@ -4,16 +4,6 @@ import Carousel from 'react-bootstrap/Carousel';
 import Footer from "@/pages/components/footer";
 import { Fade } from 'react-awesome-reveal';
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
-
-const products = [
-    { title: 'Shampoing', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
-    { title: 'Gels/Cires', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
-    { title: 'Laques', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
-    { title: 'Ciseaux', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
-    { title: 'Tondeuses', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
-    { title: 'Couleurs', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
-];
-
 export default function Accueil() {
 
     const products = [
@@ -121,8 +111,8 @@ export default function Accueil() {
 
             {/* Qui sommes-nous ?*/}
             <div className="py-5">
-                <Fade triggerOnce direction="up">
-                    <div className="container py-5">
+                <div className="container py-5">
+                    <Fade triggerOnce direction="left">
                         <div className="row align-items-center mb-5">
                             <div className="col-lg-6 order-2 order-lg-1"><i className="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
                                 <h2 className="font-weight-light">Notre philosophie</h2>
@@ -135,6 +125,8 @@ export default function Accueil() {
                                     className="img-fluid mb-4 mb-lg-0 rounded-pill shadow"></img>
                             </div>
                         </div>
+                    </Fade>
+                    <Fade triggerOnce direction="right">
                         <div className="row align-items-center mb-5">
                             <div className="col-lg-5 px-5 mx-auto">
                                 <img
@@ -147,6 +139,9 @@ export default function Accueil() {
                                 <a href="/components/prise_rendez_vous/serviceRDV" className="btn btn-light px-5 rounded-pill shadow-sm">Prendre rendez-vous</a>
                             </div>
                         </div>
+                    </Fade>
+                    <Fade triggerOnce direction="left">
+
                         <div className="row align-items-center mb-5">
                             <div className="col-lg-6 order-2 order-lg-1"><i className="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
                                 <h2 className="font-weight-light">Notre équipe</h2>
@@ -159,8 +154,8 @@ export default function Accueil() {
                                     className="img-fluid mb-4 mb-lg-0 rounded-pill shadow"></img>
                             </div>
                         </div>
-                    </div>
-                </Fade>
+                    </Fade>
+                </div>
             </div>
 
 
@@ -223,8 +218,7 @@ export default function Accueil() {
             <a className={styles.returnToTop} onClick={scrollToTop} id="returnToTop">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      className="bi bi-chevron-up" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                    <path d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
                 </svg>
             </a>
 
