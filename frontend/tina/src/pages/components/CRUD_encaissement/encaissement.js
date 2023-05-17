@@ -12,6 +12,13 @@ import { set } from 'date-fns';
  * @returns {JSX.Element}
  */
 function Encaissement_recap() {
+
+    //Constantes pour les URL de l'API
+    const urlEmployees = 'http://localhost:8000/api/employees/';
+    const urlCreate = 'http://localhost:8000/api/collections/create/';
+    //Pathname pour la redirection de page
+    const pathnameModal = './menu_encaissement';
+    
     const router = useRouter();
     const query = router.query;
     const [serviceRouter, setServiceRouter] = useState({});
@@ -65,7 +72,7 @@ function Encaissement_recap() {
         };
 
         console.log(encaissement);
-        axios.post('http://127.0.0.1:8000/api/collections/create', encaissement, {
+        axios.post(urlCreate, encaissement, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -84,7 +91,7 @@ function Encaissement_recap() {
     //Récupération des employees
     const fetchEmployees = () => {
         const cookies = parseCookies();
-        axios.get('http://127.0.0.1:8000/api/employees/', {
+        axios.get(urlEmployees, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -138,7 +145,7 @@ function Encaissement_recap() {
                     <h4 class="alert-heading">Création réussie</h4>
                     <p> Encaissement ajouté </p>
                     <hr></hr>
-                    <p class="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href="./menu_encaissement" class="alert-link">ICI</Link>
+                    <p class="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
                     </p>
                 </div>
                 <div id="notification_error" class="alert alert-danger" role="alert" hidden>
@@ -167,7 +174,6 @@ function Encaissement_recap() {
                         boxShadow: "0 2px 4px rgba(0,0,0,.2)",
                     }}
                 >
-                    {/* TODO: FINIR LE TABLEAU */}
                     {/* Liste des encaissements */}
                     <table class="table mx-2 rounded text-center" style={{ backgroundColor: "#FFFFFF" }}>
                         <thead></thead>

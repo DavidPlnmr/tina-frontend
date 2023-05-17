@@ -10,6 +10,16 @@ import { refineEventDef } from '@fullcalendar/core/internal';
 
 
 export default function Encaissement() {
+
+    // Constantes pour les URL de l'API
+    const urlEncaissements = 'http://localhost:8000/api/collections/';
+    const urlServices = 'http://localhost:8000/api/services/';
+    const urlEmployees = 'http://localhost:8000/api/employees/';
+
+    // Pathname pour la redirection de page
+    const pathnameAdd = "./creation_encaissement";
+
+
     //variables pour la gestion des boutons
     // const [buttonModify, setButtonModify] = useState(
     //     "btn btn-outline-primary"
@@ -82,14 +92,15 @@ export default function Encaissement() {
 
     const handleChoose = (evt) => {
         setS(s => ({ id: evt.target.id }));
-        if (modeModify === 'modify') {
+        // if (modeModify === 'modify') {
 
-            console.log("Modification de l'encaissement n°" + evt.target.id);
-            router.push({
-                pathname: '/components/CRUD_encaissement/modification_encaissement',
-                query: { id: evt.target.id },
-            })
-        } else if (modeModify === 'delete') {
+        //     console.log("Modification de l'encaissement n°" + evt.target.id);
+        //     router.push({
+        //         pathname: '/components/CRUD_encaissement/modification_encaissement',
+        //         query: { id: evt.target.id },
+        //     })
+        // } else 
+        if (modeModify === 'delete') {
             handleShow();
         }
     };
@@ -99,7 +110,7 @@ export default function Encaissement() {
         handleClose();
         encaissements.splice(encaissements.indexOf(s.id), 1);
         const cookies = parseCookies();
-        axios.delete('http://127.0.0.1:8000/api/collections/' + s.id + '/', {
+        axios.delete(urlEncaissements + s.id + '/', {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -126,7 +137,7 @@ export default function Encaissement() {
     //Récupération des encaissements
     const fetchEncaissements = () => {
         const cookies = parseCookies();
-        axios.get('http://127.0.0.1:8000/api/collections/', {
+        axios.get(urlEncaissements, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -143,7 +154,7 @@ export default function Encaissement() {
     //Récupération des services
     const fetchServices = () => {
         const cookies = parseCookies();
-        axios.get('http://127.0.0.1:8000/api/services/', {
+        axios.get(urlServices, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -160,7 +171,7 @@ export default function Encaissement() {
     //Récupération des employees
     const fetchEmployees = () => {
         const cookies = parseCookies();
-        axios.get('http://127.0.0.1:8000/api/employees/', {
+        axios.get(urlEmployees, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -339,7 +350,7 @@ export default function Encaissement() {
                             {/* <button type="button" class={buttonModify} onClick={handleClickModify}>Modifier</button>
                             <ul class="navbar-nav ms-1"></ul> */}
                             <button type="button" class="btn btn-primary">
-                                <Link href="/components/CRUD_encaissement/creation_encaissement" class="nav-link">
+                                <Link href={pathnameAdd} class="nav-link">
                                     Ajouter
                                 </Link>
                             </button>

@@ -9,11 +9,18 @@ import { useRouter } from 'next/router';
 
 export default function Creation_encaissement() {
 
+  // Constantes pour les URL de l'API
+  const urlServices = 'http://localhost:8000/api/services/';
+  const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+  // Pathname pour la redirection de page
+  const pathname = '/components/CRUD_encaissement/encaissement';
+  const pathnameChooseService = '/components/CRUD_encaissement/encaissement';
+
   //Partie pour la redirection de page
   const router = useRouter();
   const handleClick = (service) => {
     router.push({
-      pathname: '/components/CRUD_encaissement/encaissement',
+      pathname: pathname,
       query: { service: JSON.stringify(service) },
     })
   };
@@ -27,7 +34,7 @@ export default function Creation_encaissement() {
       type_of_service: 0
     };
     router.push({
-      pathname: '/components/CRUD_encaissement/encaissement',
+      pathname: pathname,
       query: { service: JSON.stringify(encaissement_manuel) },
     })
   };
@@ -65,7 +72,7 @@ export default function Creation_encaissement() {
   }
   const fetchTypeOfService = () => {
     const cookies = parseCookies();
-    axios.get('http://127.0.0.1:8000/api/typesofservice/', {
+    axios.get(urlTypesOfService, {
       headers: {
         Authorization: 'Token ' + cookies.csrftoken,
       },
@@ -81,7 +88,7 @@ export default function Creation_encaissement() {
 
   const fetchServices = () => {
     const cookies = parseCookies();
-    axios.get('http://127.0.0.1:8000/api/services/', {
+    axios.get(urlServices, {
       headers: {
         Authorization: 'Token ' + cookies.csrftoken,
       },
@@ -164,7 +171,7 @@ export default function Creation_encaissement() {
                                   <Button
                                     id='btnChooseService' onClick={() => handleClick(service)}>
                                     Choisir
-                                    <Link href={`./encaissement/${service.id}`} style={{ color: "white" }}></Link> {/* Button to choose a service */}
+                                    <Link href={pathnameChooseService+service.id} style={{ color: "white" }}></Link> {/* Button to choose a service */}
                                   </Button> {/* Button to choose a service */}
                                 </div>
                               ))}
