@@ -7,13 +7,33 @@ import Link from 'next/link';
 import axios from 'axios';
 import { setCookie } from 'nookies';
 import { useRouter } from 'next/router';
-import Header from '../header';
 
-
+/**
+ * @namespace 'inscription.js'
+ * @description This component provides the functionality to create and manage the registration form.
+ * @returns {JSX.Element} A React functional component rendering the registration form.
+ */
 export default function Inscription() {
 
+  /**
+   * @constant router
+   * @memberof 'inscription.js'
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
 
+  /**
+   * @constant customers
+   * @memberof 'inscription.js'
+   * @description This state variable stores the customer's data.
+   * @property {string} first_name The customer's first name.
+   * @property {string} last_name The customer's last name.
+   * @property {string} username The customer's username.
+   * @property {string} email The customer's email address.
+   * @property {string} tel_number The customer's phone number.
+   * @property {string} password The customer's password.
+   * @default {first_name: "", last_name: "", username: "", email: "", tel_number: "", password: ""}
+   */
   const [customers, setCustomers] = useState([
     {
       first_name: "",
@@ -25,16 +45,45 @@ export default function Inscription() {
     }
   ]);
 
+  /**
+   * @constant confirmPassword
+   * @memberof 'inscription.js'
+   * @description This state variable stores the customer's password confirmation.
+   * @property {string} confirmPassword The customer's password confirmation.
+   * @default {confirmPassword: ""}
+   */
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  /**
+   * @function handleChange
+   * @memberof 'inscription.js'
+   * @description This function handles the registration form submission.
+   * @param {object} evt The event object.
+   * @returns {void}
+   */
   const handleChange = (evt) => {
     setCustomers({ ...customers, [evt.target.dataset.id]: evt.target.value });
   };
 
+  /**
+   * @function handleConfirmPasswordChange
+   * @memberof 'inscription.js'
+   * @description This function handles the password confirmation.
+   * @param {object} evt The event object.
+   * @returns {void}
+   */
   const handleConfirmPasswordChange = (evt) => {
     setConfirmPassword(evt.target.value);
   };
 
+  /**
+   * @function handleSubmit
+   * @memberof 'inscription.js'
+   * @description This function handles the registration form submission.
+   * @param {object} evt The event object.
+   * @returns {void}
+   * @async
+   */
    const handleSubmit =  (evt) => {
     evt.preventDefault();
 

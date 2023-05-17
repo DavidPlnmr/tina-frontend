@@ -1,18 +1,76 @@
 import { useEffect, useState } from "react";
-import Carousel from "react-bootstrap/Carousel";
 import Header from "../header";
 import { useRouter, Router } from "next/router";
 import axios from "axios";
 import { parseCookies } from "nookies";
-import { el } from "date-fns/locale";
 
+/**
+ * @namespace 'recap_rdv.js'
+ * @description This component provides the functionality to display the appointment's recap. This component sends the appointment's data to the database.
+ * @returns {JSX.Element} A React functional component rendering the appointment's recap.
+ */
 export default function RecapRdv() {
+
+  /**
+   * @constant services
+   * @memberof 'recap_rdv.js'
+   * @description An object of services.
+   * @default {}
+   */ 
   const [services, setServices] = useState({});
+
+  /**
+   * @constant coiffeurs
+   * @memberof 'recap_rdv.js'
+   * @description An object of employees.
+   * @default {}
+   */ 
   const [coiffeurs, setCoiffeurs] = useState({});
+
+  /**
+   * @constant heureDepart
+   * @memberof 'recap_rdv.js'
+   * @description The appointment's start time.
+   * @default ''
+   */ 
   const [heureDepart, setHeureDepart] = useState();
+
+  /**
+   * @constant heureFin
+   * @memberof 'recap_rdv.js'
+   * @description The appointment's end time.
+   * @default ''
+   */ 
   const [heureFin, setHeureFin] = useState();
+
+  /**
+   * @constant clients
+   * @memberof 'recap_rdv.js'
+   * @description A list of clients.
+   * @default []
+   */ 
   const [clients, setClients] = useState([]);
+
+  /**
+   * @constant description
+   * @memberof 'recap_rdv.js'
+   * @description The appointment's description.
+   * @default ''
+   */ 
   const [description, setDescription] = useState("");
+
+  /**
+   * @constant appointment
+   * @memberof 'recap_rdv.js'
+   * @description An object of appointment's data.
+   * @ property {string} date - The appointment's date.
+   * @ property {string} time - The appointment's time.
+   * @ property {string} employee - The appointment's employee.
+   * @ property {string} service - The appointment's service.
+   * @ property {string} customer - The appointment's customer.
+   * @ property {string} informations - The appointment's informations.
+   * @default {date: null, time: null, employee: null, service: null, customer: null, informations: null}
+   */ 
   const [appointment, setAppointment] = useState({
     date: null,
     time: null,
@@ -21,11 +79,41 @@ export default function RecapRdv() {
     customer: null,
     informations: null,
   });
+
+  /**
+   * @constant myDate
+   * @memberof 'recap_rdv.js'
+   * @description Date object.
+   * @default ''
+   */
   const [myDate, setMyDate] = useState();
+
+  /**
+   * @constant router
+   * @memberof 'recap_rdv.js'
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
+
+  /**
+   * @constant param
+   * @memberof 'recap_rdv.js'
+   * @see {@link 'calendrier_utilisateur.js'.param}
+   */ 
   const param = router.query;
+
+  /**
+   * @constant cookies
+   * @memberof 'recap_rdv.js'
+   * @see {@link 'header.js'.cookies}
+   */ 
   const cookies = parseCookies();
 
+  /**
+   * @function useEffect1
+   * @memberof 'recap_rdv.js'
+   * @description React hook that triggers the side effect function when the component is mounted.
+   */
   useEffect(() => {
     setServices(JSON.parse(param.service));
     setCoiffeurs(JSON.parse(param.employee));
@@ -40,6 +128,7 @@ export default function RecapRdv() {
       }
     }
   }, []);
+
 
   useEffect(() => {
     const date = new Date();
