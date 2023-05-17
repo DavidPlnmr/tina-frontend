@@ -72,6 +72,11 @@
 
 .servicecard {
     transition: transform 0.3s, background-color 0.3s;
+    background-color: #F6F8F7;
+}
+
+.servicecard p{
+    color: gray;
 }
 
 .servicecard:hover {
@@ -79,4 +84,30 @@
     background-color: #f8f9fa; /* Cette couleur est un exemple, vous pouvez utiliser la couleur que vous préférez */
 }
 
+.servicecard:hover p{
+    color: black;
+}
+
+.returnToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #292E3D;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    z-index: 100;
+}
+
+.returnToTop:hover {
+    background-color: #f8f9fa;
+    color: #292E3D;
+    transform: rotate(360deg);
+}
 
