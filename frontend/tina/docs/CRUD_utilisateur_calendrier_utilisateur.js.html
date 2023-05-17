@@ -37,49 +37,87 @@ import { useRouter } from "next/router";
 import Footer from "../footer";
 
 /**
- * @namespace CalendrierClient
- * @description Composant qui permet de créer le calendrier de l'utilisateur.
- * @returns {JSX.Element}
+ * @namespace 'calendrier_utilisateur.js'
+ * @description This component provides the functionality to create and manage a user's calendar.
+ * @returns {JSX.Element} A React functional component rendering the calendar interface.
  */
 
 export default function CalendrierClient() {
   /**
    * @constant calendar
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This stateful constant stores the calendar object.
    * @default null
-   * @memberof CalendrierClient
-   * @description Cette constante est un useState qui contient le calendrier.
+   * @type {useState}
    */
   const [calendar, setCalendar] = useState(null);
 
   /**
    * @constant calendarEl
-   * @description Cette constante contient le calendrier.
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This constant contains a reference to the calendar HTML element.
    * @default null
-   * @memberof CalendrierClient
    * @type {object}
    */
   const calendarEl = useRef(null);
 
   /**
    * @constant events
-   * @description Cette constante est un useState contient les évènements du calendrier.
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This stateful constant holds the array of events in the calendar.
    * @default []
-   * @memberof CalendrierClient
-   * @type {array}
+   * @type {useState}
    */
   const [events, setEvents] = useState([]);
-  const event = useRef(false);
-  const cookies = parseCookies();
-  const router = useRouter();
-  let customer = null;
-  let information = null;
 
   /**
+   * @constant event
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This constant is an useRef used to determine we already passed in the useEffect.
+   * @default false
+   * @type {object}
+   * @property {boolean} current - The current value of the ref.
+   */
+  const event = useRef(false);
+
+  /**
+   * @constant cookies
+   * @memberof 'calendrier_utilisateur.js'
+   * @see {@link 'header.js'.cookies}
+   */
+  const cookies = parseCookies();
+
+  /**
+   * @constant router
+   * @memberof 'calendrier_utilisateur.js'
+   * @see {@link 'header.js'.router}
+   */
+  const router = useRouter();
+
+  /**
+   * @var customer
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This variable stores the customer's information.
+   * @default null
+   * @type {object}
+   */
+  let customer = null;
+
+  /**
+   * @var information
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This variable stores the appointment's information.
+   * @default null
+   * @type {object}
+   */
+  let information = null;
+
+   /**
    * @function handleClick
-   * @description Cette fonction permet de rediriger l'utilisateur vers la page de détail d'un rendez-vous en passant l'id du rendez-vous en paramètre.
-   * @param {number} id L'id du rendez-vous.
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This function redirects the user to the appointment details page, passing the id of the appointment as a parameter.
+   * @param {number} id - The ID of the appointment.
    * @returns {void}
-   * @memberof CalendrierClient
    */
   const handleClick = (id) => {
     router.push({
@@ -90,10 +128,10 @@ export default function CalendrierClient() {
 
   /**
    * @function useEffect1
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect performs API calls to fetch user appointments and specific appointment data. It's run once when the component mounts.
    * @returns {void}
-   * @memberof CalendrierClient
    * @async
-   * @description Cette fonction permet de faire les appels API pour récupérer les rendez-vous de l'utilisateur et les données spécifiques du rendez-vous.
    */
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -165,7 +203,7 @@ export default function CalendrierClient() {
                 );
                 const end = addMinutes(start, service.duration.slice(3, 5));
                 if (cookies.role === "customer") {
-                  myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} (cliquez pour gérer le rendez-vous)`;
+                  myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
                 } else if (cookies.role === "employee") {
                   if (appointment.customer != null) {
                     myTitle = `Service : ${service.name} / avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
@@ -197,10 +235,10 @@ export default function CalendrierClient() {
 
   /**
    * @function useEffect2
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect is responsible for sending events to the calendar and calling the handleClick function. It runs when the events state changes.
    * @returns {void}
    * @async
-   * @memberof CalendrierClient
-   * @description Cette fonction permet d'envoyer les évenements dans le calendrier ansi que d'appeler handleclick'.
    */
 
   useEffect(() => {
@@ -225,10 +263,10 @@ export default function CalendrierClient() {
 
   /**
    * @function useEffect3
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect sets up the calendar and displays the events. It's run once when the component mounts.
    * @returns {void}
    * @async
-   * @memberof CalendrierClient
-   * @description Cette fonction permet de définir le calendrier et d'afficher les évènements.
    */
   useEffect(() => {
     if (calendarEl.current !== null) {
@@ -267,7 +305,7 @@ export default function CalendrierClient() {
         },
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
-          const backgroundColor = available ? "#1338BE" : "#1338BE"; // Détermine la couleur de fond en fonction de la disponibilité
+          const backgroundColor = available ? "#2A4494" : "#2A4494"; // Détermine la couleur de fond en fonction de la disponibilité
           const title = info.event.title.split(" / ");
           const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
@@ -316,13 +354,13 @@ export default function CalendrierClient() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="CalendrierClient.html">CalendrierClient</a></li><li><a href="Header.html">Header</a></li><li><a href="ProfilUtilisateurs.html">ProfilUtilisateurs</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="-_calendrier.js_.html">'calendrier.js'</a></li><li><a href="-_calendrier_utilisateur.js_.html">'calendrier_utilisateur.js'</a></li><li><a href="-_choix_client.js_.html">'choix_client.js'</a></li><li><a href="-_connexion.js_.html">'connexion.js'</a></li><li><a href="-_header.js_.html">'header.js'</a></li><li><a href="-_inscription.js_.html">'inscription.js'</a></li><li><a href="-_no_client_rdv.js_.html">'no_client_rdv.js'</a></li><li><a href="-_profil_utilisateur.js_.html">'profil_utilisateur.js'</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 16 2023 16:41:26 GMT+0200 (heure d’été d’Europe centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 17 2023 14:01:59 GMT+0200 (heure d’été d’Europe centrale)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -9,49 +9,87 @@ import { useRouter } from "next/router";
 import Footer from "../footer";
 
 /**
- * @namespace CalendrierClient
- * @description Composant qui permet de créer le calendrier de l'utilisateur.
- * @returns {JSX.Element}
+ * @namespace 'calendrier_utilisateur.js'
+ * @description This component provides the functionality to create and manage a user's calendar.
+ * @returns {JSX.Element} A React functional component rendering the calendar interface.
  */
 
 export default function CalendrierClient() {
   /**
    * @constant calendar
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This stateful constant stores the calendar object.
    * @default null
-   * @memberof CalendrierClient
-   * @description Cette constante est un useState qui contient le calendrier.
+   * @type {useState}
    */
   const [calendar, setCalendar] = useState(null);
 
   /**
    * @constant calendarEl
-   * @description Cette constante contient le calendrier.
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This constant contains a reference to the calendar HTML element.
    * @default null
-   * @memberof CalendrierClient
    * @type {object}
    */
   const calendarEl = useRef(null);
 
   /**
    * @constant events
-   * @description Cette constante est un useState contient les évènements du calendrier.
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This stateful constant holds the array of events in the calendar.
    * @default []
-   * @memberof CalendrierClient
-   * @type {array}
+   * @type {useState}
    */
   const [events, setEvents] = useState([]);
-  const event = useRef(false);
-  const cookies = parseCookies();
-  const router = useRouter();
-  let customer = null;
-  let information = null;
 
   /**
+   * @constant event
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This constant is an useRef used to determine we already passed in the useEffect.
+   * @default false
+   * @type {object}
+   * @property {boolean} current - The current value of the ref.
+   */
+  const event = useRef(false);
+
+  /**
+   * @constant cookies
+   * @memberof 'calendrier_utilisateur.js'
+   * @see {@link 'header.js'.cookies}
+   */
+  const cookies = parseCookies();
+
+  /**
+   * @constant router
+   * @memberof 'calendrier_utilisateur.js'
+   * @see {@link 'header.js'.router}
+   */
+  const router = useRouter();
+
+  /**
+   * @var customer
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This variable stores the customer's information.
+   * @default null
+   * @type {object}
+   */
+  let customer = null;
+
+  /**
+   * @var information
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This variable stores the appointment's information.
+   * @default null
+   * @type {object}
+   */
+  let information = null;
+
+   /**
    * @function handleClick
-   * @description Cette fonction permet de rediriger l'utilisateur vers la page de détail d'un rendez-vous en passant l'id du rendez-vous en paramètre.
-   * @param {number} id L'id du rendez-vous.
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This function redirects the user to the appointment details page, passing the id of the appointment as a parameter.
+   * @param {number} id - The ID of the appointment.
    * @returns {void}
-   * @memberof CalendrierClient
    */
   const handleClick = (id) => {
     router.push({
@@ -62,10 +100,10 @@ export default function CalendrierClient() {
 
   /**
    * @function useEffect1
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect performs API calls to fetch user appointments and specific appointment data. It's run once when the component mounts.
    * @returns {void}
-   * @memberof CalendrierClient
    * @async
-   * @description Cette fonction permet de faire les appels API pour récupérer les rendez-vous de l'utilisateur et les données spécifiques du rendez-vous.
    */
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -169,10 +207,10 @@ export default function CalendrierClient() {
 
   /**
    * @function useEffect2
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect is responsible for sending events to the calendar and calling the handleClick function. It runs when the events state changes.
    * @returns {void}
    * @async
-   * @memberof CalendrierClient
-   * @description Cette fonction permet d'envoyer les évenements dans le calendrier ansi que d'appeler handleclick'.
    */
 
   useEffect(() => {
@@ -197,10 +235,10 @@ export default function CalendrierClient() {
 
   /**
    * @function useEffect3
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect sets up the calendar and displays the events. It's run once when the component mounts.
    * @returns {void}
    * @async
-   * @memberof CalendrierClient
-   * @description Cette fonction permet de définir le calendrier et d'afficher les évènements.
    */
   useEffect(() => {
     if (calendarEl.current !== null) {

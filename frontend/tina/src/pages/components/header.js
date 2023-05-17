@@ -4,16 +4,21 @@ import { useRouter } from "next/router";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 /**
- * @namespace Header
- * @description Composant qui retourne le header de l'application.
- * @returns {JSX.Element}
+ * @namespace 'header.js'
+ * @description This Header component is used to generate the application's navigation bar. 
+ * It contains links for navigating through the application and functionality for user authentication.
+ * @returns {JSX.Element} The Header component as a JSX element.
  */
 function Header() {
   /**
    * @constant user
-   * @default
-   * @memberof  Header
-   * @description Les informations de l'utilisateur connecté.
+   * @memberof 'header.js'
+   * @description State variable holding the currently logged-in user's information.
+   * @default {{email: "", username: "", last_name: "", first_name: ""}}
+   * @property {string} email - The authenticated user's email address.
+   * @property {string} username - The authenticated user's username.
+   * @property {string} last_name - The authenticated user's last name.
+   * @property {string} first_name - The authenticated user's first name.
    */
   const [user, setUser] = useState({
     email: "",
@@ -24,31 +29,31 @@ function Header() {
 
   /**
    * @constant token
+   * @memberof 'header.js'
+   * @description State variable holding the currently logged-in user's authentication token.
    * @default null
-   * @memberof  Header
-   * @description Le token de l'utilisateur connecté.
    */
   const [token, setToken] = useState(null);
 
   /**
    * @constant router
-   * @memberof  Header
-   * @description Objet router pour la navigation.
+   * @memberof 'header.js'
+   * @description Router object from Next.js' useRouter hook for programmatic navigation.
    */
   const router = useRouter();
 
-  /**
+   /**
    * @constant cookies
-   * @memberof  Header
+   * @memberof 'header.js'
    * @type {object}
-   * @description Les cookies de l'utilisateur.
+   * @description An object containing all of the user's cookies.
    */
   const cookies = parseCookies();
 
-  /**
-   * useEffect pour définir le token et les informations de l'utilisateur.
+   /**
    * @function useEffect
-   * @memberof  Header
+   * @memberof 'header.js'
+   * @description This useEffect hook sets the token and user's information based on the cookies when the component mounts or updates.
    * @returns {void}
    */
   useEffect(() => {
@@ -65,9 +70,9 @@ function Header() {
   }, [token]);
 
   /**
-   * Gère la déconnexion de l'utilisateur.
    * @function handleLogout
-   * @memberof  Header
+   * @memberof 'header.js'
+   * @description This function handles the user's logout process. It removes all user and session cookies and redirects to the home page.
    * @returns {void}
    */
   const handleLogout = () => {
