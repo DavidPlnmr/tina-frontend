@@ -5,7 +5,6 @@ import Footer from "@/pages/components/footer";
 import { Fade } from 'react-awesome-reveal';
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 
-
 const products = [
     { title: 'Shampoing', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
     { title: 'Gels/Cires', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
