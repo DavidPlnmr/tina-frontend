@@ -1,4 +1,5 @@
 import Header from '../../header';
+import Footer from '../../footer';
 import Services from './services';
 
 export default function Menu_services() {
@@ -6,6 +7,7 @@ export default function Menu_services() {
     <>
         <Header/>
         <Services/>
+        <Footer/>
     </>
   );
 }

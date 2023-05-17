@@ -6,14 +6,18 @@ import { parseCookies } from 'nookies';
 
 export default function Formulaire_typesofservice() {
 
+    // Constantes pour les URL de l'API
+    const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+    // Pathname pour la redirection de page
+    const pathnameModal = "./menu_services";
+    const pathnameNewService = "/components/gestion_admin/gestion_services/form_services";
+
+
     const [typeOfService, setTypeOfService] = useState(
         {
             name: "",
         }
     );
-    const handleClick = () => {
-        document.getElementById("form").removeAttribute("hidden");
-    };
 
     const handleChangeType = (evt) => {
         setTypeOfService({ ...typeOfService, [evt.target.dataset.id]: evt.target.value });
@@ -23,7 +27,7 @@ export default function Formulaire_typesofservice() {
         const cookies = parseCookies();
         evt.preventDefault();
 
-        axios.post('http://127.0.0.1:8000/api/typesofservice/', typeOfService, {
+        axios.post(urlTypesOfService, typeOfService, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -48,15 +52,15 @@ export default function Formulaire_typesofservice() {
                     <h4 class="alert-heading">Création réussie</h4>
                     <p>Vous avez créé le type de service : {typeOfService.name} </p>
                     <hr></hr>
-                    <p class="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href="./menu_services" class="alert-link">ICI</Link>
-                    </p>    
+                    <p class="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
+                    </p>
                 </div>
                 <div id="notification_error" class="alert alert-danger" role="alert" hidden>
                     <h4 class="alert-heading">Création Echouée</h4>
                     <p>Il y a un problème avec le service : <a id='service_error'> </a></p>
                 </div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary rounded" style={{ backgroundColor: "#b8aaa0" }}>
+                    <div class="container-fluid rounded" style={{ height: "8vh", width: "100vh",boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
                         <a class="navbar-brand" href="#">Gestion des services</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -64,16 +68,10 @@ export default function Formulaire_typesofservice() {
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             </ul>
-
-                            <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-                            </ul>
-                            <button type="button" class="btn btn-primary" onClick={handleClick}>
-                                Nouveau Type de Service
-                            </button>
                             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                             </ul>
                             <button type="button" class="btn btn-primary">
-                                <Link href="/components/gestion_admin/gestion_services/form_services" class="nav-link">
+                                <Link href={pathnameNewService} class="nav-link">
                                     Nouveau service
                                 </Link>
                             </button>
@@ -83,21 +81,33 @@ export default function Formulaire_typesofservice() {
                 </nav>
 
                 <ul></ul>
-                <form id='form' hidden>
-                    <div class="row mb-3 d-flex align-items-center">
-                        <label for="section_titre" class="col-sm-2 col-form-label">Type de service</label>
-                        <div class="col-sm">
-                            <input type="text" class="form-control" id="section_titre" data-id="name" placeholder="Nom du Type de service" onChange={handleChangeType}></input>
-                        </div>
+                {/* Form TypeOfService */}
 
-                        <div class="col-auto">
-                            <button type="button" class="btn btn-primary" onClick={handleSubmit}>
-                                Ajouter
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                <div
+                    className="mb-3 d-flex flex-column"
+                    id='form'
+                    style={{
+                        width: "100vh",
+                        height: "auto",
+                        borderRadius: "6px",
+                        padding: "10px",
+                        background: "whiteSmoke",
+                        boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                    }}
+                >
+                    <form class="form-floating" >
+                        <input type="text" class="form-control" data-id="name" onChange={handleChangeType} id="type_of_service" />
+                        <label for="type_of_service">Nom du type de service</label>
+                    </form >
+                </div>
+
+                <ul></ul>
+                {/* Boutons de validation */}
+
+                <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Créer</button>
+
+
+            </div >
         </>
     );
 }
