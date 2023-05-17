@@ -11,9 +11,9 @@ import { refineEventDef } from '@fullcalendar/core/internal';
 
 export default function Encaissement() {
     //variables pour la gestion des boutons
-    const [buttonModify, setButtonModify] = useState(
-        "btn btn-outline-primary"
-    );
+    // const [buttonModify, setButtonModify] = useState(
+    //     "btn btn-outline-primary"
+    // );
     const [modificationMode, setModificationMode] = useState(
         ""
     );
@@ -21,9 +21,9 @@ export default function Encaissement() {
         "btn btn-outline-danger"
     );
     const [modeModify, setModeModify] = useState('');
-    const [btnChooseEncaissement, setBtnChooseEncaissement] = useState(
-        "btn btn-dark"
-    );
+    // const [btnChooseEncaissement, setBtnChooseEncaissement] = useState(
+    //     "btn btn-dark"
+    // );
     const [btnChoose, setBtnChoose] = useState(
         "btn btn-dark"
     );
@@ -62,14 +62,14 @@ export default function Encaissement() {
 
 
     //handleClick pour les boutons
-    const handleClickModify = (evt) => {
-        console.log("Mode Modification");
-        if (modeModify != 'modify') {
-            setModeModify(modeModify => 'modify');
-        } else {
-            setModeModify(modeModify => '');
-        }
-    };
+    // const handleClickModify = (evt) => {
+    //     console.log("Mode Modification");
+    //     if (modeModify != 'modify') {
+    //         setModeModify(modeModify => 'modify');
+    //     } else {
+    //         setModeModify(modeModify => '');
+    //     }
+    // };
 
     const handleClickDelete = (evt) => {
         console.log("Mode Suppression");
@@ -265,27 +265,27 @@ export default function Encaissement() {
             }
         });
         setSearchResults(results);
-    }, [searchTerm,sortBy]);
+    }, [searchTerm, sortBy]);
 
     //UseEffect pour la gestion des boutons
     useEffect(() => {
         if (modeModify === 'delete') {
             //changer le bouton
             setButtonDelete(buttonDelete => "btn btn-danger");
-            setButtonModify(buttonModify => "btn btn-outline-primary");
+            // setButtonModify(buttonModify => "btn btn-outline-primary");
             setBtnChoose(btnChoose => "btn btn-danger");
             //changer la navbar
             setModificationMode(modificationMode => "MODE SUPPRESSION");
-        } else if (modeModify === 'modify') {
-            //changer le bouton
-            setButtonModify(buttonModify => "btn btn-primary");
-            setButtonDelete(buttonDelete => "btn btn-outline-danger");
-            setBtnChoose(btnChoose => "btn btn-primary");
-            //changer la navbar
-            setModificationMode(modificationMode => "MODE MODIFICATION");
+            // } else if (modeModify === 'modify') {
+            //     //changer le bouton
+            //     setButtonModify(buttonModify => "btn btn-primary");
+            //     setButtonDelete(buttonDelete => "btn btn-outline-danger");
+            //     setBtnChoose(btnChoose => "btn btn-primary");
+            //     //changer la navbar
+            //     setModificationMode(modificationMode => "MODE MODIFICATION");
         } else if (modeModify === '') {
             setModificationMode(modificationMode => "");
-            setButtonModify(buttonModify => "btn btn-outline-primary");
+            // setButtonModify(buttonModify => "btn btn-outline-primary");
             setButtonDelete(buttonDelete => "btn btn-outline-danger");
             setBtnChoose(btnChoose => "btn btn-dark");
         }
@@ -293,27 +293,28 @@ export default function Encaissement() {
 
     return (
         <>
-            {/* Modal pour la suppression */}
-            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
-                <Modal.Header closeButton>
-                    <Modal.Title>SUPPRESSION</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Voulez-vous vraiment supprimer cet encaissement ?
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="outline-secondary" onClick={handleClose}>
-                        Annuler
-                    </Button>
-                    <Button variant="danger" onClick={handleConfirmDelete}>
-                        Supprimer
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#b8aaa0" }}>
+                {/* Modal pour la suppression */}
+                <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+                    <Modal.Header closeButton>
+                        <Modal.Title>SUPPRESSION</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Voulez-vous vraiment supprimer cet encaissement ?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="outline-secondary" onClick={handleClose}>
+                            Annuler
+                        </Button>
+                        <Button variant="danger" onClick={handleConfirmDelete}>
+                            Supprimer
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
 
-            {/* Nav Bar pour les encaissements */}
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{backgroundColor: "#b8aaa0" }}>
+                {/* Nav Bar pour les encaissements */}
+
                 <ul></ul>
 
                 {/* Notification de suppression */}
@@ -322,8 +323,8 @@ export default function Encaissement() {
                     <p>L'encaissement <a id='service_error'></a> a été supprimé</p>
 
                 </div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)",height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
+                    <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
                         <div class="collapse navbar-collapse" id="text">
                             <a class="navbar-brand">Gestion des encaissements</a>
                             <ul class="navbar-nav mx-auto my-auto mb-5 ms-lg-3"></ul>
@@ -334,20 +335,21 @@ export default function Encaissement() {
                         <div class="collapse navbar-collapse" id="buttons">
                             <ul class="navbar-nav mx-auto my-auto"></ul>
                             <button type="button" class={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
-                            <ul class="navbar-nav ms-1"></ul>
-                            <button type="button" class={buttonModify} onClick={handleClickModify}>Modifier</button>
-                            <ul class="navbar-nav ms-1"></ul>
+                            <ul class="navbar-nav ms-2"></ul>
+                            {/* <button type="button" class={buttonModify} onClick={handleClickModify}>Modifier</button>
+                            <ul class="navbar-nav ms-1"></ul> */}
                             <button type="button" class="btn btn-primary">
                                 <Link href="/components/CRUD_encaissement/creation_encaissement" class="nav-link">
                                     Ajouter
                                 </Link>
                             </button>
+                            <ul class="navbar-nav ms-1"></ul>
                         </div>
                     </div>
                 </nav>
 
                 {/* Barre de recherche */}
-                <nav class="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
                     <form class="container" role="search">
                         <div class="row mx-1">
                             <select class="form-select" value={sortBy} aria-label="Default select example" data-id="filter" onChange={handleSort}>
@@ -361,13 +363,13 @@ export default function Encaissement() {
                             </select>
                         </div>
                         <div class="row mx-1" >
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Rechercher" onChange={handleSearch}></input>
+                            <input class="form-control me-2" type="search" placeholder="Employé/Service" id="Rechercher" onChange={handleSearch}></input>
                         </div>
                     </form>
                 </nav>
 
                 {/* Total des encaissements */}
-                <table class="table table-striped text-center mx-auto rounded" style={{boxShadow: "0 2px 4px rgba(0,0,0,.2)", width: "100vh", backgroundColor: "#FFFFFF" }}>
+                <table class="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", width: "100vh", backgroundColor: "#FFFFFF" }}>
                     <thead>
                         <tr>
                             <th scope="col">Nombre d'encaissements</th>

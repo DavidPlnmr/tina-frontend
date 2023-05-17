@@ -184,7 +184,7 @@ function Encaissement_recap() {
                                 <td className="align-middle" scope="col">
                                     <div class="input-group mb-3">
                                         <div class="form-floating">
-                                            <input type="number" defaultValue={serviceRouter.price} class="form-control" id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
+                                            <input type="number" defaultValue={!check?serviceRouter.price:serviceRouter.price_student} class="form-control" id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
                                             <label for="service_price">Montant</label>
                                         </div>
                                         <span class="input-group-text">CHF</span>
