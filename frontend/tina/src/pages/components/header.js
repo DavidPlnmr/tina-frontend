@@ -1,24 +1,62 @@
 import { useState, useEffect } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import Link from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
-
-export default function Header() {
+/**
+ * @namespace 'header.js'
+ * @description This Header component is used to generate the application's navigation bar. 
+ * It contains links for navigating through the application and functionality for user authentication.
+ * @returns {JSX.Element} The Header component as a JSX element.
+ */
+function Header() {
+  /**
+   * @constant user
+   * @memberof 'header.js'
+   * @description State variable holding the currently logged-in user's information.
+   * @default {{email: "", username: "", last_name: "", first_name: ""}}
+   * @property {string} email - The authenticated user's email address.
+   * @property {string} username - The authenticated user's username.
+   * @property {string} last_name - The authenticated user's last name.
+   * @property {string} first_name - The authenticated user's first name.
+   */
   const [user, setUser] = useState({
     email: "",
     username: "",
     last_name: "",
     first_name: "",
   });
+
+  /**
+   * @constant token
+   * @memberof 'header.js'
+   * @description State variable holding the currently logged-in user's authentication token.
+   * @default null
+   */
   const [token, setToken] = useState(null);
+
+  /**
+   * @constant router
+   * @memberof 'header.js'
+   * @description Router object from Next.js' useRouter hook for programmatic navigation.
+   */
   const router = useRouter();
+
+   /**
+   * @constant cookies
+   * @memberof 'header.js'
+   * @type {object}
+   * @description An object containing all of the user's cookies.
+   */
   const cookies = parseCookies();
 
+   /**
+   * @function useEffect
+   * @memberof 'header.js'
+   * @description This useEffect hook sets the token and user's information based on the cookies when the component mounts or updates.
+   * @returns {void}
+   */
   useEffect(() => {
-    const cookies = parseCookies();
     setToken(cookies.csrftoken);
 
     if (token) {
@@ -31,6 +69,12 @@ export default function Header() {
     }
   }, [token]);
 
+  /**
+   * @function handleLogout
+   * @memberof 'header.js'
+   * @description This function handles the user's logout process. It removes all user and session cookies and redirects to the home page.
+   * @returns {void}
+   */
   const handleLogout = () => {
     Promise.all([
       destroyCookie(null, "id"),
@@ -63,30 +107,51 @@ export default function Header() {
             }
         `}
       </style>
-      <header>
+      <header
+        style={{ position: "fixed", width: "100%", top: "0", zIndex: "100" }}
+      >
         <Navbar collapseOnSelect expand="lg" variant="dark">
-          <Navbar.Brand href="/" style={{marginLeft: "2%"}}><h4>Tina Coiffure</h4></Navbar.Brand>
+          <Navbar.Brand href="/" style={{ marginLeft: "2%" }}>
+            <h4>Tina Coiffure</h4>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ms-auto" style={{marginRight: "2%"}}>
-              <Nav.Link href="/components/prise_rendez_vous/serviceRDV">Prendre rendez-vous</Nav.Link>
+            <Nav className="ms-auto" style={{ marginRight: "2%" }}>
+              <Nav.Link href="/components/prise_rendez_vous/service_rdv">
+                Prendre rendez-vous
+              </Nav.Link>
               <Nav.Link href="/">Qui sommes nous ?</Nav.Link>
               {token ? (
                 <NavDropdown title={user.username} id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">Mon profil</NavDropdown.Item>
-                  <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">Mes rendez-vous</NavDropdown.Item>
+                  <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">
+                    Mon profil
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">
+                    Mes rendez-vous
+                  </NavDropdown.Item>
                   {token && cookies.role === "admin" && (
-                    <NavDropdown.Item onClick={handleLogout}>Ajout de disponibilités</NavDropdown.Item>
+                    <NavDropdown.Item onClick={handleLogout}>
+                      Ajout de disponibilités
+                    </NavDropdown.Item>
                   )}
-                  <NavDropdown.Item onClick={handleLogout}>Se déconnecter</NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogout}>
+                    Se déconnecter
+                  </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <Nav.Link href="/components/identification/connexion">S'identifier</Nav.Link>
+                <Nav.Link href="/components/identification/connexion">
+                  S'identifier
+                </Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-      </header>
+      </header>{" "}
+      <br />
+      <br />
+      <br />
     </>
   );
 }
+
+export default Header;

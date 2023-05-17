@@ -9,17 +9,70 @@ import { parseCookies } from "nookies";
 import { useRouter, Router } from "next/router";
 import Footer from "../footer";
 
+/**
+ * @namespace 'calendrier.js'
+ * @description This component provides the functionality to create and manage the appointments's calendar.
+ * @returns {JSX.Element} A React functional component rendering the calendar interface.
+ */
 export default function Calendrier() {
+
+  /**
+   * @constant calendar
+   * @memberof 'calendrier.js'
+   * @see {@link 'calendrier_client.js'.calendar}
+   */
   const [calendar, setCalendar] = useState(null);
+
+  /**
+   * @constant calendarEl
+   * @memberof 'calendrier.js'
+   * @see {@link 'calendrier_client.js'.calendarEl}
+   */
   const calendarEl = useRef(null);
+
+  /**
+   * @constant events
+   * @memberof 'calendrier.js'
+   * @see {@link 'calendrier_client.js'.events}
+   */
   const [events, setEvents] = useState([]);
+
+  /**
+   * @constant event
+   * @memberof 'calendrier.js'
+   * @see {@link 'calendrier_client.js'.event}
+   */
   const event = useRef(false);
+
+  /**
+   * @constant cookies
+   * @memberof 'calendrier.js'
+   * @see {@link 'header.js'.cookies}
+    */
   const cookies = parseCookies();
+
+  /**
+   * @constant router
+   * @memberof 'calendrier.js'
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
+
+  /**
+   * @constant param
+   * @memberof 'calendrier.js'
+   * @description The query parameters of the current URL.
+   */
   const param = router.query;
-    const [screenHeight, setScreenHeight] = useState(0);
 
-
+  /**
+   * @function handleClick
+   * @memberof 'calendrier.js'
+   * @description This function redirects the user to the next page and passes the selected time and date as query parameters.
+   * @param {string} time The selected time.
+   * @param {string} date The selected date.
+   * @returns {void}
+   */
   const handleClick = (time, date) => {
     if (cookies.role === "customer") {
       router.push({
@@ -44,6 +97,13 @@ export default function Calendrier() {
     }
   };
 
+  /**
+   * @function useEffect1
+   * @memberof 'calendrier.js'
+   * @description This effect performs API calls to fetch user appointments and specific appointment data. It's run once when the component mounts.
+   * @returns {void}
+   * @async
+   */
   useEffect(() => {
     console.log("param : ");
     console.log(param);
@@ -85,6 +145,13 @@ export default function Calendrier() {
     fetchAppointments();
   }, []);
 
+  /**
+   * @function useEffect2
+   * @memberof 'calendrier.js'
+   * @description This effect is responsible for sending events to the calendar and calling the handleClick function. It runs when the events state changes.
+   * @returns {void}
+   * @async
+   */ 
   useEffect(() => {
     if (calendar !== null && events.length > 0) {
       if (event.current) return;
@@ -111,6 +178,13 @@ export default function Calendrier() {
     }
   }, [events]);
 
+  /**
+   * @function useEffect3
+   * @memberof 'calendrier.js'
+   * @description This effect sets up the calendar and displays the events. It's run once when the component mounts.
+   * @returns {void}
+   * @async
+   */
   useEffect(() => {
     const widthThreshold = 600; // Seuil de largeur d'écran en pixels
     const sizeScreen = window.innerWidth;

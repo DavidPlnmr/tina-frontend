@@ -5,17 +5,65 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 
+/**
+ * @namespace 'choix_client.js'
+ * @description This component provides the functionality to choose a client from a list.
+ * @returns {JSX.Element} A React functional component rendering the client list.
+ */
 export default function ChoixClient() {
+
+    /**
+     * @constant clients
+     * @memberof 'choix_client.js'
+     * @description A list of clients.
+     * @default []
+     */ 
     const [clients, setClients] = useState([]);
+
+    /**
+     * @constant filteredClients
+     * @memberof 'choix_client.js'
+     * @description A list of clients filtered by the search bar.
+     * @default []
+     */
     const [filteredClients, setFilteredClients] = useState([]);
+
+    /**
+     * @constant cookies
+     * @memberof 'choix_client.js'
+     * @see {@link 'header.js'.cookies}
+     */
     const cookies = parseCookies();
+
+    /**
+     * @constant param
+     * @memberof 'choix_client.js'
+     * @see {@link 'calendrier.js'.param}
+     */ 
     const param = useRouter().query;
+
+    /**
+     * @constant router
+     * @memberof 'choix_client.js'
+     * @see {@link 'header.js'.router}
+     */
     const router = useRouter();
 
+    /**
+     * @function useEffect
+     * @memberof 'choix_client.js'
+     * @description A React hook that fetches the clients list from the database.
+     */
     useEffect(() => {
         fetchCustomers();
         }, []);
 
+    /**
+     * @function fetchCustomers
+     * @memberof 'choix_client.js'
+     * @description Fetches the clients list from the database.
+     * @returns {Array} A list of clients.
+     */     
     const fetchCustomers = () => {
         axios.get('http://127.0.0.1:8000/api/customers/', {
         headers: {
@@ -36,6 +84,13 @@ export default function ChoixClient() {
         );
     }
 
+    /**
+     * @function handleSearch
+     * @memberof 'choix_client.js'
+     * @description Filters the clients list by the search bar.
+     * @param {Event} evt The event that triggered the function.
+     * @returns {Array} A list of clients filtered by the search bar.
+     */ 
     const handleSearch = (evt) => {
         const searchValue = evt.target.value;
         const filtered = clients.filter((client) => {
@@ -44,6 +99,11 @@ export default function ChoixClient() {
         setFilteredClients(filtered);
     }
 
+    /**
+     * @function handleClick
+     * @memberof 'choix_client.js'
+     * @description Redirects to the 'no_client_rdv' page.
+     */
     const handleClick = () => {
         const cookies = parseCookies();
         router.push({
@@ -58,6 +118,12 @@ export default function ChoixClient() {
           });
     }
 
+    /**
+     * @function handleClickClient
+     * @memberof 'choix_client.js'
+     * @description Redirects to the 'recap_rdv' page.
+     * @param {Object} client The client object.
+     */
     const handleClickClient = (client) => {
         router.push({
             pathname: "../prise_rendez_vous/recap_rdv",

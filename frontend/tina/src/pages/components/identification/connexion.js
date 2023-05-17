@@ -7,14 +7,39 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 
+/**
+ * @namespace 'connexion.js'
+ * @description This component provides the functionality to log in to the application.
+ * @returns {JSX.Element} A React functional component rendering the login interface.
+ */
 export default function Connexion() {
+
+  /**
+   * @constant router
+   * @memberof 'connexion.js'
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
 
+  /**
+   * @constant user
+   * @memberof 'connexion.js'
+   * @description This state variable stores the user's data.
+   * @property {string} username The user's username.
+   * @property {string} password The user's password.
+   * @default {username: "", password: ""}
+   */
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
 
+  /**
+   * @function handleSubmit
+   * @memberof 'connexion.js'
+   * @description This function handles the login form submission.
+   * @param {object} evt The event object.
+   */
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const response = await fetch("http://127.0.0.1:8000/api/login/", {

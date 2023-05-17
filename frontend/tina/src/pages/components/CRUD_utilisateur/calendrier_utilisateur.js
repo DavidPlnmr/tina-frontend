@@ -8,16 +8,89 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import Footer from "../footer";
 
+/**
+ * @namespace 'calendrier_utilisateur.js'
+ * @description This component provides the functionality to create and manage a user's calendar.
+ * @returns {JSX.Element} A React functional component rendering the calendar interface.
+ */
+
 export default function CalendrierClient() {
+  /**
+   * @constant calendar
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This stateful constant stores the calendar object.
+   * @default null
+   * @type {useState}
+   */
   const [calendar, setCalendar] = useState(null);
+
+  /**
+   * @constant calendarEl
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This constant contains a reference to the calendar HTML element.
+   * @default null
+   * @type {object}
+   */
   const calendarEl = useRef(null);
+
+  /**
+   * @constant events
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This stateful constant holds the array of events in the calendar.
+   * @default []
+   * @type {useState}
+   */
   const [events, setEvents] = useState([]);
+
+  /**
+   * @constant event
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This constant is an useRef used to determine we already passed in the useEffect.
+   * @default false
+   * @type {object}
+   * @property {boolean} current - The current value of the ref.
+   */
   const event = useRef(false);
+
+  /**
+   * @constant cookies
+   * @memberof 'calendrier_utilisateur.js'
+   * @see {@link 'header.js'.cookies}
+   */
   const cookies = parseCookies();
+
+  /**
+   * @constant router
+   * @memberof 'calendrier_utilisateur.js'
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
+
+  /**
+   * @var customer
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This variable stores the customer's information.
+   * @default null
+   * @type {object}
+   */
   let customer = null;
+
+  /**
+   * @var information
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This variable stores the appointment's information.
+   * @default null
+   * @type {object}
+   */
   let information = null;
 
+   /**
+   * @function handleClick
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This function redirects the user to the appointment details page, passing the id of the appointment as a parameter.
+   * @param {number} id - The ID of the appointment.
+   * @returns {void}
+   */
   const handleClick = (id) => {
     router.push({
       pathname: "/components/CRUD_utilisateur/CRUD_my_rdv/detail_rdv",
@@ -25,6 +98,13 @@ export default function CalendrierClient() {
     });
   };
 
+  /**
+   * @function useEffect1
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect performs API calls to fetch user appointments and specific appointment data. It's run once when the component mounts.
+   * @returns {void}
+   * @async
+   */
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -95,7 +175,7 @@ export default function CalendrierClient() {
                 );
                 const end = addMinutes(start, service.duration.slice(3, 5));
                 if (cookies.role === "customer") {
-                  myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} (cliquez pour gérer le rendez-vous)`;
+                  myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
                 } else if (cookies.role === "employee") {
                   if (appointment.customer != null) {
                     myTitle = `Service : ${service.name} / avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
@@ -125,6 +205,14 @@ export default function CalendrierClient() {
     fetchAppointments();
   }, []);
 
+  /**
+   * @function useEffect2
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect is responsible for sending events to the calendar and calling the handleClick function. It runs when the events state changes.
+   * @returns {void}
+   * @async
+   */
+
   useEffect(() => {
     if (calendar !== null && events.length > 0) {
       if (event.current) return;
@@ -145,12 +233,19 @@ export default function CalendrierClient() {
     }
   }, [events]);
 
+  /**
+   * @function useEffect3
+   * @memberof 'calendrier_utilisateur.js'
+   * @description This effect sets up the calendar and displays the events. It's run once when the component mounts.
+   * @returns {void}
+   * @async
+   */
   useEffect(() => {
     if (calendarEl.current !== null) {
       const newCalendar = new Calendar(calendarEl.current, {
         initialView: "listWeek",
         firstDay: 1,
-        height: 'auto',
+        height: "auto",
         allDaySlot: false,
         slotDuration: "00:15:00",
         slotEventOverlap: false,
@@ -178,11 +273,11 @@ export default function CalendrierClient() {
         plugins: [listPlugin],
         locale: "fr", // définit la langue du calendrier en français
         buttonText: {
-          today: 'aujourd\'hui'
+          today: "aujourd'hui",
         },
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
-          const backgroundColor = available ? "#1338BE" : "#1338BE"; // Détermine la couleur de fond en fonction de la disponibilité
+          const backgroundColor = available ? "#2A4494" : "#2A4494"; // Détermine la couleur de fond en fonction de la disponibilité
           const title = info.event.title.split(" / ");
           const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
@@ -202,13 +297,13 @@ export default function CalendrierClient() {
 
   return (
     <>
-    <style>
-      {`@media (max-width: 600px) {
+      <style>
+        {`@media (max-width: 600px) {
         .fc-today-button {
           display: none;
         }
       }`}
-    </style>
+      </style>
       <Header />
       <div className="container">
         <div
