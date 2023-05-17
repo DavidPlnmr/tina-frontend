@@ -7,6 +7,15 @@ import { useRouter } from 'next/router';
 
 
 export default function Services() {
+
+  // Constantes pour les URL de l'API
+  const urlServices = 'http://localhost:8000/api/services/';
+  const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+  // Pathname pour la redirection de page
+  const pathnameChooseService = '/components/gestion_admin/gestion_services/form_services_modify';
+  const pathnameAdd = "/components/gestion_admin/gestion_services/form_typesofservice";
+
+
   const [lstServices, setLstServices] = useState([]);
   const [lstTypesOfService, setLstTypesOfService] = useState([]);
   const router = useRouter();
@@ -65,7 +74,7 @@ export default function Services() {
     let s = infoModify.service;
     lstServices.splice(lstServices.indexOf(s), 1);
     const cookies = parseCookies();
-    axios.delete('http://127.0.0.1:8000/api/services/'+s.id+'/', {
+    axios.delete(urlServices+s.id+'/', {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -86,7 +95,7 @@ export default function Services() {
 
   const fetchTypeOfService = () => {
     const cookies = parseCookies();
-    axios.get('http://127.0.0.1:8000/api/typesofservice/', {
+    axios.get(urlTypesOfService, {
       headers: {
         Authorization: 'Token ' + cookies.csrftoken,
       },
@@ -102,7 +111,7 @@ export default function Services() {
 
   const fetchServices = () => {
     const cookies = parseCookies();
-    axios.get('http://127.0.0.1:8000/api/services/', {
+    axios.get(urlServices, {
       headers: {
         Authorization: 'Token ' + cookies.csrftoken,
       },
@@ -121,7 +130,7 @@ export default function Services() {
     if (modeModify === 'modify') {
       console.log("Modification du service " + service.name);
       router.push({
-        pathname: '/components/gestion_admin/gestion_services/form_services_modify',
+        pathname: pathnameChooseService,
         query: { typeOfService: JSON.stringify(typeOfService), service: JSON.stringify(service) },
       })
     } else if (modeModify === 'delete') {
@@ -239,7 +248,7 @@ export default function Services() {
               <button type="button" class={buttonModify} onClick={handleClickModify}>Modifier</button>
               <ul class="navbar-nav ms-1"></ul>
               <button type="button" class="btn btn-primary">
-                <Link href="/components/gestion_admin/gestion_services/form_typesofservice" class="nav-link">
+                <Link href={pathnameAdd} class="nav-link">
                   Ajouter
                 </Link>
               </button>
