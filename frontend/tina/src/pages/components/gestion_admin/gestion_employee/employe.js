@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Header from '../header';
+import Header from '../../header';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
@@ -54,7 +54,6 @@ export default function Employe() {
 
   return (
     <>
-        <Header/>
         <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
         <div className="container">
           <div className="row justify-content-center">

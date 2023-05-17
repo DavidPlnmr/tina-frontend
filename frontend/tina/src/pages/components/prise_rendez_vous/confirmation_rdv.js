@@ -1,10 +1,26 @@
-import { useState } from "react";
-import Carousel from "react-bootstrap/Carousel";
 import Header from "../header";
 import { useRouter, Router } from "next/router";
 
+/**
+ * @namespace 'confirmation_rdv.js'
+ * @description This component display the confirmation of an appointment.
+ * @returns {JSX.Element} A React functional component rendering the confirmation of an appointment.
+ */
 export default function ConfirmationRdv() {
+
+  /**
+   * @constant router
+   * @memberof 'confirmation_rdv.js'
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
+
+  /**
+   * @function handleClick
+   * @memberof 'confirmation_rdv.js'
+   * @description A function that redirects to the home page.
+   * @returns {void}
+   */
   const handleClick = () => {
     router.push("/");
   };

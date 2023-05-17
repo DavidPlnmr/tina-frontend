@@ -1,33 +1,134 @@
 import { useEffect, useState } from "react";
-import Carousel from "react-bootstrap/Carousel";
 import Header from "../header";
 import { useRouter, Router } from "next/router";
 import axios from "axios";
 import { parseCookies } from "nookies";
 
+/**
+ * @namespace 'recap_rdv.js'
+ * @description This component provides the functionality to display the appointment's recap. This component sends the appointment's data to the database.
+ * @returns {JSX.Element} A React functional component rendering the appointment's recap.
+ */
 export default function RecapRdv() {
+
+  /**
+   * @constant services
+   * @memberof 'recap_rdv.js'
+   * @description An object of services.
+   * @default {}
+   */ 
   const [services, setServices] = useState({});
+
+  /**
+   * @constant coiffeurs
+   * @memberof 'recap_rdv.js'
+   * @description An object of employees.
+   * @default {}
+   */ 
   const [coiffeurs, setCoiffeurs] = useState({});
+
+  /**
+   * @constant heureDepart
+   * @memberof 'recap_rdv.js'
+   * @description The appointment's start time.
+   * @default ''
+   */ 
   const [heureDepart, setHeureDepart] = useState();
+
+  /**
+   * @constant heureFin
+   * @memberof 'recap_rdv.js'
+   * @description The appointment's end time.
+   * @default ''
+   */ 
   const [heureFin, setHeureFin] = useState();
+
+  /**
+   * @constant clients
+   * @memberof 'recap_rdv.js'
+   * @description A list of clients.
+   * @default []
+   */ 
+  const [clients, setClients] = useState([]);
+
+  /**
+   * @constant description
+   * @memberof 'recap_rdv.js'
+   * @description The appointment's description.
+   * @default ''
+   */ 
+  const [description, setDescription] = useState("");
+
+  /**
+   * @constant appointment
+   * @memberof 'recap_rdv.js'
+   * @description An object of appointment's data.
+   * @ property {string} date - The appointment's date.
+   * @ property {string} time - The appointment's time.
+   * @ property {string} employee - The appointment's employee.
+   * @ property {string} service - The appointment's service.
+   * @ property {string} customer - The appointment's customer.
+   * @ property {string} informations - The appointment's informations.
+   * @default {date: null, time: null, employee: null, service: null, customer: null, informations: null}
+   */ 
   const [appointment, setAppointment] = useState({
     date: null,
     time: null,
     employee: null,
     service: null,
     customer: null,
+    informations: null,
   });
+
+  /**
+   * @constant myDate
+   * @memberof 'recap_rdv.js'
+   * @description Date object.
+   * @default ''
+   */
   const [myDate, setMyDate] = useState();
+
+  /**
+   * @constant router
+   * @memberof 'recap_rdv.js'
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
+
+  /**
+   * @constant param
+   * @memberof 'recap_rdv.js'
+   * @see {@link 'calendrier_utilisateur.js'.param}
+   */ 
   const param = router.query;
+
+  /**
+   * @constant cookies
+   * @memberof 'recap_rdv.js'
+   * @see {@link 'header.js'.cookies}
+   */ 
   const cookies = parseCookies();
 
+  /**
+   * @function useEffect1
+   * @memberof 'recap_rdv.js'
+   * @description React hook that triggers the side effect function when the component is mounted.
+   */
   useEffect(() => {
-    console.log(param);
     setServices(JSON.parse(param.service));
     setCoiffeurs(JSON.parse(param.employee));
     setMyDate(param.date);
+    if (cookies.role === "employee") {
+      console.log(param.client);
+      if (param.client != "") {
+        setClients(JSON.parse(param.client));
+      }
+      else {
+        setDescription(param.description);
+      }
+    }
   }, []);
+
 
   useEffect(() => {
     const date = new Date();
@@ -56,6 +157,8 @@ export default function RecapRdv() {
       const splitDate = myDate.split("/");
       const formattedDate =
         splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
+        if (cookies.role === "customer") {
+
       setAppointment({
         ...appointment,
         date: formattedDate,
@@ -63,6 +166,27 @@ export default function RecapRdv() {
         employee: coiffeurs.id,
         service: services.id,
       });
+    } else if (cookies.role === "employee" && param.client != "") {
+      setAppointment({
+        ...appointment,
+        date: formattedDate,
+        time: heureDepart,
+        employee: coiffeurs.id,
+        service: services.id,
+        customer: clients.id,
+      });
+    }
+    else if (cookies.role === "employee" && param.client == "") {
+      console.log(description);
+      setAppointment({
+        ...appointment,
+        date: formattedDate,
+        time: heureDepart,
+        employee: coiffeurs.id,
+        service: services.id,
+        informations: description,
+      });
+    }
     }
   }, [services]);
 
@@ -70,6 +194,7 @@ export default function RecapRdv() {
     evt.preventDefault();
 
     console.log(appointment.date);
+    console.log(appointment);
     axios
       .post("http://127.0.0.1:8000/api/appointments/create", appointment, {
         headers: {
@@ -89,7 +214,7 @@ export default function RecapRdv() {
   return (
     <>
       <Header />
-      <div className="container " style={{ marginTop: "270px" }}>
+      <div className="container " style={{ marginTop: "10%" }}>
         <h2>Récapitulatif du rendez-vous : </h2>
         <table class="table">
           <tbody>
@@ -101,6 +226,20 @@ export default function RecapRdv() {
               <td>Coiffeur</td>
               <td>{coiffeurs.first_name + " " + coiffeurs.last_name}</td>
             </tr>
+            {cookies.role === "employee" && clients != "" && (
+              <tr>
+                <td>Client</td>
+                <td>{clients.first_name + " " + clients.last_name}</td>
+              </tr>
+            )}
+
+            {cookies.role === "employee" && description != "" &&(
+              <tr>
+                <td>Description</td>
+                <td>{description}</td>
+              </tr>
+            )
+            }
             <tr>
               <td>Date</td>
               <td>{myDate}</td>

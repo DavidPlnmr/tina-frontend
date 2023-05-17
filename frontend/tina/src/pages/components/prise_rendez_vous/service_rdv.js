@@ -64,11 +64,13 @@ export default function ServiceRDV() {
 
   // Function to get the minimum price for a type of service
   const minPriceForATypeOfService = (typeOfService) => {
+    if (services) {
     return priceWithoutCent(
       services
         .filter((service) => service.type_of_service === typeOfService.id)
         .sort((a, b) => a.price - b.price)[0].price
-    );
+      
+    );}
   };
 
   // Function to handle choosing of a service
