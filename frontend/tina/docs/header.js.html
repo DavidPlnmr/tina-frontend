@@ -31,17 +31,18 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Link from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 /**
- * Composant permettant de créer le header de l'application
- * @function Header
+ * @namespace Header
+ * @description Composant qui retourne le header de l'application.
  * @returns {JSX.Element}
  */
 function Header() {
   /**
-   * @constant Header-user
+   * @constant user
    * @default
+   * @memberof  Header
    * @description Les informations de l'utilisateur connecté.
    */
   const [user, setUser] = useState({
@@ -52,20 +53,23 @@ function Header() {
   });
 
   /**
-   * @constant Header-token
+   * @constant token
    * @default null
+   * @memberof  Header
    * @description Le token de l'utilisateur connecté.
    */
   const [token, setToken] = useState(null);
 
   /**
-   * @constant Header-router
+   * @constant router
+   * @memberof  Header
    * @description Objet router pour la navigation.
    */
   const router = useRouter();
 
   /**
-   * @constant Header-cookies
+   * @constant cookies
+   * @memberof  Header
    * @type {object}
    * @description Les cookies de l'utilisateur.
    */
@@ -73,7 +77,8 @@ function Header() {
 
   /**
    * useEffect pour définir le token et les informations de l'utilisateur.
-   * @function Header-useEffect
+   * @function useEffect
+   * @memberof  Header
    * @returns {void}
    */
   useEffect(() => {
@@ -91,7 +96,8 @@ function Header() {
 
   /**
    * Gère la déconnexion de l'utilisateur.
-   * @function Header-handleLogout
+   * @function handleLogout
+   * @memberof  Header
    * @returns {void}
    */
   const handleLogout = () => {
@@ -126,35 +132,55 @@ function Header() {
             }
         `}
       &lt;/style>
-      &lt;header>
+      &lt;header
+        style={{ position: "fixed", width: "100%", top: "0", zIndex: "100" }}
+      >
         &lt;Navbar collapseOnSelect expand="lg" variant="dark">
-          &lt;Navbar.Brand href="/" style={{marginLeft: "2%"}}>&lt;h4>Tina Coiffure&lt;/h4>&lt;/Navbar.Brand>
+          &lt;Navbar.Brand href="/" style={{ marginLeft: "2%" }}>
+            &lt;h4>Tina Coiffure&lt;/h4>
+          &lt;/Navbar.Brand>
           &lt;Navbar.Toggle aria-controls="responsive-navbar-nav" />
           &lt;Navbar.Collapse id="responsive-navbar-nav">
-            &lt;Nav className="ms-auto" style={{marginRight: "2%"}}>
-              &lt;Nav.Link href="/components/prise_rendez_vous/serviceRDV">Prendre rendez-vous&lt;/Nav.Link>
+            &lt;Nav className="ms-auto" style={{ marginRight: "2%" }}>
+              &lt;Nav.Link href="/components/prise_rendez_vous/serviceRDV">
+                Prendre rendez-vous
+              &lt;/Nav.Link>
               &lt;Nav.Link href="/">Qui sommes nous ?&lt;/Nav.Link>
               {token ? (
                 &lt;NavDropdown title={user.username} id="collasible-nav-dropdown">
-                  &lt;NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">Mon profil&lt;/NavDropdown.Item>
-                  &lt;NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">Mes rendez-vous&lt;/NavDropdown.Item>
+                  &lt;NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">
+                    Mon profil
+                  &lt;/NavDropdown.Item>
+                  &lt;NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">
+                    Mes rendez-vous
+                  &lt;/NavDropdown.Item>
                   {token &amp;&amp; cookies.role === "admin" &amp;&amp; (
-                    &lt;NavDropdown.Item onClick={handleLogout}>Ajout de disponibilités&lt;/NavDropdown.Item>
+                    &lt;NavDropdown.Item onClick={handleLogout}>
+                      Ajout de disponibilités
+                    &lt;/NavDropdown.Item>
                   )}
-                  &lt;NavDropdown.Item onClick={handleLogout}>Se déconnecter&lt;/NavDropdown.Item>
+                  &lt;NavDropdown.Item onClick={handleLogout}>
+                    Se déconnecter
+                  &lt;/NavDropdown.Item>
                 &lt;/NavDropdown>
               ) : (
-                &lt;Nav.Link href="/components/identification/connexion">S'identifier&lt;/Nav.Link>
+                &lt;Nav.Link href="/components/identification/connexion">
+                  S'identifier
+                &lt;/Nav.Link>
               )}
             &lt;/Nav>
           &lt;/Navbar.Collapse>
         &lt;/Navbar>
-      &lt;/header>
+      &lt;/header>{" "}
+      &lt;br />
+      &lt;br />
+      &lt;br />
     &lt;/>
   );
 }
 
-export default Header;</code></pre>
+export default Header;
+</code></pre>
         </article>
     </section>
 
@@ -164,13 +190,13 @@ export default Header;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="global.html#ProfilUtilisateurs">ProfilUtilisateurs</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CalendrierClient">CalendrierClient</a></li><li><a href="global.html#CalendrierClient-calendar">CalendrierClient-calendar</a></li><li><a href="global.html#CalendrierClient-calendarEl">CalendrierClient-calendarEl</a></li><li><a href="global.html#CalendrierClient-events">CalendrierClient-events</a></li><li><a href="global.html#CalendrierClient-handleClick">CalendrierClient-handleClick</a></li><li><a href="global.html#CalendrierClient-useEffect1">CalendrierClient-useEffect1</a></li><li><a href="global.html#CalendrierClient-useEffect2">CalendrierClient-useEffect2</a></li><li><a href="global.html#CalendrierClient-useEffect3">CalendrierClient-useEffect3</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Header-cookies">Header-cookies</a></li><li><a href="global.html#Header-handleLogout">Header-handleLogout</a></li><li><a href="global.html#Header-router">Header-router</a></li><li><a href="global.html#Header-token">Header-token</a></li><li><a href="global.html#Header-useEffect">Header-useEffect</a></li><li><a href="global.html#Header-user">Header-user</a></li><li><a href="global.html#ProfilUtilisateurs-fetchCusto">ProfilUtilisateurs-fetchCusto</a></li><li><a href="global.html#ProfilUtilisateurs-fetchEmp">ProfilUtilisateurs-fetchEmp</a></li><li><a href="global.html#ProfilUtilisateurs-handleSubmit">ProfilUtilisateurs-handleSubmit</a></li><li><a href="global.html#ProfilUtilisateurs-role">ProfilUtilisateurs-role</a></li><li><a href="global.html#ProfilUtilisateurs-submitCusto">ProfilUtilisateurs-submitCusto</a></li><li><a href="global.html#ProfilUtilisateurs-submitEmp">ProfilUtilisateurs-submitEmp</a></li><li><a href="global.html#ProfilUtilisateurs-useEffect">ProfilUtilisateurs-useEffect</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="CalendrierClient.html">CalendrierClient</a></li><li><a href="Header.html">Header</a></li><li><a href="ProfilUtilisateurs.html">ProfilUtilisateurs</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 16 2023 14:59:46 GMT+0200 (heure d’été d’Europe centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 16 2023 16:41:26 GMT+0200 (heure d’été d’Europe centrale)
 </footer>
 
 <script> prettyPrint(); </script>

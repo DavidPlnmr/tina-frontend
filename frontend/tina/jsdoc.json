@@ -1,13 +1,13 @@
 {
-    "source": {
-        "include": ["./src/pages/components"],
-        "includePattern": ".+\\.js(doc|x)?$",
-        "excludePattern": "(^|\\/|\\\\)_"
-    },
-    "plugins": [],
-    "opts": {
-        "recurse": true,
-        "destination": "./docs",
-        "encoding": "utf8"
-    }
+  "source": {
+    "include": ["./src/pages/components"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": [],
+  "opts": {
+    "recurse": true,
+    "destination": "./docs",
+    "encoding": "utf8"
+  }
 }

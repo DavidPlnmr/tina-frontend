@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import Link from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 /**
- * Composant permettant de créer le header de l'application
- * @function Header
+ * @namespace Header
+ * @description Composant qui retourne le header de l'application.
  * @returns {JSX.Element}
  */
 function Header() {
   /**
-   * @constant Header-user
+   * @constant user
    * @default
+   * @memberof  Header
    * @description Les informations de l'utilisateur connecté.
    */
   const [user, setUser] = useState({
@@ -24,20 +23,23 @@ function Header() {
   });
 
   /**
-   * @constant Header-token
+   * @constant token
    * @default null
+   * @memberof  Header
    * @description Le token de l'utilisateur connecté.
    */
   const [token, setToken] = useState(null);
 
   /**
-   * @constant Header-router
+   * @constant router
+   * @memberof  Header
    * @description Objet router pour la navigation.
    */
   const router = useRouter();
 
   /**
-   * @constant Header-cookies
+   * @constant cookies
+   * @memberof  Header
    * @type {object}
    * @description Les cookies de l'utilisateur.
    */
@@ -45,7 +47,8 @@ function Header() {
 
   /**
    * useEffect pour définir le token et les informations de l'utilisateur.
-   * @function Header-useEffect
+   * @function useEffect
+   * @memberof  Header
    * @returns {void}
    */
   useEffect(() => {
@@ -63,7 +66,8 @@ function Header() {
 
   /**
    * Gère la déconnexion de l'utilisateur.
-   * @function Header-handleLogout
+   * @function handleLogout
+   * @memberof  Header
    * @returns {void}
    */
   const handleLogout = () => {
@@ -98,30 +102,49 @@ function Header() {
             }
         `}
       </style>
-      <header>
+      <header
+        style={{ position: "fixed", width: "100%", top: "0", zIndex: "100" }}
+      >
         <Navbar collapseOnSelect expand="lg" variant="dark">
-          <Navbar.Brand href="/" style={{marginLeft: "2%"}}><h4>Tina Coiffure</h4></Navbar.Brand>
+          <Navbar.Brand href="/" style={{ marginLeft: "2%" }}>
+            <h4>Tina Coiffure</h4>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ms-auto" style={{marginRight: "2%"}}>
-              <Nav.Link href="/components/prise_rendez_vous/serviceRDV">Prendre rendez-vous</Nav.Link>
+            <Nav className="ms-auto" style={{ marginRight: "2%" }}>
+              <Nav.Link href="/components/prise_rendez_vous/service_rdv">
+                Prendre rendez-vous
+              </Nav.Link>
               <Nav.Link href="/">Qui sommes nous ?</Nav.Link>
               {token ? (
                 <NavDropdown title={user.username} id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">Mon profil</NavDropdown.Item>
-                  <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">Mes rendez-vous</NavDropdown.Item>
+                  <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">
+                    Mon profil
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">
+                    Mes rendez-vous
+                  </NavDropdown.Item>
                   {token && cookies.role === "admin" && (
-                    <NavDropdown.Item onClick={handleLogout}>Ajout de disponibilités</NavDropdown.Item>
+                    <NavDropdown.Item onClick={handleLogout}>
+                      Ajout de disponibilités
+                    </NavDropdown.Item>
                   )}
-                  <NavDropdown.Item onClick={handleLogout}>Se déconnecter</NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogout}>
+                    Se déconnecter
+                  </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <Nav.Link href="/components/identification/connexion">S'identifier</Nav.Link>
+                <Nav.Link href="/components/identification/connexion">
+                  S'identifier
+                </Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-      </header>
+      </header>{" "}
+      <br />
+      <br />
+      <br />
     </>
   );
 }

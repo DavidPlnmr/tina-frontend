@@ -37,31 +37,34 @@ import { useRouter } from "next/router";
 import Footer from "../footer";
 
 /**
- * Composant permettant de créer le calendrier de l'utilisateur.
- * @function CalendrierClient
+ * @namespace CalendrierClient
+ * @description Composant qui permet de créer le calendrier de l'utilisateur.
  * @returns {JSX.Element}
  */
 
 export default function CalendrierClient() {
   /**
-   * @constant CalendrierClient-calendar
+   * @constant calendar
    * @default null
-   * @description Cette constante contient le calendrier.
+   * @memberof CalendrierClient
+   * @description Cette constante est un useState qui contient le calendrier.
    */
   const [calendar, setCalendar] = useState(null);
 
   /**
-   * @constant CalendrierClient-calendarEl
+   * @constant calendarEl
    * @description Cette constante contient le calendrier.
    * @default null
+   * @memberof CalendrierClient
    * @type {object}
    */
   const calendarEl = useRef(null);
 
   /**
-   * @constant CalendrierClient-events
-   * @description Cette constante contient les évènements du calendrier.
+   * @constant events
+   * @description Cette constante est un useState contient les évènements du calendrier.
    * @default []
+   * @memberof CalendrierClient
    * @type {array}
    */
   const [events, setEvents] = useState([]);
@@ -72,11 +75,11 @@ export default function CalendrierClient() {
   let information = null;
 
   /**
-   * @function CalendrierClient-handleClick
-   * @description Cette fonction permet de rediriger l'utilisateur vers la page de détail d'un rendez-vous.
+   * @function handleClick
+   * @description Cette fonction permet de rediriger l'utilisateur vers la page de détail d'un rendez-vous en passant l'id du rendez-vous en paramètre.
    * @param {number} id L'id du rendez-vous.
    * @returns {void}
-   * @async
+   * @memberof CalendrierClient
    */
   const handleClick = (id) => {
     router.push({
@@ -86,8 +89,9 @@ export default function CalendrierClient() {
   };
 
   /**
-   * @function CalendrierClient-useEffect1
+   * @function useEffect1
    * @returns {void}
+   * @memberof CalendrierClient
    * @async
    * @description Cette fonction permet de faire les appels API pour récupérer les rendez-vous de l'utilisateur et les données spécifiques du rendez-vous.
    */
@@ -192,9 +196,10 @@ export default function CalendrierClient() {
   }, []);
 
   /**
-   * @function CalendrierClient-useEffect2
+   * @function useEffect2
    * @returns {void}
    * @async
+   * @memberof CalendrierClient
    * @description Cette fonction permet d'envoyer les évenements dans le calendrier ansi que d'appeler handleclick'.
    */
 
@@ -219,9 +224,10 @@ export default function CalendrierClient() {
   }, [events]);
 
   /**
-   * @function CalendrierClient-useEffect3
+   * @function useEffect3
    * @returns {void}
    * @async
+   * @memberof CalendrierClient
    * @description Cette fonction permet de définir le calendrier et d'afficher les évènements.
    */
   useEffect(() => {
@@ -229,7 +235,7 @@ export default function CalendrierClient() {
       const newCalendar = new Calendar(calendarEl.current, {
         initialView: "listWeek",
         firstDay: 1,
-        height: 'auto',
+        height: "auto",
         allDaySlot: false,
         slotDuration: "00:15:00",
         slotEventOverlap: false,
@@ -257,7 +263,7 @@ export default function CalendrierClient() {
         plugins: [listPlugin],
         locale: "fr", // définit la langue du calendrier en français
         buttonText: {
-          today: 'aujourd\'hui'
+          today: "aujourd'hui",
         },
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
@@ -281,13 +287,13 @@ export default function CalendrierClient() {
 
   return (
     &lt;>
-    &lt;style>
-      {`@media (max-width: 600px) {
+      &lt;style>
+        {`@media (max-width: 600px) {
         .fc-today-button {
           display: none;
         }
       }`}
-    &lt;/style>
+      &lt;/style>
       &lt;Header />
       &lt;div className="container">
         &lt;div
@@ -310,13 +316,13 @@ export default function CalendrierClient() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="global.html#ProfilUtilisateurs">ProfilUtilisateurs</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CalendrierClient">CalendrierClient</a></li><li><a href="global.html#CalendrierClient-calendar">CalendrierClient-calendar</a></li><li><a href="global.html#CalendrierClient-calendarEl">CalendrierClient-calendarEl</a></li><li><a href="global.html#CalendrierClient-events">CalendrierClient-events</a></li><li><a href="global.html#CalendrierClient-handleClick">CalendrierClient-handleClick</a></li><li><a href="global.html#CalendrierClient-useEffect1">CalendrierClient-useEffect1</a></li><li><a href="global.html#CalendrierClient-useEffect2">CalendrierClient-useEffect2</a></li><li><a href="global.html#CalendrierClient-useEffect3">CalendrierClient-useEffect3</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Header-cookies">Header-cookies</a></li><li><a href="global.html#Header-handleLogout">Header-handleLogout</a></li><li><a href="global.html#Header-router">Header-router</a></li><li><a href="global.html#Header-token">Header-token</a></li><li><a href="global.html#Header-useEffect">Header-useEffect</a></li><li><a href="global.html#Header-user">Header-user</a></li><li><a href="global.html#ProfilUtilisateurs-fetchCusto">ProfilUtilisateurs-fetchCusto</a></li><li><a href="global.html#ProfilUtilisateurs-fetchEmp">ProfilUtilisateurs-fetchEmp</a></li><li><a href="global.html#ProfilUtilisateurs-handleSubmit">ProfilUtilisateurs-handleSubmit</a></li><li><a href="global.html#ProfilUtilisateurs-role">ProfilUtilisateurs-role</a></li><li><a href="global.html#ProfilUtilisateurs-submitCusto">ProfilUtilisateurs-submitCusto</a></li><li><a href="global.html#ProfilUtilisateurs-submitEmp">ProfilUtilisateurs-submitEmp</a></li><li><a href="global.html#ProfilUtilisateurs-useEffect">ProfilUtilisateurs-useEffect</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="CalendrierClient.html">CalendrierClient</a></li><li><a href="Header.html">Header</a></li><li><a href="ProfilUtilisateurs.html">ProfilUtilisateurs</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 16 2023 14:59:46 GMT+0200 (heure d’été d’Europe centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 16 2023 16:41:26 GMT+0200 (heure d’été d’Europe centrale)
 </footer>
 
 <script> prettyPrint(); </script>
