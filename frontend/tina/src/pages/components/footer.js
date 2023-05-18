@@ -4,9 +4,24 @@ import { Container, Row, Col } from "react-bootstrap";
 
 export default function Footer() {
   return (
+    <>
+    <style>
+      {`
+        main {
+          display: flex;
+          min-height: 87vh;
+          flex-direction: column;
+        }
+        
+        footer {
+          margin-top: auto;
+        }
+      `}
+    </style>
+
     <footer
       className="bg-dark text-light py-3"
-      style={{ bottom: 0, left: 0, width: "100%", marginTop: "380px" }}
+      style={{ bottom: 0, left: 0, width: "100%" }}
     >
       <Container>
         <Row className="align-items-center">
@@ -43,7 +58,7 @@ export default function Footer() {
               className="text-white me-3"
             >
               <Image
-                src="/images/instagram_logo.svg"
+                src="/images/reseaux_sociaux/instagram_logo.svg"
                 alt="instagram"
                 width={30}
                 height={30}
@@ -57,7 +72,7 @@ export default function Footer() {
               className="text-white"
             >
               <Image
-                src="/images/facebook_logo.svg"
+                src="/images/reseaux_sociaux/facebook_logo.svg"
                 alt="facebook"
                 width={30}
                 height={30}
@@ -73,5 +88,6 @@ export default function Footer() {
         }
       `}</style>
     </footer>
+    </>
   );
 }

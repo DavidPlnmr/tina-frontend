@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "./components/header";
 import Accueil from "./components/accueil";
+import Footer from "./components/footer";
 
 export default function Home() {
   return (

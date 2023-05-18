@@ -172,23 +172,31 @@ export default function DetailRdv() {
     <>
         <Header />
         <div className="container " style={{ marginTop: "10%" }}>
-        <h2>Récapitulatif du rendez-vous : </h2>
+        <h2>Détail du rendez-vous : </h2>
         <table class="table">
           <tbody>
             <tr>
               <td>Service </td>
               <td>{services.name}</td>
             </tr>
-            {cookies.role == "customer" ? (
+            {cookies.role == "customer" &&(
             <tr>
                 <td>Coiffeur</td>
                 <td>{coiffeurs.last_name + " " + coiffeurs.first_name}</td>
             </tr>
-            ) : (
-            <tr>
-                <td>Client</td>
-                <td>{customers.last_name + " " + customers.first_name}</td>
-            </tr>
+            )}
+            {cookies.role == "employee" && customers.last_name !== undefined && (
+              <tr>
+                  <td>Client</td>
+                  <td>{customers.last_name + " " + customers.first_name}</td>
+              </tr>
+            )}
+
+            {cookies.role == "employee" && customers.last_name === undefined && (
+              <tr>
+                  <td>Informations</td>
+                  <td>{appointment.informations}</td>
+              </tr>
             )}
             <tr>
               <td>Date</td>

@@ -111,12 +111,17 @@ function Header() {
         style={{ position: "fixed", width: "100%", top: "0", zIndex: "100" }}
       >
         <Navbar collapseOnSelect expand="lg" variant="dark">
-          <Navbar.Brand href="/" style={{ marginLeft: "2%" }}>
+          <Navbar.Brand href="/" style={{ marginLeft: "6%" }}>
             <h4>Tina Coiffure</h4>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ms-auto" style={{ marginRight: "2%" }}>
+            <Nav className="ms-auto" style={{ marginRight: "6%" }}>
+            {token && cookies.role === "admin" && (
+                    <Nav.Link href="/components/gestion_admin/dash_admin">
+                      Administration
+                    </Nav.Link>
+                  )}
               <Nav.Link href="/components/prise_rendez_vous/service_rdv">
                 Prendre rendez-vous
               </Nav.Link>
@@ -129,11 +134,6 @@ function Header() {
                   <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">
                     Mes rendez-vous
                   </NavDropdown.Item>
-                  {token && cookies.role === "admin" && (
-                    <NavDropdown.Item onClick={handleLogout}>
-                      Ajout de disponibilités
-                    </NavDropdown.Item>
-                  )}
                   <NavDropdown.Item onClick={handleLogout}>
                     Se déconnecter
                   </NavDropdown.Item>

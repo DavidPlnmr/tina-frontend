@@ -199,6 +199,7 @@ export default function Calendrier() {
         slotEventOverlap: false,
         slotMinTime: "09:00:00",
         slotMaxTime: "19:00:00",
+        height: "auto",
         headerToolbar: {
           start: "prev,next today",
           center: "title",

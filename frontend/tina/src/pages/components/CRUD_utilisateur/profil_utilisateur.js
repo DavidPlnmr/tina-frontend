@@ -3,6 +3,7 @@ import Header from "../header";
 import axios from "axios";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
+import Footer from "../footer";
 
 /**
  * @namespace 'profil_utilisateur.js'
@@ -370,6 +371,7 @@ export default function ProfilUtilisateurs() {
   return (
     <>
       <Header />
+      <main>
       <div
         className="container d-flex justify-content-center"
         style={{ marginTop: "5%" }}
@@ -511,6 +513,8 @@ export default function ProfilUtilisateurs() {
           </div>
         </div>
       </div>
+      </main>
+      <Footer />
     </>
   );
 }

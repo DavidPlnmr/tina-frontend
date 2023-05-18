@@ -101,6 +101,7 @@ export default function ServiceRDV() {
   return (
     <>
       <Header /> {/* Render the Header component */}
+      <main>
       <div className="container pt-5">
         {" "}
         {/* Container for the services */}
@@ -202,6 +203,7 @@ export default function ServiceRDV() {
             ))}
         </div>
       </div>
+      </main>
       <Footer /> {/* Render the Footer component */}
     </>
   );
