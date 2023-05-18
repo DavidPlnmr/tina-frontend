@@ -4,9 +4,18 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { useRef } from 'react';
 import Header from '../../header';
+import Footer from '../../footer';
 
 
 export default function Formulaire_services() {
+
+    // Constantes pour les URL de l'API
+    const urlServices = 'http://localhost:8000/api/services/';
+    const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+    // Pathname pour la redirection de page
+    const pathnameModal = "./menu_services";
+
+
 
     const [typeOfService, setTypeOfService] = useState(0);
 
@@ -24,7 +33,7 @@ export default function Formulaire_services() {
         const index = evt.target.closest('div').dataset.index;
         console.log('index', parseInt(index));
         let val = evt.target.value;
-        if (evt.target.dataset.id =='duration') {
+        if (evt.target.dataset.id == 'duration') {
             val = formatTime(val);
         }
         setService((prevService) =>
@@ -103,16 +112,16 @@ export default function Formulaire_services() {
     const errorMessage = (newName) => {
         console.log("errorMessage");
         const serviceError = document.getElementById("service_error");
-        if (serviceError) {
+        if (!success) {
             serviceError.textContent = newName;
         }
-          
+
     };
 
     const postService = (s) => {
         const cookies = parseCookies();
 
-        axios.post('http://127.0.0.1:8000/api/services/', s, {
+        axios.post(urlServices, s, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -122,8 +131,8 @@ export default function Formulaire_services() {
                 setSuccess(true);
             })
             .catch((error) => {
-                errorMessage(s.name);
                 setSuccess(false);
+                errorMessage(s.name);
                 console.log(error);
             });
 
@@ -131,7 +140,7 @@ export default function Formulaire_services() {
 
     const fetchTypeOfService = () => {
         const cookies = parseCookies();
-        axios.get('http://127.0.0.1:8000/api/typesofservice/', {
+        axios.get(urlTypesOfService, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -152,73 +161,83 @@ export default function Formulaire_services() {
     //On crée une fonction qui va charger les formulaires des services selon le compteur
     const loadServices = () => {
 
-        for (let i = 0; i < compteur; i++) {
+        for (let n = 0; n < compteur; n++) {
+            let i = n + 1;
             lstNvServices.push(
-                <div>
+                // <div
+                //     className="mb-3 d-flex flex-column"
+                //     id='form'
+                //     style={{
+                //         width: "100vh",
+                //         height: "auto",
+                //         borderRadius: "6px",
+                //         padding: "10px",
+                //         background: "whiteSmoke",
+                //         boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                //     }}
+                // >
+                //     <form class="form-floating" >
+                //         <input type="text" class="form-control" data-id="name" onChange={handleChangeType} id="type_of_service" />
+                //         <label for="type_of_service">Nom du type de service</label>
+                //     </form >
+                // </div>
 
-                    <div class="row mb-3">
-                        <div class="col-md-2 col-form-label">
-                            <label for={"service_titre" + i}>Service{i} titre</label>
-                        </div>
-                        <div class="col-md-10" data-index={i}>
+                <div
+                    className="mb-3 d-flex flex-column"
+                    id='form'
+                    style={{
+                        width: "100vh",
+                        height: "auto",
+                        borderRadius: "6px",
+                        padding: "10px",
+                        background: "whiteSmoke",
+                        boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                    }}
+                >
+                    <label>Service {i}</label>
+                    <ul></ul>
+                    <div class="input-group mb-3">
+                        <form class="form-floating" data-index={i}>
                             <input type="text" class="form-control" id={"service_titre" + i} data-id={"name"} placeholder={'Le titre du service ' + i} onChange={handleChange}></input>
-                        </div>
+                            <label for={"service_titre" + i}>Titre</label>
+                        </form>
                     </div>
 
-                    <div class="row mb-3">
-                        <div class="col-md-2 col-form-label">
-                            <label for={"service_prix" + i}>Service{i} prix</label>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="input-group mb-2" data-index={i}>
-                                <input type="number" class="form-control" id={"service_prix" + i} data-id={"price"} placeholder="0" onChange={handleChange}></input>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">CHF</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-2 col-form-label">
-                            <label for={"service_studentprice" + i}>Service{i} prix etudiant</label>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="input-group mb-2" data-index={i}>
-                                <input type="number" class="form-control" id={"service_studentprice" + i} data-id={"price_student"} placeholder="0" onChange={handleChange}></input>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">CHF</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-2 col-form-label">
-                            <label for={"service_temps" + i}>Service{i} duree</label>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="input-group mb-2" data-index={i}>
-                                <select class="form-select" aria-label="Temps de service" id={"service_temps" + i} data-id={"duration"} onChange={handleChange}>
-                                    <option value="0">0</option>
-                                    <option value="15">15</option>
-                                    <option value="30">30</option>
-                                    <option value="45">45</option>
-                                    <option value="60">60</option>
-                                    <option value="75">75</option>
-                                    <option value="90">90</option>
-                                    <option value="105">105</option>
-                                    <option value="120">120</option>
-                                </select>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">Minutes</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="input-group mb-3">
+                        <form class="form-floating" data-index={i}>
+                            <input type="number" class="form-control" id={"service_prix" + i} data-id={"price"} placeholder="0" onChange={handleChange}></input>
+                            <label for={"service_prix" + i}>Prix normal</label>
+                        </form>
+                        <span class="input-group-text">CHF</span>
                     </div>
 
 
-                </div>
+                    <div class="input-group mb-3">
+                        <form class="form-floating" data-index={i}>
+                            <input type="number" class="form-control" id={"service_studentprice" + i} data-id={"price_student"} placeholder="0" onChange={handleChange}></input>
+                            <label for={"service_studentprice" + i}>Prix etudiant</label>
+                        </form>
+                        <span class="input-group-text">CHF</span>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <form class="form-floating" data-index={i}>
+                            <select class="form-select" aria-label="Temps de service" id={"service_temps" + i} data-id={"duration"} onChange={handleChange}>
+                                <option value="0">0</option>
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                                <option value="60">60</option>
+                                <option value="75">75</option>
+                                <option value="90">90</option>
+                                <option value="105">105</option>
+                                <option value="120">120</option>
+                            </select>
+                            <label for={"service_temps" + i}>Duree</label>
+                        </form>
+                        <span class="input-group-text">Minutes</span>
+                    </div>
+                </div >
             );
         }
         return lstNvServices;
@@ -236,27 +255,38 @@ export default function Formulaire_services() {
     return (
         <>
             <Header />
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "auto", backgroundColor: "#b8aaa0" }}>
+            <div
+                className="mb-3 d-flex flex-column text-center justify-content-center align-items-center"
+                style={{
+                    height: "auto",
+                    background: "#b8aaa0",
+                    boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                }}
+            >
                 <ul></ul>
                 <div id="notification_success" class="alert alert-success" role="alert" hidden>
                     <h4 class="alert-heading">Création réussie</h4>
                     <p>Vous avez créé {compteur} service(s) </p>
                     <hr></hr>
-                    <p class="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href="./menu_services" class="alert-link">ICI</Link>
-                    </p>    
+                    <p class="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
+                    </p>
                 </div>
                 <div id="notification_error" class="alert alert-danger" role="alert" hidden>
                     <h4 class="alert-heading">Création Echouée</h4>
                     <p>Il y a un problème avec le service : <a id='service_error'> </a></p>
                 </div>
-                <form>
-                    <div class="row mb-3">
-                        <select class="form-select" aria-label="Default select example" data-id="type_of_service" onChange={handleSelect}>
-                            <option key='0' value='0'>Sélectionnez un type de service...</option>
-                            {listTypeOfService.map(item => {
-                                return (<option key={item.id} value={item.id}>{item.name}</option>);
-                            })}
-                        </select>
+
+                <div>
+                    <div class="input-group mb-3">
+                        <form class="form-floating">
+                            <select class="form-select" aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                                <option key='0' value='0'>Sélectionnez un type de service...</option>
+                                {listTypeOfService.map(item => {
+                                    return (<option key={item.id} value={item.id}>{item.name}</option>);
+                                })}
+                            </select>
+                            <label for="select_type_of_service">Type de service</label>
+                        </form>
                     </div>
 
                     <div>
@@ -264,19 +294,19 @@ export default function Formulaire_services() {
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-auto">
-                            <button type="button" class="btn btn-outline-secondary" onClick={addService}>Ajouter un service</button>
-                        </div>
+                        <button type="button" class="btn btn-dark" onClick={addService}>Ajouter un service</button>
+
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-auto">
-                            <button type="button" class="btn btn-primary" onClick={handleSubmit}>Sauvegarder</button>
-                        </div>
+
+                        <button type="button" class="btn btn-primary" onClick={handleSubmit}>Sauvegarder</button>
+
                     </div>
 
-                </form>
+                </div>
             </div>
+            <Footer />
         </>
     );
 }

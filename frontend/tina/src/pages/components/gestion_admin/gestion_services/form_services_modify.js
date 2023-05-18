@@ -8,6 +8,14 @@ import { useRouter } from 'next/router';
 
 
 export default function Formulaire_services_modify() {
+
+    // Constantes pour les URL de l'API
+    const urlServices = 'http://localhost:8000/api/services/';
+    const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+
+    //Partie pour la redirection de page
+    const pathnameModal = "./menu_services";
+
     //Partie pour le formulaire de modification des services
     const router = useRouter();
     const values = router.query;
@@ -78,7 +86,7 @@ export default function Formulaire_services_modify() {
     const putService = (s) => {
         const cookies = parseCookies();
 
-        axios.put('http://127.0.0.1:8000/api/services/'+s.id+'/', s, {
+        axios.put(urlServices+s.id+'/', s, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -96,7 +104,7 @@ export default function Formulaire_services_modify() {
 
     const fetchTypeOfService = () => {
         const cookies = parseCookies();
-        axios.get('http://127.0.0.1:8000/api/typesofservice/', {
+        axios.get(urlTypesOfService, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -135,7 +143,7 @@ export default function Formulaire_services_modify() {
                     <h4 className="alert-heading">Modification réussie</h4>
                     <p>Le service a été modifié</p>
                     <hr></hr>
-                    <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href="./menu_services" className="alert-link">ICI</Link>
+                    <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
                     </p>
                 </div>
                 <div id="notification_error" className="alert alert-danger" role="alert" hidden>
