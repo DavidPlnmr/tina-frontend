@@ -6,74 +6,176 @@ import { useRouter } from "next/router";
 import { Card, Button } from "react-bootstrap";
 import Footer from "@/pages/components/footer";
 
+/**
+ * @namespace 'service_rdv.js'
+ * @description This component provides the functionality to display the services and types of services.
+ * @returns {JSX.Element}
+ */
 export default function ServiceRDV() {
-  // Defining state variables and a ref variable
-  const [typesOfService, setTypesOfService] = useState(null); // To store types of services
-  const [services, setServices] = useState(null); // To store services
-  const dataFetchedRef = useRef(false); // To check if data is already fetched or not
 
-  // Getting cookies and router
+  /**
+   * @constant typesOfService
+   * @memberof 'service_rdv.js'
+   * @see {@link 'service_rdv.js'.typesOfService}
+   * @description To store types of services
+   * @default null
+   */
+  const [typesOfService, setTypesOfService] = useState(null);
+
+  /**
+   * @constant services
+   * @memberof 'service_rdv.js'
+   * @see {@link 'service_rdv.js'.services}
+   * @description To store services
+   * @summary This state variable is used to store the services fetched from the backend.
+   * @default null
+   */
+  const [services, setServices] = useState(null);
+
+  /**
+   * @constant dataFetchedRef
+   * @memberof 'service_rdv.js'
+   * @see {@link 'service_rdv.js'.dataFetchedRef}
+   * @description To check if data is already fetched or not
+   * @summary The services are fetched only once when the component is mounted.
+   * @summary The services are fetched only if they are not already fetched.
+   * @summary This is done to avoid unnecessary API calls.
+   * @type {React.MutableRefObject<boolean>}
+   * @default false
+   */
+  const dataFetchedRef = useRef(false);
+
+  /**
+   * @constant cookies
+   * @memberof 'service_rdv.js'
+   * @see {@link 'header.js'.cookies}
+   * @description To store cookies
+   * @summary This state variable is used to store the cookies fetched from the browser.
+   * @type {{[p: string]: string}}
+   * @default null
+   * @see {@link 'https://www.npmjs.com/package/nookies'.parseCookies}
+   */
   const cookies = parseCookies();
+
+  /**
+   * @constant router
+   * @memberof 'service_rdv.js'
+   * @see {@link 'header.js'.router}
+   * @description To store router
+   * @summary This state variable is used to store the router object.
+   * @summary The router object is used to redirect the user to the login page if the user is not logged in.
+   * @summary The router object is used to redirect the user to the dashboard if the user is logged in.
+   * @type {NextRouter}
+   */
   const router = useRouter();
 
-  // Function to fetch types of service
+  /**
+   * @constant fetchTypeOfService
+   * @memberof 'service_rdv.js'
+   * @description To fetch types of services
+   * @summary This state variable is used to store the types of services fetched from the backend.
+   * @returns {void}
+   */
   const fetchTypeOfService = () => {
     axios
-      .get("http://127.0.0.1:8000/api/typesofservice/", {
-        headers: {
-          Authorization: "Token " + cookies.csrftoken,
-        },
-      })
-      .then((response) => {
-        setTypesOfService(response.data); // Setting types of service in the state variable
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .get("http://127.0.0.1:8000/api/typesofservice/", {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+          },
+        })
+        .then((response) => {
+          setTypesOfService(response.data); // Setting types of service in the state variable
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
-  // Function to fetch services
+  /**
+   * @constant fetchServices
+   * @memberof 'service_rdv.js'
+   * @description To fetch services
+   * @summary This state variable is used to store the services fetched from the backend.
+   * @returns {void}
+   */
   const fetchServices = () => {
     axios
-      .get("http://127.0.0.1:8000/api/services/", {
-        headers: {
-          Authorization: "Token " + cookies.csrftoken,
-        },
-      })
-      .then((response) => {
-        setServices(response.data); // Setting services in the state variable
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .get("http://127.0.0.1:8000/api/services/", {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+          },
+        })
+        .then((response) => {
+          setServices(response.data); // Setting services in the state variable
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
-  // Function to format the duration
+  /**
+   * @constant formatDuration
+   * @memberof 'service_rdv.js'
+   * @description To format duration
+   * @summary This function is used to format the duration of a service.
+   * @summary The duration is in the format HH:MM.
+   * @summary The duration is converted to minutes.
+   * @summary The duration is returned in minutes.
+   * @param duration
+   * @return {number}
+   */
   const formatDuration = (duration) => {
     const hours = duration.split(":")[0] * 60;
     const minutes = duration.split(":")[1];
     return parseInt(hours) + parseInt(minutes);
   };
 
-  // Function to get price without cents
+  /**
+   * @constant priceWithoutCent
+   * @memberof 'service_rdv.js'
+   * @description To get price without cent
+   * @summary This function is used to get the price of a service without the cents.
+   * @summary The price is in the format XX.XX.
+   * @summary The price is converted to XX.
+   * @summary The price is returned in XX.
+   * @param price
+   * @return {string}
+   */
   const priceWithoutCent = (price) => {
     return price.split(".")[0];
   };
 
-  // Function to get the minimum price for a type of service
+  /**
+   * @constant minPriceForATypeOfService
+   * @memberof 'service_rdv.js'
+   * @description To get minimum price for a type of service
+   * @summary This function is used to get the minimum price for a type of service.
+   * @summary The minimum price is returned in XX.
+   * @param typeOfService
+   * @return {string}
+   */
   const minPriceForATypeOfService = (typeOfService) => {
     if (services) {
-    return priceWithoutCent(
-      services
-        .filter((service) => service.type_of_service === typeOfService.id)
-        .sort((a, b) => a.price - b.price)[0].price
-      
-    );}
+      return priceWithoutCent(
+          services
+              .filter((service) => service.type_of_service === typeOfService.id)
+              .sort((a, b) => a.price - b.price)[0].price
+
+      );}
   };
 
-  // Function to handle choosing of a service
+  /**
+   * @constant handleChooseService
+   * @memberof 'service_rdv.js'
+   * @description To handle choose service
+   * @summary This function is used to redirect the user to the page where the user can choose the employee.
+   * @summary The service is passed as a query parameter.
+   * @summary The service is passed as a stringified JSON object because the service is an object.
+   * @param service
+   * @return {void}
+   */
   const handleChooseService = (service) => {
     console.log(service);
     router.push({
@@ -82,7 +184,15 @@ export default function ServiceRDV() {
     });
   };
 
-  // Effect hook to fetch data
+  /**
+   * @constant useEffect
+   * @memberof 'service_rdv.js'
+   * @description To fetch data
+   * @summary This function is used to fetch the types of service and services.
+   * @summary The types of service and services are fetched only once.
+   * @summary The types of service and services are fetched when the component is mounted.
+   * @returns {void}
+   */
   useEffect(() => {
     if (dataFetchedRef.current) return; // Fetch data only once
     dataFetchedRef.current = true;
@@ -94,117 +204,127 @@ export default function ServiceRDV() {
     });
   }, []);
 
-  // Setting number of columns for services
+  /**
+   * @constant numCols
+   * @memberof 'service_rdv.js'
+   * @description To set number of columns
+   * @summary This state variable is used to set the number of columns for the services.
+   * @summary The number of columns is set to 4 if the number of types of service is 0.
+   * @summary The number of columns is set to 12 divided by the number of types of service if the number of types of service is not 0.
+   * @summary The number of columns is returned.
+   * @type {number|number}
+   * @returns {number}
+   * @default 4
+   */
   const numCols = typesOfService ? Math.floor(12 / typesOfService.length) : 4;
 
-  // Rendering component
   return (
-    <>
-      <Header /> {/* Render the Header component */}
-      <main>
-      <div className="container pt-5">
-        {" "}
-        {/* Container for the services */}
-        <div className="row">
-          {typesOfService && // Check if types of service have been fetched before rendering the services
-            typesOfService.map((typeOfService) => (
-              <div className={`col-md-${numCols}`} key={typeOfService.id}>
-                {" "}
-                {/* Create a column for each service */}
-                <Card className="mb-4">
-                  {" "}
-                  {/* Create a card to display each type of service */}
-                  <Card.Body>
-                    <Card.Title
-                      style={{
-                        color: "#232627",
-                        fontSize: "36px",
-                        marginBottom: "22px",
-                      }}
-                    >
-                      {typeOfService.name}
-                    </Card.Title>{" "}
-                    {/* Display the name of the service type */}
-                    <Card.Subtitle
-                      className="mb-2"
-                      style={{ color: "#F3B10E", fontSize: "28px" }}
-                    >
-                      À partir de CHF {minPriceForATypeOfService(typeOfService)}
-                      .-
-                    </Card.Subtitle>{" "}
-                    {/* Display the minimum price for each type of service */}
-                    <hr />
-                    <div>
-                      {services &&
-                        services
-                          .filter(
-                            (service) =>
-                              service.type_of_service === typeOfService.id
-                          ) // Filter services based on their type
-                          .sort((a, b) => b.price - a.price) // Sort services by price in descending order
-                          .map((service) => (
-                            <div
-                              className="mb-3 d-flex flex-column"
-                              key={service.id}
-                              style={{
-                                background: "whiteSmoke",
-                                borderRadius: "6px",
-                                padding: "10px",
-                                boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                              }}
-                            >
-                              <div>
-                                <Card.Text className="mb-1">
-                                  {service.name}
-                                </Card.Text>{" "}
-                                {/* Display the name of the service */}
-                                <Card.Text className="mb-2">
-                                  {formatDuration(service.duration)} minutes,
-                                  CHF {priceWithoutCent(service.price)}.-
-                                </Card.Text>{" "}
-                                {/* Display the duration and price of the service */}
-                              </div>
-                              <Button
-                                variant="primary"
+      <>
+        <Header /> {/* Render the Header component */}
+        <main>
+          <div className="container pt-5">
+            {" "}
+            {/* Container for the services */}
+            <div className="row">
+              {typesOfService && // Check if types of service have been fetched before rendering the services
+                  typesOfService.map((typeOfService) => (
+                      <div className={`col-md-${numCols}`} key={typeOfService.id}>
+                        {" "}
+                        {/* Create a column for each service */}
+                        <Card className="mb-4">
+                          {" "}
+                          {/* Create a card to display each type of service */}
+                          <Card.Body>
+                            <Card.Title
                                 style={{
-                                  background: "#232627",
-                                  alignSelf: "flex-end",
-                                  borderColor: "#232627",
-                                  transition: "all 0.2s ease-in-out",
+                                  color: "#232627",
+                                  fontSize: "36px",
+                                  marginBottom: "22px",
                                 }}
-                                onClick={() => handleChooseService(service)}
-                                onMouseOver={(e) =>
-                                  (e.target.style.background = "#383a3d")
-                                }
-                                onMouseOut={(e) =>
-                                  (e.target.style.background = "#232627")
-                                }
-                              >
-                                Choisir
-                              </Button>{" "}
-                              {/* Button to choose a service */}
+                            >
+                              {typeOfService.name}
+                            </Card.Title>{" "}
+                            {/* Display the name of the service type */}
+                            <Card.Subtitle
+                                className="mb-2"
+                                style={{ color: "#F3B10E", fontSize: "28px" }}
+                            >
+                              À partir de CHF {minPriceForATypeOfService(typeOfService)}
+                              .-
+                            </Card.Subtitle>{" "}
+                            {/* Display the minimum price for each type of service */}
+                            <hr />
+                            <div>
+                              {services &&
+                                  services
+                                      .filter(
+                                          (service) =>
+                                              service.type_of_service === typeOfService.id
+                                      ) // Filter services based on their type
+                                      .sort((a, b) => b.price - a.price) // Sort services by price in descending order
+                                      .map((service) => (
+                                          <div
+                                              className="mb-3 d-flex flex-column"
+                                              key={service.id}
+                                              style={{
+                                                background: "whiteSmoke",
+                                                borderRadius: "6px",
+                                                padding: "10px",
+                                                boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                                              }}
+                                          >
+                                            <div>
+                                              <Card.Text className="mb-1">
+                                                {service.name}
+                                              </Card.Text>{" "}
+                                              {/* Display the name of the service */}
+                                              <Card.Text className="mb-2">
+                                                {formatDuration(service.duration)} minutes,
+                                                CHF {priceWithoutCent(service.price)}.-
+                                              </Card.Text>{" "}
+                                              {/* Display the duration and price of the service */}
+                                            </div>
+                                            <Button
+                                                variant="primary"
+                                                style={{
+                                                  background: "#232627",
+                                                  alignSelf: "flex-end",
+                                                  borderColor: "#232627",
+                                                  transition: "all 0.2s ease-in-out",
+                                                }}
+                                                onClick={() => handleChooseService(service)}
+                                                onMouseOver={(e) =>
+                                                    (e.target.style.background = "#383a3d")
+                                                }
+                                                onMouseOut={(e) =>
+                                                    (e.target.style.background = "#232627")
+                                                }
+                                            >
+                                              Choisir
+                                            </Button>{" "}
+                                            {/* Button to choose a service */}
+                                          </div>
+                                      ))}
                             </div>
-                          ))}
-                    </div>
-                  </Card.Body>
-                  <Card.Footer
-                    className="text-muted"
-                    style={{
-                      background: "white",
-                      alignSelf: "flex-end",
-                      border: "none",
-                    }}
-                  >
-                    Étudiant réduc 5.-
-                  </Card.Footer>{" "}
-                  {/* Footer displaying a discount for students */}
-                </Card>
-              </div>
-            ))}
-        </div>
-      </div>
-      </main>
-      <Footer /> {/* Render the Footer component */}
-    </>
+                          </Card.Body>
+                          <Card.Footer
+                              className="text-muted"
+                              style={{
+                                background: "white",
+                                alignSelf: "flex-end",
+                                border: "none",
+                              }}
+                          >
+                            Étudiant réduc 5.-
+                          </Card.Footer>{" "}
+                          {/* Footer displaying a discount for students */}
+                        </Card>
+                      </div>
+                  ))}
+            </div>
+          </div>
+        </main>
+        <Footer /> {/* Render the Footer component */}
+      </>
   );
 }

@@ -113,7 +113,7 @@ function Header() {
                             gap: '10px' /* Espacement entre l'image et le texte */
                           }}
             >
-              <img src="/images/tina4.png" className="d-inline-block align-top rounded-circle shadow" width="60" alt="Logo Tina Coiffure" />
+              <img src="/images/tina_logo.png" className="d-inline-block align-top rounded-circle shadow" width="60" alt="Logo Tina Coiffure" />
               <h4  style={{
                 fontSize: "1.5rem",
                 fontWeight: "bold",

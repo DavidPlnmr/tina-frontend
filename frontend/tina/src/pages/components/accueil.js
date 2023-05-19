@@ -4,8 +4,21 @@ import Carousel from 'react-bootstrap/Carousel';
 import Footer from "@/pages/components/footer";
 import { Fade } from 'react-awesome-reveal';
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
+
+/**
+ * @namespace 'accueil.js'
+ * @description This component provides the functionality to create and manage the home page.
+ * @returns {JSX.Element} A React functional component rendering the home page.
+ */
 export default function Accueil() {
 
+    /**
+     * @constant products
+     * @memberof 'accueil.js'
+     * @description An array containing the products to be displayed on the home page.
+     * @type {[{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},null]}
+     * @see {@link 'accueil.js'.products}
+     */
     const products = [
         { title: 'Shampoing', backgroundColor: '#292E3D', textColor: '#F6F8F7' },
         { title: 'Gels, Cires & Poudre', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
@@ -15,8 +28,23 @@ export default function Accueil() {
         { title: 'Couleurs', backgroundColor: '#F6F8F7', textColor: '#292E3D' },
     ];
 
+    /**
+     * @constant isBrowser
+     * @memberof 'accueil.js'
+     * @description A function to check if the code is running in a browser or not.
+     * @type {function(): boolean}
+     * @see {@link 'accueil.js'.isBrowser}
+     * @returns {boolean}
+     */
     const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
-    // Show button when page is scrolled upto given distance
+
+    /**
+     * @function toggleVisibility
+     * @memberof 'accueil.js'
+     * @description A function to display the "return to top" button when the user scrolls down the page.
+     * @see {@link 'accueil.js'.toggleVisibility}
+     * @returns {void}
+     */
     function toggleVisibility() {
         if (!isBrowser()) return;
         if (window.scrollY > 300) {
@@ -26,13 +54,27 @@ export default function Accueil() {
         }
     }
 
-    // Set the function to run when scrolling
+    /**
+     * @function useEffect
+     * @memberof 'accueil.js'
+     * @description A function to add an event listener to the window object to display the "return to top" button when the user scrolls down the page.
+     * @see {@link 'accueil.js'.useEffect}
+     * @returns {void}
+     * @async
+     */
     useEffect(() => {
         if (!isBrowser()) return;
         window.addEventListener("scroll", toggleVisibility);
         return () => window.removeEventListener("scroll", toggleVisibility);
     }, []);
 
+    /**
+     * @function scrollToTop
+     * @memberof 'accueil.js'
+     * @description A function to scroll to the top of the page when the user clicks on the "return to top" button.
+     * @see {@link 'accueil.js'.scrollToTop}
+     * @returns {void}
+     */
     function scrollToTop() {
         if (!isBrowser()) return;
         window.scrollTo({
@@ -178,7 +220,6 @@ export default function Accueil() {
 
             {/*adresse - email - phone*/}
             <div className="bg-dark text-light py-3">
-                <br/>
                 <Container className="text-muted">
                     <br />
                     <Row>
