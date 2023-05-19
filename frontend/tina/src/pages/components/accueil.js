@@ -46,7 +46,7 @@ export default function Accueil() {
             {/* Carousel avec 3 images*/}
             <Carousel fade>
                 <Carousel.Item>
-                    <img src="/images/home_images/carousel/carousel_1.jpg" className="d-flex w-100" alt="..." />
+                    <img src="/images/home_images/carousel/carousel_1.jpg" className="d-flex w-100" alt="Un style unique" />
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Un style unique</h3>
                         <p className={styles.carouselText}>Des coiffures sur mesure pour refléter votre personnalité</p>
@@ -54,7 +54,7 @@ export default function Accueil() {
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src="/images/home_images/carousel/carousel_2.jpg" className="d-block w-100" alt="..." />
+                    <img src="/images/home_images/carousel/carousel_2.jpg" className="d-block w-100" alt="Le confort avant tout" />
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Le confort avant tout</h3>
                         <p className={styles.carouselText}>Un espace détente pour une expérience agréable</p>
@@ -62,7 +62,7 @@ export default function Accueil() {
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src="/images/home_images/carousel/carousel_3.jpg" className="d-block w-100" alt="..." />
+                    <img src="/images/home_images/carousel/carousel_3.jpg" className="d-block w-100" alt="Des professionels à votre écoute" />
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Des professionnels à votre écoute</h3>
                         <p className={styles.carouselText}>Une équipe dédiée à vos besoins en coiffure</p>
@@ -120,18 +120,14 @@ export default function Accueil() {
                                 <a href="https://goo.gl/maps/jHu3JBzorevPJ9qf6" target="_blank" className="btn btn-light px-5 rounded-pill shadow-sm">Où nous trouver ?</a>
                             </div>
                             <div className="col-lg-5 px-5 mx-auto order-1 order-lg-2">
-                                <img
-                                    src="/images/home_images/qui_sommes_nous/perso_1.PNG" alt=""
-                                    className="img-fluid mb-4 mb-lg-0 rounded-pill shadow"></img>
+                                <img src="/images/home_images/qui_sommes_nous/perso_1.PNG" alt="Notre philosophie" className="img-fluid mb-4 mb-lg-0 rounded-pill shadow"/>
                             </div>
                         </div>
                     </Fade>
                     <Fade triggerOnce direction="right">
                         <div className="row align-items-center mb-5">
                             <div className="col-lg-5 px-5 mx-auto">
-                                <img
-                                    src="/images/home_images/qui_sommes_nous/perso_2.PNG" alt=""
-                                    className="img-fluid mb-4 mb-lg-0 rounded-pill shadow"></img>
+                                <img src="/images/home_images/qui_sommes_nous/perso_2.PNG" alt="Une tradition revisitée" className="img-fluid mb-4 mb-lg-0 rounded-pill shadow"/ >
                             </div>
                             <div className="col-lg-6"><i className="fa fa-leaf fa-2x mb-3 text-primary"></i>
                                 <h2 className="font-weight-light">Une tradition revisitée</h2>
@@ -149,9 +145,7 @@ export default function Accueil() {
                                 <a href="tel:+41223202222" className="btn btn-light px-5 rounded-pill shadow-sm">Contactez-nous</a>
                             </div>
                             <div className="col-lg-5 px-5 mx-auto order-1 order-lg-2">
-                                <img
-                                    src="/images/home_images/qui_sommes_nous/equipe.PNG" alt=""
-                                    className="img-fluid mb-4 mb-lg-0 rounded-pill shadow"></img>
+                                <img src="/images/home_images/qui_sommes_nous/equipe.PNG" alt="Notre équipe" className="img-fluid mb-4 mb-lg-0 rounded-pill shadow" />
                             </div>
                         </div>
                     </Fade>
@@ -225,5 +219,5 @@ export default function Accueil() {
             {/*Footer*/}
             <Footer />
         </>
-    );
+);
 }

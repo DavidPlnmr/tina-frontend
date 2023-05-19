@@ -5,7 +5,7 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 /**
  * @namespace 'header.js'
- * @description This Header component is used to generate the application's navigation bar. 
+ * @description This Header component is used to generate the application's navigation bar.
  * It contains links for navigating through the application and functionality for user authentication.
  * @returns {JSX.Element} The Header component as a JSX element.
  */
@@ -42,7 +42,7 @@ function Header() {
    */
   const router = useRouter();
 
-   /**
+  /**
    * @constant cookies
    * @memberof 'header.js'
    * @type {object}
@@ -50,7 +50,7 @@ function Header() {
    */
   const cookies = parseCookies();
 
-   /**
+  /**
    * @function useEffect
    * @memberof 'header.js'
    * @description This useEffect hook sets the token and user's information based on the cookies when the component mounts or updates.
@@ -93,64 +93,72 @@ function Header() {
   };
 
   return (
-    <>
-      <style type="text/css">
-        {`
+      <>
+        <style type="text/css">
+          {`
             .navbar {
                 background-color: #232627;
                 color: #fff;
                 min-height: 90px;
             }
-
-            img {
-                height: 20%;
-            }
         `}
-      </style>
-      <header
-        style={{ position: "fixed", width: "100%", top: "0", zIndex: "100" }}
-      >
-        <Navbar collapseOnSelect expand="lg" variant="dark">
-          <Navbar.Brand href="/" style={{ marginLeft: "6%" }}>
-            <h4>Tina Coiffure</h4>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ms-auto" style={{ marginRight: "6%" }}>
-            {token && cookies.role === "admin" && (
+        </style>
+        <header style={{ position: "fixed", width: "100%", top: "0", zIndex: "100" }}>
+          <Navbar collapseOnSelect expand="lg" variant="dark">
+            <Navbar.Brand href="/"
+                          style={{
+                            marginLeft: "6%",
+                            display: 'flex', /* Ajout de la propriété display: flex */
+                            alignItems: 'center', /* Alignement des éléments sur la ligne de base */
+                            gap: '10px' /* Espacement entre l'image et le texte */
+                          }}
+            >
+              <img src="/images/tina4.png" className="d-inline-block align-top rounded-circle shadow" width="60" alt="Logo Tina Coiffure" />
+              <h4  style={{
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                textDecoration: "none",
+                textShadow: "2px 2px 4px #000000"
+              }}>Tina Coiffure</h4>
+            </Navbar.Brand>
+
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="ms-auto" style={{ marginRight: "6%" }}>
+                {token && cookies.role === "admin" && (
                     <Nav.Link href="/components/gestion_admin/dash_admin">
                       Administration
                     </Nav.Link>
-                  )}
-              <Nav.Link href="/components/prise_rendez_vous/service_rdv">
-                Prendre rendez-vous
-              </Nav.Link>
-              <Nav.Link href="/">Qui sommes nous ?</Nav.Link>
-              {token ? (
-                <NavDropdown title={user.username} id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">
-                    Mon profil
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">
-                    Mes rendez-vous
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={handleLogout}>
-                    Se déconnecter
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <Nav.Link href="/components/identification/connexion">
-                  S'identifier
+                )}
+                <Nav.Link href="/components/prise_rendez_vous/service_rdv">
+                  Prendre rendez-vous
                 </Nav.Link>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </header>{" "}
-      <br />
-      <br />
-      <br />
-    </>
+                <Nav.Link href="/">Qui sommes nous ?</Nav.Link>
+                {token ? (
+                    <NavDropdown title={user.username} id="collasible-nav-dropdown">
+                      <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">
+                        Mon profil
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/components/CRUD_utilisateur/calendrier_utilisateur">
+                        Mes rendez-vous
+                      </NavDropdown.Item>
+                      <NavDropdown.Item onClick={handleLogout}>
+                        Se déconnecter
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                ) : (
+                    <Nav.Link href="/components/identification/connexion">
+                      S'identifier
+                    </Nav.Link>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </header>{" "}
+        <br />
+        <br />
+        <br />
+      </>
   );
 }
 
