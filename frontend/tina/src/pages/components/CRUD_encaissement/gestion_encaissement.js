@@ -8,9 +8,20 @@ import { format, parse, set } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { refineEventDef } from '@fullcalendar/core/internal';
 
-
+/**
+ * @namespace 'gestion_encaissement.js'
+ * @description this page is used to manage the encaissements
+ * @returns {JSX.Element}
+ */
 export default function Encaissement() {
 
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} urlEncaissements - url to get the encaissements
+     * @constant {String} urlServices - url to get the services
+     * @constant {String} urlEmployees - url to get the employees
+     * @constant {String} pathnameAdd - pathname to redirect to the page to add an encaissement
+     */
     // Constantes pour les URL de l'API
     const urlEncaissements = 'http://localhost:8000/api/collections/';
     const urlServices = 'http://localhost:8000/api/services/';
@@ -20,68 +31,166 @@ export default function Encaissement() {
     const pathnameAdd = "./creation_encaissement";
 
 
-    //variables pour la gestion des boutons
-    // const [buttonModify, setButtonModify] = useState(
-    //     "btn btn-outline-primary"
-    // );
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} modificationMode - state to manage the message to display when the user wants to modify or delete an encaissement
+     * @default ""
+     */
     const [modificationMode, setModificationMode] = useState(
         ""
     );
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} buttonDelete - state to manage the className of the delete button
+     * @default "btn btn-outline-danger"
+     */
     const [buttonDelete, setButtonDelete] = useState(
         "btn btn-outline-danger"
     );
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} modeModify - state to manage the modification mode(modify or delete)
+     * @default ""
+     */
     const [modeModify, setModeModify] = useState('');
-    // const [btnChooseEncaissement, setBtnChooseEncaissement] = useState(
-    //     "btn btn-dark"
-    // );
+ 
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} btnChoose - state to manage the className of the choose button
+     * @default "btn btn-dark"
+     */
     const [btnChoose, setBtnChoose] = useState(
         "btn btn-dark"
     );
 
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} encaissement - state to manage the list of encaissements
+     * @default []
+     */
     //variables pour la gestion des encaissements
     //Encaissements
     const [encaissements, setEncaissements] = useState([]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} encaissementsAffichage - state to manage the list of encaissements to display
+     * @default []
+     */
     const [encaissementsAffichage, setEncaissementsAffichage] = useState([]);
     //Service
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} services - state to manage the list of services
+     * @default []
+     */
     const [services, setServices] = useState([]);
     //Employee
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} employees - state to manage the list of employees
+     * @default []
+     */
     const [employees, setEmployees] = useState([]);
 
     //partie de la modal
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} show - state to manage if the modal is shown or not
+     * @default false
+     */
     const [show, setShow] = useState(false);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} s - state to manage the id of the encaissement to delete
+     * @default {id:0}
+     */
     const [s, setS] = useState({ id: 0 });
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClose - function to close the modal
+     * @description set the state show to false
+     */
     const handleClose = () => setShow(false);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleShow - function to show the modal
+     * @description set the state show to true
+     */
     const handleShow = () => setShow(true);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {boolean} refresh - state to manage the refresh of the page
+     * @default false
+     */
     const [refresh, setRefresh] = useState(false);
 
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {Integer} totalAmount - state to manage the total amount of the encaissements
+     * @default 0
+     */
     //total amount
     const [totalAmount, setTotalAmount] = useState(0);
 
     // Const pour la recherche et le tri
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} searchTerm - state to manage the search term of the encaissements filter
+     * @default ""
+     */
     const [searchTerm, setSearchTerm] = useState("");
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} searchResults - state to manage the list of encaissements searched
+     * @default []
+     */
     const [searchResults, setSearchResults] = useState([]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} sortBy - state to manage the sort term of the encaissements filter
+     * @default ""
+     */
     const [sortBy, setSortBy] = useState("");
 
     // Handle search and sort functions for encaissements
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @param {object} event - event to manage the search term
+     * @function handleSearch - function to manage the search term
+     * @description set the state searchTerm to the value of the search input
+     */
     const handleSearch = event => {
         setSearchTerm(event.target.value);
     };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleSort - function to manage the sort term
+     * @param {object} event - event to manage the sort term
+     * @description set the state sortBy to the value of the sort input
+     */
     const handleSort = (event) => {
         setSortBy(event.target.value);
     };
 
 
-    //handleClick pour les boutons
-    // const handleClickModify = (evt) => {
-    //     console.log("Mode Modification");
-    //     if (modeModify != 'modify') {
-    //         setModeModify(modeModify => 'modify');
-    //     } else {
-    //         setModeModify(modeModify => '');
-    //     }
-    // };
-
-    const handleClickDelete = (evt) => {
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClickDelete - function to manage the delete mode
+     * @description set the state modeModify to 'delete' if it's not the delete mode, else set the state modeModify to ''
+     */
+    const handleClickDelete = () => {
         console.log("Mode Suppression");
         if (modeModify != 'delete') {
             setModeModify(modeModify => 'delete');
@@ -90,21 +199,29 @@ export default function Encaissement() {
         }
     };
 
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleChoose - function to manage the choose mode
+     * @param {object} evt - event to manage the choose mode 
+     * @description set the state s to the id of the encaissement to delete and show the modal
+     */
     const handleChoose = (evt) => {
         setS(s => ({ id: evt.target.id }));
-        // if (modeModify === 'modify') {
-
-        //     console.log("Modification de l'encaissement n°" + evt.target.id);
-        //     router.push({
-        //         pathname: '/components/CRUD_encaissement/modification_encaissement',
-        //         query: { id: evt.target.id },
-        //     })
-        // } else 
         if (modeModify === 'delete') {
             handleShow();
         }
     };
 
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleConfirmDelete - function to manage the delete of the encaissement
+     * @see {@link 'gestion_encaissement.js'.handleClose}
+     * @see {@link 'gestion_encaissement.js'.errorMessage}
+     * @see {@link 'gestion_encaissement.js'.urlEncaissements}
+     * @description delete the encaissement through the API, then delete the encaissement in the list of encaissements and show a notification
+     */
     const handleConfirmDelete = () => {
         console.log("supp")
         handleClose();
@@ -123,6 +240,14 @@ export default function Encaissement() {
                 console.log(error);
             });
     };
+
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function errorMessage - function to show a notification when an error occured
+     * @param {Integer} id - id of the encaissement to delete
+     * @description modify the text of the notification and show it, then hide it after 3 seconds, and refresh the page
+     */
     const errorMessage = (id) => {
         document.getElementById("notification_delete").removeAttribute("hidden");
         const serviceError = document.getElementById("service_error");
@@ -135,6 +260,13 @@ export default function Encaissement() {
     };
 
     //Récupération des encaissements
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function fetchEncaissements - function to get the encaissements through the API
+     * @see {@link 'gestion_encaissement.js'.urlEncaissements}
+     * @see {@link 'gestion_encaissement.js'.parseCookies}
+     * @description get the encaissements through the API and set the state encaissements with the response data    
+     */
     const fetchEncaissements = () => {
         const cookies = parseCookies();
         axios.get(urlEncaissements, {
@@ -152,6 +284,13 @@ export default function Encaissement() {
     };
 
     //Récupération des services
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function fetchServices - function to get the services through the API
+     * @see {@link 'gestion_encaissement.js'.urlServices}
+     * @see {@link 'gestion_encaissement.js'.parseCookies}
+     * @description get the services through the API and set the state services with the response data
+     */
     const fetchServices = () => {
         const cookies = parseCookies();
         axios.get(urlServices, {
@@ -169,6 +308,13 @@ export default function Encaissement() {
     };
 
     //Récupération des employees
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function fetchEmployees - function to get the employees through the API
+     * @see {@link 'gestion_encaissement.js'.urlEmployees}
+     * @see {@link 'gestion_encaissement.js'.parseCookies}
+     * @description get the employees through the API and set the state employees with the response data
+     */
     const fetchEmployees = () => {
         const cookies = parseCookies();
         axios.get(urlEmployees, {
@@ -187,6 +333,13 @@ export default function Encaissement() {
 
     //Fonctions pour l'affichage
     //Récupération du nom du service
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @param {Integer} id - id of the service
+     * @function getServiceName - function to get the name of the service
+     * @description go through the list of services and return the name of the service with the id passed in parameter
+     * @returns {String} name - name of the service
+     */
     const getServiceName = (id) => {
         let name = "";
         services.map((s) => {
@@ -197,6 +350,14 @@ export default function Encaissement() {
         return name;
     };
     //Récupération du nom de l'employee
+    /**
+     * 
+     * @param {Integer} id - id of the employee
+     * @memberof 'gestion_encaissement.js'
+     * @function getEmployeeName - function to get the name of the employee
+     * @description go through the list of employees and return the name of the employee with the id passed in parameter
+     * @returns {String} name - name of the employee
+     */
     const getEmployeeName = (id) => {
         let name = "";
         employees.map((e) => {
@@ -207,17 +368,42 @@ export default function Encaissement() {
         return name;
     };
     //Formatage de la date
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @param {String} date - date of the encaissement
+     * @function formatDate - function to format the date of the encaissement
+     * @description format the date of the encaissement from YYYY-MM-DD to DD/MM/YYYY
+     * @returns {String} newDate - date of the encaissement formatted
+     */
     const formatDate = (date) => {
         let newDate = date.split('-');
         return newDate[2] + "/" + newDate[1] + "/" + newDate[0];
     };
     //Formatage de l'heure
+    /**
+     * 
+     * @param {String} time - time of the encaissement
+     * @memberof 'gestion_encaissement.js'
+     * @function formatTime - function to format the time of the encaissement
+     * @description format the time of the encaissement from HH:MM:SS to HHhMM
+     * @returns {String} newTime - time of the encaissement formatted
+     */
     const formatTime = (time) => {
         let newTime = time.split(':');
         return newTime[0] + "h" + newTime[1];
     };
 
     //Formatage des encaissements pour l'affichage
+    /**
+     * 
+     * @param {object} encaissements - list of the encaissements
+     * @memberof 'gestion_encaissement.js'
+     * @function formatEncaissements - function to format the encaissements for the display
+     * @description go through the list of encaissements and format them for the display
+     * @returns {object} newEncaissements - list of the encaissements formatted
+     * @see {@link 'gestion_encaissement.js'.formatDate}
+     * @see {@link 'gestion_encaissement.js'.formatTime}
+     */
     const formatEncaissements = (encaissements) => {
         let newEncaissements = [];
         encaissements.map((e) => {
@@ -235,6 +421,13 @@ export default function Encaissement() {
     };
 
     //Affichage des encaissements
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect - sets the state encaissementsAffichage and searchResults with the formatted encaissements
+     * and sets the state totalAmount with the total amount of the encaissements. It is called when the state encaissements is updated
+     * @see {@link 'gestion_encaissement.js'.formatEncaissements}
+     * @param {object} encaissements - list of the encaissements
+     */
     useEffect(() => {
         let total = 0;
         encaissements.map((e) => {
@@ -246,13 +439,28 @@ export default function Encaissement() {
     }, [encaissements]);
 
     //UseEffect pour la récupération
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect - calls the functions to get the services, the employees and the encaissements
+     * @see {@link 'gestion_encaissement.js'.fetchServices}
+     * @see {@link 'gestion_encaissement.js'.fetchEmployees}
+     * @see {@link 'gestion_encaissement.js'.fetchEncaissements}
+     * @param {boolean} refresh - boolean to refresh the page
+     */
     useEffect(() => {
         fetchServices();
         fetchEmployees();
         fetchEncaissements();
     }, [refresh]);
 
-    //TODO : completer après avoir ajouter la création d'encaissement
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect - sets the state searchResults with the encaissements filtered and ordered
+     * It is called when the state searchTerm or sortBy is updated
+     * @description takes the encaissements formatted and filter them by the searchTerm and order them by the sortBy
+     * @see {@link 'gestion_encaissement.js'.formatEncaissements}
+     * @param {object} encaissementsAffichage - list of the encaissements formatted
+     */
     useEffect(() => {
         //Filter by searchTerm
         let results = encaissementsAffichage.filter(e =>
@@ -278,7 +486,15 @@ export default function Encaissement() {
         setSearchResults(results);
     }, [searchTerm, sortBy]);
 
+
     //UseEffect pour la gestion des boutons
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect - sets the state buttonDelete, buttonModify, btnChoose and modificationMode
+     * It is called when the state modeModify is updated
+     * @description changes the buttons and the navbar depending on the modeModify
+     * @param {string} modeModify - mode of the modification
+     */
     useEffect(() => {
         if (modeModify === 'delete') {
             //changer le bouton

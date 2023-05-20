@@ -8,31 +8,57 @@ import { useRouter } from 'next/router';
 import { set } from 'date-fns';
 
 /**
- * Page récapitulative de l'encaissement
+ * @namespace 'encaissement.js'
+ * @description this page is used to show a overview of the encaissement and to create a new encaissement
  * @returns {JSX.Element}
  */
 function Encaissement_recap() {
 
+    /**
+     * @memberof 'encaissement.js'
+     * @constant {string} urlCreate - the url to create a new encaissement 
+     * @constant {string} pathnameModal - the pathname to the link redirecting the user after the modal is shown
+     */
     //Constantes pour les URL de l'API
-    const urlEmployees = 'http://localhost:8000/api/employees/';
     const urlCreate = 'http://localhost:8000/api/collections/create/';
     //Pathname pour la redirection de page
     const pathnameModal = './menu_encaissement';
     
+
+    /**
+     * @memberof 'encaissement.js'
+     * @constant {object} router - the router object to get the query
+     * @constant {object} query - the query object to get the service from the url
+     * @see {@link 'header.js'.router}
+     */
     const router = useRouter();
     const query = router.query;
+
+
+    /** 
+     * @memberof 'encaissement.js'
+     * @constant {object} serviceRouter - the object containing the service from the url
+    */
     const [serviceRouter, setServiceRouter] = useState({});
-    const [services, setServices] = useState([]);
-    const [employees, setEmployees] = useState([]);
-    const [serviceAffichage, setServiceAffichage] = useState({});
+
+    /**
+     * @memberof 'encaissement.js'
+     * @constant {boolean} refresh - the boolean to refresh the page
+     */
     const [refresh, setRefresh] = useState(false);
+
+    /**
+     * @memberof 'encaissement.js'
+     * @constant {boolean} check - the boolean to check if the encaissement is for a student
+     */
     const [check, setCheck] = useState(false);
 
 
-    /**
-     * Fonction pour afficher le message de succès
-     * @returns {JSX.Element}
-     */
+    /** 
+     * @memberof 'encaissement.js'
+     * @function successMessage - the function to show the success message then hide it after 5 seconds
+     * @description the function to show the success message then hide it after 5 seconds and refresh the page
+    */
     
     const successMessage = () => {
         document.getElementById("notification_success").removeAttribute("hidden");
@@ -43,6 +69,13 @@ function Encaissement_recap() {
         setRefresh(!refresh);
     };
 
+
+    /**
+     * @memberof 'encaissement.js'
+     * @function errorMessage - the function to show the error message then hide it after 3 seconds 
+     * @param {String} txt - the text to show in the error message
+     * @description the function to show the error message then hide it after 3 seconds and refresh the page
+     */
     const errorMessage = (txt) => {
         document.getElementById("notification_error").removeAttribute("hidden");
         const serviceError = document.getElementById("enc_error");
@@ -54,15 +87,35 @@ function Encaissement_recap() {
         setRefresh(!refresh);
     };
 
+
+    /**
+     * @memberof 'encaissement.js'
+     * @param {object} evt - the event object
+     * @function handleChange - the function to handle the change of the input  
+     */
     const handleChange = (evt) => {
         setServiceRouter({ ...serviceRouter, [evt.target.dataset.id]: evt.target.value });
     };
 
+
+    /**
+     * @memberof 'encaissement.js'
+     * @function handleCheck - the function to handle the change of the checkbox
+     * @param {object} evt - the event object
+     */
     const handleCheck = (evt) => {
         setCheck(check=>!check);
     };
 
-    const handleSubmit = (evt) => {
+    /**
+     * @memberof 'encaissement.js'
+     * @function handleSubmit - the function to handle the submit of the form
+     * @description the function to handle the submit of the form and create a new encaissement by sending a post request to the API
+     * @var {object} encaissement - the object containing the data to create a new encaissement
+     * @see {@link 'encaissement.js'.urlCreate}
+     * @see {@link 'header.js'.cookies}
+     */
+    const handleSubmit = () => {
 
         const cookies = parseCookies();
 
@@ -88,23 +141,13 @@ function Encaissement_recap() {
             });
 
     };
-    //Récupération des employees
-    const fetchEmployees = () => {
-        const cookies = parseCookies();
-        axios.get(urlEmployees, {
-            headers: {
-                Authorization: 'Token ' + cookies.csrftoken,
-            },
-        })
-            .then((response) => {
-                setEmployees(response.data);
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
 
+    /**
+     * @memberof 'encaissement.js'
+     * @param {boolean} router.isReady - the boolean to check if the router is ready to be used
+     * @function useEffect - the function to set the serviceRouter object with the service from the url 
+     * 
+     */
     useEffect(() => {
         if (!router.isReady) return;
         setServiceRouter(
@@ -118,12 +161,13 @@ function Encaissement_recap() {
             }
         );
     }, [router.isReady]);
-    useEffect(() => {
-        console.log('serv router', serviceRouter);
-    }, [serviceRouter]);
-    useEffect(() => {
-        fetchEmployees();
-    }, []);
+
+
+    /**
+     * @memberof 'encaissement.js'
+     * @param {boolean} refresh - the boolean to refresh the page
+     * @function useEffect - the function to refresh the page when the refresh state changes
+     */
     useEffect(() => {
         console.log("refresh");
     }, [refresh]);

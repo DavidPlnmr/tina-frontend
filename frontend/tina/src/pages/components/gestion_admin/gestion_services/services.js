@@ -5,10 +5,21 @@ import axios from 'axios';
 import { Card, Button, Modal } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
-
+/**
+ * @namespace 'services.js'
+ * @description page that allows the user to see all the services and to modify or delete them
+ * @returns {JSX.Element}
+ */
 export default function Services() {
 
   // Constantes pour les URL de l'API
+  /**
+   * @memberof 'services.js'
+   * @constant {String} urlServices URL of the API for the services
+   * @constant {String} urlTypesOfService URL of the API for the types of service
+   * @constant {String} pathnameChooseService Pathname for the redirection of page when the user wants to modify a service
+   * @constant {String} pathnameAdd Pathname for the redirection of page when the user wants to add a new service
+   */
   const urlServices = 'http://localhost:8000/api/services/';
   const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
   // Pathname pour la redirection de page
@@ -16,10 +27,33 @@ export default function Services() {
   const pathnameAdd = "/components/gestion_admin/gestion_services/form_typesofservice";
 
 
+  /**
+   * @memberof 'services.js'
+   * @constant {Array} lstServices Array that contains all the services
+   * @constant {Array} lstTypesOfService Array that contains all the types of service
+   * @default {Array} lstServices []
+   * @default {Array} lstTypesOfService []
+   */
   const [lstServices, setLstServices] = useState([]);
   const [lstTypesOfService, setLstTypesOfService] = useState([]);
+
+  /**
+   * @memberof 'services.js'
+   * @constant {object} router The router object to redirect to another page after the service selection. It is from the Next.js library
+   * @see {@link 'header.js'.router}
+   */
   const router = useRouter();
 
+  /**
+   * @memberof 'services.js'
+   * @constant {String} buttonModify ClassName of the button to modify a service
+   * @constant {String} modificationMode Mode of the modification Text shown in the navbar
+   * @constant {String} buttonDelete ClassName of the button to delete a service
+   * @constant {String} modeModify Mode the page is in
+   * @constant {String} btnChooseService ClassName of the button to choose a service
+   * 
+   * 
+   */
   const [buttonModify, setButtonModify] = useState(
     "btn btn-outline-primary"
   );
@@ -34,7 +68,14 @@ export default function Services() {
     "btn btn-dark"
   );
 
-  const handleClickModify = (evt) => {
+
+  /**
+   * @memberof 'services.js'
+   * @function handleClickModify Function that changes the mode of the page to modify a service
+   * @description When the user clicks on the button to modify a service, the mode of the page changes to 'modify' or '' if the mode was already 'modify'
+   * 
+   */
+  const handleClickModify = () => {
     console.log("Mode Modification");
     if (modeModify != 'modify') {
       setModeModify(modeModify => 'modify');
@@ -43,7 +84,13 @@ export default function Services() {
     }
   };
 
-  const handleClickDelete = (evt) => {
+  /**
+   * @memberof 'services.js'
+   * @function handleClickDelete Function that changes the mode of the page to delete a service
+   * @description When the user clicks on the button to delete a service, the mode of the page changes to 'delete' or '' if the mode was already 'delete'
+   * 
+   */
+  const handleClickDelete = () => {
     console.log("Mode Suppression");
     if (modeModify != 'delete') {
       setModeModify(modeModify => 'delete');
@@ -53,12 +100,32 @@ export default function Services() {
   };
 
   //partie de la modal
+  /**
+   * @memberof 'services.js'
+   * @constant {Boolean} show Boolean that indicates if the modal is shown or not
+   * @default {Boolean} show false
+   */
   const [show, setShow] = useState(false);
 
+  /**
+   * @memberof 'services.js'
+   * @function handleClose Function that closes the modal by setting the boolean show to false
+   */
   const handleClose = () => setShow(false);
+  /**
+   * @memberof 'services.js'
+   * @function handleShow Function that shows the modal by setting the boolean show to true
+   * 
+   */
   const handleShow = () => setShow(true);
 
-  const errorMessage = (newName) => {
+  /**
+   * @memberof 'services.js'
+   * @param {String} newName Name of the service that has been deleted
+   * @function deleteMessage Function that shows a notification when a service has been deleted
+   * @description sets the notification to visible and changes the text of the notification to the name of the service that has been to be deleted. it hides the notification after 3 seconds
+   */
+  const deleteMessage = (newName) => {
     document.getElementById("notification_delete").removeAttribute("hidden");
     const serviceError = document.getElementById("service_error");
     serviceError.textContent = newName;
@@ -69,6 +136,17 @@ export default function Services() {
 
   };
 
+  /**
+   * @memberof 'services.js'
+   * @function handleConfirmDelete Function that deletes a service, used in the modal
+   * @description deletes the service from the database and from the list of services
+   * @see {@link 'services.js'.handleClose}
+   * @see {@link 'services.js'.deleteMessage}
+   * @see {@link 'services.js'.lstServices}
+   * @see {@link 'services.js'.urlServices}
+   * @see {@link 'services.js'.infoModify}
+   * 
+   */
   const handleConfirmDelete = () => {
     handleClose();
     let s = infoModify.service;
@@ -81,18 +159,32 @@ export default function Services() {
         })
             .then((response) => {
                 console.log(response.data);
-                errorMessage(s.name);
+                deleteMessage(s.name);
             })
             .catch((error) => {
                 console.log(error);
             });
   };
 
+  /**
+   * @memberof 'services.js'
+   * @constant {object} infoModify Object that contains the service and the type of service that are being modified or deleted
+   * @default {object} infoModify {service: {}, typeOfService: {}}
+   */
   const [infoModify, setInfoModify] = useState({
     service: {},
     typeOfService: {},
-  });//[service, typeOfService]
+  });
 
+  /**
+   * @memberof 'services.js'
+   * @function fetchTypeOfService Function that fetches the types of service from the database
+   * @description fetches the types of service from the database and sets the list of types of service to the response of the request
+   * @see {@link 'services.js'.urlTypesOfService}
+   * @see {@link 'services.js'.setLstTypesOfService}
+   * @see {@link 'header.js'.cookies}
+   * @see {@link 'creation_encaissement.js'.fetchTypeOfService}
+   */
   const fetchTypeOfService = () => {
     const cookies = parseCookies();
     axios.get(urlTypesOfService, {
@@ -109,6 +201,14 @@ export default function Services() {
       });
   };
 
+
+  /**
+   * @memberof 'services.js'
+   * @param {String} urlServices the url to fetch the services from the API
+   * @function fetchServices Function to fetch the services from the API
+   * @see {@link 'header.js'.cookies}
+   * @see {@link 'gestion_encaissement.js'.fetchServices}
+   */
   const fetchServices = () => {
     const cookies = parseCookies();
     axios.get(urlServices, {
@@ -125,6 +225,17 @@ export default function Services() {
       });
   };
 
+  /**
+   * @memberof 'services.js'
+   * @function handleChooseService Function that handle the choice of a service to be modified or deleted
+   * @description if the mode is 'modify', the user is redirected to the page to modify the service, if the mode is 'delete', the modal is shown.
+   * @param {object} service JSON object that contains the service to be modified or deleted
+   * @param {object} typeOfService JSON object that contains the type of service to be modified or deleted
+   * @see {@link 'services.js'.infoModify}
+   * @see {@link 'services.js'.handleShow}
+   * @see {@link 'services.js'.pathnameChooseService}
+   * @see {@link 'services.js'.router}
+   */
   const handleChooseService = (service, typeOfService) => {
     setInfoModify({ service: service, typeOfService: typeOfService });
     if (modeModify === 'modify') {
@@ -141,12 +252,26 @@ export default function Services() {
   //Partie du code de milaz
 
   // Function to format the duration
+  /**
+   * @memberof 'services.js'
+   * @function formatDuration Function that formats the duration of the service
+   * @param {Integer} duration duration of the service
+   * @see {@link 'creation_encaissement.js'.formatDuration}
+   * @returns {Integer} duration of the service in minutes
+   */
   const formatDuration = (duration) => {
     const hours = duration.split(":")[0] * 60;
     const minutes = duration.split(":")[1];
     return parseInt(hours) + parseInt(minutes);
   };
   // Function to get price without cents
+  /**
+   * @memberof 'services.js'
+   * @function priceWithoutCent Function that gets the price of the service without cents 
+   * @param {Float} price price of the service
+   * @see {@link 'creation_encaissement.js'.priceWithoutCent}
+   * @returns {Integer} price of the service without cents
+   */
   const priceWithoutCent = (price) => {
     if (typeof price !== "string") {
       return price;
@@ -159,8 +284,18 @@ export default function Services() {
   };
 
   // Setting number of columns for services
+  /**
+   * @memberof 'services.js'
+   * @see {@link 'creation_encaissement.js'.numCols}
+   */
   const numCols = lstTypesOfService ? Math.floor(12 / lstTypesOfService.length) : 4;
   // Function to get the minimum price for a type of service
+  /**
+   * @memberof 'services.js'
+   * @see {@link 'creation_encaissement.js'.minPriceForATypeOfService}
+   * @param {Array} lstTypeOfService list of types of service
+   * @returns 
+   */
   const minPriceForATypeOfService = (lstTypeOfService) => {
     let val = 0;
     val = priceWithoutCent(lstServices
@@ -169,15 +304,40 @@ export default function Services() {
     return val;
   }
 
+
+  /**
+   * @memberof 'services.js'
+   * @param {Array} lstServices list of services
+   * @function useEffect function that refreshes the page when the list of services is updated
+   */
   useEffect(() => {
     console.log("refresh");
   }, [lstServices]);
 
+
+  /**
+   * @memberof 'services.js'
+   * @function useEffect function that fetches the services and the types of service when the page is loaded
+   * @see {@link 'services.js'.fetchServices}
+   * @see {@link 'services.js'.fetchTypeOfService}
+   */
   useEffect(() => {
     fetchServices();
     fetchTypeOfService();
   }, []);
 
+
+  /**
+   * @memberof 'services.js'
+   * @param {String} modeModify mode of modification
+   * @function useEffect function that changes the mode of modification and the buttons when the mode of modification is changed
+   * @description if the mode is 'modify', the button 'modify' is blue and the button 'delete' is red, if the mode is 'delete', the button 'modify' is white and the button 'delete' is red
+   * @see {@link 'services.js'.buttonModify}
+   * @see {@link 'services.js'.buttonDelete}
+   * @see {@link 'services.js'.btnChooseService}
+   * @see {@link 'services.js'.modificationMode}
+   * @see {@link 'services.js'.modeModify}
+   */
   useEffect(() => {
     if (modeModify === 'delete') {
       //changer le bouton
