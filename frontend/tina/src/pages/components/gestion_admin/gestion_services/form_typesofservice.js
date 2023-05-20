@@ -4,25 +4,55 @@ import { useState } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 
+/**
+ * @namespace 'form_typesofservice.js'
+ * @description page that allows the user to create a new type of service or to add a new service to an existing type of service
+ * @returns {JSX.Element}
+ */
 export default function Formulaire_typesofservice() {
 
     // Constantes pour les URL de l'API
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @constant {String} urlTypesOfService URL of the API for the types of service
+     * @constant {String} pathnameModal Pathname for the redirection of page after the creation of a new type of service
+     * @constant {String} pathnameNewService Pathname for the redirection of page when the user wants to create a new service
+     */
     const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
     // Pathname pour la redirection de page
     const pathnameModal = "./menu_services";
     const pathnameNewService = "/components/gestion_admin/gestion_services/form_services";
 
-
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @constant {Object} typeOfService Object that contains the name of the type of service
+     * @constant {String} typeOfService.name Name of the type of service
+     * @default {String} typeOfService.name ""
+     */
     const [typeOfService, setTypeOfService] = useState(
         {
             name: "",
         }
     );
 
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function handleChangeType Function that allows the user to change the name of the type of service
+     * @description takes the value of the input and changes the value of the name of the type of service
+     * @param {object} evt - event
+     */
     const handleChangeType = (evt) => {
         setTypeOfService({ ...typeOfService, [evt.target.dataset.id]: evt.target.value });
-        console.log(typeOfService);
     };
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function handleSubmit Function that allows the user to create a new type of service
+     * @description posts the new type of service in the database and shows a notification if the creation is successful or not
+     * @param {object} evt - event
+     * @see {@link 'form_typesofservice.js'.urlTypesOfService}
+     * @see {@link 'form_typesofservice.js'.typeOfService}
+     */
     const handleSubmit = (evt) => {
         const cookies = parseCookies();
         evt.preventDefault();
