@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
+import Head from "next/head";
 
 /**
  * @namespace 'no_client_rdv.js'
@@ -91,6 +92,10 @@ export default function NoClientRdv() {
 
   return (
     <>
+      <Head>
+        <title>Tina - Prise de rendez-vous</title>
+        <meta name="description" content="Prise de rendez-vous" />
+      </Head>
       <Header />
       <div className="container my-5">
         <div className="row justify-content-center">

@@ -5,6 +5,7 @@ import axios from "axios";
 import Router from "next/router";
 import { useRouter } from "next/router";
 import Footer from "../footer";
+import Head from "next/head";
 
 export default function Rdv_employee() {
   const [lstEmployee, setLstEmployee] = useState([]);
@@ -77,6 +78,10 @@ export default function Rdv_employee() {
 
   return (
     <>
+      <Head>
+        <title>Tina - Prise de rendez-vous</title>
+        <meta name="description" content="Page de prise de rendez-vous de l'application Tina"/>
+      </Head>
       <Header />
       <br></br>
 

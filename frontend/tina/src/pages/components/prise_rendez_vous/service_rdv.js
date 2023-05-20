@@ -5,6 +5,7 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { Card, Button } from "react-bootstrap";
 import Footer from "@/pages/components/footer";
+import Head from "next/head";
 
 /**
  * @namespace 'service_rdv.js'
@@ -220,6 +221,10 @@ export default function ServiceRDV() {
 
   return (
       <>
+        <Head>
+          <title>Tina - Prise de rendez-vous</title>
+          <meta name="description" content="Page de prise de rendez-vous de l'application Tina"/>
+        </Head>
         <Header /> {/* Render the Header component */}
         <main>
           <div className="container pt-5">

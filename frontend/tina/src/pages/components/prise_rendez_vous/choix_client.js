@@ -4,6 +4,7 @@ import Header from '../header';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 /**
  * @namespace 'choix_client.js'
