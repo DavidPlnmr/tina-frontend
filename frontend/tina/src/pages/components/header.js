@@ -130,6 +130,11 @@ function Header() {
                       Administration
                     </Nav.Link>
                 )}
+                {token && cookies.role === "employee"||"admin" && (
+                    <Nav.Link href="/components/CRUD_encaissement/creation_encaissement">
+                      Encaissement
+                    </Nav.Link>
+                )}
                 <Nav.Link href="/components/prise_rendez_vous/service_rdv">
                   Prendre rendez-vous
                 </Nav.Link>

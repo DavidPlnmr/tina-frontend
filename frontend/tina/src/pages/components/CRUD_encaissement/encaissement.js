@@ -20,10 +20,10 @@ function Encaissement_recap() {
      * @constant {string} pathnameModal - the pathname to the link redirecting the user after the modal is shown
      */
     //Constantes pour les URL de l'API
-    const urlCreate = 'http://localhost:8000/api/collections/create/';
+    const urlCreate = 'http://localhost:8000/api/collections/create';
     //Pathname pour la redirection de page
     const pathnameModal = './menu_encaissement';
-    
+
 
     /**
      * @memberof 'encaissement.js'
@@ -34,6 +34,23 @@ function Encaissement_recap() {
     const router = useRouter();
     const query = router.query;
 
+    /**
+   * @constant user
+   * @memberof 'encaissement.js'
+   * @see {@link 'header.js'.user}
+   * @description State variable holding the currently logged-in user's information.
+   * @default {{email: "", username: "", last_name: "", first_name: ""}}
+   * @property {string} email - The authenticated user's email address.
+   * @property {string} username - The authenticated user's username.
+   * @property {string} last_name - The authenticated user's last name.
+   * @property {string} first_name - The authenticated user's first name.
+   */
+    const [user, setUser] = useState({
+        email: "",
+        username: "",
+        last_name: "",
+        first_name: "",
+    });
 
     /** 
      * @memberof 'encaissement.js'
@@ -54,17 +71,57 @@ function Encaissement_recap() {
     const [check, setCheck] = useState(false);
 
 
+    /**
+     * @constant cookies
+     * @memberof 'encaissement.js'
+     * @see {@link 'header.js'.cookies}
+     * @type {object}
+     * @description An object containing all of the user's cookies.
+     */
+    const cookies = parseCookies();
+
+    /**
+     * @constant token
+     * @memberof 'encaissement.js'
+     * @see {@link 'header.js'.token}
+     * @description State variable holding the currently logged-in user's authentication token.
+     * @default null
+     */
+    const [token, setToken] = useState(null);
+
+    /**
+     * @function useEffect
+     * @memberof 'encaissement.js'
+     * @see {@link 'header.js'.useEffect}
+     * @description This useEffect hook sets the token and user's information based on the cookies when the component mounts or updates.
+     * @returns {void}
+     */
+    useEffect(() => {
+        setToken(cookies.csrftoken);
+
+        if (token) {
+            setUser({
+                email: cookies.email,
+                username: cookies.username,
+                last_name: cookies.last_name,
+                first_name: cookies.first_name,
+            });
+        }
+    }, [token]);
+
     /** 
      * @memberof 'encaissement.js'
      * @function successMessage - the function to show the success message then hide it after 5 seconds
      * @description the function to show the success message then hide it after 5 seconds and refresh the page
     */
-    
+
     const successMessage = () => {
         document.getElementById("notification_success").removeAttribute("hidden");
         //après 3 secondes, on cache la notification
         setTimeout(function () {
-            document.getElementById("notification_success").setAttribute("hidden", "hidden");
+            if (document.getElementById("notification_success") != null) {
+                document.getElementById("notification_success").setAttribute("hidden", "hidden");
+            }
         }, 5000);
         setRefresh(!refresh);
     };
@@ -82,7 +139,9 @@ function Encaissement_recap() {
         serviceError.textContent = txt;
         //après 3 secondes, on cache la notification
         setTimeout(function () {
-            document.getElementById("notification_error").setAttribute("hidden", "hidden");
+            if (document.getElementById("notification_error") != null) {
+                document.getElementById("notification_error").setAttribute("hidden", "hidden");
+            }
         }, 3000);
         setRefresh(!refresh);
     };
@@ -104,7 +163,7 @@ function Encaissement_recap() {
      * @param {object} evt - the event object
      */
     const handleCheck = (evt) => {
-        setCheck(check=>!check);
+        setCheck(check => !check);
     };
 
     /**
@@ -121,7 +180,7 @@ function Encaissement_recap() {
 
         let encaissement = {
             service: parseInt(serviceRouter.id),
-            amount: parseFloat(check?serviceRouter.price_student:serviceRouter.price)
+            amount: parseFloat(check ? serviceRouter.price_student : serviceRouter.price)
         };
 
         console.log(encaissement);
@@ -188,9 +247,15 @@ function Encaissement_recap() {
                 <div id="notification_success" class="alert alert-success" role="alert" hidden>
                     <h4 class="alert-heading">Création réussie</h4>
                     <p> Encaissement ajouté </p>
-                    <hr></hr>
-                    <p class="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
-                    </p>
+                    
+                    {token && cookies.role === "admin" && (
+                        <div>
+                        <hr></hr>
+                        <p class="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
+                        </p>
+                        </div>
+                    )}
+
                 </div>
                 <div id="notification_error" class="alert alert-danger" role="alert" hidden>
                     <h4 class="alert-heading">Création Echouée</h4>
@@ -234,7 +299,7 @@ function Encaissement_recap() {
                                 <td className="align-middle" scope="col">
                                     <div class="input-group mb-3">
                                         <div class="form-floating">
-                                            <input type="number" defaultValue={!check?serviceRouter.price:serviceRouter.price_student} class="form-control" id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
+                                            <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} class="form-control" id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
                                             <label for="service_price">Montant</label>
                                         </div>
                                         <span class="input-group-text">CHF</span>
@@ -243,7 +308,7 @@ function Encaissement_recap() {
                                 <td className="align-middle" scope="col">
                                     <div class="input-group mb-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck}/>
+                                            <input class="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
                                             <label for="service_discount">Rabais étudiant</label>
                                         </div>
                                     </div>
