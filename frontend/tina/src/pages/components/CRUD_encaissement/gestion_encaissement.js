@@ -550,6 +550,7 @@ export default function Encaissement() {
                     <p>L'encaissement <a id='service_error'></a> a été supprimé</p>
 
                 </div>
+                
                 <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
                     <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
                         <div class="collapse navbar-collapse" id="text">
