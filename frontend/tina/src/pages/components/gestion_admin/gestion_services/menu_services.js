@@ -11,7 +11,9 @@ export default function Menu_services() {
   return (
     <>
         <Header/>
+        <main>
         <Services/>
+        </main>
         <Footer/>
     </>
   );

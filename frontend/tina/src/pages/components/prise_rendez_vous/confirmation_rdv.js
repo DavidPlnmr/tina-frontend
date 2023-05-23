@@ -1,6 +1,7 @@
 import Header from "../header";
 import { useRouter, Router } from "next/router";
 import Head from "next/head";
+import Footer from "../footer";
 
 /**
  * @namespace 'confirmation_rdv.js'
@@ -32,6 +33,7 @@ export default function ConfirmationRdv() {
         <meta name="description" content="Confirmation de rendez-vous" />
       </Head>
       <Header />
+      <main>
       <div className="container py-5 jumbotron" style={{ marginTop: "200px" }}>
         <h1 className="text-center mb-5">Merci pour votre réservation !</h1>
         <div className="d-grid gap-3 col-6 mx-auto">
@@ -45,6 +47,8 @@ export default function ConfirmationRdv() {
           </button>
         </div>
       </div>
+      </main>
+      <Footer />
     </>
   );
 }

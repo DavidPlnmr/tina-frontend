@@ -5,6 +5,7 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import Footer from '../footer';
 
 /**
  * @namespace 'choix_client.js'
@@ -141,6 +142,7 @@ export default function ChoixClient() {
   return (
     <>
         <Header />
+        <main>
         <div className='container my-5'>
             <div className='row'>
                 <div className='col-md-8'>
@@ -173,6 +175,8 @@ export default function ChoixClient() {
                 </tbody>
             </Table>
         </div>
+        </main>
+        <Footer />
     </>
   );
 }

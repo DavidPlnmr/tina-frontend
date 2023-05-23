@@ -3,6 +3,7 @@ import Header from "../../header";
 import { useRouter, Router } from "next/router";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import Footer from "../../footer";
 
 /**
  * @namespace 'recap_rdv.js'
@@ -67,8 +68,9 @@ export default function DetailEmployee() {
   return (
     <>
       <Header />
+      <main>
       <div className="container " style={{ marginTop: "10%" }}>
-        <h2>Récapitulatif du rendez-vous : </h2>
+        <h2>Détail de l'employé : </h2>
         <table class="table">
           <tbody>
             <tr>
@@ -84,6 +86,16 @@ export default function DetailEmployee() {
               <td>{coiffeurs.username}</td>
             </tr>
             <br />
+          </tbody>
+        </table>
+        <button
+              type="button"
+              class="btn btn-primary no-border"
+              style={{ backgroundColor: "#232627", border: "none" }}
+              onClick={handleDelete}
+            >
+              Modifier l'employé
+            </button> &nbsp;&nbsp;&nbsp; 
             <button
               type="button"
               class="btn btn-primary no-border"
@@ -92,9 +104,9 @@ export default function DetailEmployee() {
             >
               Supprimer l'employé
             </button>
-          </tbody>
-        </table>
       </div>
+      </main>
+      <Footer />
     </>
   );
 }

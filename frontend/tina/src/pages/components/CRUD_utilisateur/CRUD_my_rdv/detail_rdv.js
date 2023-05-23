@@ -171,6 +171,7 @@ export default function DetailRdv() {
   return (
     <>
         <Header />
+        <main>
         <div className="container " style={{ marginTop: "10%" }}>
         <h2>Détail du rendez-vous : </h2>
         <table class="table">
@@ -222,6 +223,7 @@ export default function DetailRdv() {
           </tbody>
         </table>
       </div>
+      </main>
       <Footer />
     </>
   );

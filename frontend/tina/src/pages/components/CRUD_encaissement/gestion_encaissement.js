@@ -520,7 +520,7 @@ export default function Encaissement() {
 
     return (
         <>
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#b8aaa0" }}>
+            <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#F6F8F7" }}>
                 {/* Modal pour la suppression */}
                 <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
                     <Modal.Header closeButton>
@@ -551,8 +551,8 @@ export default function Encaissement() {
 
                 </div>
                 
-                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#F6F8F7" }}>
+                    <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", height: "8vh", width: "100vh", backgroundColor: "#F6F8F7" }}>
                         <div class="collapse navbar-collapse" id="text">
                             <a class="navbar-brand">Gestion des encaissements</a>
                             <ul class="navbar-nav mx-auto my-auto mb-5 ms-lg-3"></ul>
@@ -577,7 +577,7 @@ export default function Encaissement() {
                 </nav>
 
                 {/* Barre de recherche */}
-                <nav class="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#F6F8F7" }}>
                     <form class="container" role="search">
                         <div class="row mx-1">
                             <select class="form-select" value={sortBy} aria-label="Default select example" data-id="filter" onChange={handleSort}>
@@ -613,6 +613,7 @@ export default function Encaissement() {
                 </table>
 
                 {/* Liste des encaissements */}
+                <div class="container">
                 <table class="table table-striped mx-auto" style={{ backgroundColor: "#FFFFFF" }}>
                     <thead>
                         <tr>
@@ -647,6 +648,7 @@ export default function Encaissement() {
                 </table>
             </div>
             <ul class="d-flex my-4"></ul>
+            </div>
         </>
     );
 }

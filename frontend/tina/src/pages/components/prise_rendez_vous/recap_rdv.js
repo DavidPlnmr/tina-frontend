@@ -3,6 +3,7 @@ import Header from "../header";
 import { useRouter, Router } from "next/router";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import Footer from "../footer";
 
 /**
  * @namespace 'recap_rdv.js'
@@ -214,6 +215,7 @@ export default function RecapRdv() {
   return (
     <>
       <Header />
+      <main>
       <div className="container " style={{ marginTop: "10%" }}>
         <h2>Récapitulatif du rendez-vous : </h2>
         <table class="table">
@@ -279,6 +281,8 @@ export default function RecapRdv() {
           </tbody>
         </table>
       </div>
+      </main>
+      <Footer />
     </>
   );
 }
