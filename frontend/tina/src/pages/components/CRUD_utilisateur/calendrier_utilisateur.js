@@ -277,11 +277,11 @@ export default function CalendrierClient() {
         },
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
-          const backgroundColor = available ? "#2A4494" : "#2A4494"; // Détermine la couleur de fond en fonction de la disponibilité
+          const backgroundColor = available ? "#587792" : "#587792"; // Détermine la couleur de fond en fonction de la disponibilité
           const title = info.event.title.split(" / ");
           const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
-            html: `<div style="text-align: center; background-color: ${backgroundColor}; color: white; font-size:12px;"><div >${title[0]}</div><div >${title[1]}</div></b></div>`,
+            html: `<div style="text-align: center; background-color: ${backgroundColor}; cursor:pointer; color: white; font-size:12px;"><div >${title[0]}</div><div >${title[1]}</div></b></div>`,
           };
         },
       });
