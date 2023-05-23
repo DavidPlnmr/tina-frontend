@@ -71,6 +71,10 @@ export default function Rdv_employee() {
   useEffect(() => {
     console.log(service_json);
 
+    if (service_json.service == undefined) {
+      Router.push("./service_rdv");
+    }
+
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     fetchEmployee();

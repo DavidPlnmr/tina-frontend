@@ -62,11 +62,11 @@ export default function Dash() {
                     <div class="card">
                         <div class="card-body justify-content-center">
                             <ul></ul>
-                            <h5 class="card-title text-center font-weight-bold">Suppression d'un employé</h5>
+                            <h5 class="card-title text-center font-weight-bold">Gestion des employés</h5>
                             <h5 class="card-title text-center font-weight-bold" style={{color: "green"}}>Employé</h5>
                             <br></br>
                             <div class="text-center">
-                                <a href="./gestion_employee/display_delete_employee">
+                                <a href="./gestion_employee/display_employee">
                                 <button 
                                     type="button" 
                                     class="btn btn-primary"

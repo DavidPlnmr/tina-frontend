@@ -305,6 +305,7 @@ export default function CalendrierClient() {
       }`}
       </style>
       <Header />
+      <main>
       <div className="container">
         <div
           ref={calendarEl}
@@ -312,6 +313,7 @@ export default function CalendrierClient() {
           style={{ marginTop: "5%", marginBottom: "510px" }}
         ></div>
       </div>
+      </main>
       <Footer />
     </>
   );

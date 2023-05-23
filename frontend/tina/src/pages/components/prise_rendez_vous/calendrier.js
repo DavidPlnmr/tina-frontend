@@ -107,6 +107,9 @@ export default function Calendrier() {
   useEffect(() => {
     console.log("param : ");
     console.log(param);
+    if (param.service === undefined || param.employee === undefined) {
+      router.push("./service_rdv");
+    }
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(

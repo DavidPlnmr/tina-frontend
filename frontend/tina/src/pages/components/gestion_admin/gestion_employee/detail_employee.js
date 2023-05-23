@@ -65,6 +65,13 @@ export default function DetailEmployee() {
     }
 }
 
+const handleUpdate = () => {
+  router.push({
+    pathname: "./modif_employee_admin",
+    query: { employee: JSON.stringify(coiffeurs)},
+  });
+}
+
   return (
     <>
       <Header />
@@ -92,7 +99,7 @@ export default function DetailEmployee() {
               type="button"
               class="btn btn-primary no-border"
               style={{ backgroundColor: "#232627", border: "none" }}
-              onClick={handleDelete}
+              onClick={handleUpdate}
             >
               Modifier l'employé
             </button> &nbsp;&nbsp;&nbsp; 
