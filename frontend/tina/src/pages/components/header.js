@@ -130,7 +130,12 @@ function Header() {
                       Administration
                     </Nav.Link>
                 )}
-                {token && cookies.role === "employee"||"admin" && (
+                {token && cookies.role === "employee" && (
+                    <Nav.Link href="/components/CRUD_encaissement/creation_encaissement">
+                      Encaissement
+                    </Nav.Link>
+                )}
+                {token && cookies.role === "admin" && (
                     <Nav.Link href="/components/CRUD_encaissement/creation_encaissement">
                       Encaissement
                     </Nav.Link>

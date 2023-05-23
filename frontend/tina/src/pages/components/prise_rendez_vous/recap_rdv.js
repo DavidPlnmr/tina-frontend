@@ -118,7 +118,7 @@ export default function RecapRdv() {
     setServices(JSON.parse(param.service));
     setCoiffeurs(JSON.parse(param.employee));
     setMyDate(param.date);
-    if (cookies.role === "employee") {
+    if (cookies.role === "employee" || cookies.role === "admin") {
       console.log(param.client);
       if (param.client != "") {
         setClients(JSON.parse(param.client));
@@ -166,7 +166,7 @@ export default function RecapRdv() {
         employee: coiffeurs.id,
         service: services.id,
       });
-    } else if (cookies.role === "employee" && param.client != "") {
+    } else if (cookies.role === "employee" && param.client != "" || cookies.role === "admin" && param.client != "") {
       setAppointment({
         ...appointment,
         date: formattedDate,
@@ -176,7 +176,7 @@ export default function RecapRdv() {
         customer: clients.id,
       });
     }
-    else if (cookies.role === "employee" && param.client == "") {
+    else if (cookies.role === "employee" && param.client == "" || cookies.role === "admin" && param.client == "") {
       console.log(description);
       setAppointment({
         ...appointment,
@@ -234,6 +234,21 @@ export default function RecapRdv() {
             )}
 
             {cookies.role === "employee" && description != "" &&(
+              <tr>
+                <td>Description</td>
+                <td>{description}</td>
+              </tr>
+            )
+            }
+
+            {cookies.role === "admin" && clients != "" && (
+              <tr>
+                <td>Client</td>
+                <td>{clients.first_name + " " + clients.last_name}</td>
+              </tr>
+            )}
+
+            {cookies.role === "admin" && description != "" &&(
               <tr>
                 <td>Description</td>
                 <td>{description}</td>

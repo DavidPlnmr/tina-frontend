@@ -238,7 +238,7 @@ export default function Calendrier() {
           const backgroundColor = available ? "green" : "green"; // Détermine la couleur de fond en fonction de la disponibilité
           const textColor = available ? "white" : "white"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
-            html: `<b><div style="text-align: center; background-color: ${backgroundColor}; color: ${textColor};">${info.event.start.toLocaleTimeString(
+            html: `<b><div style="text-align: center; cursor: pointer; background-color: ${backgroundColor}; color: ${textColor};">${info.event.start.toLocaleTimeString(
               [],
               { hour: "numeric", minute: "2-digit" }
             )}</div></b>`,
