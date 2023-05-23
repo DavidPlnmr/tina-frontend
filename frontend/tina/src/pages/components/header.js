@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import Cookies from 'js-cookie';
 
 /**
  * @namespace 'header.js'
@@ -76,20 +77,15 @@ function Header() {
    * @returns {void}
    */
   const handleLogout = () => {
-    Promise.all([
-      destroyCookie(null, "id"),
-      destroyCookie(null, "csrftoken"),
-      destroyCookie(null, "email"),
-      destroyCookie(null, "username"),
-      destroyCookie(null, "last_name"),
-      destroyCookie(null, "first_name"),
-      destroyCookie(null, "role"),
-    ]).then(() => {
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-      router.push("/");
-    });
+    Cookies.remove("id");
+    Cookies.remove("csrftoken");
+    Cookies.remove("email");
+    Cookies.remove("username");
+    Cookies.remove("last_name");
+    Cookies.remove("first_name");
+    Cookies.remove("role");
+
+    router.push("/");
   };
 
   return (
