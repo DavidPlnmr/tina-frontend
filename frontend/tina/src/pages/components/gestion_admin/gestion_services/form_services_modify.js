@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { useRef } from 'react';
 import Header from '../../header';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 /**
  * @namespace 'form_services_modify.js'
@@ -82,7 +82,7 @@ export default function Formulaire_services_modify() {
      */
     const handleChange = (evt) => {
         let val = evt.target.value;
-        if (evt.target.dataset.id =='duration') {
+        if (evt.target.dataset.id == 'duration') {
             val = formatTime(val);
         }
         setService({ ...service, [evt.target.dataset.id]: val });
@@ -180,7 +180,7 @@ export default function Formulaire_services_modify() {
     const putService = (s) => {
         const cookies = parseCookies();
 
-        axios.put(urlServices+s.id+'/', s, {
+        axios.put(urlServices + s.id + '/', s, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -254,6 +254,10 @@ export default function Formulaire_services_modify() {
 
     return (
         <>
+            <Head>
+                <title>Tina - Modification de service</title>
+                <meta name="description" content="Page pour la modification de service de l'application Tina" />
+            </Head>
             <Header />
             <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "auto", backgroundColor: "#b8aaa0" }}>
                 <ul></ul>

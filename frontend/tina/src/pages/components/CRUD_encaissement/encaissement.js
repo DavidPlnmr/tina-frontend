@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { set } from 'date-fns';
+import Head from "next/head";
 
 /**
  * @namespace 'encaissement.js'
@@ -233,6 +233,10 @@ function Encaissement_recap() {
 
     return (
         <>
+        <Head>
+        <title>Tina - Récapitulatif de l'encaissement</title>
+        <meta name="description" content="Page récapitulative avant encaissement de l'application Tina" />
+      </Head>
             <Header />
             <div
                 className="mb-3 d-flex flex-column justify-content-start align-items-center"
