@@ -178,9 +178,7 @@ export default function Formulaire_services_modify() {
         // } else {
         //     document.getElementById('select_type_of_service').setAttribute('class', 'form-control is-valid')
         // };
-        console.log(s.name.toLowerCase() === serviceRouter.name.toLowerCase());
-        console.log(s.name.toLowerCase);
-        console.log(serviceRouter.name.toLowerCase());
+       
         if (s.name.toLowerCase() == serviceRouter.name.toLowerCase()) {
             document.getElementById('service_titre').setAttribute('class', 'form-control is-valid');
         }
@@ -229,7 +227,6 @@ export default function Formulaire_services_modify() {
      * 
      */
     const errorMessage = (newName) => {
-        console.log("errorMessage");
         document.getElementById("notification_success").removeAttribute("hidden");
         const serviceError = document.getElementById("service_error");
         serviceError.textContent = newName;
@@ -348,10 +345,6 @@ export default function Formulaire_services_modify() {
         selectServiceDuration(JSON.parse(values.service).duration);
 
     }, [router.isReady]);
-
-    useEffect(() => {
-        console.log(service.name);
-    }, [service.name]);
 
     return (
         <>
