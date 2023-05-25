@@ -16,7 +16,7 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {string} urlCreate - the url to create a new encaissement 
+     * @constant {string} urlCreate
      * @constant {string} pathnameModal - the pathname to the link redirecting the user after the modal is shown
      */
     //Constantes pour les URL de l'API
@@ -27,8 +27,8 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {object} router - the router object to get the query
-     * @constant {object} query - the query object to get the service from the url
+     * @constant {object} router
+     * @constant {object} query
      * @see {@link 'header.js'.router}
      */
     const router = useRouter();
@@ -54,19 +54,19 @@ function Encaissement_recap() {
 
     /** 
      * @memberof 'encaissement.js'
-     * @constant {object} serviceRouter - the object containing the service from the url
+     * @constant {object} serviceRouter 
     */
     const [serviceRouter, setServiceRouter] = useState({});
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {boolean} refresh - the boolean to refresh the page
+     * @constant {boolean} refresh
      */
     const [refresh, setRefresh] = useState(false);
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {boolean} check - the boolean to check if the encaissement is for a student
+     * @constant {boolean} check 
      */
     const [check, setCheck] = useState(false);
 
@@ -111,7 +111,7 @@ function Encaissement_recap() {
 
     /** 
      * @memberof 'encaissement.js'
-     * @function successMessage - the function to show the success message then hide it after 5 seconds
+     * @function successMessage 
      * @description the function to show the success message then hide it after 5 seconds and refresh the page
     */
 
@@ -129,7 +129,7 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @function errorMessage - the function to show the error message then hide it after 3 seconds 
+     * @function errorMessage 
      * @param {String} txt - the text to show in the error message
      * @description the function to show the error message then hide it after 3 seconds and refresh the page
      */
@@ -150,7 +150,7 @@ function Encaissement_recap() {
     /**
      * @memberof 'encaissement.js'
      * @param {object} evt - the event object
-     * @function handleChange - the function to handle the change of the input  
+     * @function handleChange 
      */
     const handleChange = (evt) => {
         setServiceRouter({ ...serviceRouter, [evt.target.dataset.id]: evt.target.value });
@@ -159,7 +159,7 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @function handleCheck - the function to handle the change of the checkbox
+     * @function handleCheck 
      * @param {object} evt - the event object
      */
     const handleCheck = (evt) => {
@@ -168,9 +168,9 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @function handleSubmit - the function to handle the submit of the form
+     * @function handleSubmit 
      * @description the function to handle the submit of the form and create a new encaissement by sending a post request to the API
-     * @var {object} encaissement - the object containing the data to create a new encaissement
+     * @var {object} encaissement
      * @see {@link 'encaissement.js'.urlCreate}
      * @see {@link 'header.js'.cookies}
      */
@@ -204,7 +204,7 @@ function Encaissement_recap() {
     /**
      * @memberof 'encaissement.js'
      * @param {boolean} router.isReady - the boolean to check if the router is ready to be used
-     * @function useEffect - the function to set the serviceRouter object with the service from the url 
+     * @function useEffect 
      * 
      */
     useEffect(() => {
@@ -225,7 +225,7 @@ function Encaissement_recap() {
     /**
      * @memberof 'encaissement.js'
      * @param {boolean} refresh - the boolean to refresh the page
-     * @function useEffect - the function to refresh the page when the refresh state changes
+     * @function useEffect
      */
     useEffect(() => {
         console.log("refresh");
