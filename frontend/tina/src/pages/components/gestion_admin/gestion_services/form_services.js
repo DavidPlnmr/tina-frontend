@@ -310,6 +310,7 @@ export default function Formulaire_services() {
                 console.log(error);
             });
     };
+    
     /**
      * @memberof 'form_services.js'
      * @function loadNameServices
