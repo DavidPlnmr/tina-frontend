@@ -96,9 +96,9 @@ export default function DisplayAndDeleteEmployee() {
     const handleSearch = (evt) => {
         const searchValue = evt.target.value;
         const filtered = employees.filter((employee) => {
-            return employee.first_name.toLowerCase().includes(searchValue.toLowerCase()) || employee.last_name.toLowerCase().includes(searchValue.toLowerCase()) || employee.username.toLowerCase().includes(searchValue.toLowerCase()) || employee.email.toLowerCase().includes(searchValue.toLowerCase()) || employee.tel_number.toLowerCase().includes(searchValue.toLowerCase());
+            return employee.first_name.toLowerCase().includes(searchValue.toLowerCase()) || employee.last_name.toLowerCase().includes(searchValue.toLowerCase()) || employee.username.toLowerCase().includes(searchValue.toLowerCase()) || employee.email.toLowerCase().includes(searchValue.toLowerCase());
         });
-        setFilteredClients(filtered);
+        setFilteredEmployees(filtered);
     }
 
     /**

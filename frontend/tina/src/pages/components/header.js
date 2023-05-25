@@ -3,6 +3,7 @@ import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Cookies from 'js-cookie';
+import axios from "axios";
 
 /**
  * @namespace 'header.js'
@@ -76,16 +77,31 @@ function Header() {
    * @description This function handles the user's logout process. It removes all user and session cookies and redirects to the home page.
    * @returns {void}
    */
-  const handleLogout = () => {
-    Cookies.remove("id");
-    Cookies.remove("csrftoken");
-    Cookies.remove("email");
-    Cookies.remove("username");
-    Cookies.remove("last_name");
-    Cookies.remove("first_name");
-    Cookies.remove("role");
+  const handleLogout = async () => {
 
-    router.push("/");
+    const response = await fetch("http://127.0.0.1:8000/api/logout/", {
+      method: "POST",
+      headers: {
+        "Authorization": "Token " + cookies.csrftoken,
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (response.ok) {
+        Cookies.remove("id");
+        Cookies.remove("csrftoken");
+        Cookies.remove("email");
+        Cookies.remove("username");
+        Cookies.remove("last_name");
+        Cookies.remove("first_name");
+        Cookies.remove("role");
+        router.push("/");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+    } else {
+      alert("ERREUR !");
+    }
   };
 
   return (
