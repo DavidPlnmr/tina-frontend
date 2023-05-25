@@ -1,8 +1,10 @@
 import Header from '../../header';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
+import Head from "next/head";
+import Image from "next/image";
 
 /**
  * @namespace 'form_typesofservice.js'
@@ -22,6 +24,17 @@ export default function Formulaire_typesofservice() {
     // Pathname pour la redirection de page
     const pathnameModal = "./menu_services";
     const pathnameNewService = "/components/gestion_admin/gestion_services/form_services";
+
+    /**
+     * @memberof 'services.js'
+     * @constant {Array} lstTypesOfService Array that contains all the types of service
+     * @constant {Array} lstTOSNames Array that contains all the names of the types of service
+     * @default {Array} lstTypesOfService []
+     * @default {Array} lstTOSNames []
+     * @see{@link 'services.js'.lstTypesOfService}
+   */
+    const [lstTOSNames, setLstTOSNames] = useState([]);
+    const [lstTypesOfService, setLstTypesOfService] = useState([]);
 
     /**
      * @memberof 'form_typesofservice.js'
@@ -46,35 +59,119 @@ export default function Formulaire_typesofservice() {
     };
 
     /**
-     * @memberof 'form_typesofservice.js'
-     * @function handleSubmit Function that allows the user to create a new type of service
-     * @description posts the new type of service in the database and shows a notification if the creation is successful or not
-     * @param {object} evt - event
-     * @see {@link 'form_typesofservice.js'.urlTypesOfService}
-     * @see {@link 'form_typesofservice.js'.typeOfService}
-     */
-    const handleSubmit = (evt) => {
+   * @memberof 'form_typesofservice.js'
+   * @function fetchTypeOfService Function that fetches the types of service from the database
+   * @description fetches the types of service from the database and sets the list of types of service to the response of the request
+   * @see {@link 'services.js'.fetchTypeOfService}
+   */
+    const fetchTypeOfService = () => {
         const cookies = parseCookies();
-        evt.preventDefault();
-
-        axios.post(urlTypesOfService, typeOfService, {
+        axios.get(urlTypesOfService, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
         })
             .then((response) => {
+                setLstTypesOfService(response.data);
                 console.log(response.data);
-                document.getElementById("notification_success").hidden = false;
             })
             .catch((error) => {
                 console.log(error);
-                document.getElementById("notification_error").hidden = false;
             });
-
     };
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function loadTOSNames
+     * @description loads the names of the types of service in an array
+     */
+    const loadTOSNames = () => {
+        let lstTOSNames = [];
+        lstTypesOfService.map((tos) => {
+            lstTOSNames.push(tos.name.toLowerCase());
+        });
+        setLstTOSNames(lstTOSNames);
+    };
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @constant {String} isValid String that contains the class to apply to the input
+     * @default {String} isValid ""
+     * 
+     */
+    const [isValid, setIsValid] = useState("");
+
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function handleSubmit Function that allows the user to create a new type of service
+     * @description posts the new type of service in the database and shows a notification if the creation is successful or not
+     * @see {@link 'form_typesofservice.js'.urlTypesOfService}
+     * @see {@link 'form_typesofservice.js'.typeOfService}
+     */
+    const handleSubmit = () => {
+        if (typeOfService.name != "" && !lstTOSNames.includes(typeOfService.name.toLowerCase())) {
+            const cookies = parseCookies();
+
+            axios.post(urlTypesOfService, typeOfService, {
+                headers: {
+                    Authorization: 'Token ' + cookies.csrftoken,
+                },
+            })
+                .then((response) => {
+                    console.log(response.data);
+                    document.getElementById("notification_success").hidden = false;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    document.getElementById("notification_error").hidden = false;
+                });
+        }
+    };
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function useEffect
+     * @description calls the function fetchTypeOfService when the page is loaded
+     * @return {void}
+     */
+    useEffect(() => {
+        fetchTypeOfService();
+        console.log(lstTypesOfService);
+    }, []);
+
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function loadTOSNames
+     * @description loads the names of the types of service in an array, when lstTypesOfService is loaded
+     */
+    useEffect(() => {
+        loadTOSNames();
+    }, [lstTypesOfService]);
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function useEffect
+     * @description checks if the name of the type of service is valid or not
+     */
+    useEffect(() => {
+        if (lstTOSNames.includes(typeOfService.name.toLowerCase())) {
+            setIsValid("is-invalid");
+        } else if (typeOfService.name != "") {
+            setIsValid("is-valid");
+        }else{
+            setIsValid("");
+        }
+    }, [typeOfService.name]
+    );
 
     return (
         <>
+            <Head>
+                <title>Tina - Création de type de service</title>
+                <meta name="description" content="Page pour la création de type de service de l'application Tina" />
+            </Head>
             <Header />
             <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
                 <ul></ul>
@@ -90,7 +187,7 @@ export default function Formulaire_typesofservice() {
                     <p>Il y a un problème avec le service : <a id='service_error'> </a></p>
                 </div>
                 <nav class="navbar navbar-expand-lg bg-body-tertiary rounded" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid rounded" style={{ height: "8vh", width: "100vh",boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
+                    <div class="container-fluid rounded" style={{ height: "8vh", width: "100vh", boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
                         <a class="navbar-brand" href="#">Gestion des services</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -126,8 +223,11 @@ export default function Formulaire_typesofservice() {
                     }}
                 >
                     <form class="form-floating" >
-                        <input type="text" class="form-control" data-id="name" onChange={handleChangeType} id="type_of_service" />
+                        <input type="text" class={"form-control "+ isValid} data-id="name" onChange={handleChangeType} id="type_of_service" />
                         <label for="type_of_service">Nom du type de service</label>
+                        <div class="invalid-feedback">
+                            Le type de service existe déjà !
+                        </div>
                     </form >
                 </div>
 

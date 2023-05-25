@@ -6,6 +6,7 @@ import { parseCookies } from 'nookies';
 import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 
 /**
@@ -89,7 +90,7 @@ export default function Creation_encaissement() {
    * @default {object} [] An empty list
    */
   const [lstTypesOfService, setLstTypesOfService] = useState([]);
-  
+
   /**
    * @memberof 'creation_encaissement.js'
    * @function fetchTypeOfService Function to fetch the types of services from the API
@@ -218,6 +219,10 @@ export default function Creation_encaissement() {
   }, []);
   return (
     <>
+      <Head>
+        <title>Tina - Choix du service avant encaissement</title>
+        <meta name="description" content="Page de choix de service avant encaissement, de l'application Tina" />
+      </Head>
       <Header />
       <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "auto", backgroundColor: "#b8aaa0" }}>
         <ul></ul>
@@ -277,7 +282,7 @@ export default function Creation_encaissement() {
                                   <Button
                                     id='btnChooseService' onClick={() => handleClick(service)}>
                                     Choisir
-                                    <Link href={pathnameChooseService+service.id} style={{ color: "white" }}></Link> {/* Button to choose a service */}
+                                    <Link href={pathnameChooseService + service.id} style={{ color: "white" }}></Link> {/* Button to choose a service */}
                                   </Button> {/* Button to choose a service */}
                                 </div>
                               ))}
