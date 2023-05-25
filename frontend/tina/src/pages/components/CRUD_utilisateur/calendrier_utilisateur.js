@@ -176,7 +176,7 @@ export default function CalendrierClient() {
                 const end = addMinutes(start, service.duration.slice(3, 5));
                 if (cookies.role === "customer") {
                   myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
-                } else if (cookies.role === "employee") {
+                } else if (cookies.role === "employee" || cookies.role === "admin") {
                   if (appointment.customer != null) {
                     myTitle = `Service : ${service.name} / avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
                   } else {

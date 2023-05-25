@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
-import Header from '../../header';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { set } from 'date-fns';
 import { useRouter } from 'next/router';
-import { el } from 'date-fns/locale';
 import Link from 'next/link';
 
 export default function AjoutDispo() {
@@ -33,8 +30,10 @@ export default function AjoutDispo() {
         },
         })
         .then((response) => {
-        console.log(response.data);
-        setEmployees(response.data);
+          setEmployees(response.data);
+          if (dispo.employee === undefined){
+            setDispo({ ...dispo, employee: response.data[0].id});
+          }
         }
         )
         .catch((error) => {
@@ -53,7 +52,7 @@ export default function AjoutDispo() {
 
     evt.preventDefault();
 
-    console.log(dispo);
+    console.log(dispo.employee);
 
     axios.post('http://127.0.0.1:8000/api/employees/' + dispo.employee +'/disponibilities/', dispo, {
       headers: {

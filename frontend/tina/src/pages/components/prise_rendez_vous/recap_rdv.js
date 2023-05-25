@@ -116,6 +116,9 @@ export default function RecapRdv() {
    * @description React hook that triggers the side effect function when the component is mounted.
    */
   useEffect(() => {
+    if (param == undefined) {
+      router.push("/prise_rendez_vous/service_rdv");
+    } else {
     setServices(JSON.parse(param.service));
     setCoiffeurs(JSON.parse(param.employee));
     setMyDate(param.date);
@@ -128,6 +131,7 @@ export default function RecapRdv() {
         setDescription(param.description);
       }
     }
+  }
   }, []);
 
 
@@ -147,13 +151,27 @@ export default function RecapRdv() {
       const duration = services.duration;
       const splitDuration = duration.split(":");
       console.log(splitDuration[1]);
-      const minuteDuration = parseInt(splitDuration[1]);
-      const endDate = new Date(date.getTime() + minuteDuration * 60000);
-      const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
-        hour12: false,
-      });
-      setHeureFin(formattedEndTime);
-      console.log(formattedEndTime);
+      console.log(splitDuration[0]);
+      if (splitDuration[0] == "00") {
+        const minuteDuration = parseInt(splitDuration[1]);
+        const endDate = new Date(date.getTime() + minuteDuration * 60000);
+        const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
+          hour12: false,
+        });
+        setHeureFin(formattedEndTime);
+        console.log(formattedEndTime);
+      }
+      else {
+        console.log("test");
+        const hourDuration = parseInt(splitDuration[0]);
+        const minuteDuration = parseInt(splitDuration[1]);
+        const endDate = new Date(date.getTime() + hourDuration * 3600000 + minuteDuration * 60000);
+        const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
+          hour12: false,
+        });
+        setHeureFin(formattedEndTime);
+        console.log(formattedEndTime);
+      }
       // format date from dd/mm/yyyy to yyyy-mm-dd
       const splitDate = myDate.split("/");
       const formattedDate =
@@ -216,6 +234,7 @@ export default function RecapRdv() {
     <>
       <Header />
       <main>
+        {param != undefined && (
       <div className="container " style={{ marginTop: "10%" }}>
         <h2>Récapitulatif du rendez-vous : </h2>
         <table class="table">
@@ -281,6 +300,7 @@ export default function RecapRdv() {
           </tbody>
         </table>
       </div>
+        )}
       </main>
       <Footer />
     </>
