@@ -409,7 +409,7 @@ export default function ProfilUtilisateurs() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
-                    Nom :
+                    Prénom :
                   </label>
                   <input
                     type="text"
@@ -423,7 +423,7 @@ export default function ProfilUtilisateurs() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="prenom" className="form-label">
-                    Prénom :
+                    Nom :
                   </label>
                   <input
                     type="text"

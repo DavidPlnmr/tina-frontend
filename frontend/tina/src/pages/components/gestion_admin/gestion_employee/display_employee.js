@@ -129,8 +129,8 @@ export default function DisplayAndDeleteEmployee() {
             <Table striped bordered hover>
                 <thead>
                 <tr>
-                    <th>Nom</th>
                     <th>Prénom</th>
+                    <th>Nom</th>
                     <th className='d-none d-sm-block'>Nom d'utilisateur</th>
                     <th>Email</th>
                 </tr>
