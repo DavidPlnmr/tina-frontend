@@ -63,12 +63,7 @@ export default function Creation_encaissement() {
    */
   const handleClickEncManuel = () => {
     let encaissement_manuel = {
-      id: 0,
-      name: "Encaissement manuel",
-      duration: "00:00:00",
-      price: "00.00",
-      price_student: "00.00",
-      type_of_service: 0
+      name: "Encaissement manuel"
     };
     router.push({
       pathname: pathname,
@@ -231,16 +226,16 @@ export default function Creation_encaissement() {
         {/* Nav Bar pour les services */}
         <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#b8aaa0" }}>
           <ul></ul>
-          <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
-            <div class="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
-              <div class="collapse navbar-collapse" id="text">
-                <a class="navbar-brand">Ajout d'un encaissement</a>
-                <ul class="navbar-nav ms-auto mb-5 ms-lg-3"></ul>
+          <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
+            <div className="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
+              <div className="collapse navbar-collapse" id="text">
+                <a className="navbar-brand">Ajout d'un encaissement</a>
+                <ul className="navbar-nav ms-auto mb-5 ms-lg-3"></ul>
               </div>
-              <div class="collapse navbar-collapse" id="buttons">
-                <ul class="navbar-nav ms-auto"></ul>
+              <div className="collapse navbar-collapse" id="buttons">
+                <ul className="navbar-nav ms-auto"></ul>
                 <button type="button" className='btn btn-outline-primary' onClick={handleClickEncManuel}>Encaissement manuel</button>
-                <ul class="navbar-nav ms-1"></ul>
+                <ul className="navbar-nav ms-1"></ul>
               </div>
             </div>
           </nav>

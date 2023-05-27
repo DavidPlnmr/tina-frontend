@@ -178,44 +178,44 @@ export default function Formulaire_services() {
             let statusOK = true;
 
             if (typeOfService === 0) {
-                document.getElementById('select_type_of_service').setAttribute('class', 'form-control is-invalid');
+                document.getElementById('select_type_of_service').setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             } else {
-                document.getElementById('select_type_of_service').setAttribute('class', 'form-control is-valid')
+                document.getElementById('select_type_of_service').setAttribute('className', 'form-control is-valid')
             };
 
             const s = service[i + 1];
             if (lstNameServices.includes(s.name.toLowerCase())) {
-                document.getElementById('service_titre' + (i + 1)).setAttribute('class', 'form-control is-invalid');
+                document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 document.getElementById('service_titre_error' + (i + 1)).innerHTML = "Ce service existe déjà";
                 statusOK = false;
             } else if (s.name === "") {
-                document.getElementById('service_titre' + (i + 1)).setAttribute('class', 'form-control is-invalid');
+                document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 document.getElementById('service_titre' + (i + 1)).innerHTML = 'Le titre ne peut pas être vide.';
                 statusOK = false;
             }
             else {
-                document.getElementById('service_titre' + (i + 1)).setAttribute('class', 'form-control is-valid');
+                document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-valid');
             };
             if (s.price === 0) {
-                document.getElementById('service_prix' + (i + 1)).setAttribute('class', 'form-control is-invalid');
+                document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             } else {
-                document.getElementById('service_prix' + (i + 1)).setAttribute('class', 'form-control is-valid');
+                document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-valid');
             };
             if (s.price_student === 0) {
-                document.getElementById('service_studentprice' + (i + 1)).setAttribute('class', 'form-control is-invalid');
+                document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             }
             else {
-                document.getElementById('service_studentprice' + (i + 1)).setAttribute('class', 'form-control is-valid');
+                document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-valid');
             };
             if (s.duration === 0) {
-                document.getElementById('service_temps' + (i + 1)).setAttribute('class', 'form-control is-invalid');
+                document.getElementById('service_temps' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             }
             else {
-                document.getElementById('service_temps' + (i + 1)).setAttribute('class', 'form-control is-valid');
+                document.getElementById('service_temps' + (i + 1)).setAttribute('className', 'form-control is-valid');
             };
             if (statusOK) {
                 s.type_of_service = typeOfService;
@@ -380,41 +380,41 @@ export default function Formulaire_services() {
                 >
                     <label>Service {i}</label>
                     <ul></ul>
-                    <div class="input-group mb-3">
-                        <form class="form-floating" data-index={i}>
-                            <input type="text" class={"form-control "} id={"service_titre" + i} data-id={"name"} placeholder={'Le titre du service ' + i} onChange={handleChange}></input>
+                    <div className="input-group mb-3">
+                        <form className="form-floating" data-index={i}>
+                            <input type="text" className={"form-control "} id={"service_titre" + i} data-id={"name"} placeholder={'Le titre du service ' + i} onChange={handleChange}></input>
                             <label for={"service_titre" + i}>Titre</label>
-                            <div class="invalid-feedback" id={'service_titre_error' + i}>
+                            <div className="invalid-feedback" id={'service_titre_error' + i}>
                             </div>
                         </form>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <form class="form-floating" data-index={i}>
-                            <input type="number" class={"form-control "} id={"service_prix" + i} data-id={"price"} placeholder="0" onChange={handleChange}></input>
+                    <div className="input-group mb-3">
+                        <form className="form-floating" data-index={i}>
+                            <input type="number" className={"form-control "} id={"service_prix" + i} data-id={"price"} placeholder="0" onChange={handleChange}></input>
                             <label for={"service_prix" + i}>Prix normal</label>
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 Le prix ne peut pas être vide.
                             </div>
                         </form>
-                        <span class="input-group-text">CHF</span>
+                        <span className="input-group-text">CHF</span>
                     </div>
 
 
-                    <div class="input-group mb-3">
-                        <form class="form-floating" data-index={i}>
-                            <input type="number" class={"form-control "} id={"service_studentprice" + i} data-id={"price_student"} placeholder="0" onChange={handleChange}></input>
+                    <div className="input-group mb-3">
+                        <form className="form-floating" data-index={i}>
+                            <input type="number" className={"form-control "} id={"service_studentprice" + i} data-id={"price_student"} placeholder="0" onChange={handleChange}></input>
                             <label for={"service_studentprice" + i}>Prix etudiant</label>
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 Le prix ne peut pas être vide.
                             </div>
                         </form>
-                        <span class="input-group-text">CHF</span>
+                        <span className="input-group-text">CHF</span>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <form class="form-floating" data-index={i}>
-                            <select class={"form-select "} aria-label="Temps de service" id={"service_temps" + i} data-id={"duration"} onChange={handleChange}>
+                    <div className="input-group mb-3">
+                        <form className="form-floating" data-index={i}>
+                            <select className={"form-select "} aria-label="Temps de service" id={"service_temps" + i} data-id={"duration"} onChange={handleChange}>
                                 <option value="0">0</option>
                                 <option value="15">15</option>
                                 <option value="30">30</option>
@@ -426,11 +426,11 @@ export default function Formulaire_services() {
                                 <option value="120">120</option>
                             </select>
                             <label for={"service_temps" + i}>Duree</label>
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 La durée doit être supérieure à 0.
                             </div>
                         </form>
-                        <span class="input-group-text">Minutes</span>
+                        <span className="input-group-text">Minutes</span>
                     </div>
                 </div >
             );
@@ -479,28 +479,28 @@ export default function Formulaire_services() {
                 }}
             >
                 <ul></ul>
-                <div id={"notification_success"} class="alert alert-success" role="alert" hidden>
-                    <h4 class="alert-heading">Création réussie</h4>
+                <div id={"notification_success"} className="alert alert-success" role="alert" hidden>
+                    <h4 className="alert-heading">Création réussie</h4>
                     <hr></hr>
-                    <p class="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
+                    <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
                     </p>
                 </div>
-                <div id={"notification_error"} class="alert alert-danger" role="alert" hidden>
-                    <h4 class="alert-heading">Création Echouée</h4>
-                    <p>Veuillez vérifier que le service n'existe pas déjà. Vous pouvez consulter tous les services :  <Link href={pathnameModal} class="alert-link">ICI</Link></p>
+                <div id={"notification_error"} className="alert alert-danger" role="alert" hidden>
+                    <h4 className="alert-heading">Création Echouée</h4>
+                    <p>Veuillez vérifier que le service n'existe pas déjà. Vous pouvez consulter tous les services :  <Link href={pathnameModal} className="alert-link">ICI</Link></p>
                 </div>
                 <ul></ul>
                 <div>
-                    <div class="input-group mb-3">
-                        <form class="form-floating">
-                            <select class={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                    <div className="input-group mb-3">
+                        <form className="form-floating">
+                            <select className={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
                                 <option key='0' value='0'>Sélectionnez un type de service...</option>
                                 {listTypeOfService.map(item => {
                                     return (<option key={item.id} value={item.id}>{item.name}</option>);
                                 })}
                             </select>
                             <label for="select_type_of_service">Type de service</label>
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 Le type de service ne peut pas être vide.
                             </div>
                         </form>
@@ -510,14 +510,14 @@ export default function Formulaire_services() {
                         {loadServices()}
                     </div>
 
-                    <div class="row mb-3">
-                        <button type="button" class="btn btn-dark" onClick={addService}>Ajouter un service</button>
+                    <div className="row mb-3">
+                        <button type="button" className="btn btn-dark" onClick={addService}>Ajouter un service</button>
 
                     </div>
 
-                    <div class="row mb-3">
+                    <div className="row mb-3">
 
-                        <button type="button" id='btn_save_serv' class="btn btn-primary disabled" onClick={handleSubmit}>Sauvegarder</button>
+                        <button type="button" id='btn_save_serv' className="btn btn-primary disabled" onClick={handleSubmit}>Sauvegarder</button>
 
                     </div>
 
