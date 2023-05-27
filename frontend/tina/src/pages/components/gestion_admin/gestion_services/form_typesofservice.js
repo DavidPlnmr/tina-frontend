@@ -175,30 +175,30 @@ export default function Formulaire_typesofservice() {
             <Header />
             <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
                 <ul></ul>
-                <div id="notification_success" class="alert alert-success" role="alert" hidden>
-                    <h4 class="alert-heading">Création réussie</h4>
+                <div id="notification_success" className="alert alert-success" role="alert" hidden>
+                    <h4 className="alert-heading">Création réussie</h4>
                     <p>Vous avez créé le type de service : {typeOfService.name} </p>
                     <hr></hr>
-                    <p class="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
+                    <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
                     </p>
                 </div>
-                <div id="notification_error" class="alert alert-danger" role="alert" hidden>
-                    <h4 class="alert-heading">Création Echouée</h4>
+                <div id="notification_error" className="alert alert-danger" role="alert" hidden>
+                    <h4 className="alert-heading">Création Echouée</h4>
                     <p>Il y a un problème avec le service : <a id='service_error'> </a></p>
                 </div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary rounded" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid rounded" style={{ height: "8vh", width: "100vh", boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
-                        <a class="navbar-brand" href="#">Gestion des services</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+                <nav className="navbar navbar-expand-lg bg-body-tertiary rounded" style={{ backgroundColor: "#b8aaa0" }}>
+                    <div className="container-fluid rounded" style={{ height: "8vh", width: "100vh", boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
+                        <a className="navbar-brand" href="#">Gestion des services</a>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             </ul>
-                            <ul class="navbar-nav me-2 mb-2 mb-lg-0">
+                            <ul className="navbar-nav me-2 mb-2 mb-lg-0">
                             </ul>
-                            <button type="button" class="btn btn-primary">
-                                <Link href={pathnameNewService} class="nav-link">
+                            <button type="button" className="btn btn-primary">
+                                <Link href={pathnameNewService} className="nav-link">
                                     Nouveau service
                                 </Link>
                             </button>
@@ -222,10 +222,10 @@ export default function Formulaire_typesofservice() {
                         boxShadow: "0 2px 4px rgba(0,0,0,.2)",
                     }}
                 >
-                    <form class="form-floating" >
-                        <input type="text" class={"form-control "+ isValid} data-id="name" onChange={handleChangeType} id="type_of_service" />
+                    <form className="form-floating" >
+                        <input type="text" className={"form-control "+ isValid} data-id="name" onChange={handleChangeType} id="type_of_service" />
                         <label for="type_of_service">Nom du type de service</label>
-                        <div class="invalid-feedback">
+                        <div className="invalid-feedback">
                             Le type de service existe déjà !
                         </div>
                     </form >
@@ -234,7 +234,7 @@ export default function Formulaire_typesofservice() {
                 <ul></ul>
                 {/* Boutons de validation */}
 
-                <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Créer</button>
+                <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Créer</button>
 
 
             </div >

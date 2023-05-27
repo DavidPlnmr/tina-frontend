@@ -24,6 +24,12 @@ function Encaissement_recap() {
     //Pathname pour la redirection de page
     const pathnameModal = './menu_encaissement';
 
+    /**
+     * @memberof 'encaissement.js'
+     * @constant {String} isValid String that contains the class to apply to the input
+     * @default {String} isValid ""
+     */
+    const [isValid, setIsValid] = useState("");
 
     /**
      * @memberof 'encaissement.js'
@@ -89,26 +95,6 @@ function Encaissement_recap() {
      */
     const [token, setToken] = useState(null);
 
-    /**
-     * @function useEffect
-     * @memberof 'encaissement.js'
-     * @see {@link 'header.js'.useEffect}
-     * @description This useEffect hook sets the token and user's information based on the cookies when the component mounts or updates.
-     * @returns {void}
-     */
-    useEffect(() => {
-        setToken(cookies.csrftoken);
-
-        if (token) {
-            setUser({
-                email: cookies.email,
-                username: cookies.username,
-                last_name: cookies.last_name,
-                first_name: cookies.first_name,
-            });
-        }
-    }, [token]);
-
     /** 
      * @memberof 'encaissement.js'
      * @function successMessage 
@@ -144,6 +130,20 @@ function Encaissement_recap() {
             }
         }, 3000);
         setRefresh(!refresh);
+    };
+
+    /**
+     * @memberof 'encaissement.js'
+     * @function checkEncManuel
+     * @description the function to check if the encaissement is manual or not and hide the student price if it is not, since the price won't be defined
+     */
+    const checkEncManuel = () => {
+        if (serviceRouter.id == null) {
+            document.getElementById("rabais_etudiant").setAttribute("hidden", "hidden");
+        }
+        else {
+            document.getElementById("rabais_etudiant").removeAttribute("hidden");
+        }
     };
 
 
@@ -222,6 +222,11 @@ function Encaissement_recap() {
     }, [router.isReady]);
 
 
+
+    useEffect(() => {
+        checkEncManuel();
+    }, [serviceRouter]);
+
     /**
      * @memberof 'encaissement.js'
      * @param {boolean} refresh - the boolean to refresh the page
@@ -231,12 +236,48 @@ function Encaissement_recap() {
         console.log("refresh");
     }, [refresh]);
 
+    /**
+     * @function useEffect
+     * @memberof 'encaissement.js'
+     * @see {@link 'header.js'.useEffect}
+     * @description This useEffect hook sets the token and user's information based on the cookies when the component mounts or updates.
+     * @returns {void}
+     */
+    useEffect(() => {
+        setToken(cookies.csrftoken);
+
+        if (token) {
+            setUser({
+                email: cookies.email,
+                username: cookies.username,
+                last_name: cookies.last_name,
+                first_name: cookies.first_name,
+            });
+        }
+    }, [token]);
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function useEffect
+     * @description checks if the name of the type of service is valid or not
+     */
+    useEffect(() => {
+        if (serviceRouter.price == null || serviceRouter.price == "" ) {
+            setIsValid("is-invalid");
+        } else if (serviceRouter.price == 0) {
+            setIsValid("");
+        }else{
+            setIsValid("is-valid");
+        }
+    }, [serviceRouter.price]
+    );
+
     return (
         <>
-        <Head>
-        <title>Tina - Récapitulatif de l'encaissement</title>
-        <meta name="description" content="Page récapitulative avant encaissement de l'application Tina" />
-      </Head>
+            <Head>
+                <title>Tina - Récapitulatif de l'encaissement</title>
+                <meta name="description" content="Page récapitulative avant encaissement de l'application Tina" />
+            </Head>
             <Header />
             <div
                 className="mb-3 d-flex flex-column justify-content-start align-items-center"
@@ -248,29 +289,29 @@ function Encaissement_recap() {
             >
                 <ul></ul>
                 {/* Notifications */}
-                <div id="notification_success" class="alert alert-success" role="alert" hidden>
-                    <h4 class="alert-heading">Création réussie</h4>
+                <div id="notification_success" className="alert alert-success" role="alert" hidden>
+                    <h4 className="alert-heading">Création réussie</h4>
                     <p> Encaissement ajouté </p>
-                    
+
                     {token && cookies.role === "admin" && (
                         <div>
-                        <hr></hr>
-                        <p class="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
-                        </p>
+                            <hr></hr>
+                            <p className="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
+                            </p>
                         </div>
                     )}
 
                 </div>
-                <div id="notification_error" class="alert alert-danger" role="alert" hidden>
-                    <h4 class="alert-heading">Création Echouée</h4>
+                <div id="notification_error" className="alert alert-danger" role="alert" hidden>
+                    <h4 className="alert-heading">Création Echouée</h4>
                     <p>Il y a un problème avec l'encaissement de : <a id='enc_error'> </a></p>
                 </div>
 
-                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
-                        <div class="collapse navbar-collapse" id="text">
-                            <a class="navbar-brand">Ajout d'un encaissement</a>
-                            <ul class="navbar-nav ms-auto mb-5 ms-lg-3"></ul>
+                <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
+                    <div className="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
+                        <div className="collapse navbar-collapse" id="text">
+                            <a className="navbar-brand">Ajout d'un encaissement</a>
+                            <ul className="navbar-nav ms-auto mb-5 ms-lg-3"></ul>
                         </div>
                     </div>
                 </nav>
@@ -288,31 +329,31 @@ function Encaissement_recap() {
                     }}
                 >
                     {/* Liste des encaissements */}
-                    <table class="table mx-2 rounded text-center" style={{ backgroundColor: "#FFFFFF" }}>
+                    <table className="table mx-2 rounded text-center" style={{ backgroundColor: "#FFFFFF" }}>
                         <thead></thead>
                         <tbody>
                             <tr key={1}>
                                 <td className="align-middle" scope="col">
-                                    <div class="input-group mb-3">
-                                        <div class="form-floating">
-                                            <input type="text" defaultValue={serviceRouter.name} class="form-control" id="service_name" disabled />
+                                    <div className="input-group mb-3">
+                                        <div className="form-floating">
+                                            <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
                                             <label for="service_name">Service</label>
                                         </div>
                                     </div>
                                 </td>
                                 <td className="align-middle" scope="col">
-                                    <div class="input-group mb-3">
-                                        <div class="form-floating">
-                                            <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} class="form-control" id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
+                                    <div className="input-group mb-3">
+                                        <div className="form-floating">
+                                            <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control "+ isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
                                             <label for="service_price">Montant</label>
                                         </div>
-                                        <span class="input-group-text">CHF</span>
+                                        <span className="input-group-text">CHF</span>
                                     </div>
                                 </td>
-                                <td className="align-middle" scope="col">
-                                    <div class="input-group mb-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
+                                <td className="align-middle" scope="col" id='rabais_etudiant'>
+                                    <div className="input-group mb-3">
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
                                             <label for="service_discount">Rabais étudiant</label>
                                         </div>
                                     </div>
@@ -323,7 +364,7 @@ function Encaissement_recap() {
 
                     {/* Boutons de validation */}
 
-                    <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
+                    <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
 
                 </div>
             </div>

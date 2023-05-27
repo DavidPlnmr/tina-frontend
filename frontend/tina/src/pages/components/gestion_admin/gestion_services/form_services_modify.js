@@ -171,31 +171,24 @@ export default function Formulaire_services_modify() {
 
         const s = service;
         let statusOK = true;
-
-        // if (s.type_of_service === 0) {
-        //     document.getElementById('select_type_of_service').setAttribute('class', 'form-control is-invalid');
-        //     statusOK = false;
-        // } else {
-        //     document.getElementById('select_type_of_service').setAttribute('class', 'form-control is-valid')
-        // };
        
         if (s.name.toLowerCase() == serviceRouter.name.toLowerCase()) {
-            document.getElementById('service_titre').setAttribute('class', 'form-control is-valid');
+            document.getElementById('service_titre').setAttribute('className', 'form-control is-valid');
         }
         else if (lstNameServices.includes(s.name.toLowerCase())) {
-            document.getElementById('service_titre').setAttribute('class', 'form-control is-invalid');
+            document.getElementById('service_titre').setAttribute('className', 'form-control is-invalid');
             document.getElementById('service_titre_error').innerHTML = "Ce nom de service existe déjà";
             statusOK = false;
         }
         else if (s.name == "") {
-            document.getElementById('service_titre').setAttribute('class', 'form-control is-invalid');
+            document.getElementById('service_titre').setAttribute('className', 'form-control is-invalid');
             document.getElementById('service_titre_error').innerHTML = 'Le titre ne peut pas être vide.';
             statusOK = false;
         }
 
-        document.getElementById('service_prix').setAttribute('class', 'form-control is-valid');
-        document.getElementById('service_studentprice').setAttribute('class', 'form-control is-valid');
-        document.getElementById('service_temps').setAttribute('class', 'form-control is-valid');
+        document.getElementById('service_prix').setAttribute('className', 'form-control is-valid');
+        document.getElementById('service_studentprice').setAttribute('className', 'form-control is-valid');
+        document.getElementById('service_temps').setAttribute('className', 'form-control is-valid');
         if (statusOK) {
             putService(s);
         }
@@ -368,9 +361,9 @@ export default function Formulaire_services_modify() {
                 </div>
                 <div>
                     <ul></ul>
-                    <div class="input-group mb-3">
-                        <form class="form-floating">
-                            <select class={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                    <div className="input-group mb-3">
+                        <form className="form-floating">
+                            <select className={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
                                 {listTypeOfService.map(item => {
                                     if (item.id === typeOfServiceRouter.id) {
                                         return (<option key={item.id} value={item.id} selected>{item.name}</option>);
@@ -399,39 +392,39 @@ export default function Formulaire_services_modify() {
                             }}
                         >
 
-                            <div class="input-group mb-3">
-                                <form class="form-floating">
-                                    <input type="text" class={"form-control "} defaultValue={serviceRouter.name} id={"service_titre"} data-id={"name"} placeholder={'Le titre du service '} onKeyUp={handleChange} onChange={handleChange}></input>
+                            <div className="input-group mb-3">
+                                <form className="form-floating">
+                                    <input type="text" className={"form-control "} defaultValue={serviceRouter.name} id={"service_titre"} data-id={"name"} placeholder={'Le titre du service '} onKeyUp={handleChange} onChange={handleChange}></input>
                                     <label htmlFor={"service_titre"}>Titre du service</label>
-                                    <div class="invalid-feedback" id={'service_titre_error'}>
+                                    <div className="invalid-feedback" id={'service_titre_error'}>
                                     </div>
                                 </form>
                                 {/* <span class="input-group-text">CHF</span> */}
                             </div>
 
-                            <div class="input-group mb-3">
-                                <form class="form-floating">
-                                    <input type="number" class={"form-control "} defaultValue={serviceRouter.price} id={"service_prix"} data-id={"price"} placeholder="0" onKeyUp={handleChange} onChange={handleChange}></input>
+                            <div className="input-group mb-3">
+                                <form className="form-floating">
+                                    <input type="number" className={"form-control "} defaultValue={serviceRouter.price} id={"service_prix"} data-id={"price"} placeholder="0" onKeyUp={handleChange} onChange={handleChange}></input>
                                     <label htmlFor={"service_prix"}>Prix normal</label>
-                                    <div class="invalid-feedback" id={'service_prix_error'}>
+                                    <div className="invalid-feedback" id={'service_prix_error'}>
                                     </div>
                                 </form>
-                                <span class="input-group-text">CHF</span>
+                                <span className="input-group-text">CHF</span>
                             </div>
 
-                            <div class="input-group mb-3">
-                                <form class="form-floating">
+                            <div className="input-group mb-3">
+                                <form className="form-floating">
                                     <input type="number" className="form-control" id={"service_studentprice"} defaultValue={serviceRouter.price_student} data-id={"price_student"} placeholder="0" onKeyUp={handleChange} onChange={handleChange}></input>
                                     <label htmlFor={"service_studentprice"}>Prix etudiant</label>
-                                    <div class="invalid-feedback" id={'service_studentprice_error'}>
+                                    <div className="invalid-feedback" id={'service_studentprice_error'}>
                                     </div>
                                 </form>
-                                <span class="input-group-text">CHF</span>
+                                <span className="input-group-text">CHF</span>
                             </div>
 
-                            <div class="input-group mb-3">
-                                <form class="form-floating">
-                                    <select class={"form-select "} aria-label="Temps de service" id={"service_temps"} data-id={"duration"} onKeyUp={handleChange} onChange={handleChange}>
+                            <div className="input-group mb-3">
+                                <form className="form-floating">
+                                    <select className={"form-select "} aria-label="Temps de service" id={"service_temps"} data-id={"duration"} onKeyUp={handleChange} onChange={handleChange}>
                                         <option value="0">0</option>
                                         <option value="15">15</option>
                                         <option value="30">30</option>
@@ -443,11 +436,11 @@ export default function Formulaire_services_modify() {
                                         <option value="120">120</option>
                                     </select>
                                     <label for={"service_temps"}>Duree</label>
-                                    <div class="invalid-feedback">
+                                    <div className="invalid-feedback">
                                         La durée doit être supérieure à 0.
                                     </div>
                                 </form>
-                                <span class="input-group-text">Minutes</span>
+                                <span className="input-group-text">Minutes</span>
                             </div>
 
 
