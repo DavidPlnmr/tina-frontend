@@ -42,9 +42,10 @@ export default function DetailEmployee() {
   const cookies = parseCookies();
 
   useEffect(() => {
-
+    if (!router.isReady) return;
     setCoiffeurs(JSON.parse(param.employee));
-  }, []);
+    localStorage.setItem("employee", JSON.stringify(coiffeurs));
+  }, [router.isReady]);
 
   const handleDelete = () => {
     console.log(coiffeurs.id);
@@ -57,7 +58,7 @@ export default function DetailEmployee() {
     .then((response) => {
       console.log(response);
       alert("L'employé a bien été supprimé");
-    router.push("./display_delete_employee");
+    router.push("./display_employee");
     })
     .catch((error) => {
       console.log(error);
@@ -76,25 +77,24 @@ const handleUpdate = () => {
     <>
       <Header />
       <main>
-      <div className="container " style={{ marginTop: "10%" }}>
-        <h2>Détail de l'employé : </h2>
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>Nom, Prénom</td>
-              <td>{coiffeurs.first_name + " " + coiffeurs.last_name}</td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td>{coiffeurs.email}</td>
-            </tr>
-            <tr>
-              <td>Nom d'utilisateur</td>
-              <td>{coiffeurs.username}</td>
-            </tr>
-            <br />
-          </tbody>
-        </table>
+        {coiffeurs && (
+      <div className="container" style={{ marginTop: "10%" }}>
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">Détail de l'employé</h4>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">
+                  <b>Nom, Prénom : </b> {coiffeurs.last_name + " " + coiffeurs.first_name}
+                </li>
+                <li className="list-group-item">
+                  <b>Email : </b> {coiffeurs.email}
+                </li>
+                <li className="list-group-item">
+                  <b>Username : </b> {coiffeurs.username}
+                </li>
+              </ul>
+            </div>
+          </div> <br />
         <button
               type="button"
               class="btn btn-primary no-border"
@@ -112,6 +112,7 @@ const handleUpdate = () => {
               Supprimer l'employé
             </button>
       </div>
+        )}
       </main>
       <Footer />
     </>

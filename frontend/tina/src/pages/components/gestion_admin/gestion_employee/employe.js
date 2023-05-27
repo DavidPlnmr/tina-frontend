@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
+import { useRouter } from 'next/router';
 
 export default function Employe() {
 
@@ -17,6 +18,8 @@ export default function Employe() {
       password: ""
     }
   ]);
+
+  const router = useRouter();
 
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -37,6 +40,8 @@ export default function Employe() {
     })
     .then((response) => {
       console.log(response.data);
+      alert("L'employé a bien été ajouté !");
+      router.push("../dash_admin");
     })
     .catch((error) => {
       console.log(error);
@@ -64,11 +69,11 @@ export default function Employe() {
                   <Card.Title className="text-center mb-4">Ajout d'un employé</Card.Title>
                   <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
-                      <Form.Control data-id="first_name" type="text" placeholder="Nom" value={employe.firstName} onChange={handleChange}/>
+                      <Form.Control data-id="first_name" type="text" placeholder="Nom" value={employe.lastName} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <Form.Control data-id="last_name" type="text" placeholder="Prénom" value={employe.lastName} onChange={handleChange}/>
+                      <Form.Control data-id="last_name" type="text" placeholder="Prénom" value={employe.firstName} onChange={handleChange}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">

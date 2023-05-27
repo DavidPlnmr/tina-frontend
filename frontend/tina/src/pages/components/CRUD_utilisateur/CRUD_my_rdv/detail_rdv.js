@@ -170,6 +170,11 @@ export default function DetailRdv() {
       }
     } 
   };
+
+  const handleRedirect = (evt) => {
+    evt.preventDefault();
+    router.push("/components/CRUD_utilisateur/calendrier_utilisateur");
+  };
   
   return (
     <>
@@ -210,6 +215,14 @@ export default function DetailRdv() {
             Annuler le rendez-vous
           </button>
         </div>
+          )}
+          {appointment == undefined && (
+            <div className="container" style={{marginTop: "10%"}}>
+              <h1>Une erreur est survenue</h1><br /> 
+              <button className="btn btn-primary" style={{backgroundColor: "#232627", border: "none"}} onClick={handleRedirect}>
+                Revenir au calendrier
+              </button>
+            </div>
           )}
       </main>
       <Footer />
