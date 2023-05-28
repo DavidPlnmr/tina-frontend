@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { Card, Button } from "react-bootstrap";
 import Footer from "@/pages/components/footer";
 import Head from "next/head";
+import api from "@/api/api";
 
 /**
  * @namespace 'service_rdv.js'

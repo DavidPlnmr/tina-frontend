@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Header from "../header";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
@@ -20,6 +19,18 @@ export default function Connexion() {
    * @see {@link 'header.js'.router}
    */
   const router = useRouter();
+
+  /**
+   * @constant showPassword
+   * @memberof 'connexion.js'
+   * @description This state variable stores the password visibility.
+   * @default {showPassword: false}
+   * @see {@link 'inscription.js'.showPassword}
+   * @returns {boolean} The password visibility.
+   */
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   /**
    * @constant user
@@ -65,7 +76,7 @@ export default function Connexion() {
         path: "/",
       });
       setCookie(null, 'role', data.role, { maxAge: 86400, path: '/' });
-      router.push("/");
+      await router.push("/");
     } else {
       alert("Identifiants incorrects");
     }
@@ -76,71 +87,77 @@ export default function Connexion() {
   };
 
   return (
-    <>
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh", backgroundColor: "#b8aaa0" }}
-      >
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-sm-10 col-md-8 col-lg-6">
-              <Card
-                className="border-0"
-                style={{ backgroundColor: "#b8aaa0", marginTop: "-150px" }}
-              >
-                <Card.Body>
-                  <h2 className="text-center mb-4">Tina Coiffure</h2>
-                  <Card.Title className="text-center mb-4">
-                    Connexion
-                  </Card.Title>
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control
-                        data-id="username"
-                        value={user.username}
-                        type="text"
-                        placeholder="Nom d'utilisateur"
-                        onChange={handleChange}
-                      />
-                    </Form.Group>
+      <>
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-12 col-sm-10 col-md-8 col-lg-6">
+                <Card className="border-0 shadow-lg">
+                  <Card.Body className="p-4">
+                    <Card.Title className="text-center mb-4">
+                      <div className="d-flex justify-content-center align-items-center gap-3">
+                        <img src="/images/tina_logo.png" alt="logo" className="img-fluid" width="60" />
+                        <h2 className="font-weight-bold" style={{ fontFamily: "Abhaya Libre", fontSize: "38px" }}>Tina Coiffure</h2>
+                      </div>
+                    </Card.Title>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Control
-                        data-id="password"
-                        value={user.password}
-                        type="password"
-                        placeholder="Mot de passe"
-                        onChange={handleChange}
-                      />
-                      <Form.Text className="text-muted">
-                        <Link class="nav-link" href="/">
-                          Problème de connexion ?
-                        </Link>
-                      </Form.Text>
-                    </Form.Group>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      className='w-100 border-0"'
-                      style={{ backgroundColor: "#232627", border: 0 }}
-                    >
-                      Se connecter
-                    </Button>
-                    <Form.Text className="text-muted">
-                      <Link
-                        class="nav-link"
-                        href="/components/identification/inscription"
+                    <Card.Subtitle className="mb-4">
+                      <h4 className="text-center font-weight-bold">Connexion</h4>
+                    </Card.Subtitle>
+
+                    <Form onSubmit={handleSubmit} className="pt-3">
+                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Control
+                            className="shadow-sm"
+                            data-id="username"
+                            value={user.username}
+                            type="text"
+                            placeholder="Nom d'utilisateur ou adresse e-mail"
+                            onChange={handleChange}
+                        />
+                      </Form.Group>
+
+                      <Form.Group className="mb-4" controlId="formBasicPassword">
+                        <Form.Control
+                            className="shadow-sm"
+                            data-id="password"
+                            value={user.password}
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Mot de passe"
+                            onChange={handleChange}
+                        />
+                        <div className="d-flex justify-content-between align-items-center mt-2">
+                          <Form.Check
+                              type="checkbox"
+                              label="Afficher le mot de passe"
+                              onClick={toggleShowPassword}
+                          />
+                          <Form.Text className="text-muted">
+                            <Link class="nav-link p-0" href="#">Mot de passe oublié ?</Link>
+                          </Form.Text>
+                        </div>
+                      </Form.Group>
+
+                      <Button
+                          variant="primary"
+                          type="submit"
+                          className='w-100 border-0 shadow-sm'
+                          style={{ backgroundColor: "#232627", marginBottom: "10px" }}
                       >
-                        Vous n'avez pas de compte ?
-                      </Link>
-                    </Form.Text>
-                  </Form>
-                </Card.Body>
-              </Card>
+                        Se connecter
+                      </Button>
+                      {/* Margin top */}
+                      <Form.Text className="text-muted text-center mt-3">
+                        <Link class="nav-link p-0" href="/components/identification/inscription">Vous n'avez pas de compte ?</Link>
+                      </Form.Text>
+                    </Form>
+                  </Card.Body>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
   );
+
 }
