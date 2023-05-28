@@ -90,14 +90,14 @@ export default function Connexion() {
   return (
       <>
         <Head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Tina Coiffure | Connexion</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Tina Coiffure | Connexion</title>
         </Head>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-sm-10 col-md-8 col-lg-6">
-                <Card className="border-0 shadow-lg">
+                <Card className="border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
                   <Card.Body className="p-4">
                     <Card.Title className="text-center mb-4">
                       <div className="d-flex justify-content-center align-items-center gap-3">
