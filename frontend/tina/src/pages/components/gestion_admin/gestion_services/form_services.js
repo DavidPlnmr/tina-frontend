@@ -66,7 +66,7 @@ export default function Formulaire_services() {
         const index = evt.target.closest('form').dataset.index;
         console.log('index', parseInt(index));
         let val = evt.target.value;
-        if (evt.target.dataset.id == 'duration') {
+        if (evt.target.dataset.id === 'duration') {
             val = formatTime(val);
         }
         setService((prevService) =>
@@ -90,7 +90,7 @@ export default function Formulaire_services() {
      */
     const handleSelect = (evt) => {
         setTypeOfService(evt.target.value);
-        if (evt.target.value != 0) {
+        if (evt.target.value !== 0) {
             document.getElementById('select_type_of_service').classList.replace('is-invalid', 'is-valid');
         }
     };
@@ -104,16 +104,16 @@ export default function Formulaire_services() {
 
 
     /**
-    * @memberof 'form_services.js'
-    * @constant {Array} lstServices Array that contains all the services
-    * @constant {Array} lstTypesOfService Array that contains all the types of service
-    * @constant {Array} lstNameServices Array that contains all the names of the services
-    * @default {Array} lstNameServices []
-    * @default {Array} lstServices []
-    * @default {Array} lstTypesOfService []
-    * @see {@link 'services.js'.lstServices}
-    * @see {@link 'services.js'.lstTypesOfService}
-    */
+     * @memberof 'form_services.js'
+     * @constant {Array} lstServices Array that contains all the services
+     * @constant {Array} lstTypesOfService Array that contains all the types of service
+     * @constant {Array} lstNameServices Array that contains all the names of the services
+     * @default {Array} lstNameServices []
+     * @default {Array} lstServices []
+     * @default {Array} lstTypesOfService []
+     * @see {@link 'services.js'.lstServices}
+     * @see {@link 'services.js'.lstTypesOfService}
+     */
     const [lstNameServices, setLstNameServices] = useState([]);
     const [lstServices, setLstServices] = useState([]);
     const [listTypeOfService, setListTypeOfService] = useState([]);
@@ -164,14 +164,12 @@ export default function Formulaire_services() {
     }
 
     /**
-     * @memberof 'form_services.js'
      * @function handleSubmit - function to submit the form and call the postService function
      * @description go through the array of services and call the postService function for each service if the fields are not empty and if the type of service is selected. then if there is no error, call the successMessage function
      * @see {@link 'form_services_modify.js'.postService}
      * @see {@link 'form_services_modify.js'.successMessage}
-     * @param {object} evt - event
      */
-    const handleSubmit = (evt) => {
+    const handleSubmit = () => {
 
         // boucle for pour envoyer les services
         for (let i = 0; i < compteur; ++i) {
@@ -182,7 +180,7 @@ export default function Formulaire_services() {
                 statusOK = false;
             } else {
                 document.getElementById('select_type_of_service').setAttribute('className', 'form-control is-valid')
-            };
+            }
 
             const s = service[i + 1];
             if (lstNameServices.includes(s.name.toLowerCase())) {
@@ -196,44 +194,44 @@ export default function Formulaire_services() {
             }
             else {
                 document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-valid');
-            };
+            }
             if (s.price === 0) {
                 document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             } else {
                 document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-valid');
-            };
+            }
             if (s.price_student === 0) {
                 document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             }
             else {
                 document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-valid');
-            };
+            }
             if (s.duration === 0) {
                 document.getElementById('service_temps' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             }
             else {
                 document.getElementById('service_temps' + (i + 1)).setAttribute('className', 'form-control is-valid');
-            };
+            }
             if (statusOK) {
                 s.type_of_service = typeOfService;
-                postService(s, i);
+                postService(s);
             }
         }
 
 
     };
 
-    /** 
+    /**
      * @memberof 'form_services.js'
      * @function successMessage
      * @description the function to show the success message then hide it after 5 seconds and refresh the page
      * @see {@link 'encaissement.js'.successMessage}
-    */
+     */
 
-    const successMessage = (i) => {
+    const successMessage = () => {
         document.getElementById("notification_success").removeAttribute("hidden");
         //après 3 secondes, on cache la notification
         setTimeout(function () {
@@ -249,7 +247,7 @@ export default function Formulaire_services() {
      * @description the function to show the error message then hide it after 3 seconds and refresh the page
      * @see {@link 'encaissement.js'.errorMessage}
      */
-    const errorMessage = (i) => {
+    const errorMessage = () => {
         document.getElementById("notification_error").removeAttribute("hidden");
         //après 3 secondes, on cache la notification
         setTimeout(function () {
@@ -265,7 +263,7 @@ export default function Formulaire_services() {
      * @description post a service and set the success state to true if there is no error, else set the success state to false and call the errorMessage function
      * @param {object} s - service to post
      */
-    const postService = (s, i) => {
+    const postService = (s) => {
         const cookies = parseCookies();
 
         axios.post(urlServices, s, {
@@ -276,13 +274,13 @@ export default function Formulaire_services() {
             .then((response) => {
                 console.log("response ", response.status);
                 if (response.status === 201) {
-                    successMessage(i);
+                    successMessage();
                 } else {
-                    errorMessage(i);
+                    errorMessage();
                 }
             })
             .catch((error) => {
-                errorMessage(i);
+                errorMessage();
                 console.log(error);
             });
 
@@ -290,11 +288,10 @@ export default function Formulaire_services() {
 
     /**
      * @memberof 'form_services.js'
-     * @param {String} urlServices the url to fetch the services from the API
      * @function fetchServices Function to fetch the services from the API
      * @see {@link 'header.js'.cookies}
      * @see {@link 'gestion_encaissement.js'.fetchServices}
-   */
+     */
     const fetchServices = () => {
         const cookies = parseCookies();
         axios.get(urlServices, {
@@ -310,7 +307,7 @@ export default function Formulaire_services() {
                 console.log(error);
             });
     };
-    
+
     /**
      * @memberof 'form_services.js'
      * @function loadNameServices
@@ -362,28 +359,19 @@ export default function Formulaire_services() {
      * @returns {Array} array of components to contain the forms of the services
      */
     const loadServices = () => {
-
         for (let n = 0; n < compteur; n++) {
             let i = n + 1;
             lstNvServices.push(
                 <div
-                    className="mb-3 d-flex flex-column"
+                    className="mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm position-relative"
                     id='form'
-                    style={{
-                        width: "100vh",
-                        height: "auto",
-                        borderRadius: "6px",
-                        padding: "10px",
-                        background: "whiteSmoke",
-                        boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                    }}
                 >
-                    <label>Service {i}</label>
+                    <label className="fs-5">Service {i}</label>
                     <ul></ul>
                     <div className="input-group mb-3">
                         <form className="form-floating" data-index={i}>
                             <input type="text" className={"form-control "} id={"service_titre" + i} data-id={"name"} placeholder={'Le titre du service ' + i} onChange={handleChange}></input>
-                            <label for={"service_titre" + i}>Titre</label>
+                            <label htmlFor={"service_titre" + i}>Titre</label>
                             <div className="invalid-feedback" id={'service_titre_error' + i}>
                             </div>
                         </form>
@@ -392,7 +380,7 @@ export default function Formulaire_services() {
                     <div className="input-group mb-3">
                         <form className="form-floating" data-index={i}>
                             <input type="number" className={"form-control "} id={"service_prix" + i} data-id={"price"} placeholder="0" onChange={handleChange}></input>
-                            <label for={"service_prix" + i}>Prix normal</label>
+                            <label htmlFor={"service_prix" + i}>Prix normal</label>
                             <div className="invalid-feedback">
                                 Le prix ne peut pas être vide.
                             </div>
@@ -404,7 +392,7 @@ export default function Formulaire_services() {
                     <div className="input-group mb-3">
                         <form className="form-floating" data-index={i}>
                             <input type="number" className={"form-control "} id={"service_studentprice" + i} data-id={"price_student"} placeholder="0" onChange={handleChange}></input>
-                            <label for={"service_studentprice" + i}>Prix etudiant</label>
+                            <label htmlFor={"service_studentprice" + i}>Prix etudiant</label>
                             <div className="invalid-feedback">
                                 Le prix ne peut pas être vide.
                             </div>
@@ -425,12 +413,12 @@ export default function Formulaire_services() {
                                 <option value="105">105</option>
                                 <option value="120">120</option>
                             </select>
-                            <label for={"service_temps" + i}>Duree</label>
+                            <label htmlFor={"service_temps" + i}>Duree</label>
                             <div className="invalid-feedback">
                                 La durée doit être supérieure à 0.
                             </div>
                         </form>
-                        <span className="input-group-text">Minutes</span>
+                        <span className="input-group-text">MIN</span>
                     </div>
                 </div >
             );
@@ -442,7 +430,7 @@ export default function Formulaire_services() {
      * @memberof 'form_services.js'
      * @function useEffect
      * @description when the component is mounted, fetch the types of services and the services
-     * @see {@link 'form_services.js'.fetchTypeOfService} 
+     * @see {@link 'form_services.js'.fetchTypeOfService}
      * @see {@link 'form_services.js'.fetchServices}
      */
     useEffect(() => {
@@ -469,16 +457,8 @@ export default function Formulaire_services() {
                 <meta name="description" content="Page pour la création de service de l'application Tina" />
             </Head>
             <Header />
-            <ul></ul>
-            <div
-                className="mb-3 d-flex flex-column text-center justify-content-center align-items-center"
-                style={{
-                    height: "auto",
-                    background: "#b8aaa0",
-                    boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                }}
-            >
-                <ul></ul>
+            <main className="container mt-5">
+
                 <div id={"notification_success"} className="alert alert-success" role="alert" hidden>
                     <h4 className="alert-heading">Création réussie</h4>
                     <hr></hr>
@@ -489,40 +469,38 @@ export default function Formulaire_services() {
                     <h4 className="alert-heading">Création Echouée</h4>
                     <p>Veuillez vérifier que le service n'existe pas déjà. Vous pouvez consulter tous les services :  <Link href={pathnameModal} className="alert-link">ICI</Link></p>
                 </div>
-                <ul></ul>
-                <div>
-                    <div className="input-group mb-3">
-                        <form className="form-floating">
-                            <select className={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
-                                <option key='0' value='0'>Sélectionnez un type de service...</option>
-                                {listTypeOfService.map(item => {
-                                    return (<option key={item.id} value={item.id}>{item.name}</option>);
-                                })}
-                            </select>
-                            <label for="select_type_of_service">Type de service</label>
-                            <div className="invalid-feedback">
-                                Le type de service ne peut pas être vide.
-                            </div>
-                        </form>
+                <div className="text-center">
+                    <div className="d-flex justify-content-center">
+                        <div className="input-group mb-3 w-50">
+                            <form className="form-floating">
+                                <select className={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                                    <option key='0' value='0'>Sélectionnez un type de service...</option>
+                                    {listTypeOfService.map(item => {
+                                        return (<option key={item.id} value={item.id}>{item.name}</option>);
+                                    })}
+                                </select>
+                                <label htmlFor="select_type_of_service">Type de service</label>
+                                <div className="invalid-feedback">
+                                    Le type de service ne peut pas être vide.
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                     <div>
                         {loadServices()}
                     </div>
 
-                    <div className="row mb-3">
+                    <div className="d-flex justify-content-center mb-3">
                         <button type="button" className="btn btn-dark" onClick={addService}>Ajouter un service</button>
-
                     </div>
 
-                    <div className="row mb-3">
-
-                        <button type="button" id='btn_save_serv' className="btn btn-primary disabled" onClick={handleSubmit}>Sauvegarder</button>
-
+                    <div className="d-flex justify-content-center mb-3">
+                        <Link href={pathnameModal} className="btn btn-secondary me-2">Annuler</Link>
+                        <button type="button" className="btn btn-primary" id="btn_save_serv" onClick={handleSubmit}>Enregistrer</button>
                     </div>
-
                 </div>
-            </div>
+            </main>
             <Footer />
         </>
     );
