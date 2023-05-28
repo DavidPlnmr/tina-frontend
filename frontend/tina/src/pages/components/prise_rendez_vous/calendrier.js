@@ -107,6 +107,9 @@ export default function Calendrier() {
   useEffect(() => {
     console.log("param : ");
     console.log(param);
+    if (param.service === undefined || param.employee === undefined) {
+      router.push("./service_rdv");
+    }
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(
@@ -235,10 +238,10 @@ export default function Calendrier() {
         locale: "fr", // définit la langue du calendrier en français
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
-          const backgroundColor = available ? "green" : "green"; // Détermine la couleur de fond en fonction de la disponibilité
+          const backgroundColor = available ? "#4B7F52" : "#4B7F52"; // Détermine la couleur de fond en fonction de la disponibilité
           const textColor = available ? "white" : "white"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
-            html: `<b><div style="text-align: center; background-color: ${backgroundColor}; color: ${textColor};">${info.event.start.toLocaleTimeString(
+            html: `<b><div style="text-align: center; cursor: pointer; background-color: ${backgroundColor}; color: ${textColor}; border: "none">${info.event.start.toLocaleTimeString(
               [],
               { hour: "numeric", minute: "2-digit" }
             )}</div></b>`,

@@ -324,7 +324,6 @@ export default function ProfilUtilisateurs() {
     evt.preventDefault();
     let response;
     if (confirm("Voulez-vous vraiment supprimer votre compte ?")) {
-      if (cookies.role === "customer") {
         response = axios
           .delete("http://127.0.0.1:8000/api/customers/" + cookies.id + "/", {
             headers: {
@@ -335,21 +334,6 @@ export default function ProfilUtilisateurs() {
           .catch((error) => {
             console.log(error);
           });
-      } else if (cookies.role === "employee" || cookies.role === "admin") {
-        axios
-          .delete("http://127.0.0.1:8000/api/employees/" + cookies.id + "/", {
-            headers: {
-              Authorization: "Token " + cookies.csrftoken,
-            },
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-
       Promise.all([
         destroyCookie(null, "id"),
         destroyCookie(null, "csrftoken"),
@@ -425,7 +409,7 @@ export default function ProfilUtilisateurs() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
-                    Nom :
+                    Prénom :
                   </label>
                   <input
                     type="text"
@@ -439,7 +423,7 @@ export default function ProfilUtilisateurs() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="prenom" className="form-label">
-                    Prénom :
+                    Nom :
                   </label>
                   <input
                     type="text"
@@ -501,13 +485,15 @@ export default function ProfilUtilisateurs() {
                 </button>{" "}
                 <br />
                 <br />
+                {role === "customer" && (
                 <button
                   className="btn btn-primary"
                   onClick={handleDelete}
-                  style={{ backgroundColor: "#C21A09", border: 0 }}
+                  style={{ backgroundColor: "#DC3545", border: "none" }}
                 >
                   Supprimer mon compte
                 </button>
+                )}
               </form>
             </div>
           </div>

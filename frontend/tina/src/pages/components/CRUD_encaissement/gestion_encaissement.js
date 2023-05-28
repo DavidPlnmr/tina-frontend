@@ -3,10 +3,8 @@ import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
-import { useRouter } from 'next/router';
-import { format, parse, set } from 'date-fns';
-import { id } from 'date-fns/locale';
-import { refineEventDef } from '@fullcalendar/core/internal';
+import { set } from 'date-fns';
+import { el } from 'date-fns/locale';
 
 /**
  * @namespace 'gestion_encaissement.js'
@@ -29,7 +27,6 @@ export default function Encaissement() {
 
     // Pathname pour la redirection de page
     const pathnameAdd = "./creation_encaissement";
-
 
     /**
      * @memberof 'gestion_encaissement.js'
@@ -55,7 +52,6 @@ export default function Encaissement() {
      * @default ""
      */
     const [modeModify, setModeModify] = useState('');
- 
 
     /**
      * @memberof 'gestion_encaissement.js'
@@ -65,7 +61,6 @@ export default function Encaissement() {
     const [btnChoose, setBtnChoose] = useState(
         "btn btn-dark"
     );
-
 
     /**
      * @memberof 'gestion_encaissement.js'
@@ -141,6 +136,14 @@ export default function Encaissement() {
     //total amount
     const [totalAmount, setTotalAmount] = useState(0);
 
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {Integer} totalLenght - state to manage the total lenght of the encaissements
+     * @default 0
+     */
+    //total amount
+    const [totalLenght, setTotalLenght] = useState(0);
+
     // Const pour la recherche et le tri
     /**
      * @memberof 'gestion_encaissement.js'
@@ -163,6 +166,35 @@ export default function Encaissement() {
      */
     const [sortBy, setSortBy] = useState("");
 
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} amountFilter - state to manage the amount filter of the encaissements filter
+     * @default ""
+     */
+    const [amountFilter, setAmountFilter] = useState("amount_total");
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} invertFilter - state to manage the invert filter of the encaissements filter
+     * @default false
+     */
+    const [invertFilter, setInvertFilter] = useState(false);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} invertFilterActive - state to manage the invert filter button of the encaissements filter
+     * @default ""
+     */
+    const [invertFilterActive, setInvertFilterActive] = useState("");
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} firstTimeInvertFilter - state to manage the first time invert filter of the encaissements filter
+     * @description the way the filter is applied the first time is different from the other times
+     * @default true
+     */
+    const [firstTimeInvertFilter, setFirstTimeInvertFilter] = useState(true);
+
     // Handle search and sort functions for encaissements
     /**
      * @memberof 'gestion_encaissement.js'
@@ -184,7 +216,6 @@ export default function Encaissement() {
         setSortBy(event.target.value);
     };
 
-
     /**
      * @memberof 'gestion_encaissement.js'
      * @function handleClickDelete - function to manage the delete mode
@@ -199,7 +230,6 @@ export default function Encaissement() {
         }
     };
 
-
     /**
      * @memberof 'gestion_encaissement.js'
      * @function handleChoose - function to manage the choose mode
@@ -212,7 +242,6 @@ export default function Encaissement() {
             handleShow();
         }
     };
-
 
     /**
      * @memberof 'gestion_encaissement.js'
@@ -240,7 +269,6 @@ export default function Encaissement() {
                 console.log(error);
             });
     };
-
 
     /**
      * @memberof 'gestion_encaissement.js'
@@ -345,27 +373,30 @@ export default function Encaissement() {
         services.map((s) => {
             if (s.id == id) {
                 name = s.name;
+            } else if (id == null) {
+                name = "Encaissement manuel";
             }
         });
         return name;
     };
     //Récupération du nom de l'employee
     /**
-     * 
-     * @param {Integer} id - id of the employee
      * @memberof 'gestion_encaissement.js'
-     * @function getEmployeeName - function to get the name of the employee
-     * @description go through the list of employees and return the name of the employee with the id passed in parameter
-     * @returns {String} name - name of the employee
+     * @function getEmployeeName
+     * @param {Integer} id - id of the employee
+     * @description go through the list of employees and return the username, firstname and lastname of the employee with the id passed in parameter
+     * @returns {Object} employee_info - username, firstname and lastname of the employee
      */
     const getEmployeeName = (id) => {
-        let name = "";
+        let employee_info = {};
         employees.map((e) => {
             if (e.id == id) {
-                name = e.username;
+                employee_info.username = e.username;
+                employee_info.first_name = e.first_name;
+                employee_info.last_name = e.last_name;
             }
         });
-        return name;
+        return employee_info;
     };
     //Formatage de la date
     /**
@@ -420,6 +451,61 @@ export default function Encaissement() {
         return newEncaissements;
     };
 
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClickAmount
+     * @description function to handle the click on the amount's filters
+     * @param {object} evt 
+     */
+    const handleClickAmount = (evt) => {
+        toggleButtons(evt);
+        setAmountFilter(evt.target.id);
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function toggleButtons
+     * @description function to toggle the active class on the amount's filters
+     * @param {object} evt 
+     */
+    const toggleButtons = (evt) => {
+        document.getElementById('amount_total').classList.remove('active');
+        document.getElementById('amount_annee').classList.remove('active');
+        document.getElementById('amount_mois').classList.remove('active');
+        document.getElementById('amount_semaine').classList.remove('active');
+        document.getElementById('amount_jour').classList.remove('active');
+
+        document.getElementById(evt.target.id).classList.toggle("active");
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function getWeekNumber
+     * @param {Date} date we want to get the week number
+     * @returns {number} week number of the date
+     */
+    const getWeekNumber = (date) => {
+        // Copy date so it doesn't modify the original
+        const target = new Date(date.getTime());
+        // Set to nearest Thursday: current date + 4 - current day number
+        target.setDate(target.getDate() + 4 - (target.getDay() || 7));
+        // Get the year of the target date
+        const year = target.getFullYear();
+        // Calculate the week number by taking the days between the target date and the first week of the year
+        const weekNumber = Math.ceil(((target - new Date(year, 0, 1)) / 86400000 + 1) / 7);
+        return weekNumber;
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClickInvertFilter
+     * @description function to handle the click on the invert filter button
+     */
+    const handleClickInvertFilter = () => {
+        setInvertFilter(!invertFilter);
+
+    };
+
     //Affichage des encaissements
     /**
      * @memberof 'gestion_encaissement.js'
@@ -429,11 +515,6 @@ export default function Encaissement() {
      * @param {object} encaissements - list of the encaissements
      */
     useEffect(() => {
-        let total = 0;
-        encaissements.map((e) => {
-            total += parseInt(e.amount);
-        });
-        setTotalAmount(total);
         setEncaissementsAffichage(formatEncaissements(encaissements));
         setSearchResults(formatEncaissements(encaissements));
     }, [encaissements]);
@@ -455,18 +536,27 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function useEffect - sets the state searchResults with the encaissements filtered and ordered
-     * It is called when the state searchTerm or sortBy is updated
-     * @description takes the encaissements formatted and filter them by the searchTerm and order them by the sortBy
+     * @function useEffect
+     * @description
+     * on change of searchTerm and sortBy filter the SearchResults.
+     * if invertFilter is true, invert the order of the searchResults
+     * @see {@link 'gestion_encaissement.js'.searchTerm}
+     * @see {@link 'gestion_encaissement.js'.sortBy}
+     * @see {@link 'gestion_encaissement.js'.invertFilter}
      * @see {@link 'gestion_encaissement.js'.formatEncaissements}
      * @param {object} encaissementsAffichage - list of the encaissements formatted
      */
     useEffect(() => {
+        let lstEncaissement = searchResults.length > 0 ? searchResults : encaissementsAffichage;
+
         //Filter by searchTerm
-        let results = encaissementsAffichage.filter(e =>
-            e.employee.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        let results = lstEncaissement.filter(e =>
+            e.employee.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.employee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             e.service.toLowerCase().includes(searchTerm.toLowerCase())
         );
+        console.log("filter", sortBy);
         console.log("filter", results);
 
         //Order by sort
@@ -478,13 +568,87 @@ export default function Encaissement() {
             } else if (sortBy === 'service') {
                 return a.service.localeCompare(b.service);
             } else if (sortBy === 'employee') {
-                return a.employee.localeCompare(b.employee);
+                return a.employee.username.localeCompare(b.employee.username);
             } else if (sortBy === 'amount') {
                 return a.amount - b.amount;
+            } else if (sortBy === 'id') {
+                return a.id - b.id;
             }
         });
-        setSearchResults(results);
+        setSearchResults(invertFilter ? results.reverse() :results);
+        
     }, [searchTerm, sortBy]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect
+     * @description sets the state invertFilterActive with the active class if the invertFilter is true and reverse the searchResults
+     * @param {boolean} invertFilter - boolean to know if the filter is inverted
+     */
+    useEffect(() => {
+        invertFilter ? setInvertFilterActive("active") : setInvertFilterActive("");
+        setSearchResults(searchResults.reverse());
+    }, [invertFilter]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @functionn useEffect
+     * @description filter the encaissements by the amountFilter and set the totalAmount and totalLenght 
+     * @param {string} amountFilter - filter to apply on the encaissements
+     */
+    useEffect(() => {
+        console.log("amountFilter", amountFilter);
+
+        let today = new Date();
+        let todayDate = { day: today.getDate(), month: today.getMonth() + 1, year: today.getFullYear() };
+        let results = [];
+        let totalAmount = 0;
+        let totalLenght = 0;
+
+        if (amountFilter === 'amount_total') {
+            results = encaissementsAffichage;
+        } else if (amountFilter === 'amount_annee') {
+            results = encaissementsAffichage.filter(e => {
+                let e_year = parseInt(e.date.split('/')[2]);
+                let today_year = today.getFullYear();
+                return e_year === today_year;
+            });
+        } else if (amountFilter === 'amount_mois') {
+            results = encaissementsAffichage.filter(e => {
+                let e_month = parseInt(e.date.split('/')[1]);
+                let today_month = (today.getMonth() + 1);
+                return e_month === today_month;
+            });
+
+        } else if (amountFilter === 'amount_semaine') {
+            results = encaissementsAffichage.filter(e => {
+
+                let e_week = new Date(
+                    parseInt(e.date.split('/')[2]),
+                    parseInt(e.date.split('/')[1]) - 1,
+                    parseInt(e.date.split('/')[0])
+                );
+                e_week = getWeekNumber(e_week);
+                let today_week = getWeekNumber(today);
+                return e_week === today_week;
+            });
+        } else if (amountFilter === 'amount_jour') {
+            results = encaissementsAffichage.filter(e => {
+                let e_date = e.date.split('/');
+
+                return parseInt(e_date[0]) == todayDate.day && parseInt(e_date[1]) == todayDate.month && parseInt(e_date[2]) == todayDate.year;
+            });
+        }
+
+        results.map(e =>
+            totalAmount += parseFloat(e.amount));
+        totalLenght = results.length;
+
+        setSearchResults(results);
+        setTotalAmount(totalAmount);
+        setTotalLenght(totalLenght);
+
+    }, [amountFilter, encaissementsAffichage]);
 
 
     //UseEffect pour la gestion des boutons
@@ -503,13 +667,7 @@ export default function Encaissement() {
             setBtnChoose(btnChoose => "btn btn-danger");
             //changer la navbar
             setModificationMode(modificationMode => "MODE SUPPRESSION");
-            // } else if (modeModify === 'modify') {
-            //     //changer le bouton
-            //     setButtonModify(buttonModify => "btn btn-primary");
-            //     setButtonDelete(buttonDelete => "btn btn-outline-danger");
-            //     setBtnChoose(btnChoose => "btn btn-primary");
-            //     //changer la navbar
-            //     setModificationMode(modificationMode => "MODE MODIFICATION");
+
         } else if (modeModify === '') {
             setModificationMode(modificationMode => "");
             // setButtonModify(buttonModify => "btn btn-outline-primary");
@@ -520,7 +678,7 @@ export default function Encaissement() {
 
     return (
         <>
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#b8aaa0" }}>
+            <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#F6F8F7" }}>
                 {/* Modal pour la suppression */}
                 <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
                     <Modal.Header closeButton>
@@ -550,36 +708,40 @@ export default function Encaissement() {
                     <p>L'encaissement <a id='service_error'></a> a été supprimé</p>
 
                 </div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
-                        <div class="collapse navbar-collapse" id="text">
-                            <a class="navbar-brand">Gestion des encaissements</a>
-                            <ul class="navbar-nav mx-auto my-auto mb-5 ms-lg-3"></ul>
-                            <i class="navbar-text">
+
+                <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#F6F8F7" }}>
+                    <div className="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", height: "8vh", width: "100vh", backgroundColor: "#F6F8F7" }}>
+                        <div className="collapse navbar-collapse" id="text">
+                            <a className="navbar-brand">Gestion des encaissements</a>
+                            <ul className="navbar-nav mx-auto my-auto mb-5 ms-lg-3"></ul>
+                            <i className="navbar-text">
                                 {modificationMode}
                             </i>
                         </div>
-                        <div class="collapse navbar-collapse" id="buttons">
-                            <ul class="navbar-nav mx-auto my-auto"></ul>
-                            <button type="button" class={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
-                            <ul class="navbar-nav ms-2"></ul>
-                            {/* <button type="button" class={buttonModify} onClick={handleClickModify}>Modifier</button>
-                            <ul class="navbar-nav ms-1"></ul> */}
-                            <button type="button" class="btn btn-primary">
-                                <Link href={pathnameAdd} class="nav-link">
+                        <div className="collapse navbar-collapse" id="buttons">
+                            <ul className="navbar-nav mx-auto my-auto"></ul>
+                            <button type="button" className={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
+                            <ul className="navbar-nav ms-2"></ul>
+                            {/* <button type="button" className={buttonModify} onClick={handleClickModify}>Modifier</button>
+                            <ul className="navbar-nav ms-1"></ul> */}
+                            <button type="button" className="btn btn-primary">
+                                <Link href={pathnameAdd} className="nav-link">
                                     Ajouter
                                 </Link>
                             </button>
-                            <ul class="navbar-nav ms-1"></ul>
+                            <ul className="navbar-nav ms-1"></ul>
                         </div>
                     </div>
                 </nav>
 
                 {/* Barre de recherche */}
-                <nav class="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
-                    <form class="container" role="search">
-                        <div class="row mx-1">
-                            <select class="form-select" value={sortBy} aria-label="Default select example" data-id="filter" onChange={handleSort}>
+                <nav className="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#F6F8F7" }}>
+                    <form className="container" role="search">
+                        <div className="row mx-1">
+                            <button className={'btn btn-light ' + invertFilterActive} type="button" id="btnFilter" onClick={handleClickInvertFilter}>↑↓</button>
+                        </div>
+                        <div className="row mx-1">
+                            <select className="form-select" value={sortBy} aria-label="Default select example" data-id="filter" onChange={handleSort}>
                                 <option key='0' value='0'>Filtrer...</option>
                                 <option key='1' value='id'>ID</option>
                                 <option key='2' value='employee'>Employé</option>
@@ -589,14 +751,24 @@ export default function Encaissement() {
                                 <option key='6' value='amount'>Montant</option>
                             </select>
                         </div>
-                        <div class="row mx-1" >
-                            <input class="form-control me-2" type="search" placeholder="Employé/Service" id="Rechercher" onChange={handleSearch}></input>
+                        <div className="row mx-1" >
+                            <input className="form-control me-2" type="search" placeholder="Employé/Service" id="Rechercher" onChange={handleSearch}></input>
+                        </div>
+                        {/* Boutons de tri */}
+                        <div className='row mx-1' >
+                            <div className="btn-group" role="group" aria-label="amount_filters">
+                                <button id='amount_total' onClick={handleClickAmount} type="button" className={"btn btn-secondary active"} >Total</button>
+                                <button id='amount_annee' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Année</button>
+                                <button id='amount_mois' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Mois</button>
+                                <button id='amount_semaine' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Semaine</button>
+                                <button id='amount_jour' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Jour</button>
+                            </div>
                         </div>
                     </form>
                 </nav>
 
                 {/* Total des encaissements */}
-                <table class="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", width: "100vh", backgroundColor: "#FFFFFF" }}>
+                <table className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", width: "100vh", backgroundColor: "#FFFFFF" }}>
                     <thead>
                         <tr>
                             <th scope="col">Nombre d'encaissements</th>
@@ -605,47 +777,53 @@ export default function Encaissement() {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{encaissements.length}</td>
+                            <td>{totalLenght}</td>
                             <td>{totalAmount}</td>
                         </tr>
                     </tbody>
                 </table>
 
                 {/* Liste des encaissements */}
-                <table class="table table-striped mx-auto" style={{ backgroundColor: "#FFFFFF" }}>
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Employé</th>
-                            <th scope="col">Service</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Heure</th>
-                            <th scope="col">Montant</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {searchResults.map((encaissement) => (
-                            <tr key={encaissement.id}>
-                                <th scope="row">{encaissement.id}</th>
-                                <td>{encaissement.employee}</td>
-                                <td>{encaissement.service}</td>
-                                <td>{encaissement.date}</td>
-                                <td>{encaissement.time}</td>
-                                <td>{encaissement.amount}</td>
-                                <td>
-                                    <Button
-                                        id={encaissement.id}
-                                        className={btnChoose}
-                                        onClick={handleChoose}
-                                        disabled={modeModify === '' ? true : false}
-                                    >Choisir</Button>
-                                </td>
+                <div className="container">
+                    <table className="table table-striped mx-auto" style={{ backgroundColor: "#FFFFFF" }}>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Employé</th>
+                                <th scope="col">Service</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Heure</th>
+                                <th scope="col">Montant</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {searchResults.map((encaissement) => (
+                                <tr key={encaissement.id}>
+                                    <th scope="row">{encaissement.id}</th>
+                                    <td >
+                                        <div>
+                                            <b>{encaissement.employee.username}</b> {encaissement.employee.first_name} {encaissement.employee.last_name}
+                                        </div>
+                                    </td>
+                                    <td>{encaissement.service}</td>
+                                    <td>{encaissement.date}</td>
+                                    <td>{encaissement.time}</td>
+                                    <td>{encaissement.amount}</td>
+                                    <td>
+                                        <Button
+                                            id={encaissement.id}
+                                            className={btnChoose}
+                                            onClick={handleChoose}
+                                            disabled={modeModify === '' ? true : false}
+                                        >Choisir</Button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <ul className="d-flex my-4"></ul>
             </div>
-            <ul class="d-flex my-4"></ul>
         </>
     );
 }

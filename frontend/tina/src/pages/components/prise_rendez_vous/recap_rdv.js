@@ -3,6 +3,8 @@ import Header from "../header";
 import { useRouter, Router } from "next/router";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import Footer from "../footer";
+import { de } from "date-fns/locale";
 
 /**
  * @namespace 'recap_rdv.js'
@@ -109,85 +111,115 @@ export default function RecapRdv() {
    */ 
   const cookies = parseCookies();
 
+  useEffect(() => {
+    console.log(param);
+    if (Object.keys(param).length !== 0) {
+      console.log("param");
+      console.log(param);
+      localStorage.setItem("param", JSON.stringify(param));
+    }
+  }, []);
+
   /**
    * @function useEffect1
    * @memberof 'recap_rdv.js'
    * @description React hook that triggers the side effect function when the component is mounted.
    */
   useEffect(() => {
-    setServices(JSON.parse(param.service));
-    setCoiffeurs(JSON.parse(param.employee));
-    setMyDate(param.date);
-    if (cookies.role === "employee") {
-      console.log(param.client);
-      if (param.client != "") {
-        setClients(JSON.parse(param.client));
-      }
-      else {
-        setDescription(param.description);
+    const localparam = JSON.parse(localStorage.getItem("param"));
+    console.log(localparam);
+    if (localparam !== undefined || localparam !== null) {
+      setServices(JSON.parse(localparam.service));
+      setCoiffeurs(JSON.parse(localparam.employee));
+      setMyDate(localparam.date);
+      if (cookies.role === "employee" || cookies.role === "admin") {
+        console.log(localparam.client);
+        if (localparam.client != "") {
+          setClients(JSON.parse(localparam.client));
+        }
+        else {
+          setDescription(localparam.description);
+        }
       }
     }
   }, []);
 
 
   useEffect(() => {
-    const date = new Date();
-    const splitTime = param.time.split(":");
-    date.setHours(splitTime[0]);
-    date.setMinutes(splitTime[1]);
-    date.setSeconds(0);
-    console.log(date);
-    const formattedTime = date.toLocaleTimeString("fr-FR", { hour12: false });
-    console.log(formattedTime);
-    setHeureDepart(formattedTime);
-    //const durationSplit = services.duration.toString().split(":");
-    if (services.duration != null) {
-      console.log(typeof services.duration);
-      const duration = services.duration;
-      const splitDuration = duration.split(":");
-      console.log(splitDuration[1]);
-      const minuteDuration = parseInt(splitDuration[1]);
-      const endDate = new Date(date.getTime() + minuteDuration * 60000);
-      const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
-        hour12: false,
-      });
-      setHeureFin(formattedEndTime);
-      console.log(formattedEndTime);
-      // format date from dd/mm/yyyy to yyyy-mm-dd
-      const splitDate = myDate.split("/");
-      const formattedDate =
-        splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
-        if (cookies.role === "customer") {
+    const localparam = JSON.parse(localStorage.getItem("param"));
+    if (localparam != undefined || localparam != null) {
+      const date = new Date();
+      const splitTime = localparam.time.split(":");
+      date.setHours(splitTime[0]);
+      date.setMinutes(splitTime[1]);
+      date.setSeconds(0);
+      console.log(date);
+      const formattedTime = date.toLocaleTimeString("fr-FR", { hour12: false });
+      console.log(formattedTime);
+      setHeureDepart(formattedTime);
+      //const durationSplit = services.duration.toString().split(":");
+      if (services.duration != null) {
+        console.log(typeof services.duration);
+        const duration = services.duration;
+        const splitDuration = duration.split(":");
+        console.log(splitDuration[1]);
+        console.log(splitDuration[0]);
+        if (splitDuration[0] == "00") {
+          const minuteDuration = parseInt(splitDuration[1]);
+          const endDate = new Date(date.getTime() + minuteDuration * 60000);
+          const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
+            hour12: false,
+          });
+          setHeureFin(formattedEndTime);
+          console.log(formattedEndTime);
+        }
+        else {
+          console.log("test");
+          const hourDuration = parseInt(splitDuration[0]);
+          const minuteDuration = parseInt(splitDuration[1]);
+          const endDate = new Date(date.getTime() + hourDuration * 3600000 + minuteDuration * 60000);
+          const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
+            hour12: false,
+          });
+          setHeureFin(formattedEndTime);
+          console.log(formattedEndTime);
+        }
+        // format date from dd/mm/yyyy to yyyy-mm-dd
+        const splitDate = myDate.split("/");
+        const formattedDate =
+          splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
+          if (cookies.role === "customer") {
 
-      setAppointment({
-        ...appointment,
-        date: formattedDate,
-        time: heureDepart,
-        employee: coiffeurs.id,
-        service: services.id,
-      });
-    } else if (cookies.role === "employee" && param.client != "") {
-      setAppointment({
-        ...appointment,
-        date: formattedDate,
-        time: heureDepart,
-        employee: coiffeurs.id,
-        service: services.id,
-        customer: clients.id,
-      });
+        setAppointment({
+          ...appointment,
+          date: formattedDate,
+          time: heureDepart,
+          employee: coiffeurs.id,
+          service: services.id,
+        });
+      } else if (cookies.role === "employee" && param.client != "" || cookies.role === "admin" && param.client != "") {
+        setAppointment({
+          ...appointment,
+          date: formattedDate,
+          time: heureDepart,
+          employee: coiffeurs.id,
+          service: services.id,
+          customer: clients.id,
+        });
+      }
+      else if (cookies.role === "employee" && param.client == "" || cookies.role === "admin" && param.client == "") {
+        console.log(description);
+        setAppointment({
+          ...appointment,
+          date: formattedDate,
+          time: heureDepart,
+          employee: coiffeurs.id,
+          service: services.id,
+          informations: description,
+        });
+      }
     }
-    else if (cookies.role === "employee" && param.client == "") {
-      console.log(description);
-      setAppointment({
-        ...appointment,
-        date: formattedDate,
-        time: heureDepart,
-        employee: coiffeurs.id,
-        service: services.id,
-        informations: description,
-      });
-    }
-    }
+  }
   }, [services]);
 
   const handleSubmit = (evt) => {
@@ -214,56 +246,50 @@ export default function RecapRdv() {
   return (
     <>
       <Header />
-      <div className="container " style={{ marginTop: "10%" }}>
-        <h2>Récapitulatif du rendez-vous : </h2>
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>Service </td>
-              <td>{services.name}</td>
-            </tr>
-            <tr>
-              <td>Coiffeur</td>
-              <td>{coiffeurs.first_name + " " + coiffeurs.last_name}</td>
-            </tr>
-            {cookies.role === "employee" && clients != "" && (
-              <tr>
-                <td>Client</td>
-                <td>{clients.first_name + " " + clients.last_name}</td>
-              </tr>
-            )}
+      <main>
+        <div className="container" style={{ marginTop: "10%" }}>
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">Récapitulatif de réservation</h4>
+              <ul className="list-group list-group-flush">
+                {cookies.role !== "customer"  && description === "" &&(
+                  <li className="list-group-item">
+                    <strong>Client:</strong> {clients.first_name} {clients.last_name}
+                  </li>
+                )}
 
-            {cookies.role === "employee" && description != "" &&(
-              <tr>
-                <td>Description</td>
-                <td>{description}</td>
-              </tr>
-            )
-            }
-            <tr>
-              <td>Date</td>
-              <td>{myDate}</td>
-            </tr>
-            <tr>
-              <td>Heure de départ</td>
-              <td>{heureDepart}</td>
-            </tr>
-            <tr>
-              <td>Heure de fin</td>
-              <td>{heureFin}</td>
-            </tr>
-            <br />
-            <button
-              type="button"
-              onClick={handleSubmit}
-              class="btn btn-primary no-border"
-              style={{ backgroundColor: "#232627" }}
-            >
-              Confirmer
-            </button>
-          </tbody>
-        </table>
-      </div>
+              {(cookies.role === "employee" || cookies.role === "admin") && description !== "" &&(
+                  <li className="list-group-item">
+                    <strong>information:</strong> {description}
+                  </li>
+                )}
+
+                {cookies.role === "customer" && (
+                  <li className="list-group-item">
+                    <strong>Coiffeur:</strong> {coiffeurs.first_name} {coiffeurs.last_name}
+                  </li>
+                )}
+                <li className="list-group-item">
+                  <strong>Service:</strong> {services.name}
+                </li>
+                <li className="list-group-item">
+                  <strong>Date:</strong> {myDate}
+                </li>
+                <li className="list-group-item">
+                  <strong>Heure de début :</strong> {heureDepart}
+                </li>
+                <li className="list-group-item">
+                  <strong>Heure de fin :</strong> {heureFin}
+                </li>
+              </ul>
+            </div>
+          </div> <br />
+          <button className="btn btn-primary" style={{backgroundColor: "#232627", border: "none"}} onClick={handleSubmit}>
+            Confirmer le rendez-vous
+          </button>
+        </div>
+      </main>
+      <Footer />
     </>
-  );
+  );  
 }

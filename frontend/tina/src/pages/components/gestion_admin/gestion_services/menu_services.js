@@ -1,6 +1,7 @@
 import Header from '../../header';
 import Footer from '../../footer';
 import Services from './services';
+import Head from "next/head";
 
 /**
  * @namespace 'menu_services.js'
@@ -10,9 +11,15 @@ import Services from './services';
 export default function Menu_services() {
   return (
     <>
-        <Header/>
-        <Services/>
-        <Footer/>
+      <Head>
+        <title>Tina - Gestion des services</title>
+        <meta name="description" content="Page pour la gestion des services de l'application Tina" />
+      </Head>
+      <Header />
+      <main>
+        <Services />
+      </main>
+      <Footer />
     </>
   );
 }

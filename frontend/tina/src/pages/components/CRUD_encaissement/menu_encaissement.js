@@ -1,6 +1,7 @@
 import Header from '../header';
 import Footer from '../footer';
 import Encaissement from './gestion_encaissement';
+import Head from "next/head";
 
 /**
  * @namespace 'menu_encaissement.js'
@@ -10,9 +11,13 @@ import Encaissement from './gestion_encaissement';
 export default function Menu_encaissement() {
   return (
     <>
-        <Header/>
-        <Encaissement/>
-        <Footer/>
+      <Head>
+        <title>Tina - Gestion de l'encaissementt</title>
+        <meta name="description" content="Page de gestion des encaissements de l'application Tina" />
+      </Head>
+      <Header />
+      <Encaissement />
+      <Footer />
     </>
   );
 }

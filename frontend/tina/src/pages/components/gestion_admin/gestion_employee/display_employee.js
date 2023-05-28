@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import Header from '../header';
+import Header from '../../header';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import Head from "next/head";
-import Footer from '../footer';
+import Footer from '../../footer';
 
 /**
  * @namespace 'choix_client.js'
  * @description This component provides the functionality to choose a client from a list.
  * @returns {JSX.Element} A React functional component rendering the client list.
  */
-export default function ChoixClient() {
+export default function DisplayAndDeleteEmployee() {
 
     /**
      * @constant clients
@@ -20,7 +20,7 @@ export default function ChoixClient() {
      * @description A list of clients.
      * @default []
      */ 
-    const [clients, setClients] = useState([]);
+    const [employees, setEmployees] = useState([]);
 
     /**
      * @constant filteredClients
@@ -28,7 +28,7 @@ export default function ChoixClient() {
      * @description A list of clients filtered by the search bar.
      * @default []
      */
-    const [filteredClients, setFilteredClients] = useState([]);
+    const [filteredEmployees, setFilteredEmployees] = useState([]);
 
     /**
      * @constant cookies
@@ -67,16 +67,16 @@ export default function ChoixClient() {
      * @returns {Array} A list of clients.
      */     
     const fetchCustomers = () => {
-        axios.get('http://127.0.0.1:8000/api/customers/', {
+        axios.get('http://127.0.0.1:8000/api/employees/', {
         headers: {
                 Authorization: `Token ` + cookies.csrftoken,
             },
             })
             .then((response) => {
-                setClients(response.data);
-                if (filteredClients.length === 0) {
+                setEmployees(response.data);
+                if (filteredEmployees.length === 0) {
                     console.log("filteredClients is empty");
-                    setFilteredClients(response.data);
+                    setFilteredEmployees(response.data);
                 }
             }
             )
@@ -95,29 +95,10 @@ export default function ChoixClient() {
      */ 
     const handleSearch = (evt) => {
         const searchValue = evt.target.value;
-        const filtered = clients.filter((client) => {
-            return client.first_name.toLowerCase().includes(searchValue.toLowerCase()) || client.last_name.toLowerCase().includes(searchValue.toLowerCase()) || client.username.toLowerCase().includes(searchValue.toLowerCase()) || client.email.toLowerCase().includes(searchValue.toLowerCase()) || client.tel_number.toLowerCase().includes(searchValue.toLowerCase());
+        const filtered = employees.filter((employee) => {
+            return employee.first_name.toLowerCase().includes(searchValue.toLowerCase()) || employee.last_name.toLowerCase().includes(searchValue.toLowerCase()) || employee.username.toLowerCase().includes(searchValue.toLowerCase()) || employee.email.toLowerCase().includes(searchValue.toLowerCase());
         });
-        setFilteredClients(filtered);
-    }
-
-    /**
-     * @function handleClick
-     * @memberof 'choix_client.js'
-     * @description Redirects to the 'no_client_rdv' page.
-     */
-    const handleClick = () => {
-        const cookies = parseCookies();
-        router.push({
-            pathname: "../prise_rendez_vous/no_client_rdv",
-            query: {
-              time: param.time,
-              service: param.service,
-              employee: param.employee,
-              date: param.date,
-              client : null
-            },
-          });
+        setFilteredEmployees(filtered);
     }
 
     /**
@@ -126,15 +107,11 @@ export default function ChoixClient() {
      * @description Redirects to the 'recap_rdv' page.
      * @param {Object} client The client object.
      */
-    const handleClickClient = (client) => {
+    const handleClickClient = (employee) => {
         router.push({
-            pathname: "../prise_rendez_vous/recap_rdv",
+            pathname: "./detail_employee",
             query: {
-                time: param.time,
-                service: param.service,
-                employee: param.employee,
-                date: param.date,
-                client : JSON.stringify(client)
+                employee : JSON.stringify(employee)
             },
             });
     }
@@ -148,11 +125,6 @@ export default function ChoixClient() {
                 <div className='col-md-8'>
                 <input type="text" placeholder="Rechercher un client" className="form-control-lg mb-2" onChange={handleSearch}/>
                 </div>
-                <div className='col-md-4'>
-                <button type="button" className="btn btn-primary w-100 mb-2" style={{ backgroundColor: "#C21A09", borderColor: "#C21A09" }} onClick={handleClick}>
-                    Pas de compte
-                </button>
-                </div>
             </div>
             <Table striped bordered hover>
                 <thead>
@@ -164,12 +136,12 @@ export default function ChoixClient() {
                 </tr>
                 </thead>
                 <tbody style={{cursor:"pointer"}}>
-                    {filteredClients.map((client) => (
-                        <tr key={client.id} onClick={() =>  handleClickClient(client) }>
-                            <td >{client.first_name}</td>
-                            <td>{client.last_name}</td>
-                            <td className='d-none d-sm-block'>{client.username}</td>
-                            <td>{client.email}</td>
+                    {filteredEmployees.map((employee) => (
+                        <tr key={employee.id} onClick={() =>  handleClickClient(employee) }>
+                            <td >{employee.first_name}</td>
+                            <td>{employee.last_name}</td>
+                            <td className='d-none d-sm-block'>{employee.username}</td>
+                            <td>{employee.email}</td>
                         </tr>
                     ))}
                 </tbody>

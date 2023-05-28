@@ -7,17 +7,66 @@ import { useRouter } from "next/router";
 import Footer from "../footer";
 import Head from "next/head";
 
+/**
+ * @namespace 'Rdv_employee.js'
+ * @description Page to select an employee for the appointment
+ * @returns {JSX.Element}
+ */
 export default function Rdv_employee() {
-  const [lstEmployee, setLstEmployee] = useState([]);
-  const dataFetchedRef = useRef(false);
-  let lstCompEmployee = [];
-  const router = useRouter();
-  const service_json = router.query;
 
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @constant urlEmployees
+   * @description URL of the API to fetch the list of employees
+   */
+  const urlEmployees = "http://127.0.0.1:8000/api/employees/"
+
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @constant urlNextPage
+   * @description URL of the next page to redirect to
+   */
+  const urlNextPage = "/components/prise_rendez_vous/calendrier"
+
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @constant router
+   * @see {@link 'header.js'.router}
+   */
+  const router = useRouter();
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @constant service_json
+   * @description Service selected by the user, passed as a query parameter
+   */
+  const service_json = router.query;
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @constant lstEmployee
+   * @description List of employees fetched from the API
+   * @see {@link 'Rdv_employee.js'.fetchEmployee}
+   * @default []
+   */
+  const [lstEmployee, setLstEmployee] = useState([]);
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @constant lstCompEmployee
+   * @description List of employees to be displayed
+   * @see {@link 'Rdv_employee.js'.loadEmployee}
+   * @default []
+   */
+  let lstCompEmployee = [];
+ 
+
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @function fetchEmployee
+   * @description Fetch the list of employees from the API
+   */
   const fetchEmployee = () => {
     const cookies = parseCookies();
     axios
-      .get("http://127.0.0.1:8000/api/employees/", {
+      .get(urlEmployees, {
         headers: {
           Authorization: "Token " + cookies.csrftoken,
         },
@@ -32,7 +81,7 @@ export default function Rdv_employee() {
 
   const handleOnClick = (e) => {
     router.push({
-      pathname: "/components/prise_rendez_vous/calendrier",
+      pathname: urlNextPage,
       query: { employee: JSON.stringify(e), service: service_json.service },
     });
   };
@@ -40,19 +89,19 @@ export default function Rdv_employee() {
   const loadEmployee = () => {
     lstEmployee.map((e) => {
       lstCompEmployee.push(
-        <div class="col-lg-3 col-md-6 col-sm-12">
+        <div key={e.id} className="col-lg-3 col-md-6 col-sm-12">
           <br></br>
-          <div class="card">
-            <div class="card-body justify-content-center">
+          <div className="card">
+            <div className="card-body justify-content-center">
               <ul></ul>
-              <h5 class="card-title text-center font-weight-bold">
-                {e.first_name} {e.last_name} {e.username}
+              <h5 className="card-title text-center font-weight-bold">
+                {e.first_name} {e.last_name}
               </h5>
               <br></br>
-              <div class="text-center">
+              <div className="text-center">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   data-id={"btn " + e.id}
                   style={{ backgroundColor: "#232627", border: "none" }}
                   onClick={() => handleOnClick(e)}
@@ -68,32 +117,37 @@ export default function Rdv_employee() {
     return lstCompEmployee;
   };
 
+  /**
+   * @memberof 'Rdv_employee.js'
+   * @function useEffect
+   * @description on page load, fetch the list of employees, if the router is ready
+   */
   useEffect(() => {
-    console.log(service_json);
-
-    if (dataFetchedRef.current) return;
-    dataFetchedRef.current = true;
+    if (!router.isReady) { return; }
     fetchEmployee();
-  }, []);
+
+  }, [router.isReady]);
 
   return (
     <>
       <Head>
         <title>Tina - Prise de rendez-vous</title>
-        <meta name="description" content="Page de prise de rendez-vous de l'application Tina"/>
+        <meta name="description" content="Page de prise de rendez-vous de l'application Tina" />
       </Head>
       <Header />
       <br></br>
 
-      <body>
+      <div>
         <main>
-          <div class="container">
+          <div className="container">
             <h2>Sélectionnez un coiffeur :</h2>
-            <div class="row">{loadEmployee()}</div>
+            <div className="row">{loadEmployee()}</div>
           </div>
         </main>
-        <Footer />
-      </body>
+      </div>
+
+      <Footer />
+
     </>
   );
 }

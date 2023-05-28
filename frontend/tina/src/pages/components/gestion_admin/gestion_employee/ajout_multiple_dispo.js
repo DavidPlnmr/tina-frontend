@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 
 export default function AjoutMultipleDispo() {
@@ -20,6 +21,10 @@ export default function AjoutMultipleDispo() {
 
   const [listDispo, setListDispo] = useState([]);
 
+  const router = useRouter();
+
+  const event = useRef(false);
+
 
   const fetchEmployees = () => {
     axios.get('http://127.0.0.1:8000/api/employees/', {
@@ -28,7 +33,7 @@ export default function AjoutMultipleDispo() {
         },
         })
         .then((response) => {
-        setEmployees(response.data);
+          setEmployees(response.data);
         }
         )
         .catch((error) => {
@@ -92,10 +97,17 @@ export default function AjoutMultipleDispo() {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        //router.push('/gestion_admin/gestion_employee');
+        console.log(dispo);
+        
+        alert("Disponibilité ou vacance ajoutée ou modifiée avec succès");
+        router.push('/');
       }
-    )
+      )
+      .catch((error) => {
+        console.log(error);
+        alert("Erreur lors de l'ajout de la disponibilité");
+      }
+      );
     }
   }, [listDispo]);
 

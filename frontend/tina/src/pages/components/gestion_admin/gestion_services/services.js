@@ -383,7 +383,7 @@ export default function Services() {
 
       
       {/* Nav Bar pour les services */}
-      <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#b8aaa0" }}>
+      <div className="d-flex flex-column justify-content-start align-items-center">
         <ul></ul>
 
         {/* Notification de suppression */}
@@ -392,23 +392,23 @@ export default function Services() {
         <p>Le service " <a id='service_error'> </a> " a été supprimé</p>
 
       </div>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#b8aaa0" }}>
-          <div class="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh", backgroundColor: "#FFFFFF" }}>
-            <div class="collapse navbar-collapse" id="text">
-              <a class="navbar-brand">Gestion des services</a>
-              <ul class="navbar-nav ms-auto mb-5 ms-lg-3"></ul>
-              <i class="navbar-text">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#F6F8F7" }}>
+          <div className="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh" }}>
+            <div className="collapse navbar-collapse" id="text">
+              <a className="navbar-brand">Gestion des services</a>
+              <ul className="navbar-nav ms-auto mb-5 ms-lg-3"></ul>
+              <i className="navbar-text">
                 {modificationMode}
               </i>
             </div>
-            <div class="collapse navbar-collapse" id="buttons">
-              <ul class="navbar-nav ms-auto"></ul>
-              <button type="button" class={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
-              <ul class="navbar-nav ms-1"></ul>
-              <button type="button" class={buttonModify} onClick={handleClickModify}>Modifier</button>
-              <ul class="navbar-nav ms-1"></ul>
-              <button type="button" class="btn btn-primary">
-                <Link href={pathnameAdd} class="nav-link">
+            <div className="collapse navbar-collapse" id="buttons">
+              <ul className="navbar-nav ms-auto"></ul>
+              <button type="button" className={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
+              <ul className="navbar-nav ms-1"></ul>
+              <button type="button" className={buttonModify} onClick={handleClickModify}>Modifier</button>
+              <ul className="navbar-nav ms-1"></ul>
+              <button type="button" className="btn btn-primary">
+                <Link href={pathnameAdd} className="nav-link">
                   Ajouter
                 </Link>
               </button>

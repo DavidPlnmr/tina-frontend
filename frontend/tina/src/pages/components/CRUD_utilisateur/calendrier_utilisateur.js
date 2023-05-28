@@ -176,7 +176,7 @@ export default function CalendrierClient() {
                 const end = addMinutes(start, service.duration.slice(3, 5));
                 if (cookies.role === "customer") {
                   myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
-                } else if (cookies.role === "employee") {
+                } else if (cookies.role === "employee" || cookies.role === "admin") {
                   if (appointment.customer != null) {
                     myTitle = `Service : ${service.name} / avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
                   } else {
@@ -277,11 +277,11 @@ export default function CalendrierClient() {
         },
         eventContent: function (info) {
           const available = info.event.extendedProps.available;
-          const backgroundColor = available ? "#2A4494" : "#2A4494"; // Détermine la couleur de fond en fonction de la disponibilité
+          const backgroundColor = available ? "#587792" : "#587792"; // Détermine la couleur de fond en fonction de la disponibilité
           const title = info.event.title.split(" / ");
           const textColor = available ? "white" : "black"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
-            html: `<div style="text-align: center; background-color: ${backgroundColor}; color: white; font-size:12px;"><div >${title[0]}</div><div >${title[1]}</div></b></div>`,
+            html: `<div style="text-align: center; background-color: ${backgroundColor}; cursor:pointer; color: white; font-size:12px;"><div >${title[0]}</div><div >${title[1]}</div></b></div>`,
           };
         },
       });
@@ -305,6 +305,7 @@ export default function CalendrierClient() {
       }`}
       </style>
       <Header />
+      <main>
       <div className="container">
         <div
           ref={calendarEl}
@@ -312,6 +313,7 @@ export default function CalendrierClient() {
           style={{ marginTop: "5%", marginBottom: "510px" }}
         ></div>
       </div>
+      </main>
       <Footer />
     </>
   );

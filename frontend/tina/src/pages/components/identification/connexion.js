@@ -88,6 +88,7 @@ export default function Connexion() {
 
   return (
       <>
+
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="container">
             <div className="row justify-content-center">
@@ -113,6 +114,7 @@ export default function Connexion() {
                             value={user.username}
                             type="text"
                             placeholder="Nom d'utilisateur ou adresse e-mail"
+
                             onChange={handleChange}
                         />
                       </Form.Group>
@@ -149,6 +151,7 @@ export default function Connexion() {
                       {/* Margin top */}
                       <Form.Text className="text-muted text-center mt-3">
                         <Link class="nav-link p-0" href="/components/identification/inscription">Vous n'avez pas de compte ?</Link>
+
                       </Form.Text>
                     </Form>
                   </Card.Body>

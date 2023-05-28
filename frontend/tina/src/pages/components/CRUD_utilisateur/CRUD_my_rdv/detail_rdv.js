@@ -86,6 +86,7 @@ export default function DetailRdv() {
     };
 
     const createHeureFin = () => {
+      if (appointment) {
       if (appointment.time != null) {
         console.log(appointment);
         const date = new Date();
@@ -116,6 +117,7 @@ export default function DetailRdv() {
           splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
         }
       }
+    }
     };
 
   useEffect(() => {
@@ -139,6 +141,7 @@ export default function DetailRdv() {
       fetchServices(appointment.service);
       fetchEmployees(appointment.employee);
       fetchCustomers(appointment.customer);
+      console.log(customers);
     }
   }, [appointment]);
 
@@ -167,61 +170,61 @@ export default function DetailRdv() {
       }
     } 
   };
+
+  const handleRedirect = (evt) => {
+    evt.preventDefault();
+    router.push("/components/CRUD_utilisateur/calendrier_utilisateur");
+  };
   
   return (
     <>
         <Header />
-        <div className="container " style={{ marginTop: "10%" }}>
-        <h2>Détail du rendez-vous : </h2>
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>Service </td>
-              <td>{services.name}</td>
-            </tr>
-            {cookies.role == "customer" &&(
-            <tr>
-                <td>Coiffeur</td>
-                <td>{coiffeurs.last_name + " " + coiffeurs.first_name}</td>
-            </tr>
-            )}
-            {cookies.role == "employee" && customers.last_name !== undefined && (
-              <tr>
-                  <td>Client</td>
-                  <td>{customers.last_name + " " + customers.first_name}</td>
-              </tr>
-            )}
-
-            {cookies.role == "employee" && customers.last_name === undefined && (
-              <tr>
-                  <td>Informations</td>
-                  <td>{appointment.informations}</td>
-              </tr>
-            )}
-            <tr>
-              <td>Date</td>
-              <td>{appointment.date}</td>
-            </tr>
-            <tr>
-              <td>Heure de départ</td>
-              <td>{appointment.time}</td>
-            </tr>
-            <tr>
-              <td>Heure de fin</td>
-              <td>{heureFin}</td>
-            </tr>
-            <br />
-            <button
-              type="button"
-              class="btn btn-primary no-border"
-              style={{ backgroundColor: "#C21A09", borderColor: "#C21A09" }}
-              onClick={handleClick}
-            >
-              Annuler le rendez-vous
-            </button>
-          </tbody>
-        </table>
-      </div>
+        <main>
+          {appointment && services && customers && coiffeurs && (
+        <div className="container" style={{marginTop: "10%"}}>
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">Récapitulatif de réservation</h4>
+              <ul className="list-group list-group-flush">
+                {Object.keys(customers).length !== 0 && (
+                <li className="list-group-item">
+                  <strong>Client:</strong> {customers.first_name} {customers.last_name}
+                </li>
+                )}
+                {appointment.informations && (
+                <li className="list-group-item">
+                  <strong>information:</strong> {appointment.informations}
+                </li>
+                )}
+                <li className="list-group-item">
+                  <strong>Service:</strong> {services.name}
+                </li>
+                <li className="list-group-item">
+                  <strong>Date:</strong> {appointment.date}
+                </li>
+                <li className="list-group-item">
+                  <strong>Heure de début :</strong> {appointment.time}
+                </li>
+                <li className="list-group-item">
+                  <strong>Heure de fin :</strong> {heureFin}
+                </li>
+              </ul>
+            </div>
+          </div> <br /> 
+          <button className="btn btn-danger" style={{backgroundColor: "#BB2D3B", border: "none"}} onClick={handleClick}>
+            Annuler le rendez-vous
+          </button>
+        </div>
+          )}
+          {appointment == undefined && (
+            <div className="container" style={{marginTop: "10%"}}>
+              <h1>Une erreur est survenue</h1><br /> 
+              <button className="btn btn-primary" style={{backgroundColor: "#232627", border: "none"}} onClick={handleRedirect}>
+                Revenir au calendrier
+              </button>
+            </div>
+          )}
+      </main>
       <Footer />
     </>
   );

@@ -1,8 +1,11 @@
 import Header from '../../header';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
+import Head from "next/head";
+import Footer from "@/pages/components/footer";
+import Table from "react-bootstrap/Table";
 
 /**
  * @namespace 'form_typesofservice.js'
@@ -20,8 +23,16 @@ export default function Formulaire_typesofservice() {
      */
     const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
     // Pathname pour la redirection de page
-    const pathnameModal = "./menu_services";
-    const pathnameNewService = "/components/gestion_admin/gestion_services/form_services";
+    /**
+     * @memberof 'services.js'
+     * @constant {Array} lstTypesOfService Array that contains all the types of service
+     * @constant {Array} lstTOSNames Array that contains all the names of the types of service
+     * @default {Array} lstTypesOfService []
+     * @default {Array} lstTOSNames []
+     * @see{@link 'services.js'.lstTypesOfService}
+     */
+    const [lstTOSNames, setLstTOSNames] = useState([]);
+    const [lstTypesOfService, setLstTypesOfService] = useState([]);
 
     /**
      * @memberof 'form_typesofservice.js'
@@ -47,97 +58,191 @@ export default function Formulaire_typesofservice() {
 
     /**
      * @memberof 'form_typesofservice.js'
-     * @function handleSubmit Function that allows the user to create a new type of service
-     * @description posts the new type of service in the database and shows a notification if the creation is successful or not
-     * @param {object} evt - event
-     * @see {@link 'form_typesofservice.js'.urlTypesOfService}
-     * @see {@link 'form_typesofservice.js'.typeOfService}
+     * @function fetchTypeOfService Function that fetches the types of service from the database
+     * @description fetches the types of service from the database and sets the list of types of service to the response of the request
+     * @see {@link 'services.js'.fetchTypeOfService}
      */
-    const handleSubmit = (evt) => {
+    const fetchTypeOfService = () => {
         const cookies = parseCookies();
-        evt.preventDefault();
-
-        axios.post(urlTypesOfService, typeOfService, {
+        axios.get(urlTypesOfService, {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
         })
             .then((response) => {
+                setLstTypesOfService(response.data);
                 console.log(response.data);
-                document.getElementById("notification_success").hidden = false;
             })
             .catch((error) => {
                 console.log(error);
-                document.getElementById("notification_error").hidden = false;
             });
-
     };
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function loadTOSNames
+     * @description loads the names of the types of service in an array
+     */
+    const loadTOSNames = () => {
+        let lstTOSNames = [];
+        lstTypesOfService.map((tos) => {
+            lstTOSNames.push(tos.name.toLowerCase());
+        });
+        setLstTOSNames(lstTOSNames);
+    };
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @constant {String} isValid String that contains the class to apply to the input
+     * @default {String} isValid ""
+     *
+     */
+    const [isValid, setIsValid] = useState("");
+
+
+    const [serviceExistsError, setServiceExistsError] = useState(false);
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function handleSubmit Function that allows the user to create a new type of service
+     * @description posts the new type of service in the database and shows a notification if the creation is successful or not
+     * @see {@link 'form_typesofservice.js'.urlTypesOfService}
+     * @see {@link 'form_typesofservice.js'.typeOfService}
+     */
+    const handleSubmit = () => {
+        if (typeOfService.name !== "") {
+            if (lstTOSNames.includes(typeOfService.name.toLowerCase())) {
+                setServiceExistsError(true);
+            } else {
+                const cookies = parseCookies();
+
+                axios.post(urlTypesOfService, typeOfService, {
+                    headers: {
+                        Authorization: 'Token ' + cookies.csrftoken,
+                    },
+                })
+                    .then((response) => {
+                        console.log(response.data);
+
+                        setLstTypesOfService(prevState => [...prevState, response.data]);
+                        setServiceExistsError(false);
+
+                        // Réinitialise le typeOfService pour vider l'input
+                        setTypeOfService({name: ""});
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        }
+    };
+
+
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function useEffect
+     * @description calls the function fetchTypeOfService when the page is loaded
+     * @return {void}
+     */
+    useEffect(() => {
+        fetchTypeOfService();
+        console.log(lstTypesOfService);
+    }, []);
+
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function loadTOSNames
+     * @description loads the names of the types of service in an array, when lstTypesOfService is loaded
+     */
+    useEffect(() => {
+        loadTOSNames();
+    }, [lstTypesOfService]);
+
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @function useEffect
+     * @description checks if the name of the type of service is valid or not
+     */
+    useEffect(() => {
+            if (lstTOSNames.includes(typeOfService.name.toLowerCase())) {
+                setIsValid("is-invalid");
+            } else if (typeOfService.name !== "") {
+                setIsValid("is-valid");
+            }else{
+                setIsValid("");
+            }
+        }, [typeOfService.name]
+    );
 
     return (
         <>
+            <Head>
+                <title>Tina - Création de type de service</title>
+                <meta name="description" content="Page pour la création de type de service de l'application Tina" />
+            </Head>
             <Header />
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
-                <ul></ul>
-                <div id="notification_success" class="alert alert-success" role="alert" hidden>
-                    <h4 class="alert-heading">Création réussie</h4>
-                    <p>Vous avez créé le type de service : {typeOfService.name} </p>
-                    <hr></hr>
-                    <p class="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} class="alert-link">ICI</Link>
-                    </p>
-                </div>
-                <div id="notification_error" class="alert alert-danger" role="alert" hidden>
-                    <h4 class="alert-heading">Création Echouée</h4>
-                    <p>Il y a un problème avec le service : <a id='service_error'> </a></p>
-                </div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary rounded" style={{ backgroundColor: "#b8aaa0" }}>
-                    <div class="container-fluid rounded" style={{ height: "8vh", width: "100vh",boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#FFFFFF" }}>
-                        <a class="navbar-brand" href="#">Gestion des services</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            </ul>
-                            <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-                            </ul>
-                            <button type="button" class="btn btn-primary">
-                                <Link href={pathnameNewService} class="nav-link">
-                                    Nouveau service
-                                </Link>
-                            </button>
+            <main>
+                <div className="container py-5">
+                    <div className="row justify-content-center">
+                        <div className="col-lg-6"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                            <div className="card shadow-lg mt-4 rounded">
+                                <div className="card-body">
+                                    <h1 className="card-title text-center text-">Liste des types de service</h1>
 
+                                    {/* Boutons Retour aux services et Ajouter un service */}
+                                    <div className="d-flex justify-content-center mt-3 mb-4">
+                                        <Link href="/components/gestion_admin/gestion_services/services" passHref>
+                                            <button className="btn btn-outline-secondary" style={{ marginRight: '10px' }}>
+                                                Retour aux services
+                                            </button>
+                                        </Link>
+                                        <Link href="/components/gestion_admin/gestion_services/form_services" passHref>
+                                            <button className="btn btn-outline-primary">
+                                                Ajouter un service
+                                            </button>
+                                        </Link>
+                                    </div>
+
+                                    <Table className="table-hover">
+                                        <thead className="rounded" style={{ backgroundColor: "#232627", color: "#F6F8F7" }}>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Type</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {lstTypesOfService.map((tos, index) => (
+                                            <tr key={tos.id}>
+                                                <td>{index + 1}</td>
+                                                <td>{tos.name}</td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colSpan="2">
+                                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                                    <input type="text" className={"form-control " + isValid} data-id="name" onChange={handleChangeType} id="type_of_service" value={typeOfService.name} style={{ marginRight: "5px"}} />
+                                                    <button className="btn btn-primary" type="button" onClick={handleSubmit}>Créer</button>
+                                                </div>
+                                                {serviceExistsError && <div className="text-danger">Le type de service existe déjà</div>}
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </Table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </nav>
-
-                <ul></ul>
-                {/* Form TypeOfService */}
-
-                <div
-                    className="mb-3 d-flex flex-column"
-                    id='form'
-                    style={{
-                        width: "100vh",
-                        height: "auto",
-                        borderRadius: "6px",
-                        padding: "10px",
-                        background: "whiteSmoke",
-                        boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                    }}
-                >
-                    <form class="form-floating" >
-                        <input type="text" class="form-control" data-id="name" onChange={handleChangeType} id="type_of_service" />
-                        <label for="type_of_service">Nom du type de service</label>
-                    </form >
                 </div>
 
-                <ul></ul>
-                {/* Boutons de validation */}
 
-                <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Créer</button>
-
-
-            </div >
+            </main>
+            <Footer />
         </>
     );
+
+
 }

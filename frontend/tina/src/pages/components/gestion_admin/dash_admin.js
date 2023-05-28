@@ -62,11 +62,11 @@ export default function Dash() {
                     <div class="card">
                         <div class="card-body justify-content-center">
                             <ul></ul>
-                            <h5 class="card-title text-center font-weight-bold">Suppression d'un employé</h5>
+                            <h5 class="card-title text-center font-weight-bold">Gestion des employés</h5>
                             <h5 class="card-title text-center font-weight-bold" style={{color: "green"}}>Employé</h5>
                             <br></br>
                             <div class="text-center">
-                                <a href="./gestion_services/menu_services">
+                                <a href="./gestion_employee/display_employee">
                                 <button 
                                     type="button" 
                                     class="btn btn-primary"
@@ -93,6 +93,28 @@ export default function Dash() {
                                     type="button" 
                                     class="btn btn-primary"
                                     href="./gestion_services/menu_services"
+                                    style={{backgroundColor: "#232627", border: "none"}}>
+                                        Choisir
+                                </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <br></br>
+                    <div class="card">
+                        <div class="card-body justify-content-center">
+                            <ul></ul>
+                            <h5 class="card-title text-center font-weight-bold">Gestion des encaissements</h5>
+                            <h5 class="card-title text-center font-weight-bold" style={{color: "orange"}}>Encaissements</h5>
+                            <br></br>
+                            <div class="text-center">
+                                <a href="../CRUD_encaissement/menu_encaissement">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-primary"
+                                    href="../CRUD_encaissement/menu_encaissement"
                                     style={{backgroundColor: "#232627", border: "none"}}>
                                         Choisir
                                 </button>
