@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import Cookies from "js-cookie";
 
 
 /**
