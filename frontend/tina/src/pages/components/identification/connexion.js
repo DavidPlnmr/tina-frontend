@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
+import Head from "next/head";
 
 /**
  * @namespace 'connexion.js'
@@ -88,7 +89,10 @@ export default function Connexion() {
 
   return (
       <>
-
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Tina Coiffure | Connexion</title>
+        </Head>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="container">
             <div className="row justify-content-center">
@@ -135,7 +139,7 @@ export default function Connexion() {
                               onClick={toggleShowPassword}
                           />
                           <Form.Text className="text-muted">
-                            <Link class="nav-link p-0" href="#">Mot de passe oublié ?</Link>
+                            <Link className="nav-link p-0" href="#">Mot de passe oublié ?</Link>
                           </Form.Text>
                         </div>
                       </Form.Group>
@@ -150,7 +154,7 @@ export default function Connexion() {
                       </Button>
                       {/* Margin top */}
                       <Form.Text className="text-muted text-center mt-3">
-                        <Link class="nav-link p-0" href="/components/identification/inscription">Vous n'avez pas de compte ?</Link>
+                        <Link className="nav-link p-0" href="/components/identification/inscription">Vous n'avez pas de compte ?</Link>
 
                       </Form.Text>
                     </Form>

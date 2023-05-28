@@ -6,6 +6,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { setCookie } from 'nookies';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 /**
  * @namespace 'inscription.js'
@@ -140,6 +141,10 @@ export default function Inscription() {
 
   return (
       <>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Tina Coiffure | Inscription</title>
+        </Head>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="container">
             <div className="row justify-content-center">
@@ -183,7 +188,7 @@ export default function Inscription() {
                         S'inscrire
                       </Button>
                       <Form.Text className="text-muted text-center mt-3">
-                        <Link class="nav-link p-0" href="/components/identification/connexion">Vous avez déjà un compte ?</Link>
+                        <Link className="nav-link p-0" href="/components/identification/connexion">Vous avez déjà un compte ?</Link>
                       </Form.Text>
                     </Form>
 
