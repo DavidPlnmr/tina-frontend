@@ -4,6 +4,7 @@ import axios from "axios";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 import Footer from "../footer";
+import Cookies from 'js-cookie';
 
 /**
  * @namespace 'profil_utilisateur.js'
@@ -330,27 +331,25 @@ export default function ProfilUtilisateurs() {
               Authorization: "Token " + cookies.csrftoken,
             },
           })
-          .then((response) => {})
+          .then((response) => {
+            Cookies.remove("id");
+            Cookies.remove("csrftoken");
+            Cookies.remove("email");
+            Cookies.remove("username");
+            Cookies.remove("last_name");
+            Cookies.remove("first_name");
+            Cookies.remove("role");
+            router.push("/");
+        
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+          })
           .catch((error) => {
             console.log(error);
           });
-      Promise.all([
-        destroyCookie(null, "id"),
-        destroyCookie(null, "csrftoken"),
-        destroyCookie(null, "email"),
-        destroyCookie(null, "username"),
-        destroyCookie(null, "last_name"),
-        destroyCookie(null, "first_name"),
-        destroyCookie(null, "role"),
-      ]).then(() => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-        router.push("/");
-        alert("Votre compte a bien été supprimé !");
-      });
-    }
-  };
+      };
+    };
 
   return (
     <>
