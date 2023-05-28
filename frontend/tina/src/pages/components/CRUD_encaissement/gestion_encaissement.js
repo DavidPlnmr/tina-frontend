@@ -202,7 +202,7 @@ export default function Encaissement() {
      * @function handleSearch - function to manage the search term
      * @description set the state searchTerm to the value of the search input
      */
-    const handleSearch = event => {
+    const handleSearch = (event) => {
         setSearchTerm(event.target.value);
     };
 
@@ -459,6 +459,7 @@ export default function Encaissement() {
      */
     const handleClickAmount = (evt) => {
         toggleButtons(evt);
+        setSearchTerm(searchTerm => "");
         setAmountFilter(evt.target.id);
     };
 
@@ -466,16 +467,18 @@ export default function Encaissement() {
      * @memberof 'gestion_encaissement.js'
      * @function toggleButtons
      * @description function to toggle the active class on the amount's filters
-     * @param {object} evt 
+     * @param {object} evt
+     * @param {boolean} reset - boolean to know if we have to reset the active class
      */
     const toggleButtons = (evt) => {
+        let filter_to_activate = evt.target.id;
         document.getElementById('amount_total').classList.remove('active');
         document.getElementById('amount_annee').classList.remove('active');
         document.getElementById('amount_mois').classList.remove('active');
         document.getElementById('amount_semaine').classList.remove('active');
         document.getElementById('amount_jour').classList.remove('active');
 
-        document.getElementById(evt.target.id).classList.toggle("active");
+        document.getElementById(filter_to_activate).classList.toggle("active");
     };
 
     /**
@@ -547,7 +550,14 @@ export default function Encaissement() {
      * @param {object} encaissementsAffichage - list of the encaissements formatted
      */
     useEffect(() => {
-        let lstEncaissement = searchResults.length > 0 ? searchResults : encaissementsAffichage;
+
+        let lstEncaissement = [];
+        if (searchResults.length > 0 && searchTerm != ""){
+            lstEncaissement = searchResults;
+        }else{
+            lstEncaissement=encaissementsAffichage;
+        }
+          
 
         //Filter by searchTerm
         let results = lstEncaissement.filter(e =>
@@ -597,13 +607,10 @@ export default function Encaissement() {
      * @param {string} amountFilter - filter to apply on the encaissements
      */
     useEffect(() => {
-        console.log("amountFilter", amountFilter);
-
         let today = new Date();
         let todayDate = { day: today.getDate(), month: today.getMonth() + 1, year: today.getFullYear() };
         let results = [];
-        let totalAmount = 0;
-        let totalLenght = 0;
+       
 
         if (amountFilter === 'amount_total') {
             results = encaissementsAffichage;
@@ -640,15 +647,31 @@ export default function Encaissement() {
             });
         }
 
-        results.map(e =>
-            totalAmount += parseFloat(e.amount));
-        totalLenght = results.length;
+        
 
         setSearchResults(results);
-        setTotalAmount(totalAmount);
-        setTotalLenght(totalLenght);
+
+        //reset the search bar when we change the amount filter
+        //couldn't find a better way to do it
+        document.getElementById('Rechercher').value = "";
 
     }, [amountFilter, encaissementsAffichage]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect
+     * @description set the totalAmount and totalLenght when the searchResults is updated
+     * @param {object} searchResults - list of the encaissements searched
+     */
+    useEffect (() => {
+        let totalAmount = 0;
+        let totalLenght = 0;
+        searchResults.map(e =>
+            totalAmount += parseFloat(e.amount));
+        totalLenght = searchResults.length;
+        setTotalAmount(totalAmount);
+        setTotalLenght(totalLenght);
+    }, [searchResults]);
 
 
     //UseEffect pour la gestion des boutons
