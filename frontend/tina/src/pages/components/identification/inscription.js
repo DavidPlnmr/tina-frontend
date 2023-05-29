@@ -6,6 +6,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { setCookie } from 'nookies';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 /**
  * @namespace 'inscription.js'
@@ -131,7 +132,7 @@ export default function Inscription() {
           setCookie(null, 'last_name', response.data.last_name, { maxAge: 86400, path: '/' });
           setCookie(null, 'first_name', response.data.first_name, { maxAge: 86400, path: '/' });
           setCookie(null, 'role', response.data.role, { maxAge: 86400, path: '/' });
-          router.push('/');
+          router.push('/').then(r => r);
         })
         .catch((error) => {
           console.log(error);
@@ -140,17 +141,23 @@ export default function Inscription() {
 
   return (
       <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Tina Coiffure | Inscription</title>
+        </Head>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-sm-10 col-md-8 col-lg-6">
-                <Card className="border-0 shadow-lg">
+                <Card className="border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
                   <Card.Body className="p-4">
                     <Card.Title className="text-center mb-4">
-                      <div className="d-flex justify-content-center align-items-center gap-3">
-                        <img src="/images/tina_logo.png" alt="logo" className="img-fluid" width="60" />
-                        <h2 className="font-weight-bold" style={{ fontFamily: "Abhaya Libre", fontSize: "38px" }}>Tina Coiffure</h2>
-                      </div>
+                      <Link href="/" className="text-decoration-none text-dark">
+                        <div className="d-flex justify-content-center align-items-center gap-3">
+                          <img src="/images/tina_logo.png" alt="logo" className="img-fluid" width="60" />
+                          <h2 className="font-weight-bold" style={{ fontFamily: "Abhaya Libre", fontSize: "38px" }}>Tina Coiffure</h2>
+                        </div>
+                      </Link>
                     </Card.Title>
                     <Card.Subtitle className="mb-4">
                       <h4 className="text-center font-weight-bold">Inscription</h4>
@@ -182,11 +189,20 @@ export default function Inscription() {
                       <Button variant="primary" type="submit" className='w-100 border-0 shadow-sm' style={{ backgroundColor: "#232627", marginBottom: "10px" }}>
                         S'inscrire
                       </Button>
-                      <Form.Text className="text-muted text-center mt-3">
-                        <Link class="nav-link p-0" href="/components/identification/connexion">Vous avez déjà un compte ?</Link>
-                      </Form.Text>
+                      <Form.Group className="mt-3 mb-1 text-center">
+                        <Form.Text className="text-muted">
+                          En vous inscrivant, vous acceptez les
+                          <Link href="#" className="text-decoration-none"> Conditions d'utilisation </Link>
+                          et la
+                          <Link href="#"  className="text-decoration-none"> Politique de confidentialité </Link>,
+                          notamment l'Utilisation des
+                          <Link href="#"  className="text-decoration-none"> cookies</Link>.
+                        </Form.Text>
+                      </Form.Group>
+                      <Form.Group className="mb-0 text-center">
+                        <Link className="nav-link p-0" href="/components/identification/connexion">Vous avez déjà un compte ?</Link>
+                      </Form.Group>
                     </Form>
-
                   </Card.Body>
                 </Card>
               </div>
@@ -194,7 +210,6 @@ export default function Inscription() {
           </div>
         </div>
       </>
-
 
   );
 }

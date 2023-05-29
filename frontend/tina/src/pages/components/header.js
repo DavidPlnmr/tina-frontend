@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { parseCookies, destroyCookie } from "nookies";
+import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import Cookies from 'js-cookie';
-import axios from "axios";
+import Cookies from "js-cookie";
+
 
 /**
  * @namespace 'header.js'
@@ -95,7 +95,7 @@ function Header() {
         Cookies.remove("last_name");
         Cookies.remove("first_name");
         Cookies.remove("role");
-        router.push("/");
+        await router.push("/");
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -137,6 +137,7 @@ function Header() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="ms-auto" style={{ marginRight: "6%" }}>
+                <Nav.Link href="/">Accueil</Nav.Link>
                 {token && cookies.role === "admin" && (
                     <Nav.Link href="/components/gestion_admin/dash_admin">
                       Administration
@@ -155,7 +156,6 @@ function Header() {
                 <Nav.Link href="/components/prise_rendez_vous/service_rdv">
                   Prendre rendez-vous
                 </Nav.Link>
-                <Nav.Link href="/">Qui sommes nous ?</Nav.Link>
                 {token ? (
                     <NavDropdown title={user.username} id="collasible-nav-dropdown">
                       <NavDropdown.Item href="/components/CRUD_utilisateur/profil_utilisateur">

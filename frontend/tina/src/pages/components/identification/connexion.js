@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
+import Head from "next/head";
 
 /**
  * @namespace 'connexion.js'
@@ -88,18 +89,23 @@ export default function Connexion() {
 
   return (
       <>
-
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Tina Coiffure | Connexion</title>
+        </Head>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-sm-10 col-md-8 col-lg-6">
-                <Card className="border-0 shadow-lg">
+                <Card className="border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
                   <Card.Body className="p-4">
                     <Card.Title className="text-center mb-4">
+                      <Link href="/" className="text-decoration-none text-dark">
                       <div className="d-flex justify-content-center align-items-center gap-3">
                         <img src="/images/tina_logo.png" alt="logo" className="img-fluid" width="60" />
                         <h2 className="font-weight-bold" style={{ fontFamily: "Abhaya Libre", fontSize: "38px" }}>Tina Coiffure</h2>
                       </div>
+                        </Link>
                     </Card.Title>
 
                     <Card.Subtitle className="mb-4">
@@ -135,7 +141,7 @@ export default function Connexion() {
                               onClick={toggleShowPassword}
                           />
                           <Form.Text className="text-muted">
-                            <Link class="nav-link p-0" href="#">Mot de passe oublié ?</Link>
+                            <Link className="nav-link p-0" href="#">Mot de passe oublié ?</Link>
                           </Form.Text>
                         </div>
                       </Form.Group>
@@ -150,7 +156,7 @@ export default function Connexion() {
                       </Button>
                       {/* Margin top */}
                       <Form.Text className="text-muted text-center mt-3">
-                        <Link class="nav-link p-0" href="/components/identification/inscription">Vous n'avez pas de compte ?</Link>
+                        <Link className="nav-link p-0" href="/components/identification/inscription">Vous n'avez pas de compte ?</Link>
 
                       </Form.Text>
                     </Form>

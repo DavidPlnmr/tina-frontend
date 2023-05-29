@@ -3,9 +3,6 @@ import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
 import { Button, Modal, Card } from 'react-bootstrap';
-import { set } from 'date-fns';
-import { el } from 'date-fns/locale';
-
 /**
  * @namespace 'gestion_encaissement.js'
  * @description this page is used to manage the encaissements

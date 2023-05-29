@@ -103,14 +103,26 @@ export default function DetailRdv() {
           console.log(typeof services.duration);
           const duration = services.duration;
           const splitDuration = duration.split(":");
-          console.log(splitDuration[1]);
-          const minuteDuration = parseInt(splitDuration[1]);
-          const endDate = new Date(date.getTime() + minuteDuration * 60000);
-          const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
-            hour12: false,
-          });
-          setHeureFin(formattedEndTime);
-          console.log(formattedEndTime);
+          if (splitDuration[0] == "00") {
+            const minuteDuration = parseInt(splitDuration[1]);
+            const endDate = new Date(date.getTime() + minuteDuration * 60000);
+            const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
+              hour12: false,
+            });
+            setHeureFin(formattedEndTime);
+            console.log(formattedEndTime);
+          }
+          else {
+            console.log("test");
+            const hourDuration = parseInt(splitDuration[0]);
+            const minuteDuration = parseInt(splitDuration[1]);
+            const endDate = new Date(date.getTime() + hourDuration * 3600000 + minuteDuration * 60000);
+            const formattedEndTime = endDate.toLocaleTimeString("fr-FR", {
+              hour12: false,
+            });
+            setHeureFin(formattedEndTime);
+            console.log(formattedEndTime);
+          }
           // format date from dd/mm/yyyy to yyyy-mm-dd
           const splitDate = appointment.date.split("/");
           const formattedDate =

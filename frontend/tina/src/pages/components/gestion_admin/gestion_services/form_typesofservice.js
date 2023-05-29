@@ -186,19 +186,19 @@ export default function Formulaire_typesofservice() {
             <main>
                 <div className="container py-5">
                     <div className="row justify-content-center">
-                        <div className="col-lg-6"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                        <div className="col-lg-10">
                             <div className="card shadow-lg mt-4 rounded">
                                 <div className="card-body">
                                     <h1 className="card-title text-center text-">Liste des types de service</h1>
 
                                     {/* Boutons Retour aux services et Ajouter un service */}
                                     <div className="d-flex justify-content-center mt-3 mb-4">
-                                        <Link href="/components/gestion_admin/gestion_services/services" passHref>
+                                        <Link href="menu_services" passHref>
                                             <button className="btn btn-outline-secondary" style={{ marginRight: '10px' }}>
                                                 Retour aux services
                                             </button>
                                         </Link>
-                                        <Link href="/components/gestion_admin/gestion_services/form_services" passHref>
+                                        <Link href="form_services" passHref>
                                             <button className="btn btn-outline-primary">
                                                 Ajouter un service
                                             </button>
