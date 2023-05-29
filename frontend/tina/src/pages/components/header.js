@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
  * @returns {JSX.Element} The Header component as a JSX element.
  */
 function Header() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   /**
    * @constant user
    * @memberof 'header.js'
@@ -79,7 +80,7 @@ function Header() {
    */
   const handleLogout = async () => {
 
-    const response = await fetch("http://127.0.0.1:8000/api/logout/", {
+    const response = await fetch(baseUrl + "logout/", {
       method: "POST",
       headers: {
         "Authorization": "Token " + cookies.csrftoken,

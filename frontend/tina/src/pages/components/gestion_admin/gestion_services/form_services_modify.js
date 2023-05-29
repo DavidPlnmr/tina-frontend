@@ -14,6 +14,8 @@ import Footer from "@/pages/components/footer";
  */
 export default function Formulaire_services_modify() {
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
     // Constantes pour les URL de l'API
     /**
      * @constant {String} urlServices url of the API for the services
@@ -23,8 +25,8 @@ export default function Formulaire_services_modify() {
      * @constant {String}values values of the query
      * @memberof 'form_services_modify.js'
      */
-    const urlServices = 'http://localhost:8000/api/services/';
-    const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+    const urlServices = baseUrl + 'services/';
+    const urlTypesOfService = baseUrl + 'typesofservice/';
 
     //Partie pour la redirection de page
     const pathnameModal = "./menu_services";

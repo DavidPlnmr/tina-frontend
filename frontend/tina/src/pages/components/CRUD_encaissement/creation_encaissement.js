@@ -16,6 +16,8 @@ import Head from "next/head";
  */
 export default function Creation_encaissement() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @memberof 'creation_encaissement.js'
    * @constant {string} urlServices The URL to fetch the Services from the API
@@ -24,8 +26,8 @@ export default function Creation_encaissement() {
    * @constant {string} pathnameChooseService The pathname to redirect after the service selection, to create a new payment (encaissement)
    */
   // Constantes pour les URL de l'API
-  const urlServices = 'http://localhost:8000/api/services/';
-  const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+  const urlServices = baseUrl + 'services/';
+  const urlTypesOfService = baseUrl + 'typesofservice/';
   // Pathname pour la redirection de page
   const pathname = '/components/CRUD_encaissement/encaissement';
   const pathnameChooseService = '/components/CRUD_encaissement/encaissement';

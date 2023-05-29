@@ -14,6 +14,8 @@ import Head from "next/head";
  */
 export default function Formulaire_services() {
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 
     // Constantes pour les URL de l'API
     /**
@@ -22,8 +24,8 @@ export default function Formulaire_services() {
      * @constant {String}urlTypesOfService - url to get the types of services
      * @constant {String}pathnameModal - pathname to redirect to the services page
      */
-    const urlServices = 'http://localhost:8000/api/services/';
-    const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+    const urlServices = baseUrl + 'services/';
+    const urlTypesOfService = baseUrl + 'typesofservice/';
     // Pathname pour la redirection de page
     const pathnameModal = "./menu_services";
 

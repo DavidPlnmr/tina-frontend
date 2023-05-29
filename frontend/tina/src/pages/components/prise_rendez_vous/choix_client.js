@@ -14,6 +14,8 @@ import Footer from '../footer';
  */
 export default function ChoixClient() {
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
     /**
      * @constant clients
      * @memberof 'choix_client.js'
@@ -67,7 +69,7 @@ export default function ChoixClient() {
      * @returns {Array} A list of clients.
      */     
     const fetchCustomers = () => {
-        axios.get('http://127.0.0.1:8000/api/customers/', {
+        axios.get(baseUrl + 'customers/', {
         headers: {
                 Authorization: `Token ` + cookies.csrftoken,
             },

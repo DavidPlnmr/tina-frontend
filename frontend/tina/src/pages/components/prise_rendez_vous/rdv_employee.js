@@ -14,12 +14,14 @@ import Head from "next/head";
  */
 export default function Rdv_employee() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @memberof 'Rdv_employee.js'
    * @constant urlEmployees
    * @description URL of the API to fetch the list of employees
    */
-  const urlEmployees = "http://127.0.0.1:8000/api/employees/"
+  const urlEmployees = baseUrl + "employees/"
 
   /**
    * @memberof 'Rdv_employee.js'

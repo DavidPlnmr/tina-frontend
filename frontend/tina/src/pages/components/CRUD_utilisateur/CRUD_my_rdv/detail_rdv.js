@@ -18,11 +18,12 @@ export default function DetailRdv() {
   const [heureFin, setHeureFin] = useState();
   const [appointments, setAppointments] = useState([]);
   const [appointment, setAppointment] = useState({});
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const fetchAppointment = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/my-appointments/",
+        baseUrl + "my-appointments/",
         {
           headers: {
             Authorization: "Token " + cookies.csrftoken,
@@ -39,7 +40,7 @@ export default function DetailRdv() {
   const fetchCustomers = async (id) => {
     try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/customers/" + id + "/",
+      baseUrl + "customers/" + id + "/",
       {
         headers: {
           Authorization: "Token " + cookies.csrftoken,
@@ -55,7 +56,7 @@ export default function DetailRdv() {
 
   const fetchEmployees = async (id) => {
     const cookies = parseCookies();
-        axios.get('http://127.0.0.1:8000/api/employees/' + id + "/", {
+        axios.get(baseUrl + 'employees/' + id + "/", {
             headers: {
                 Authorization: 'Token ' + cookies.csrftoken,
             },
@@ -71,7 +72,7 @@ export default function DetailRdv() {
 
   const fetchServices = async (id) => {
     axios
-      .get("http://127.0.0.1:8000/api/services/" + id + "/", {
+      .get(baseUrl + "services/" + id + "/", {
         headers: {
           Authorization: "Token " + cookies.csrftoken,
         },
@@ -166,7 +167,7 @@ export default function DetailRdv() {
     evt.preventDefault();
     const result = confirm("Êtes-vous sûr de vouloir annuler le rendez-vous ?");
     if (result === true) {
-      const response = await fetch("http://127.0.0.1:8000/api/appointments/" + resQuery.id + "/cancel", {
+      const response = await fetch(baseUrl + "appointments/" + resQuery.id + "/cancel", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -198,11 +199,14 @@ export default function DetailRdv() {
             <div className="card-body">
               <h4 className="card-title">Récapitulatif de réservation</h4>
               <ul className="list-group list-group-flush">
-                {Object.keys(customers).length !== 0 && (
+                {Object.keys(customers).length !== 0 && cookies.role == "employee" && (
                 <li className="list-group-item">
                   <strong>Client:</strong> {customers.first_name} {customers.last_name}
                 </li>
                 )}
+                <li className="list-group-item">
+                  <strong>Coiffeur :</strong> {coiffeurs.first_name} {coiffeurs.last_name}
+                </li>
                 {appointment.informations && (
                 <li className="list-group-item">
                   <strong>information:</strong> {appointment.informations}

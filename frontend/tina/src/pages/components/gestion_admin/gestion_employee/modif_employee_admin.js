@@ -13,6 +13,8 @@ import Footer from "../../footer";
 
 export default function ModifEmployee() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const [employee, setEmployee] = useState({});
 
   /**
@@ -84,7 +86,7 @@ export default function ModifEmployee() {
       if (employee.password === employee.confirm_password) {
         axios
           .patch(
-            "http://127.0.0.1:8000/api/employees/" + employee.id + "/",
+            baseUrl + "employees/" + employee.id + "/",
             employee,
             {
               headers: {
@@ -104,7 +106,7 @@ export default function ModifEmployee() {
     } else {
       axios
         .patch(
-          "http://127.0.0.1:8000/api/employees/" + employee.id + "/",
+          baseUrl + "employees/" + employee.id + "/",
           customer,
           {
             headers: {

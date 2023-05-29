@@ -15,6 +15,8 @@ import api from "@/api/api";
  */
 export default function ServiceRDV() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @constant typesOfService
    * @memberof 'service_rdv.js'
@@ -80,7 +82,7 @@ export default function ServiceRDV() {
    */
   const fetchTypeOfService = () => {
     axios
-        .get("http://127.0.0.1:8000/api/typesofservice/", {
+        .get(baseUrl + "typesofservice/", {
           headers: {
             Authorization: "Token " + cookies.csrftoken,
           },
@@ -103,7 +105,7 @@ export default function ServiceRDV() {
    */
   const fetchServices = () => {
     axios
-        .get("http://127.0.0.1:8000/api/services/", {
+        .get(baseUrl + "services/", {
           headers: {
             Authorization: "Token " + cookies.csrftoken,
           },

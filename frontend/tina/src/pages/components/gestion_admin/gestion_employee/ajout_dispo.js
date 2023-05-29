@@ -9,6 +9,8 @@ import Link from 'next/link';
 
 export default function AjoutDispo() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const [dispo, setDispo] = useState([
     {
         date: "",
@@ -24,7 +26,7 @@ export default function AjoutDispo() {
 
   const fetchEmployees = () => {
     const cookies = parseCookies();
-    axios.get('http://127.0.0.1:8000/api/employees/', {
+    axios.get(baseUrl + 'employees/', {
       headers: {
         Authorization: `Token ` + cookies.csrftoken,
         },
@@ -54,7 +56,7 @@ export default function AjoutDispo() {
 
     console.log(dispo.employee);
 
-    axios.post('http://127.0.0.1:8000/api/employees/' + dispo.employee +'/disponibilities/', dispo, {
+    axios.post(baseUrl + 'employees/' + dispo.employee +'/disponibilities/', dispo, {
       headers: {
         Authorization: `Token ` + cookies.csrftoken,
       },

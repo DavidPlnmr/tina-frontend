@@ -10,6 +10,8 @@ import { Button, Modal } from 'react-bootstrap';
  */
 export default function Encaissement() {
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
     /**
      * @memberof 'gestion_encaissement.js'
      * @constant {String} urlEncaissements - url to get the encaissements
@@ -18,9 +20,9 @@ export default function Encaissement() {
      * @constant {String} pathnameAdd - pathname to redirect to the page to add an encaissement
      */
     // Constantes pour les URL de l'API
-    const urlEncaissements = 'http://localhost:8000/api/collections/';
-    const urlServices = 'http://localhost:8000/api/services/';
-    const urlEmployees = 'http://localhost:8000/api/employees/';
+    const urlEncaissements = baseUrl + 'collections/';
+    const urlServices = baseUrl + 'services/';
+    const urlEmployees = baseUrl + 'employees/';
 
     // Pathname pour la redirection de page
     const pathnameAdd = "./creation_encaissement";

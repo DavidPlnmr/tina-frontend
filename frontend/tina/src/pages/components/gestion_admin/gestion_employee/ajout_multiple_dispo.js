@@ -9,6 +9,9 @@ import { useRouter } from 'next/router';
 
 
 export default function AjoutMultipleDispo() {
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  
   const [dispo, setDispo] = useState({start_date: "", end_date: "", disponibilities: {}}); 
   
 
@@ -27,7 +30,7 @@ export default function AjoutMultipleDispo() {
 
 
   const fetchEmployees = () => {
-    axios.get('http://127.0.0.1:8000/api/employees/', {
+    axios.get(baseUrl + 'employees/', {
       headers: {
         Authorization: `Token ` + cookies.csrftoken,
         },
@@ -91,7 +94,7 @@ export default function AjoutMultipleDispo() {
       const id = employee;
       console.log(id);
       console.log(dispo);
-      axios.post('http://127.0.0.1:8000/api/employees/' + id +'/disponibilities/bulk', dispo, {
+      axios.post(baseUrl + 'employees/' + id +'/disponibilities/bulk', dispo, {
         headers: {
           Authorization: `Token ` + cookies.csrftoken,
         },
