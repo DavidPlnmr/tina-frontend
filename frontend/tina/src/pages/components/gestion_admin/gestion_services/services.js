@@ -478,7 +478,7 @@ export default function Services() {
                     <div className="row mb-5 justify-content-center text-center align-items-start">
                       {lstTypesOfService && // Check if types of service have been fetched before rendering the services
                         lstTypesOfService.map((typeOfService) => (
-                          <div className={'col-md-5 col-lg-3'} key={typeOfService.id}> {/* Create a column for each service */}
+                          <div className={'col-md-6 col-lg-3'} key={typeOfService.id}> {/* Create a column for each service */}
                             <Card className="mb-4 position-relative"> {/* Create a card to display each type of service */}
                               <Button hidden={tosHidden} variant="danger" className="position-absolute top-0 end-0 m-2" onClick={() => handleDeleteTypeOfService(typeOfService)}>
                                 X

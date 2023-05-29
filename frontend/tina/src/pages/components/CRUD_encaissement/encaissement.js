@@ -279,90 +279,92 @@ function Encaissement_recap() {
                 <meta name="description" content="Page récapitulative avant encaissement de l'application Tina" />
             </Head>
             <Header />
-            <div className="container py-5">
-                <div className="row justify-content-center text-center align-items-center">
-                    <div className="col-lg-15"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
-                        <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
-                            <div className="card-body justify-content-center text-center align-items-center">
-                                <h1 className="card-title text-center mb-5">Ajout d'un encaissement</h1>
-                                
-                                <div className="mb-3 d-flex flex-column justify-content-start align-items-center rounded my-5">
-                                    <ul></ul>
-                                    {/* Notifications */}
-                                    <div id="notification_success" className="alert alert-success" role="alert" hidden>
-                                        <h4 className="alert-heading">Création réussie</h4>
-                                        <p> Encaissement ajouté </p>
+            <main>
+                <div className="container py-5">
+                    <div className="row justify-content-center text-center align-items-center">
+                        <div className="col-lg-15"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                            <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
+                                <div className="card-body justify-content-center text-center align-items-center">
+                                    <h1 className="card-title text-center mb-5">Ajout d'un encaissement</h1>
 
-                                        {token && cookies.role === "admin" && (
-                                            <div>
-                                                <hr></hr>
-                                                <p className="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
-                                                </p>
-                                            </div>
-                                        )}
+                                    <div className="mb-3 d-flex flex-column justify-content-start align-items-center rounded my-5">
+                                        <ul></ul>
+                                        {/* Notifications */}
+                                        <div id="notification_success" className="alert alert-success" role="alert" hidden>
+                                            <h4 className="alert-heading">Création réussie</h4>
+                                            <p> Encaissement ajouté </p>
 
-                                    </div>
-                                    <div id="notification_error" className="alert alert-danger" role="alert" hidden>
-                                        <h4 className="alert-heading">Création Echouée</h4>
-                                        <p>Il y a un problème avec l'encaissement de : <a id='enc_error'> </a></p>
-                                    </div>
+                                            {token && cookies.role === "admin" && (
+                                                <div>
+                                                    <hr></hr>
+                                                    <p className="mb-0">Vous pouvez consulter tous les encaissements en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
+                                                    </p>
+                                                </div>
+                                            )}
 
-                                    <div
-                                        className="mb-3 d-flex flex-column"
+                                        </div>
+                                        <div id="notification_error" className="alert alert-danger" role="alert" hidden>
+                                            <h4 className="alert-heading">Création Echouée</h4>
+                                            <p>Il y a un problème avec l'encaissement de : <a id='enc_error'> </a></p>
+                                        </div>
 
-                                    >
-                                        {/* Liste des encaissements */}
-                                        <table className="table mx-2 rounded text-center" style={{
-                                            width: "100vh",
-                                            height: "auto",
-                                            borderRadius: "6px",
-                                            padding: "10px",
-                                            background: "whiteSmoke",
-                                            boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                                        }}>
-                                            <thead></thead>
-                                            <tbody>
-                                                <tr key={1}>
-                                                    <td className="align-middle" scope="col">
-                                                        <div className="input-group mb-3">
-                                                            <div className="form-floating">
-                                                                <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
-                                                                <label for="service_name">Service</label>
+                                        <div
+                                            className="mb-3 d-flex flex-column"
+
+                                        >
+                                            {/* Liste des encaissements */}
+                                            <table className="table mx-2 rounded text-center" style={{
+                                                width: "100vh",
+                                                height: "auto",
+                                                borderRadius: "6px",
+                                                padding: "10px",
+                                                background: "whiteSmoke",
+                                                boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                                            }}>
+                                                <thead></thead>
+                                                <tbody>
+                                                    <tr key={1}>
+                                                        <td className="align-middle" scope="col">
+                                                            <div className="input-group mb-3">
+                                                                <div className="form-floating">
+                                                                    <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
+                                                                    <label for="service_name">Service</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td className="align-middle" scope="col">
-                                                        <div className="input-group mb-3">
-                                                            <div className="form-floating">
-                                                                <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control " + isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
-                                                                <label for="service_price">Montant</label>
+                                                        </td>
+                                                        <td className="align-middle" scope="col">
+                                                            <div className="input-group mb-3">
+                                                                <div className="form-floating">
+                                                                    <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control " + isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
+                                                                    <label for="service_price">Montant</label>
+                                                                </div>
+                                                                <span className="input-group-text">CHF</span>
                                                             </div>
-                                                            <span className="input-group-text">CHF</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="align-middle" scope="col" id='rabais_etudiant'>
-                                                        <div className="input-group mb-3">
-                                                            <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
-                                                                <label for="service_discount">Rabais étudiant</label>
+                                                        </td>
+                                                        <td className="align-middle" scope="col" id='rabais_etudiant'>
+                                                            <div className="input-group mb-3">
+                                                                <div className="form-check">
+                                                                    <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
+                                                                    <label for="service_discount">Rabais étudiant</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                        {/* Boutons de validation */}
+                                            {/* Boutons de validation */}
 
-                                        <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
+                                            <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
             <Footer />
         </>
     );

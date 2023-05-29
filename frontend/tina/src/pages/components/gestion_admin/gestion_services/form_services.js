@@ -21,9 +21,11 @@ export default function Formulaire_services() {
      * @constant {String}urlServices - url to get the services
      * @constant {String}urlTypesOfService - url to get the types of services
      * @constant {String}pathnameModal - pathname to redirect to the services page
+     * @constant {baseUrl} baseUrl The base URL of the API
      */
-    const urlServices = 'http://localhost:8000/api/services/';
-    const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const urlServices = baseUrl + 'services/';
+    const urlTypesOfService = baseUrl + 'typesofservice/';
     // Pathname pour la redirection de page
     const pathnameModal = "./menu_services";
 
@@ -181,49 +183,49 @@ export default function Formulaire_services() {
             // boucle for pour envoyer les services
             if (typeOfService === 0) {
                 console.log("typeOfService === 0");
-                document.getElementById('select_type_of_service').classList.replace(('form-select', 'form-select is-invalid'));
+                document.getElementById('select_type_of_service').setAttribute('class', 'form-select is-invalid');
                 statusOK = false;
             } else {
-                document.getElementById('select_type_of_service').setAttribute('className', 'form-control is-valid')
+                document.getElementById('select_type_of_service').setAttribute('class', 'form-control is-valid')
             }
 
             const s = service[i + 1];
             if (lstNameServices.includes(s.name.toLowerCase())) {
                 console.log("lstNameServices.includes(s.name.toLowerCase())");
-                document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-invalid');
+                document.getElementById('service_titre' + (i + 1)).setAttribute('class', 'form-control is-invalid');
                 document.getElementById('service_titre_error' + (i + 1)).innerHTML = "Ce service existe déjà";
                 statusOK = false;
             } else if (s.name === "") {
                 console.log("s.name === ''");
-                document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-invalid');
-                document.getElementById('service_titre' + (i + 1)).innerHTML = 'Le titre ne peut pas être vide.';
+                document.getElementById('service_titre' + (i + 1)).setAttribute('class', 'form-control is-invalid');
+                document.getElementById('service_titre_error' + (i + 1)).innerHTML = 'Le titre ne peut pas être vide.';
                 statusOK = false;
             }
             else {
-                document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-valid');
+                document.getElementById('service_titre' + (i + 1)).setAttribute('class', 'form-control is-valid');
             }
             if (s.price === 0) {
                 console.log("s.price === 0");
-                document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-invalid');
+                document.getElementById('service_prix' + (i + 1)).setAttribute('class', 'form-control is-invalid');
                 statusOK = false;
             } else {
-                document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-valid');
+                document.getElementById('service_prix' + (i + 1)).setAttribute('class', 'form-control is-valid');
             }
             if (s.price_student === 0) {
                 console.log("s.price_student === 0");
-                document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-invalid');
+                document.getElementById('service_studentprice' + (i + 1)).setAttribute('class', 'form-control is-invalid');
                 statusOK = false;
             }
             else {
-                document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-valid');
+                document.getElementById('service_studentprice' + (i + 1)).setAttribute('class', 'form-control is-valid');
             }
             if (s.duration === 0) {
                 console.log("s.duration === 0");
-                document.getElementById('service_temps' + (i + 1)).setAttribute('className', 'form-control is-invalid');
+                document.getElementById('service_temps' + (i + 1)).setAttribute('class', 'form-control is-invalid');
                 statusOK = false;
             }
             else {
-                document.getElementById('service_temps' + (i + 1)).setAttribute('className', 'form-control is-valid');
+                document.getElementById('service_temps' + (i + 1)).setAttribute('class', 'form-control is-valid');
             }
             if (statusOK) {
                 s.type_of_service = typeOfService;
@@ -381,39 +383,39 @@ export default function Formulaire_services() {
                     <ul></ul>
                     <div className="input-group mb-3">
                         <form className="form-floating" data-index={i}>
-                            <input type="text" className={"form-control "} id={"service_titre" + i} data-id={"name"} placeholder={'Le titre du service ' + i} onChange={handleChange}></input>
+                            <input type="text" class={"form-control "} id={"service_titre" + i} data-id={"name"} placeholder={'Le titre du service ' + i} onChange={handleChange}></input>
                             <label htmlFor={"service_titre" + i}>Titre</label>
-                            <div className="invalid-feedback" id={'service_titre_error' + i}>
+                            <div class="invalid-feedback" id={'service_titre_error' + i}>
                             </div>
                         </form>
                     </div>
 
                     <div className="input-group mb-3">
                         <form className="form-floating" data-index={i}>
-                            <input type="number" className={"form-control "} id={"service_prix" + i} data-id={"price"} placeholder="0" onChange={handleChange}></input>
+                            <input type="number" class={"form-control "} id={"service_prix" + i} data-id={"price"} placeholder="0" onChange={handleChange}></input>
                             <label htmlFor={"service_prix" + i}>Prix normal</label>
-                            <div className="invalid-feedback">
+                            <div class="invalid-feedback">
                                 Le prix ne peut pas être vide.
                             </div>
                         </form>
-                        <span className="input-group-text">CHF</span>
+                        <span class="input-group-text">CHF</span>
                     </div>
 
 
                     <div className="input-group mb-3">
                         <form className="form-floating" data-index={i}>
-                            <input type="number" className={"form-control "} id={"service_studentprice" + i} data-id={"price_student"} placeholder="0" onChange={handleChange}></input>
+                            <input type="number" class={"form-control "} id={"service_studentprice" + i} data-id={"price_student"} placeholder="0" onChange={handleChange}></input>
                             <label htmlFor={"service_studentprice" + i}>Prix etudiant</label>
-                            <div className="invalid-feedback">
+                            <div class="invalid-feedback">
                                 Le prix ne peut pas être vide.
                             </div>
                         </form>
-                        <span className="input-group-text">CHF</span>
+                        <span class="input-group-text">CHF</span>
                     </div>
 
                     <div className="input-group mb-3">
                         <form className="form-floating" data-index={i}>
-                            <select className={"form-select "} aria-label="Temps de service" id={"service_temps" + i} data-id={"duration"} onChange={handleChange}>
+                            <select class={"form-select "} aria-label="Temps de service" id={"service_temps" + i} data-id={"duration"} onChange={handleChange}>
                                 <option value="0">0</option>
                                 <option value="15">15</option>
                                 <option value="30">30</option>
@@ -425,11 +427,11 @@ export default function Formulaire_services() {
                                 <option value="120">120</option>
                             </select>
                             <label htmlFor={"service_temps" + i}>Duree</label>
-                            <div className="invalid-feedback">
+                            <div class="invalid-feedback">
                                 La durée doit être supérieure à 0.
                             </div>
                         </form>
-                        <span className="input-group-text">MIN</span>
+                        <span class="input-group-text">MIN</span>
                     </div>
                 </div >
             );
@@ -469,55 +471,57 @@ export default function Formulaire_services() {
             </Head>
             <Header />
 
-            <div className="container pt-5">
-                <div className="container py-5">
-                    <div className="row justify-content-center text-center align-items-center">
-                        <div className="col-lg-15"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
-                            <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
-                                <div className="card-body text-center align-items-center">
-                                    <h1 className="card-title text-center">Création de services</h1>
+            <main>
+                <div className="container pt-5">
+                    <div className="container py-5">
+                        <div className="row justify-content-center text-center align-items-center">
+                            <div className="col-lg-15"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                                <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
+                                    <div className="card-body text-center align-items-center">
+                                        <h1 className="card-title text-center">Création de services</h1>
 
-                                    <div id={"notification_success"} className="alert alert-success" role="alert" hidden>
-                                        <h4 className="alert-heading">Création réussie</h4>
-                                        <hr></hr>
-                                        <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
-                                        </p>
-                                    </div>
-                                    <div id={"notification_error"} className="alert alert-danger" role="alert" hidden>
-                                        <h4 className="alert-heading">Création Echouée</h4>
-                                        <p>Veuillez vérifier que le service n'existe pas déjà. Vous pouvez consulter tous les services :  <Link href={pathnameModal} className="alert-link">ICI</Link></p>
-                                    </div>
+                                        <div id={"notification_success"} className="alert alert-success" role="alert" hidden>
+                                            <h4 className="alert-heading">Création réussie</h4>
+                                            <hr></hr>
+                                            <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
+                                            </p>
+                                        </div>
+                                        <div id={"notification_error"} className="alert alert-danger" role="alert" hidden>
+                                            <h4 className="alert-heading">Création Echouée</h4>
+                                            <p>Veuillez vérifier que le service n'existe pas déjà. Vous pouvez consulter tous les services :  <Link href={pathnameModal} className="alert-link">ICI</Link></p>
+                                        </div>
 
 
-                                    <div className="text-center">
-                                        <div className="d-flex justify-content-center">
-                                            <div className="input-group mb-3 w-50">
-                                                <form className="form-floating">
-                                                    <select className="form-select" aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
-                                                        <option key='0' value='0'>Sélectionnez un type de service...</option>
-                                                        {listTypeOfService.map(item => {
-                                                            return (<option key={item.id} value={item.id}>{item.name}</option>);
-                                                        })}
-                                                    </select>
-                                                    <label htmlFor="select_type_of_service">Type de service</label>
-                                                    <div className="invalid-feedback">
-                                                        Le type de service ne peut pas être vide.
-                                                    </div>
-                                                </form>
+                                        <div className="text-center">
+                                            <div className="d-flex justify-content-center">
+                                                <div className="input-group mb-3 w-50">
+                                                    <form className="form-floating">
+                                                        <select className="form-select" aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                                                            <option key='0' value='0'>Sélectionnez un type de service...</option>
+                                                            {listTypeOfService.map(item => {
+                                                                return (<option key={item.id} value={item.id}>{item.name}</option>);
+                                                            })}
+                                                        </select>
+                                                        <label htmlFor="select_type_of_service">Type de service</label>
+                                                        <div className="invalid-feedback">
+                                                            Le type de service ne peut pas être vide.
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div>
-                                            {loadServices()}
-                                        </div>
+                                            <div>
+                                                {loadServices()}
+                                            </div>
 
-                                        <div className="d-flex justify-content-center mb-3">
-                                            <button type="button" className="btn btn-dark" onClick={addService}>Ajouter un service</button>
-                                        </div>
+                                            <div className="d-flex justify-content-center mb-3">
+                                                <button type="button" className="btn btn-dark" onClick={addService}>Ajouter un service</button>
+                                            </div>
 
-                                        <div className="d-flex justify-content-center mb-3">
-                                            <Link href={pathnameModal} className="btn btn-secondary me-2">Annuler</Link>
-                                            <button type="button" className="btn btn-primary disabled" id="btn_save_serv" onClick={handleSubmit}>Enregistrer</button>
+                                            <div className="d-flex justify-content-center mb-3">
+                                                <Link href={pathnameModal} className="btn btn-secondary me-2">Annuler</Link>
+                                                <button type="button" className="btn btn-primary disabled" id="btn_save_serv" onClick={handleSubmit}>Enregistrer</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -525,8 +529,7 @@ export default function Formulaire_services() {
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </main>
             <Footer />
         </>
     );

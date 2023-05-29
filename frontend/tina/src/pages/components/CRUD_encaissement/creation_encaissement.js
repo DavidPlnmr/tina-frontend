@@ -22,10 +22,12 @@ export default function Creation_encaissement() {
    * @constant {string} urlTypesOfService The URL to fetch the TypesOfService from the API
    * @constant {string} pathname The pathname to redirect to the page to create a new payment (encaissement)
    * @constant {string} pathnameChooseService The pathname to redirect after the service selection, to create a new payment (encaissement)
+   * @constant {baseUrl} baseUrl The base URL of the API
    */
   // Constantes pour les URL de l'API
-  const urlServices = 'http://localhost:8000/api/services/';
-  const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const urlServices = baseUrl + 'services/';
+  const urlTypesOfService = baseUrl + 'typesofservice/';
   // Pathname pour la redirection de page
   const pathname = '/components/CRUD_encaissement/encaissement';
   const pathnameChooseService = '/components/CRUD_encaissement/encaissement';
@@ -222,76 +224,75 @@ export default function Creation_encaissement() {
         <meta name="description" content="Page de choix de service avant encaissement, de l'application Tina" />
       </Head>
       <Header />
-      <div className="container pt-5">
-        <div className="container py-5">
-          <div className="row justify-content-center text-center align-items-center">
-            <div className="col-lg-15"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
-              <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
-                <div className="card-body text-center align-items-center">
-                  <h1 className="card-title text-center">Ajout d'un encaissement</h1>
-                  <div className="btn-group mx-auto my-auto" >
+      <main>
+        <div className="container pt-5">
+          <div className="container py-5">
+            <div className="row justify-content-center text-center align-items-center">
+              <div className="col-lg-15"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
+                  <div className="card-body text-center align-items-center">
+                    <h1 className="card-title text-center">Ajout d'un encaissement</h1>
                     <button type="button" className='btn btn-outline-primary' onClick={handleClickEncManuel}>Encaissement manuel</button>
-                    <ul className="navbar-nav ms-1"></ul>
-                  </div>
 
-                  {/* Tableau des services */}
-                  <div className="container mb-5 pt-5"> {/* Container for the services */}
-                    <div className="row mb-5 justify-content-center text-center align-items-start">
-                      {lstTypesOfService && // Check if types of service have been fetched before rendering the services
-                        lstTypesOfService.map((typeOfService) => (
-                          <div className="col-md-5 col-lg-3" key={typeOfService.id}> {/* Create a column for each service */}
-                            <Card className="mb-3"> {/* Create a card to display each type of service */}
-                              <Card.Body>
-                                <Card.Title style={{ color: "#232627", fontSize: "36px", marginBottom: "22px" }}>{typeOfService.name}</Card.Title> {/* Display the name of the service type */}
-                                <Card.Subtitle className="mb-2" style={{ color: "#F3B10E", fontSize: "28px" }}>
-                                  À partir de CHF {minPriceForATypeOfService(typeOfService)}.-
-                                </Card.Subtitle> {/* Display the minimum price for each type of service */}
-                                <hr />
-                                <div>
-                                  {lstServices &&
-                                    lstServices
-                                      .filter((service) => service.type_of_service === typeOfService.id) // Filter services based on their type
-                                      .sort((a, b) => b.price - a.price) // Sort services by price in descending order
-                                      .map((service) => (
-                                        <div
-                                          className="mb-3 d-flex flex-column"
-                                          key={service.id}
-                                          style={{
-                                            background: "whiteSmoke",
-                                            borderRadius: "6px",
-                                            padding: "10px",
-                                            boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                                          }}
-                                        >
-                                          <div>
-                                            <Card.Text className="mb-1">{service.name}</Card.Text> {/* Display the name of the service */}
-                                            <Card.Text className="mb-2">{formatDuration(service.duration)} minutes, CHF {priceWithoutCent(service.price)}.-</Card.Text> {/* Display the duration and price of the service */}
+                    {/* Tableau des services */}
+                    <div className="container mb-5 pt-5"> {/* Container for the services */}
+                      <div className="row mb-5 justify-content-center text-center align-items-start">
+                        {lstTypesOfService && // Check if types of service have been fetched before rendering the services
+                          lstTypesOfService.map((typeOfService) => (
+                            <div className="col-md-5 col-lg-3" key={typeOfService.id}> {/* Create a column for each service */}
+                              <Card className="mb-3"> {/* Create a card to display each type of service */}
+                                <Card.Body>
+                                  <Card.Title style={{ color: "#232627", fontSize: "36px", marginBottom: "22px" }}>{typeOfService.name}</Card.Title> {/* Display the name of the service type */}
+                                  <Card.Subtitle className="mb-2" style={{ color: "#F3B10E", fontSize: "28px" }}>
+                                    À partir de CHF {minPriceForATypeOfService(typeOfService)}.-
+                                  </Card.Subtitle> {/* Display the minimum price for each type of service */}
+                                  <hr />
+                                  <div>
+                                    {lstServices &&
+                                      lstServices
+                                        .filter((service) => service.type_of_service === typeOfService.id) // Filter services based on their type
+                                        .sort((a, b) => b.price - a.price) // Sort services by price in descending order
+                                        .map((service) => (
+                                          <div
+                                            className="mb-3 d-flex flex-column"
+                                            key={service.id}
+                                            style={{
+                                              background: "whiteSmoke",
+                                              borderRadius: "6px",
+                                              padding: "10px",
+                                              boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                                            }}
+                                          >
+                                            <div>
+                                              <Card.Text className="mb-1">{service.name}</Card.Text> {/* Display the name of the service */}
+                                              <Card.Text className="mb-2">{formatDuration(service.duration)} minutes, CHF {priceWithoutCent(service.price)}.-</Card.Text> {/* Display the duration and price of the service */}
+                                            </div>
+
+                                            <Button
+                                              id='btnChooseService' onClick={() => handleClick(service)}>
+                                              Choisir
+                                              <Link href={pathnameChooseService + service.id} style={{ color: "white" }}></Link> {/* Button to choose a service */}
+                                            </Button> {/* Button to choose a service */}
                                           </div>
-
-                                          <Button
-                                            id='btnChooseService' onClick={() => handleClick(service)}>
-                                            Choisir
-                                            <Link href={pathnameChooseService + service.id} style={{ color: "white" }}></Link> {/* Button to choose a service */}
-                                          </Button> {/* Button to choose a service */}
-                                        </div>
-                                      ))}
-                                </div>
-                              </Card.Body>
-                              <Card.Footer className="text-muted" style={{ background: "white", alignSelf: "flex-end", border: "none" }}>
-                                Étudiant réduc 5.-
-                              </Card.Footer> {/* Footer displaying a discount for students */}
-                            </Card>
-                          </div>
-                        ))}
+                                        ))}
+                                  </div>
+                                </Card.Body>
+                                <Card.Footer className="text-muted" style={{ background: "white", alignSelf: "flex-end", border: "none" }}>
+                                  Étudiant réduc 5.-
+                                </Card.Footer> {/* Footer displaying a discount for students */}
+                              </Card>
+                            </div>
+                          ))}
+                      </div>
                     </div>
-                  </div>
 
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );

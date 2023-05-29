@@ -712,7 +712,6 @@ export default function Encaissement() {
 
     return (
         <>
-
             {/* Modal pour la suppression */}
             <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
                 <Modal.Header closeButton>
