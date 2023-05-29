@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 import Head from "next/head";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 /**
  * @namespace 'connexion.js'
@@ -20,6 +21,8 @@ export default function Connexion() {
    * @see {@link 'header.js'.router}
    */
   const router = useRouter();
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   /**
    * @constant showPassword
@@ -54,7 +57,7 @@ export default function Connexion() {
    */
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/api/login/", {
+    const response = await fetch(baseUrl + "login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

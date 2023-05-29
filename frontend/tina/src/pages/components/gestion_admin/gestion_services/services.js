@@ -51,21 +51,21 @@ export default function Services() {
    * @constant {String} buttonDelete ClassName of the button to delete a service
    * @constant {String} modeModify Mode the page is in
    * @constant {String} btnChooseService ClassName of the button to choose a service
-   * 
-   * 
+   *
+   *
    */
   const [buttonModify, setButtonModify] = useState(
-    "btn btn-outline-primary"
+      "btn btn-outline-primary"
   );
   const [modificationMode, setModificationMode] = useState(
-    ""
+      ""
   );
   const [buttonDelete, setButtonDelete] = useState(
-    "btn btn-outline-danger"
+      "btn btn-outline-danger"
   );
   const [modeModify, setModeModify] = useState('');
   const [btnChooseService, setBtnChooseService] = useState(
-    "btn btn-dark"
+      "btn btn-dark"
   );
 
 
@@ -73,14 +73,14 @@ export default function Services() {
    * @memberof 'services.js'
    * @function handleClickModify Function that changes the mode of the page to modify a service
    * @description When the user clicks on the button to modify a service, the mode of the page changes to 'modify' or '' if the mode was already 'modify'
-   * 
+   *
    */
   const handleClickModify = () => {
     console.log("Mode Modification");
-    if (modeModify != 'modify') {
-      setModeModify(modeModify => 'modify');
+    if (modeModify !== 'modify') {
+      setModeModify(() => 'modify');
     } else {
-      setModeModify(modeModify => '');
+      setModeModify(() => '');
     }
   };
 
@@ -88,14 +88,14 @@ export default function Services() {
    * @memberof 'services.js'
    * @function handleClickDelete Function that changes the mode of the page to delete a service
    * @description When the user clicks on the button to delete a service, the mode of the page changes to 'delete' or '' if the mode was already 'delete'
-   * 
+   *
    */
   const handleClickDelete = () => {
     console.log("Mode Suppression");
-    if (modeModify != 'delete') {
-      setModeModify(modeModify => 'delete');
+    if (modeModify !== 'delete') {
+      setModeModify(() => 'delete');
     } else {
-      setModeModify(modeModify => '');
+      setModeModify(() => '');
     }
   };
 
@@ -115,7 +115,7 @@ export default function Services() {
   /**
    * @memberof 'services.js'
    * @function handleShow Function that shows the modal by setting the boolean show to true
-   * 
+   *
    */
   const handleShow = () => setShow(true);
 
@@ -145,7 +145,7 @@ export default function Services() {
    * @see {@link 'services.js'.lstServices}
    * @see {@link 'services.js'.urlServices}
    * @see {@link 'services.js'.infoModify}
-   * 
+   *
    */
   const handleConfirmDelete = () => {
     handleClose();
@@ -153,17 +153,17 @@ export default function Services() {
     lstServices.splice(lstServices.indexOf(s), 1);
     const cookies = parseCookies();
     axios.delete(urlServices+s.id+'/', {
-            headers: {
-                Authorization: 'Token ' + cookies.csrftoken,
-            },
+      headers: {
+        Authorization: 'Token ' + cookies.csrftoken,
+      },
+    })
+        .then((response) => {
+          console.log(response.data);
+          deleteMessage(s.name);
         })
-            .then((response) => {
-                console.log(response.data);
-                deleteMessage(s.name);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
   /**
@@ -192,19 +192,18 @@ export default function Services() {
         Authorization: 'Token ' + cookies.csrftoken,
       },
     })
-      .then((response) => {
-        setLstTypesOfService(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          setLstTypesOfService(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
 
   /**
    * @memberof 'services.js'
-   * @param {String} urlServices the url to fetch the services from the API
    * @function fetchServices Function to fetch the services from the API
    * @see {@link 'header.js'.cookies}
    * @see {@link 'gestion_encaissement.js'.fetchServices}
@@ -216,13 +215,13 @@ export default function Services() {
         Authorization: 'Token ' + cookies.csrftoken,
       },
     })
-      .then((response) => {
-        setLstServices(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          setLstServices(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
   /**
@@ -267,10 +266,10 @@ export default function Services() {
   // Function to get price without cents
   /**
    * @memberof 'services.js'
-   * @function priceWithoutCent Function that gets the price of the service without cents 
+   * @function priceWithoutCent Function that gets the price of the service without cents
    * @param {Float} price price of the service
    * @see {@link 'creation_encaissement.js'.priceWithoutCent}
-   * @returns {Integer} price of the service without cents
+   * @returns {string} price of the service without cents
    */
   const priceWithoutCent = (price) => {
     if (typeof price !== "string") {
@@ -294,13 +293,13 @@ export default function Services() {
    * @memberof 'services.js'
    * @see {@link 'creation_encaissement.js'.minPriceForATypeOfService}
    * @param {Array} lstTypeOfService list of types of service
-   * @returns 
+   * @returns
    */
   const minPriceForATypeOfService = (lstTypeOfService) => {
-    let val = 0;
+    let val;
     val = priceWithoutCent(lstServices
-      .filter((service) => service.type_of_service === lstTypeOfService.id)
-      .sort((a, b) => a.price - b.price)[0]?.price || 0)
+        .filter((service) => service.type_of_service === lstTypeOfService.id)
+        .sort((a, b) => a.price - b.price)[0]?.price || 0)
     return val;
   }
 
@@ -341,30 +340,54 @@ export default function Services() {
   useEffect(() => {
     if (modeModify === 'delete') {
       //changer le bouton
-      setButtonDelete(buttonDelete => "btn btn-danger");
-      setButtonModify(buttonModify => "btn btn-outline-primary");
-      setBtnChooseService(btnChooseService => "btn btn-danger");
+      setButtonDelete(() => "btn btn-danger");
+      setButtonModify(() => "btn btn-outline-primary");
+      setBtnChooseService(() => "btn btn-danger");
       //changer la navbar
-      setModificationMode(modificationMode => "MODE SUPPRESSION");
+      setModificationMode(() => "MODE SUPPRESSION");
     } else if (modeModify === 'modify') {
       //changer le bouton
-      setButtonModify(buttonModify => "btn btn-primary");
-      setButtonDelete(buttonDelete => "btn btn-outline-danger");
-      setBtnChooseService(btnChooseService => "btn btn-primary");
+      setButtonModify(() => "btn btn-primary");
+      setButtonDelete(() => "btn btn-outline-danger");
+      setBtnChooseService(() => "btn btn-primary");
       //changer la navbar
-      setModificationMode(modificationMode => "MODE MODIFICATION");
+      setModificationMode(() => "MODE MODIFICATION");
     } else if (modeModify === '') {
-      setModificationMode(modificationMode => "");
-      setButtonModify(buttonModify => "btn btn-outline-primary");
-      setButtonDelete(buttonDelete => "btn btn-outline-danger");
-      setBtnChooseService(btnChooseService => "btn btn-dark");
+      setModificationMode(() => "");
+      setButtonModify(() => "btn btn-outline-primary");
+      setButtonDelete(() => "btn btn-outline-danger");
+      setBtnChooseService(() => "btn btn-dark");
     }
   }, [modeModify]);
 
+  /**
+   * @memberof 'services.js'
+   * @param typeOfService
+   * @function handleDeleteTypeOfService function that deletes a type of service
+   * @description when the type of service is deleted, the page is refreshed
+   * @see {@link 'services.js'.fetchTypeOfService}
+   * return {void}
+   */
+  const handleDeleteTypeOfService = (typeOfService) => {
+    console.log("Suppression du type de service " + typeOfService.name);
+    const cookies = parseCookies();
+    axios.delete(urlTypesOfService + typeOfService.id + "/", {
+      headers: {
+        Authorization: 'Token ' + cookies.csrftoken,
+      }
+    }).then((response) => {
+      console.log(response);
+      fetchTypeOfService();
+    })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
+
   return (
-    <>
-      {/* Modal pour la suppression */}
-      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+      <>
+        {/* Modal pour la suppression */}
+        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
           <Modal.Header closeButton>
             <Modal.Title>SUPPRESSION</Modal.Title>
           </Modal.Header>
@@ -381,97 +404,97 @@ export default function Services() {
           </Modal.Footer>
         </Modal>
 
-      
-      {/* Nav Bar pour les services */}
-      <div className="d-flex flex-column justify-content-start align-items-center">
-        <ul></ul>
 
-        {/* Notification de suppression */}
-      <div id="notification_delete" className="alert alert-warning" role="alert" hidden>
-        <h4 className="alert-heading">Service supprimé</h4>
-        <p>Le service " <a id='service_error'> </a> " a été supprimé</p>
+        {/* Nav Bar pour les services */}
+        <div className="d-flex flex-column justify-content-center align-items-center">
+          <ul></ul>
 
-      </div>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#F6F8F7" }}>
-          <div className="container-fluid text-center rounded" style={{ height: "8vh", width: "100vh" }}>
-            <div className="collapse navbar-collapse" id="text">
-              <a className="navbar-brand">Gestion des services</a>
-              <ul className="navbar-nav ms-auto mb-5 ms-lg-3"></ul>
-              <i className="navbar-text">
-                {modificationMode}
-              </i>
-            </div>
-            <div className="collapse navbar-collapse" id="buttons">
-              <ul className="navbar-nav ms-auto"></ul>
-              <button type="button" className={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
-              <ul className="navbar-nav ms-1"></ul>
-              <button type="button" className={buttonModify} onClick={handleClickModify}>Modifier</button>
-              <ul className="navbar-nav ms-1"></ul>
-              <button type="button" className="btn btn-primary">
-                <Link href={pathnameAdd} className="nav-link">
-                  Ajouter
-                </Link>
-              </button>
-            </div>
+          {/* Notification de suppression */}
+          <div id="notification_delete" className="alert alert-warning" role="alert" hidden>
+            <h4 className="alert-heading">Service supprimé</h4>
+            <p>Le service " <a id='service_error'> </a> " a été supprimé</p>
+
           </div>
-        </nav>
+          <nav className="navbar bg-body-tertiary justify-content-between" style={{ backgroundColor: "#F6F8F7" }}>
+            <div className="container-fluid text-center rounded" style={{ height: "8vh", width: "100%" }}>
+              <div className="d-flex justify-content-start align-items-center" id="text">
+                <a className="navbar-brand me-3">Gestion des services</a>
+                <i className="navbar-text">
+                  {modificationMode}
+                </i>
+              </div>
+              <div className="d-flex justify-content-end align-items-center">
+                <button type="button" className={`${buttonDelete} mb-2 mb-md-0 me-1`} style={{ marginLeft: "10px" }} onClick={handleClickDelete}>Supprimer</button>
+                <button type="button" className={`${buttonModify} mb-2 mb-md-0 me-1`} onClick={handleClickModify}>Modifier</button>
+                <button type="button" className="btn btn-primary mb-2 mb-md-0">
+                  <Link href={pathnameAdd} className="nav-link">
+                    Ajouter
+                  </Link>
+                </button>
+              </div>
+            </div>
+          </nav>
 
 
-        {/* Tableau des services */}
-        <div className="container pt-5"> {/* Container for the services */}
-          <div className="row">
-            {lstTypesOfService && // Check if types of service have been fetched before rendering the services
-              lstTypesOfService.map((typeOfService) => (
-                <div className={`col-md-${numCols}`} key={typeOfService.id}> {/* Create a column for each service */}
-                  <Card className="mb-4"> {/* Create a card to display each type of service */}
-                    <Card.Body>
-                      <Card.Title style={{ color: "#232627", fontSize: "36px", marginBottom: "22px" }}>{typeOfService.name}</Card.Title> {/* Display the name of the service type */}
-                      <Card.Subtitle className="mb-2" style={{ color: "#F3B10E", fontSize: "28px" }}>
-                        À partir de CHF {minPriceForATypeOfService(typeOfService)}.-
-                      </Card.Subtitle> {/* Display the minimum price for each type of service */}
-                      <hr />
-                      <div>
-                        {lstServices &&
-                          lstServices
-                            .filter((service) => service.type_of_service === typeOfService.id) // Filter services based on their type
-                            .sort((a, b) => b.price - a.price) // Sort services by price in descending order
-                            .map((service) => (
-                              <div
-                                className="mb-3 d-flex flex-column"
-                                key={service.id}
-                                style={{
-                                  background: "whiteSmoke",
-                                  borderRadius: "6px",
-                                  padding: "10px",
-                                  boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                                }}
-                              >
-                                <div>
-                                  <Card.Text className="mb-1">{service.name}</Card.Text> {/* Display the name of the service */}
-                                  <Card.Text className="mb-2">{formatDuration(service.duration)} minutes, CHF {priceWithoutCent(service.price)}.-</Card.Text> {/* Display the duration and price of the service */}
-                                </div>
+          {/* Tableau des services */}
+          <div className="container pt-5"> {/* Container for the services */}
+            <div className="row">
+              {lstTypesOfService && // Check if types of service have been fetched before rendering the services
+                  lstTypesOfService.map((typeOfService) => (
+                      <div className={`col-md-${numCols}`} key={typeOfService.id}> {/* Create a column for each service */}
+                        <Card className="mb-4 position-relative"> {/* Create a card to display each type of service */}
+                          <Button variant="danger" className="position-absolute top-0 end-0 m-2" onClick={() => handleDeleteTypeOfService(typeOfService)}>
+                            X
+                          </Button>
+                          <Card.Body>
+                            <Card.Title style={{ color: "#232627", fontSize: "36px", marginBottom: "22px" }}>{typeOfService.name}</Card.Title> {/* Display the name of the service type */}
+                            <Card.Subtitle className="mb-2" style={{ color: "#F3B10E", fontSize: "28px" }}>
+                              À partir de CHF {minPriceForATypeOfService(typeOfService)}.-
+                            </Card.Subtitle> {/* Display the minimum price for each type of service */}
+                            <hr />
+                            <div>
+                              {lstServices &&
+                                  lstServices
+                                      .filter((service) => service.type_of_service === typeOfService.id) // Filter services based on their type
+                                      .sort((a, b) => b.price - a.price) // Sort services by price in descending order
+                                      .map((service) => (
+                                          <div
+                                              className="mb-3 d-flex flex-column"
+                                              key={service.id}
+                                              style={{
+                                                background: "whiteSmoke",
+                                                borderRadius: "6px",
+                                                padding: "10px",
+                                                boxShadow: "0 2px 4px rgba(0,0,0,.2)",
+                                              }}
+                                          >
+                                            <div>
+                                              <Card.Text className="mb-1">{service.name}</Card.Text> {/* Display the name of the service */}
+                                              <Card.Text className="mb-2">{formatDuration(service.duration)} minutes, CHF {priceWithoutCent(service.price)}.-</Card.Text> {/* Display the duration and price of the service */}
+                                            </div>
 
-                                <Button
-                                  id='btnChooseService'
-                                  className={btnChooseService}
-                                  onClick={() => handleChooseService(service, typeOfService)}
-                                  disabled={modeModify === '' ? true : false}
-                                >
-                                  {modeModify === 'delete' ? 'Supprimer' : modeModify === 'modify' ? 'Modifier' : 'Choisir'}
-                                </Button> {/* Button to choose a service */}
-                              </div>
-                            ))}
+                                            <Button
+                                                id='btnChooseService'
+                                                className={btnChooseService}
+                                                onClick={() => handleChooseService(service, typeOfService)}
+                                                disabled={modeModify === ''}
+                                            >
+                                              {modeModify === 'delete' ? 'Supprimer' : modeModify === 'modify' ? 'Modifier' : 'Choisir'}
+                                            </Button> {/* Button to choose a service */}
+                                          </div>
+                                      ))}
+                            </div>
+                          </Card.Body>
+                          <Card.Footer className="text-muted" style={{ background: "white", alignSelf: "flex-end", border: "none" }}>
+                            Étudiant réduc 5.-
+                          </Card.Footer> {/* Footer displaying a discount for students */}
+                        </Card>
                       </div>
-                    </Card.Body>
-                    <Card.Footer className="text-muted" style={{ background: "white", alignSelf: "flex-end", border: "none" }}>
-                      Étudiant réduc 5.-
-                    </Card.Footer> {/* Footer displaying a discount for students */}
-                  </Card>
-                </div>
-              ))}
+                  ))
+              }
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
   );
 }

@@ -209,16 +209,13 @@ export default function ServiceRDV() {
   /**
    * @constant numCols
    * @memberof 'service_rdv.js'
-   * @description To set number of columns
-   * @summary This state variable is used to set the number of columns for the services.
-   * @summary The number of columns is set to 4 if the number of types of service is 0.
-   * @summary The number of columns is set to 12 divided by the number of types of service if the number of types of service is not 0.
-   * @summary The number of columns is returned.
-   * @type {number|number}
+   * @description To get number of columns
+   * @summary This state variable is used to store the number of columns.
+   * @summary The number of columns is calculated based on the number of types of service.
+   * @summary The number of columns is calculated based on the number of types of service.
    * @returns {number}
-   * @default 4
    */
-  const numCols = typesOfService ? Math.floor(12 / typesOfService.length) : 4;
+  const numCols = typesOfService && typesOfService.length <= 4 ? Math.floor(12 / typesOfService.length) : 3;
 
   return (
       <>
