@@ -170,13 +170,18 @@ export default function Formulaire_services() {
      * @see {@link 'form_services_modify.js'.successMessage}
      */
     const handleSubmit = () => {
+        console.log("handleSubmit");
+        console.log("typeOfService ", typeOfService);
+        console.log("compteur ", compteur)
 
-        // boucle for pour envoyer les services
         for (let i = 0; i < compteur; ++i) {
-            let statusOK = true;
+            console.log("start for");
 
+            let statusOK = true;
+            // boucle for pour envoyer les services
             if (typeOfService === 0) {
-                document.getElementById('select_type_of_service').setAttribute('className', 'form-control is-invalid');
+                console.log("typeOfService === 0");
+                document.getElementById('select_type_of_service').classList.replace(('form-select', 'form-select is-invalid'));
                 statusOK = false;
             } else {
                 document.getElementById('select_type_of_service').setAttribute('className', 'form-control is-valid')
@@ -184,10 +189,12 @@ export default function Formulaire_services() {
 
             const s = service[i + 1];
             if (lstNameServices.includes(s.name.toLowerCase())) {
+                console.log("lstNameServices.includes(s.name.toLowerCase())");
                 document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 document.getElementById('service_titre_error' + (i + 1)).innerHTML = "Ce service existe déjà";
                 statusOK = false;
             } else if (s.name === "") {
+                console.log("s.name === ''");
                 document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 document.getElementById('service_titre' + (i + 1)).innerHTML = 'Le titre ne peut pas être vide.';
                 statusOK = false;
@@ -196,12 +203,14 @@ export default function Formulaire_services() {
                 document.getElementById('service_titre' + (i + 1)).setAttribute('className', 'form-control is-valid');
             }
             if (s.price === 0) {
+                console.log("s.price === 0");
                 document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             } else {
                 document.getElementById('service_prix' + (i + 1)).setAttribute('className', 'form-control is-valid');
             }
             if (s.price_student === 0) {
+                console.log("s.price_student === 0");
                 document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             }
@@ -209,6 +218,7 @@ export default function Formulaire_services() {
                 document.getElementById('service_studentprice' + (i + 1)).setAttribute('className', 'form-control is-valid');
             }
             if (s.duration === 0) {
+                console.log("s.duration === 0");
                 document.getElementById('service_temps' + (i + 1)).setAttribute('className', 'form-control is-invalid');
                 statusOK = false;
             }
@@ -264,6 +274,7 @@ export default function Formulaire_services() {
      * @param {object} s - service to post
      */
     const postService = (s) => {
+        console.log("postService");
         const cookies = parseCookies();
 
         axios.post(urlServices, s, {
@@ -457,50 +468,65 @@ export default function Formulaire_services() {
                 <meta name="description" content="Page pour la création de service de l'application Tina" />
             </Head>
             <Header />
-            <main className="container mt-5">
 
-                <div id={"notification_success"} className="alert alert-success" role="alert" hidden>
-                    <h4 className="alert-heading">Création réussie</h4>
-                    <hr></hr>
-                    <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
-                    </p>
-                </div>
-                <div id={"notification_error"} className="alert alert-danger" role="alert" hidden>
-                    <h4 className="alert-heading">Création Echouée</h4>
-                    <p>Veuillez vérifier que le service n'existe pas déjà. Vous pouvez consulter tous les services :  <Link href={pathnameModal} className="alert-link">ICI</Link></p>
-                </div>
-                <div className="text-center">
-                    <div className="d-flex justify-content-center">
-                        <div className="input-group mb-3 w-50">
-                            <form className="form-floating">
-                                <select className={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
-                                    <option key='0' value='0'>Sélectionnez un type de service...</option>
-                                    {listTypeOfService.map(item => {
-                                        return (<option key={item.id} value={item.id}>{item.name}</option>);
-                                    })}
-                                </select>
-                                <label htmlFor="select_type_of_service">Type de service</label>
-                                <div className="invalid-feedback">
-                                    Le type de service ne peut pas être vide.
+            <div className="container pt-5">
+                <div className="container py-5">
+                    <div className="row justify-content-center text-center align-items-center">
+                        <div className="col-lg-15"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                            <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
+                                <div className="card-body text-center align-items-center">
+                                    <h1 className="card-title text-center">Création de services</h1>
+
+                                    <div id={"notification_success"} className="alert alert-success" role="alert" hidden>
+                                        <h4 className="alert-heading">Création réussie</h4>
+                                        <hr></hr>
+                                        <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
+                                        </p>
+                                    </div>
+                                    <div id={"notification_error"} className="alert alert-danger" role="alert" hidden>
+                                        <h4 className="alert-heading">Création Echouée</h4>
+                                        <p>Veuillez vérifier que le service n'existe pas déjà. Vous pouvez consulter tous les services :  <Link href={pathnameModal} className="alert-link">ICI</Link></p>
+                                    </div>
+
+
+                                    <div className="text-center">
+                                        <div className="d-flex justify-content-center">
+                                            <div className="input-group mb-3 w-50">
+                                                <form className="form-floating">
+                                                    <select className="form-select" aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                                                        <option key='0' value='0'>Sélectionnez un type de service...</option>
+                                                        {listTypeOfService.map(item => {
+                                                            return (<option key={item.id} value={item.id}>{item.name}</option>);
+                                                        })}
+                                                    </select>
+                                                    <label htmlFor="select_type_of_service">Type de service</label>
+                                                    <div className="invalid-feedback">
+                                                        Le type de service ne peut pas être vide.
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            {loadServices()}
+                                        </div>
+
+                                        <div className="d-flex justify-content-center mb-3">
+                                            <button type="button" className="btn btn-dark" onClick={addService}>Ajouter un service</button>
+                                        </div>
+
+                                        <div className="d-flex justify-content-center mb-3">
+                                            <Link href={pathnameModal} className="btn btn-secondary me-2">Annuler</Link>
+                                            <button type="button" className="btn btn-primary disabled" id="btn_save_serv" onClick={handleSubmit}>Enregistrer</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-
-                    <div>
-                        {loadServices()}
-                    </div>
-
-                    <div className="d-flex justify-content-center mb-3">
-                        <button type="button" className="btn btn-dark" onClick={addService}>Ajouter un service</button>
-                    </div>
-
-                    <div className="d-flex justify-content-center mb-3">
-                        <Link href={pathnameModal} className="btn btn-secondary me-2">Annuler</Link>
-                        <button type="button" className="btn btn-primary" id="btn_save_serv" onClick={handleSubmit}>Enregistrer</button>
-                    </div>
                 </div>
-            </main>
+            </div>
+
             <Footer />
         </>
     );

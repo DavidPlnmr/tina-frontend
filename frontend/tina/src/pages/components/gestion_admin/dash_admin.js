@@ -22,7 +22,7 @@ export default function Dash() {
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
-                        <div className="card shadow h-100">mo
+                        <div className="card shadow h-100">
                             <div className="card-body d-flex flex-column justify-content-center align-items-center">
                                 <FaCalendarCheck size={70} className="my-3" style={{color: "green"}}/>
                                 <h5 className="card-title text-center font-weight-bold">Gestion des disponibilités</h5>

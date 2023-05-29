@@ -346,10 +346,12 @@ export default function Formulaire_services_modify() {
                 <meta name="description" content="Page pour la modification de service de l'application Tina" />
             </Head>
             <Header />
+
             <main className="d-flex justify-content-center align-items-center">
                 <div className="container mt-5 bg-light p-4 rounded shadow" style={{ maxWidth: "800px" }}>
                     <h2 className="text-center mb-4">Modification de service</h2>
 
+                    {/* Notifications success*/}
                     <div id="notification_success" className="alert alert-success w-100" role="alert" hidden>
                         <h4 className="alert-heading">Modification réussie</h4>
                         <p>Le service a été modifié</p>
@@ -357,11 +359,13 @@ export default function Formulaire_services_modify() {
                         <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link></p>
                     </div>
 
+                    {/* Notifications error */}
                     <div id="notification_error" className="alert alert-danger w-100" role="alert" hidden>
                         <h4 className="alert-heading">Création Echouée</h4>
                         <p>Il y a un problème avec le service : <a id='service_error'></a></p>
                     </div>
 
+                    
                     <div className="form-floating mb-3 w-100">
                         <select className="form-select" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
                             {listTypeOfService.map(item => (
