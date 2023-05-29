@@ -5,6 +5,7 @@ import { parseCookies } from 'nookies';
 import Header from '../../header';
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import Footer from "@/pages/components/footer";
 
 /**
  * @namespace 'form_services_modify.js'
@@ -34,24 +35,23 @@ export default function Formulaire_services_modify() {
 
 
     /**
-    * @memberof 'form_services_modify.js'
-    * @constant {Array} lstServices Array that contains all the services
-    * @constant {Array} lstNameServices Array that contains all the names of the services
-    * @default {Array} lstNameServices []
-    * @default {Array} lstServices []
-    * @see {@link 'services.js'.lstServices}
-    * @see {@link 'form_services.js'.lstNameServices}
-    */
+     * @memberof 'form_services_modify.js'
+     * @constant {Array} lstServices Array that contains all the services
+     * @constant {Array} lstNameServices Array that contains all the names of the services
+     * @default {Array} lstNameServices []
+     * @default {Array} lstServices []
+     * @see {@link 'services.js'.lstServices}
+     * @see {@link 'form_services.js'.lstNameServices}
+     */
     const [lstNameServices, setLstNameServices] = useState([]);
     const [lstServices, setLstServices] = useState([]);
 
     /**
      * @memberof 'form_services_modify.js'
-     * @param {String} urlServices the url to fetch the services from the API
      * @function fetchServices Function to fetch the services from the API
      * @see {@link 'header.js'.cookies}
      * @see {@link 'gestion_encaissement.js'.fetchServices}
-   */
+     */
     const fetchServices = () => {
         const cookies = parseCookies();
         axios.get(urlServices, {
@@ -112,11 +112,11 @@ export default function Formulaire_services_modify() {
      * @function handleChange change the value of the service
      * @description the service is the serviceRouter with the new values, the duration is formatted
      * @see {@link 'form_services_modify.js'.formatTime}
-     * @param {object} evt event 
+     * @param {object} evt event
      */
     const handleChange = (evt) => {
         let val = evt.target.value;
-        if (evt.target.dataset.id == 'duration') {
+        if (evt.target.dataset.id === 'duration') {
             val = formatTime(val);
         }
         setService({ ...service, [evt.target.dataset.id]: val });
@@ -125,7 +125,7 @@ export default function Formulaire_services_modify() {
     /**
      * @memberof 'form_services_modify.js'
      * @function handleSelect change the value of the service
-     * @param {object} evt event 
+     * @param {object} evt event
      */
     const handleSelect = (evt) => {
         setService({ ...service, [evt.target.dataset.id]: evt.target.value });
@@ -152,7 +152,7 @@ export default function Formulaire_services_modify() {
      * @param {String} t time to format
      */
     const selectServiceDuration = (t) => {
-        let durationToSelect = '';
+        let durationToSelect;
         const [hours, minutes, seconds] = t.split(':').map(Number);
         const totalMinutes = hours * 60 + minutes + seconds / 60;
 
@@ -171,8 +171,8 @@ export default function Formulaire_services_modify() {
 
         const s = service;
         let statusOK = true;
-       
-        if (s.name.toLowerCase() == serviceRouter.name.toLowerCase()) {
+
+        if (s.name.toLowerCase() === serviceRouter.name.toLowerCase()) {
             document.getElementById('service_titre').setAttribute('className', 'form-control is-valid');
         }
         else if (lstNameServices.includes(s.name.toLowerCase())) {
@@ -180,7 +180,7 @@ export default function Formulaire_services_modify() {
             document.getElementById('service_titre_error').innerHTML = "Ce nom de service existe déjà";
             statusOK = false;
         }
-        else if (s.name == "") {
+        else if (s.name === "") {
             document.getElementById('service_titre').setAttribute('className', 'form-control is-invalid');
             document.getElementById('service_titre_error').innerHTML = 'Le titre ne peut pas être vide.';
             statusOK = false;
@@ -194,12 +194,12 @@ export default function Formulaire_services_modify() {
         }
     };
 
-    /** 
+    /**
      * @memberof 'form_services_modify.js'
      * @function successMessage
      * @description the function to show the success message then hide it after 5 seconds and refresh the page
      * @see {@link 'encaissement.js'.successMessage}
-    */
+     */
 
     const successMessage = () => {
         document.getElementById("notification_success").removeAttribute("hidden");
@@ -217,7 +217,7 @@ export default function Formulaire_services_modify() {
      * @param {String} newName name of the service having an error
      * @function errorMessage display the error message
      * @description the error message is displayed, the attribute hidden is removed
-     * 
+     *
      */
     const errorMessage = (newName) => {
         document.getElementById("notification_success").removeAttribute("hidden");
@@ -228,7 +228,7 @@ export default function Formulaire_services_modify() {
 
 
     /**
-     * 
+     *
      * @param {object} s service to modify
      * @memberof 'form_services_modify.js'
      * @function putService modify the service
@@ -327,7 +327,7 @@ export default function Formulaire_services_modify() {
      * @see {@link 'form_services_modify.js'.selectServiceDuration}
      * @see {@link 'form_services_modify.js'.router}
      * @see {@link 'form_services_modify.js'.values}
-     * 
+     *
      */
     useEffect(() => {
         if (!router.isReady) return;
@@ -346,115 +346,89 @@ export default function Formulaire_services_modify() {
                 <meta name="description" content="Page pour la modification de service de l'application Tina" />
             </Head>
             <Header />
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{ height: "auto", backgroundColor: "#b8aaa0" }}>
-                <ul></ul>
-                <div id="notification_success" className="alert alert-success" role="alert" hidden>
-                    <h4 className="alert-heading">Modification réussie</h4>
-                    <div>Le service a été modifié</div>
-                    <hr></hr>
-                    <div className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link>
-                    </div>
-                </div>
-                <div id="notification_error" className="alert alert-danger" role="alert" hidden>
-                    <h4 className="alert-heading">Création Echouée</h4>
-                    <div>Il y a un problème avec le service : <a id='service_error'> </a></div>
-                </div>
-                <div>
-                    <ul></ul>
-                    <div className="input-group mb-3">
-                        <form className="form-floating">
-                            <select className={"form-select"} aria-label="select_type_of_service" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
-                                {listTypeOfService.map(item => {
-                                    if (item.id === typeOfServiceRouter.id) {
-                                        return (<option key={item.id} value={item.id} selected>{item.name}</option>);
-                                    }
-                                    return (<option key={item.id} value={item.id}>{item.name}</option>);
-                                })}
-                            </select>
-                            <label for="select_type_of_service">Type de service</label>
-                            {/* <div class="invalid-feedback">
-                                Le type de service ne peut pas être vide.
-                            </div> */}
-                        </form>
+            <main className="d-flex justify-content-center align-items-center">
+                <div className="container mt-5 bg-light p-4 rounded shadow" style={{ maxWidth: "800px" }}>
+                    <h2 className="text-center mb-4">Modification de service</h2>
+
+                    <div id="notification_success" className="alert alert-success w-100" role="alert" hidden>
+                        <h4 className="alert-heading">Modification réussie</h4>
+                        <p>Le service a été modifié</p>
+                        <hr />
+                        <p className="mb-0">Vous pouvez consulter tous les services en cliquant : <Link href={pathnameModal} className="alert-link">ICI</Link></p>
                     </div>
 
-                    <div>
-                        <div
-                            className="mb-3 d-flex flex-column"
-                            id='form'
-                            style={{
-                                width: "100vh",
-                                height: "auto",
-                                borderRadius: "6px",
-                                padding: "10px",
-                                background: "whiteSmoke",
-                                boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                            }}
-                        >
+                    <div id="notification_error" className="alert alert-danger w-100" role="alert" hidden>
+                        <h4 className="alert-heading">Création Echouée</h4>
+                        <p>Il y a un problème avec le service : <a id='service_error'></a></p>
+                    </div>
 
-                            <div className="input-group mb-3">
-                                <form className="form-floating">
-                                    <input type="text" className={"form-control "} defaultValue={serviceRouter.name} id={"service_titre"} data-id={"name"} placeholder={'Le titre du service '} onKeyUp={handleChange} onChange={handleChange}></input>
-                                    <label htmlFor={"service_titre"}>Titre du service</label>
-                                    <div className="invalid-feedback" id={'service_titre_error'}>
-                                    </div>
-                                </form>
-                                {/* <span class="input-group-text">CHF</span> */}
-                            </div>
+                    <div className="form-floating mb-3 w-100">
+                        <select className="form-select" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                            {listTypeOfService.map(item => (
+                                <option key={item.id} value={item.id} selected={item.id === typeOfServiceRouter.id}>{item.name}</option>
+                            ))}
+                        </select>
+                        <label htmlFor="select_type_of_service">Type de service</label>
+                    </div>
 
-                            <div className="input-group mb-3">
-                                <form className="form-floating">
-                                    <input type="number" className={"form-control "} defaultValue={serviceRouter.price} id={"service_prix"} data-id={"price"} placeholder="0" onKeyUp={handleChange} onChange={handleChange}></input>
-                                    <label htmlFor={"service_prix"}>Prix normal</label>
-                                    <div className="invalid-feedback" id={'service_prix_error'}>
-                                    </div>
-                                </form>
-                                <span className="input-group-text">CHF</span>
-                            </div>
+                    <div className="bg-white p-3 rounded shadow-sm mb-3 w-100">
+                        <div className="form-floating mb-3">
+                            <input type="text" className="form-control" id="service_titre" data-id="name" placeholder="Le titre du service" defaultValue={serviceRouter.name} onKeyUp={handleChange} onChange={handleChange} />
+                            <label htmlFor="service_titre">Titre du service</label>
+                            <div className="invalid-feedback" id="service_titre_error"></div>
+                        </div>
 
-                            <div className="input-group mb-3">
-                                <form className="form-floating">
-                                    <input type="number" className="form-control" id={"service_studentprice"} defaultValue={serviceRouter.price_student} data-id={"price_student"} placeholder="0" onKeyUp={handleChange} onChange={handleChange}></input>
-                                    <label htmlFor={"service_studentprice"}>Prix etudiant</label>
-                                    <div className="invalid-feedback" id={'service_studentprice_error'}>
-                                    </div>
-                                </form>
-                                <span className="input-group-text">CHF</span>
-                            </div>
+                        <div className="input-group mb-3">
+                            <form className="form-floating">
+                                <input type="number" className="form-control" id="service_prix" data-id="price" placeholder="0" defaultValue={serviceRouter.price} onKeyUp={handleChange} onChange={handleChange} />
+                                <label htmlFor="service_prix">Prix normal</label>
+                                <div className="invalid-feedback" id="service_prix_error">
+                                    Le prix ne peut pas être vide.
+                                </div>
+                            </form>
+                            <span className="input-group-text">CHF</span>
+                        </div>
 
-                            <div className="input-group mb-3">
-                                <form className="form-floating">
-                                    <select className={"form-select "} aria-label="Temps de service" id={"service_temps"} data-id={"duration"} onKeyUp={handleChange} onChange={handleChange}>
-                                        <option value="0">0</option>
-                                        <option value="15">15</option>
-                                        <option value="30">30</option>
-                                        <option value="45">45</option>
-                                        <option value="60">60</option>
-                                        <option value="75">75</option>
-                                        <option value="90">90</option>
-                                        <option value="105">105</option>
-                                        <option value="120">120</option>
-                                    </select>
-                                    <label for={"service_temps"}>Duree</label>
-                                    <div className="invalid-feedback">
-                                        La durée doit être supérieure à 0.
-                                    </div>
-                                </form>
-                                <span className="input-group-text">Minutes</span>
-                            </div>
+                        <div className="input-group mb-3">
+                            <form className="form-floating">
+                                <input type="number" className="form-control" id="service_studentprice" data-id="price_student" placeholder="0" defaultValue={serviceRouter.price_student} onKeyUp={handleChange} onChange={handleChange} />
+                                <label htmlFor="service_studentprice">Prix etudiant</label>
+                                <div className="invalid-feedback" id="service_studentprice_error">
+                                    Le prix ne peut pas être vide.
+                                </div>
+                            </form>
+                            <span className="input-group-text">CHF</span>
+                        </div>
 
-
+                        <div className="input-group mb-3">
+                            <form className="form-floating">
+                                <select className="form-select" id="service_temps" data-id="duration" onKeyUp={handleChange} onChange={handleChange}>
+                                    <option value="0">0</option>
+                                    <option value="15">15</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                    <option value="60">60</option>
+                                    <option value="75">75</option>
+                                    <option value="90">90</option>
+                                    <option value="105">105</option>
+                                    <option value="120">120</option>
+                                </select>
+                                <label htmlFor="service_temps">Duree</label>
+                                <div className="invalid-feedback">La durée doit être supérieure à 0.</div>
+                            </form>
+                            <span className="input-group-text">MIN</span>
                         </div>
                     </div>
 
-                    <div className="row mb-3">
-                        <div className="col-auto">
-                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Sauvegarder les modifications</button>
-                        </div>
+                    <div className="d-grid gap-2 col-6 mx-auto mb-3">
+                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Sauvegarder les modifications</button>
                     </div>
-
                 </div>
-            </div>
+            </main>
+            <Footer />
         </>
+
+
+
     );
 }
