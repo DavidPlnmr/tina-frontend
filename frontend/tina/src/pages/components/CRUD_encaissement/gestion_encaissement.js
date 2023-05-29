@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Card } from 'react-bootstrap';
 /**
  * @namespace 'gestion_encaissement.js'
  * @description this page is used to manage the encaissements
@@ -158,6 +158,22 @@ export default function Encaissement() {
      */
     const [searchResults, setSearchResults] = useState([]);
 
+    // /**
+    //  * @memberof 'gestion_encaissement.js'
+    //  * @constant {object} prevSearchTerm - state to manage the previous search term of the encaissements filter
+    //  * @description used to manage the search term of the encaissements filter
+    //  * @default null
+    //  */
+    // const prevSearchTerm = useRef();
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} preSearchResults - state to manage the previous list of encaissements searched
+     * @description used to manage the list of encaissements searched
+     * @default []
+     */
+    const preSearchResults = useRef([]);
+
     /**
      * @memberof 'gestion_encaissement.js'
      * @constant {String} sortBy - state to manage the sort term of the encaissements filter
@@ -201,7 +217,7 @@ export default function Encaissement() {
      * @function handleSearch - function to manage the search term
      * @description set the state searchTerm to the value of the search input
      */
-    const handleSearch = event => {
+    const handleSearch = (event) => {
         setSearchTerm(event.target.value);
     };
 
@@ -221,7 +237,6 @@ export default function Encaissement() {
      * @description set the state modeModify to 'delete' if it's not the delete mode, else set the state modeModify to ''
      */
     const handleClickDelete = () => {
-        console.log("Mode Suppression");
         if (modeModify != 'delete') {
             setModeModify(modeModify => 'delete');
         } else {
@@ -251,7 +266,7 @@ export default function Encaissement() {
      * @description delete the encaissement through the API, then delete the encaissement in the list of encaissements and show a notification
      */
     const handleConfirmDelete = () => {
-        console.log("supp")
+
         handleClose();
         encaissements.splice(encaissements.indexOf(s.id), 1);
         const cookies = parseCookies();
@@ -282,7 +297,7 @@ export default function Encaissement() {
         //après 3 secondes, on cache la notification
         setTimeout(function () {
             document.getElementById("notification_delete").setAttribute("hidden", "hidden");
-        }, 3000);
+        }, 8000);
         setRefresh(!refresh);
     };
 
@@ -436,7 +451,11 @@ export default function Encaissement() {
      */
     const formatEncaissements = (encaissements) => {
         let newEncaissements = [];
-        encaissements.map((e) => {
+        let lstEncDate = encaissements.sort((a, b) => {
+            return a.date.localeCompare(b.date)
+        });
+        lstEncDate = lstEncDate.reverse();
+        lstEncDate.map((e) => {
             let newEncaissement = {
                 id: e.id,
                 date: formatDate(e.date),
@@ -457,7 +476,8 @@ export default function Encaissement() {
      * @param {object} evt 
      */
     const handleClickAmount = (evt) => {
-        toggleButtons(evt);
+        toggleButtons(evt, false);
+        setSearchTerm(searchTerm => "");
         setAmountFilter(evt.target.id);
     };
 
@@ -465,16 +485,18 @@ export default function Encaissement() {
      * @memberof 'gestion_encaissement.js'
      * @function toggleButtons
      * @description function to toggle the active class on the amount's filters
-     * @param {object} evt 
+     * @param {object} evt
+     * @param {boolean} reset - boolean to know if we have to reset the active class
      */
-    const toggleButtons = (evt) => {
+    const toggleButtons = (evt, reset) => {
+        let filter_to_activate = !reset ? evt.target.id : "amount_total";
         document.getElementById('amount_total').classList.remove('active');
         document.getElementById('amount_annee').classList.remove('active');
         document.getElementById('amount_mois').classList.remove('active');
         document.getElementById('amount_semaine').classList.remove('active');
         document.getElementById('amount_jour').classList.remove('active');
 
-        document.getElementById(evt.target.id).classList.toggle("active");
+        document.getElementById(filter_to_activate).classList.toggle("active");
     };
 
     /**
@@ -533,6 +555,7 @@ export default function Encaissement() {
         fetchEncaissements();
     }, [refresh]);
 
+
     /**
      * @memberof 'gestion_encaissement.js'
      * @function useEffect
@@ -546,8 +569,9 @@ export default function Encaissement() {
      * @param {object} encaissementsAffichage - list of the encaissements formatted
      */
     useEffect(() => {
-        let lstEncaissement = searchResults.length > 0 ? searchResults : encaissementsAffichage;
 
+        let lstEncaissement = preSearchResults.current;
+        
         //Filter by searchTerm
         let results = lstEncaissement.filter(e =>
             e.employee.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -555,14 +579,10 @@ export default function Encaissement() {
             e.employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             e.service.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        console.log("filter", sortBy);
-        console.log("filter", results);
-
+        
         //Order by sort
         results.sort((a, b) => {
-            if (sortBy === 'date') {
-                return a.date.localeCompare(b.date);
-            } else if (sortBy === 'time') {
+            if (sortBy === 'time') {
                 return a.time.localeCompare(b.time);
             } else if (sortBy === 'service') {
                 return a.service.localeCompare(b.service);
@@ -572,10 +592,12 @@ export default function Encaissement() {
                 return a.amount - b.amount;
             } else if (sortBy === 'id') {
                 return a.id - b.id;
+            } else {
+                return a.date.localeCompare(b.date);
             }
         });
-        setSearchResults(invertFilter ? results.reverse() :results);
-        
+        setSearchResults(invertFilter ? results.reverse() : results);
+
     }, [searchTerm, sortBy]);
 
     /**
@@ -596,13 +618,10 @@ export default function Encaissement() {
      * @param {string} amountFilter - filter to apply on the encaissements
      */
     useEffect(() => {
-        console.log("amountFilter", amountFilter);
-
         let today = new Date();
         let todayDate = { day: today.getDate(), month: today.getMonth() + 1, year: today.getFullYear() };
         let results = [];
-        let totalAmount = 0;
-        let totalLenght = 0;
+
 
         if (amountFilter === 'amount_total') {
             results = encaissementsAffichage;
@@ -639,15 +658,33 @@ export default function Encaissement() {
             });
         }
 
-        results.map(e =>
-            totalAmount += parseFloat(e.amount));
-        totalLenght = results.length;
-
         setSearchResults(results);
-        setTotalAmount(totalAmount);
-        setTotalLenght(totalLenght);
+        preSearchResults.current = results;
+
+        //reset the search bar when we change the amount filter
+        //couldn't find a better way to do it
+        document.getElementById('Rechercher').value = "";
+        document.getElementById('filter').selectedIndex = -1;
+        setSortBy("");
+        setInvertFilter(false);
 
     }, [amountFilter, encaissementsAffichage]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect
+     * @description set the totalAmount and totalLenght when the searchResults is updated
+     * @param {object} searchResults - list of the encaissements searched
+     */
+    useEffect(() => {
+        let totalAmount = 0;
+        let totalLenght = 0;
+        searchResults.map(e =>
+            totalAmount += parseFloat(e.amount));
+        totalLenght = searchResults.length;
+        setTotalAmount(totalAmount);
+        setTotalLenght(totalLenght);
+    }, [searchResults]);
 
 
     //UseEffect pour la gestion des boutons
@@ -677,151 +714,141 @@ export default function Encaissement() {
 
     return (
         <>
-            <div className="d-flex flex-column justify-content-start align-items-center" style={{ backgroundColor: "#F6F8F7" }}>
-                {/* Modal pour la suppression */}
-                <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
-                    <Modal.Header closeButton>
-                        <Modal.Title>SUPPRESSION</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Voulez-vous vraiment supprimer cet encaissement ?
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="outline-secondary" onClick={handleClose}>
-                            Annuler
-                        </Button>
-                        <Button variant="danger" onClick={handleConfirmDelete}>
-                            Supprimer
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+            {/* Modal pour la suppression */}
+            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+                <Modal.Header closeButton>
+                    <Modal.Title>SUPPRESSION</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Voulez-vous vraiment supprimer cet encaissement ?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={handleClose}>
+                        Annuler
+                    </Button>
+                    <Button variant="danger" onClick={handleConfirmDelete}>
+                        Supprimer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <ul></ul>
+
+            {/* Notification de suppression */}
+            <div id="notification_delete" className="alert alert-warning" role="alert" hidden>
+                <h4 className="alert-heading">Encaissement supprimé</h4>
+                <p>L'encaissement <a id='service_error'></a> a été supprimé</p>
+
+            </div>
 
 
-                {/* Nav Bar pour les encaissements */}
+            <div className="container py-5">
+                <div className="row justify-content-center text-center align-items-center">
+                    <div className="col-lg-10"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                        <div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
+                            <div className="card-body text-center align-items-center">
+                                <h1 className="card-title text-center">Gestion des encaissements</h1>
 
-                <ul></ul>
+                                {/* Barre de recherche */}
+                                <div className="container py-5 justify-content-center mt-1 mb-1">
+                                    <div className="col mx-1 mt-1 mb-1 d-flex align-items-center justify-content-center">
+                                        <button className={'btn btn-outline-dark ' + invertFilterActive} type="button" id="btnFilter" onClick={handleClickInvertFilter}>↑↓</button>
+                                        <select className="form-select" value={sortBy} aria-label="Default select example" id='filter' data-id="filter" style={{ maxWidth: "20vh" }} onChange={handleSort}>
+                                            <option key='0' value='0'>Filtrer...</option>
+                                            <option key='1' value='id'>ID</option>
+                                            <option key='2' value='employee'>Employé</option>
+                                            <option key='3' value='service'>Service</option>
+                                            <option key='4' value='date'>Date</option>
+                                            <option key='5' value='time'>Heure</option>
+                                            <option key='6' value='amount'>Montant</option>
+                                        </select>
+                                        <input className="form-control me-2" type="search" placeholder="Employé/Service" id="Rechercher" style={{ maxWidth: "20vh", minWidth: "15vh" }} onChange={handleSearch}></input>
+                                    </div>
+                                </div>
+                            </div>
 
-                {/* Notification de suppression */}
-                <div id="notification_delete" className="alert alert-warning" role="alert" hidden>
-                    <h4 className="alert-heading">Encaissement supprimé</h4>
-                    <p>L'encaissement <a id='service_error'></a> a été supprimé</p>
+                            {/* Boutons Retour aux services et Ajouter un service */}
+                            <div className="row" >
 
-                </div>
+                                <div className="btn-group mx-auto my-auto" >
+                                    <button type="button" className={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
+                                    <button type="button" className="btn btn-primary">
+                                        <Link href={pathnameAdd} className="nav-link">
+                                            Ajouter
+                                        </Link>
+                                    </button>
+                                </div>
+                            </div>
 
-                <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ backgroundColor: "#F6F8F7" }}>
-                    <div className="container-fluid text-center rounded d-flex justify-content-between align-items-center" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", height: "8vh", width: "100vh", backgroundColor: "#F6F8F7" }}>
-                        <div className="collapse navbar-collapse" id="text">
-                            <a className="navbar-brand">Gestion des encaissements</a>
-                            <ul className="navbar-nav mx-auto my-auto mb-5 ms-lg-3"></ul>
-                            <i className="navbar-text">
-                                {modificationMode}
-                            </i>
-                        </div>
-                        <div className="collapse navbar-collapse" id="buttons">
-                            <ul className="navbar-nav mx-auto my-auto"></ul>
-                            <button type="button" className={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
-                            <ul className="navbar-nav ms-2"></ul>
-                            {/* <button type="button" className={buttonModify} onClick={handleClickModify}>Modifier</button>
-                            <ul className="navbar-nav ms-1"></ul> */}
-                            <button type="button" className="btn btn-primary">
-                                <Link href={pathnameAdd} className="nav-link">
-                                    Ajouter
-                                </Link>
-                            </button>
-                            <ul className="navbar-nav ms-1"></ul>
-                        </div>
-                    </div>
-                </nav>
+                            {/* Boutons de tri */}
+                            <div className="row justify-content-center mt-3 mb-4" >
+                                <div className="btn-group" role="group" aria-label="amount_filters">
+                                    <button id='amount_total' onClick={handleClickAmount} type="button" className={"btn btn-secondary active"} >Total</button>
+                                    <button id='amount_annee' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Année</button>
+                                    <button id='amount_mois' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Mois</button>
+                                    <button id='amount_semaine' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Semaine</button>
+                                    <button id='amount_jour' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Jour</button>
+                                </div>
+                            </div>
 
-                {/* Barre de recherche */}
-                <nav className="navbar navbar-expand-lg bg-body-tertiary  justify-content-center align-items-center mx-2 my-4 rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", backgroundColor: "#F6F8F7" }}>
-                    <form className="container" role="search">
-                        <div className="row mx-1">
-                            <button className={'btn btn-light ' + invertFilterActive} type="button" id="btnFilter" onClick={handleClickInvertFilter}>↑↓</button>
-                        </div>
-                        <div className="row mx-1">
-                            <select className="form-select" value={sortBy} aria-label="Default select example" data-id="filter" onChange={handleSort}>
-                                <option key='0' value='0'>Filtrer...</option>
-                                <option key='1' value='id'>ID</option>
-                                <option key='2' value='employee'>Employé</option>
-                                <option key='3' value='service'>Service</option>
-                                <option key='4' value='date'>Date</option>
-                                <option key='5' value='time'>Heure</option>
-                                <option key='6' value='amount'>Montant</option>
-                            </select>
-                        </div>
-                        <div className="row mx-1" >
-                            <input className="form-control me-2" type="search" placeholder="Employé/Service" id="Rechercher" onChange={handleSearch}></input>
-                        </div>
-                        {/* Boutons de tri */}
-                        <div className='row mx-1' >
-                            <div className="btn-group" role="group" aria-label="amount_filters">
-                                <button id='amount_total' onClick={handleClickAmount} type="button" className={"btn btn-secondary active"} >Total</button>
-                                <button id='amount_annee' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Année</button>
-                                <button id='amount_mois' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Mois</button>
-                                <button id='amount_semaine' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Semaine</button>
-                                <button id='amount_jour' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Jour</button>
+                            {/* Total des encaissements */}
+                            <table className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)" }}>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre d'encaissements</th>
+                                        <th scope="col">Montant total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{totalLenght}</td>
+                                        <td>{totalAmount}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            {/* Liste des encaissements */}
+                            <div className="table-responsive">
+                                <table className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)" }}>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Employé</th>
+                                            <th scope="col">Service</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Heure</th>
+                                            <th scope="col">Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {searchResults.map((encaissement) => (
+                                            <tr key={encaissement.id}>
+                                                <th scope="row">{encaissement.id}</th>
+                                                <td >
+                                                    <div>
+                                                        <b>{encaissement.employee.username}</b> {encaissement.employee.first_name} {encaissement.employee.last_name}
+                                                    </div>
+                                                </td>
+                                                <td>{encaissement.service}</td>
+                                                <td>{encaissement.date}</td>
+                                                <td>{encaissement.time}</td>
+                                                <td>{encaissement.amount}</td>
+                                                <td>
+                                                    <Button
+                                                        id={encaissement.id}
+                                                        className={btnChoose}
+                                                        onClick={handleChoose}
+                                                        disabled={modeModify === '' ? true : false}
+                                                    >Choisir</Button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </form>
-                </nav>
-
-                {/* Total des encaissements */}
-                <table className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)", width: "100vh", backgroundColor: "#FFFFFF" }}>
-                    <thead>
-                        <tr>
-                            <th scope="col">Nombre d'encaissements</th>
-                            <th scope="col">Montant total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{totalLenght}</td>
-                            <td>{totalAmount}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                {/* Liste des encaissements */}
-                <div className="container">
-                    <table className="table table-striped mx-auto" style={{ backgroundColor: "#FFFFFF" }}>
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Employé</th>
-                                <th scope="col">Service</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Heure</th>
-                                <th scope="col">Montant</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {searchResults.map((encaissement) => (
-                                <tr key={encaissement.id}>
-                                    <th scope="row">{encaissement.id}</th>
-                                    <td >
-                                        <div>
-                                            <b>{encaissement.employee.username}</b> {encaissement.employee.first_name} {encaissement.employee.last_name}
-                                        </div>
-                                    </td>
-                                    <td>{encaissement.service}</td>
-                                    <td>{encaissement.date}</td>
-                                    <td>{encaissement.time}</td>
-                                    <td>{encaissement.amount}</td>
-                                    <td>
-                                        <Button
-                                            id={encaissement.id}
-                                            className={btnChoose}
-                                            onClick={handleChoose}
-                                            disabled={modeModify === '' ? true : false}
-                                        >Choisir</Button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    </div>
                 </div>
-                <ul className="d-flex my-4"></ul>
             </div>
         </>
     );

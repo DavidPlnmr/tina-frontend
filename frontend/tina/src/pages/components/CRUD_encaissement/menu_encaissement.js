@@ -16,7 +16,9 @@ export default function Menu_encaissement() {
         <meta name="description" content="Page de gestion des encaissements de l'application Tina" />
       </Head>
       <Header />
-      <Encaissement />
+      <main>
+        <Encaissement />
+      </main>
       <Footer />
     </>
   );

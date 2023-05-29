@@ -239,8 +239,6 @@ export default function Formulaire_typesofservice() {
                         </div>
                     </div>
                 </div>
-
-
             </main>
             <Footer />
         </>
