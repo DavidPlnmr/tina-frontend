@@ -38,13 +38,6 @@ export default function DisplayAndDeleteEmployee() {
     const cookies = parseCookies();
 
     /**
-     * @constant param
-     * @memberof 'choix_client.js'
-     * @see {@link 'calendrier.js'.param}
-     */ 
-    const param = useRouter().query;
-
-    /**
      * @constant router
      * @memberof 'choix_client.js'
      * @see {@link 'header.js'.router}
@@ -105,7 +98,7 @@ export default function DisplayAndDeleteEmployee() {
      * @function handleClickClient
      * @memberof 'choix_client.js'
      * @description Redirects to the 'recap_rdv' page.
-     * @param {Object} client The client object.
+     * @param employee The employee to be redirected to the 'recap_rdv' page.
      */
     const handleClickClient = (employee) => {
         router.push({
@@ -118,12 +111,16 @@ export default function DisplayAndDeleteEmployee() {
 
   return (
     <>
+        <Head>
+            <meta charSet="utf-8" />
+            <title>Detail employé</title>
+        </Head>
         <Header />
         <main>
         <div className='container my-5'>
             <div className='row'>
                 <div className='col-md-8'>
-                <input type="text" placeholder="Rechercher un client" className="form-control-lg mb-2" onChange={handleSearch}/>
+                <input type="text" placeholder="Rechercher un employé" className="form-control-lg mb-2" onChange={handleSearch}/>
                 </div>
             </div>
             <Table striped bordered hover>
