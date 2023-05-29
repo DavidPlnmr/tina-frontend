@@ -12,6 +12,8 @@ import Footer from "../../footer";
  */
 export default function DetailEmployee() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @constant coiffeurs
    * @memberof 'recap_rdv.js'
@@ -50,7 +52,7 @@ export default function DetailEmployee() {
   const handleDelete = () => {
     console.log(coiffeurs.id);
     if (confirm("Voulez-vous vraiment supprimer cet employé ?")) {
-    axios.delete("http://127.0.0.1:8000/api/employees/" + coiffeurs.id + "/", {
+    axios.delete(baseUrl + "employees/" + coiffeurs.id + "/", {
       headers: {
         Authorization: "Token " + cookies.csrftoken,
       },

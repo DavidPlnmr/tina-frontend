@@ -14,6 +14,8 @@ import Table from "react-bootstrap/Table";
  */
 export default function Formulaire_typesofservice() {
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
     // Constantes pour les URL de l'API
     /**
      * @memberof 'form_typesofservice.js'
@@ -21,7 +23,7 @@ export default function Formulaire_typesofservice() {
      * @constant {String} pathnameModal Pathname for the redirection of page after the creation of a new type of service
      * @constant {String} pathnameNewService Pathname for the redirection of page when the user wants to create a new service
      */
-    const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+    const urlTypesOfService = baseUrl + 'typesofservice/';
     // Pathname pour la redirection de page
     /**
      * @memberof 'services.js'

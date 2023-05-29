@@ -13,6 +13,8 @@ import Cookies from 'js-cookie';
  */
 
 export default function ProfilUtilisateurs() {
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   /**
    * @constant customer
    * @default
@@ -73,7 +75,7 @@ export default function ProfilUtilisateurs() {
   const fetchCusto = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
+        baseUrl + "customers/" + cookies.id + "/",
         {
           headers: {
             Authorization: "Token " + cookies.csrftoken,
@@ -96,7 +98,7 @@ export default function ProfilUtilisateurs() {
   const fetchEmp = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/employees/" + cookies.id + "/",
+        baseUrl + "employees/" + cookies.id + "/",
         {
           headers: {
             Authorization: "Token " + cookies.csrftoken,
@@ -145,7 +147,7 @@ export default function ProfilUtilisateurs() {
       if (customer.password === customer.confirm_password) {
         axios
           .patch(
-            "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
+            baseUrl + "customers/" + cookies.id + "/",
             customer,
             {
               headers: {
@@ -181,7 +183,7 @@ export default function ProfilUtilisateurs() {
     } else {
       axios
         .patch(
-          "http://127.0.0.1:8000/api/customers/" + cookies.id + "/",
+          baseUrl + "customers/" + cookies.id + "/",
           customer,
           {
             headers: {
@@ -229,7 +231,7 @@ export default function ProfilUtilisateurs() {
       if (customer.password === customer.confirm_password) {
         axios
           .patch(
-            "http://127.0.0.1:8000/api/employees/" + cookies.id + "/",
+            baseUrl + "employees/" + cookies.id + "/",
             customer,
             {
               headers: {
@@ -265,7 +267,7 @@ export default function ProfilUtilisateurs() {
     } else {
       axios
         .patch(
-          "http://127.0.0.1:8000/api/employees/" + cookies.id + "/",
+          baseUrl + "employees/" + cookies.id + "/",
           customer,
           {
             headers: {
@@ -326,7 +328,7 @@ export default function ProfilUtilisateurs() {
     let response;
     if (confirm("Voulez-vous vraiment supprimer votre compte ?")) {
         response = axios
-          .delete("http://127.0.0.1:8000/api/customers/" + cookies.id + "/", {
+          .delete(baseUrl + "customers/" + cookies.id + "/", {
             headers: {
               Authorization: "Token " + cookies.csrftoken,
             },

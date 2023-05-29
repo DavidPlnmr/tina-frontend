@@ -13,6 +13,8 @@ import { set } from 'date-fns';
  */
 export default function Services() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   // Constantes pour les URL de l'API
   /**
    * @memberof 'services.js'
@@ -21,8 +23,8 @@ export default function Services() {
    * @constant {String} pathnameChooseService Pathname for the redirection of page when the user wants to modify a service
    * @constant {String} pathnameAdd Pathname for the redirection of page when the user wants to add a new service
    */
-  const urlServices = 'http://localhost:8000/api/services/';
-  const urlTypesOfService = 'http://localhost:8000/api/typesofservice/';
+  const urlServices = baseUrl + 'services/';
+  const urlTypesOfService = baseUrl + 'typesofservice/';
   // Pathname pour la redirection de page
   const pathnameChooseService = '/components/gestion_admin/gestion_services/form_services_modify';
   const pathnameAdd = "/components/gestion_admin/gestion_services/form_typesofservice";

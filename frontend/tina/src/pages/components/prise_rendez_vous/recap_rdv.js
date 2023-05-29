@@ -13,6 +13,8 @@ import { de } from "date-fns/locale";
  */
 export default function RecapRdv() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @constant services
    * @memberof 'recap_rdv.js'
@@ -228,7 +230,7 @@ export default function RecapRdv() {
     console.log(appointment.date);
     console.log(appointment);
     axios
-      .post("http://127.0.0.1:8000/api/appointments/create", appointment, {
+      .post(baseUrl + "appointments/create", appointment, {
         headers: {
           Authorization: `Token ` + cookies.csrftoken,
         },

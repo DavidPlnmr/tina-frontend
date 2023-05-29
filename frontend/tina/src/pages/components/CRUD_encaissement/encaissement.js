@@ -14,13 +14,15 @@ import Head from "next/head";
  */
 function Encaissement_recap() {
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
     /**
      * @memberof 'encaissement.js'
      * @constant {string} urlCreate
      * @constant {string} pathnameModal - the pathname to the link redirecting the user after the modal is shown
      */
     //Constantes pour les URL de l'API
-    const urlCreate = 'http://localhost:8000/api/collections/create';
+    const urlCreate = baseUrl + 'collections/create';
     //Pathname pour la redirection de page
     const pathnameModal = './menu_encaissement';
 

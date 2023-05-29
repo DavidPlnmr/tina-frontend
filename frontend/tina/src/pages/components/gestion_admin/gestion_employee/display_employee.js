@@ -14,6 +14,8 @@ import Footer from '../../footer';
  */
 export default function DisplayAndDeleteEmployee() {
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
     /**
      * @constant clients
      * @memberof 'choix_client.js'
@@ -60,7 +62,7 @@ export default function DisplayAndDeleteEmployee() {
      * @returns {Array} A list of clients.
      */     
     const fetchCustomers = () => {
-        axios.get('http://127.0.0.1:8000/api/employees/', {
+        axios.get(baseUrl + 'employees/', {
         headers: {
                 Authorization: `Token ` + cookies.csrftoken,
             },

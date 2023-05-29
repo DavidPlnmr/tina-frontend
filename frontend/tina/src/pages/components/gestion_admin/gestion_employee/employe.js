@@ -11,6 +11,8 @@ import Link from 'next/link';
 
 export default function Employe() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const [employe, setEmploye] = useState([
     {
       first_name: "",
@@ -37,7 +39,7 @@ export default function Employe() {
       return;
     }
 
-    axios.post('http://127.0.0.1:8000/api/employees/', employe, {
+    axios.post(baseUrl + 'employees/', employe, {
       headers: {
         Authorization: `Token ` + cookies.csrftoken,
       },

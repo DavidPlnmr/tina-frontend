@@ -15,6 +15,9 @@ import Footer from "../footer";
  */
 
 export default function CalendrierClient() {
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @constant calendar
    * @memberof 'calendrier_utilisateur.js'
@@ -109,7 +112,7 @@ export default function CalendrierClient() {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/my-appointments/",
+          baseUrl + "my-appointments/",
           {
             headers: {
               Authorization: "Token " + cookies.csrftoken,
@@ -128,7 +131,7 @@ export default function CalendrierClient() {
               .map(async (appointment) => {
                 // Fetch service info for each appointment
                 const response2 = await axios.get(
-                  "http://127.0.0.1:8000/api/services/" +
+                  baseUrl + "services/" +
                     appointment.service +
                     "/",
                   {
@@ -140,7 +143,7 @@ export default function CalendrierClient() {
                 const service = response2.data;
 
                 const response3 = await axios.get(
-                  "http://127.0.0.1:8000/api/employees/" +
+                  baseUrl + "employees/" +
                     appointment.employee +
                     "/",
                   {
@@ -153,7 +156,7 @@ export default function CalendrierClient() {
                 let response4 = null;
                 if (appointment.customer != null) {
                   response4 = await axios.get(
-                    "http://127.0.0.1:8000/api/customers/" +
+                    baseUrl + "customers/" +
                       appointment.customer +
                       "/",
                     {
@@ -173,7 +176,14 @@ export default function CalendrierClient() {
                 const start = new Date(
                   `${appointment.date}T${appointment.time}`
                 );
-                const end = addMinutes(start, service.duration.slice(3, 5));
+                console.log(service.duration.slice(0, 2) * 60 + service.duration.slice(3, 5));
+                
+                let end = addMinutes(start, service.duration.slice(3, 5));
+
+                if (service.duration.slice(0, 2) !== "00") {
+                  end = addMinutes(start, Number(service.duration.slice(0, 2)) * 60 + Number(service.duration.slice(3, 5)));
+                }
+
                 if (cookies.role === "customer") {
                   myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
                 } else if (cookies.role === "employee" || cookies.role === "admin") {

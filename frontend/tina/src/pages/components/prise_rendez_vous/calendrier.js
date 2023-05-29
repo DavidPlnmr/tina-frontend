@@ -16,6 +16,8 @@ import Footer from "../footer";
  */
 export default function Calendrier() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @constant calendar
    * @memberof 'calendrier.js'
@@ -113,7 +115,7 @@ export default function Calendrier() {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/appointment_available/?service=" +
+          baseUrl + "appointment_available/?service=" +
             JSON.parse(param.service).id +
             "&employee=" +
             JSON.parse(param.employee).id,

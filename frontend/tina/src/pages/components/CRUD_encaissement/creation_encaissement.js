@@ -16,6 +16,8 @@ import Head from "next/head";
  */
 export default function Creation_encaissement() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @memberof 'creation_encaissement.js'
    * @constant {string} urlServices The URL to fetch the Services from the API
@@ -25,7 +27,6 @@ export default function Creation_encaissement() {
    * @constant {baseUrl} baseUrl The base URL of the API
    */
   // Constantes pour les URL de l'API
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const urlServices = baseUrl + 'services/';
   const urlTypesOfService = baseUrl + 'typesofservice/';
   // Pathname pour la redirection de page

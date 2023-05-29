@@ -15,6 +15,8 @@ import Head from "next/head";
  */
 export default function Inscription() {
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @constant router
    * @memberof 'inscription.js'
@@ -122,7 +124,7 @@ export default function Inscription() {
       return;
     }
 
-    axios.post('http://127.0.0.1:8000/api/customers/create', customers)
+    axios.post(baseUrl + 'customers/create', customers)
         .then((response) => {
           console.log(response.data);
           setCookie(null, "id", response.data.id, { maxAge: 86400, path: "/" });
