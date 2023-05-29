@@ -196,10 +196,15 @@ export default function ServiceRDV() {
    * @returns {void}
    */
   useEffect(() => {
+    // If not logged in, redirect to login page
+    if (!cookies.csrftoken) {
+      router.push("/components/identification/connexion");
+    }
     if (dataFetchedRef.current) return; // Fetch data only once
     dataFetchedRef.current = true;
     fetchTypeOfService();
     fetchServices();
+
     Promise.all([fetchTypeOfService(), fetchServices()]).then(() => {
       // Fetching types of service and services
       console.log("Data fetched");
