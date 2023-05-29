@@ -88,7 +88,7 @@ export default function Accueil() {
             {/* Carousel avec 3 images*/}
             <Carousel fade>
                 <Carousel.Item>
-                    <img src="/images/home_images/carousel/carousel_1.jpg" className="d-flex w-100" alt="Un style unique" />
+                    <img src="/images/home_images/carousel/carousel_1.jpg" className="d-flex w-100" alt="https://unsplash.com/fr/@seteph" />
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Un style unique</h3>
                         <p className={styles.carouselText}>Des coiffures sur mesure pour refléter votre personnalité</p>
@@ -96,7 +96,7 @@ export default function Accueil() {
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src="/images/home_images/carousel/carousel_2.jpg" className="d-block w-100" alt="Le confort avant tout" />
+                    <img src="/images/home_images/carousel/carousel_2.jpg" className="d-block w-100" alt="https://unsplash.com/fr/@seteph" />
                     <Carousel.Caption className={styles.carouselCaption}>
                         <h3 className={styles.carouselTitle}>Le confort avant tout</h3>
                         <p className={styles.carouselText}>Un espace détente pour une expérience agréable</p>
@@ -122,7 +122,7 @@ export default function Accueil() {
                     <Row>
                         <div className="col-md-4">
                             <div className={`card ${styles.servicecard}`}>
-                                <img src="https://i.pinimg.com/736x/ae/67/7a/ae677a18891ad058e1526f2b087028b6.jpg" className="card-img-top" alt="Coupe de cheveux personnalisée" />
+                                <img src="https://i.pinimg.com/736x/ae/67/7a/ae677a18891ad058e1526f2b087028b6.jpg" className="card-img-top" alt="Image by senivpetro" />
                                 <div className="card-body">
                                     <h5 className="card-title">Coupe de cheveux personnalisée</h5>
                                     <p>Notre équipe de coiffeurs professionnels est spécialisée dans les coupes de cheveux pour hommes. Que vous souhaitiez un look classique ou un style plus moderne, nous sommes là pour vous aider à trouver la coupe parfaite qui reflète votre personnalité et votre style.</p>
@@ -131,7 +131,7 @@ export default function Accueil() {
                         </div>
                         <div className="col-md-4">
                             <div className={`card ${styles.servicecard}`}>
-                                <img src="https://img.freepik.com/free-photo/handsome-man-cutting-beard-barber-shop-salon_1303-20931.jpg" className="card-img-top" alt="Taille de la barbe et rasage" />
+                                <img src="https://img.freepik.com/free-photo/handsome-man-cutting-beard-barber-shop-salon_1303-20931.jpg" className="card-img-top" alt="Image by senivpetro" />
                                 <div className="card-body">
                                     <h5 className="card-title">Taille de la barbe et rasage</h5>
                                     <p>Offrez-vous une expérience de rasage et de taille de la barbe de qualité supérieure. Nos barbiers experts sont formés pour sculpter et entretenir votre barbe avec précision, en utilisant des outils et des techniques traditionnelles pour un résultat impeccable.</p>
@@ -140,7 +140,7 @@ export default function Accueil() {
                         </div>
                         <div className="col-md-4">
                             <div className={`card ${styles.servicecard}`}>
-                                <img src="https://img.freepik.com/free-photo/crop-hairdresser-washing-hair-client_23-2147778780.jpg?w=1060&t=st=1683727994~exp=1683728594~hmac=3374aec0a5e05c5d2ecdc7fe13a9f1f3a1460f58533de981c23e6ad5442d5e56" className="card-img-top" alt="Coloration" />
+                                <img src="https://img.freepik.com/free-photo/crop-hairdresser-washing-hair-client_23-2147778780.jpg?w=1060&t=st=1683727994~exp=1683728594~hmac=3374aec0a5e05c5d2ecdc7fe13a9f1f3a1460f58533de981c23e6ad5442d5e56" className="card-img-top" alt="Image by senivpetro" />
                                 <div className="card-body">
                                     <h5 className="card-title">Coloration</h5>
                                     <p>Notre barber shop propose des services de coloration personnalisés pour les hommes, allant de la couverture des cheveux gris à des transformations audacieuses. Nous utilisons des produits de haute qualité et respectueux du cuir chevelu pour garantir des résultats durables et éclatants.</p>

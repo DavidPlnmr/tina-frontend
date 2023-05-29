@@ -100,10 +100,12 @@ export default function Connexion() {
                 <Card className="border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
                   <Card.Body className="p-4">
                     <Card.Title className="text-center mb-4">
+                      <Link href="/" className="text-decoration-none text-dark">
                       <div className="d-flex justify-content-center align-items-center gap-3">
                         <img src="/images/tina_logo.png" alt="logo" className="img-fluid" width="60" />
                         <h2 className="font-weight-bold" style={{ fontFamily: "Abhaya Libre", fontSize: "38px" }}>Tina Coiffure</h2>
                       </div>
+                        </Link>
                     </Card.Title>
 
                     <Card.Subtitle className="mb-4">
