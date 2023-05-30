@@ -6,6 +6,9 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from "next/head";
+import Header from "@/pages/components/header";
+import Footer from "@/pages/components/footer";
 
 export default function AjoutDispo() {
 
@@ -13,11 +16,11 @@ export default function AjoutDispo() {
 
   const [dispo, setDispo] = useState([
     {
-        date: "",
-        start_hour: "",
-        end_hour: "",
-        employee: "",
-        vacation: ""
+      date: "",
+      start_hour: "",
+      end_hour: "",
+      employee: "",
+      vacation: ""
     }
   ]);
 
@@ -29,18 +32,18 @@ export default function AjoutDispo() {
     axios.get(baseUrl + 'employees/', {
       headers: {
         Authorization: `Token ` + cookies.csrftoken,
-        },
-        })
+      },
+    })
         .then((response) => {
-          setEmployees(response.data);
-          if (dispo.employee === undefined){
-            setDispo({ ...dispo, employee: response.data[0].id});
-          }
-        }
+              setEmployees(response.data);
+              if (dispo.employee === undefined){
+                setDispo({ ...dispo, employee: response.data[0].id});
+              }
+            }
         )
         .catch((error) => {
-        console.log(error);
-        }
+              console.log(error);
+            }
         );
   }
 
@@ -61,76 +64,86 @@ export default function AjoutDispo() {
         Authorization: `Token ` + cookies.csrftoken,
       },
     })
-    .then((response) => {
-      console.log(response);
-      console.log(response.data);
-      if (response.data.vacation === false){
-        alert("Disponibilité ajoutée");
-      } else {
-        alert("Vacances ajoutées");
-      }
-      router.push("/components/gestion_admin/dash_admin");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+        .then((response) => {
+          console.log(response);
+          console.log(response.data);
+          if (response.data.vacation === false){
+            alert("Disponibilité ajoutée");
+          } else {
+            alert("Vacances ajoutées");
+          }
+          router.push("/components/gestion_admin/dash_admin");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
   }
 
   const handleChange = (evt) => {
-      setDispo({ ...dispo, [evt.target.dataset.id]: evt.target.value});
+    setDispo({ ...dispo, [evt.target.dataset.id]: evt.target.value});
   };
 
   return (
-    <>
-        <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", backgroundColor: "#b8aaa0" }}>
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-sm-10 col-md-8 col-lg-6">
-              <Card className="border-0" style={{ backgroundColor: "#b8aaa0", marginTop: "-150px" }}>
-                <Card.Body>
-                  <h2 className="text-center mb-4">Tina Coiffure</h2>
-                  <Card.Title className="text-center mb-4">Ajout d'une disponibilité ou de vacances pour un employé</Card.Title>
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3">
-                      <Form.Control data-id="date" type="date" placeholder="Date" value={dispo.date} onChange={handleChange} required/>
-                    </Form.Group>
+      <>
+        <Head>
+          <meta charSet="utf-8"/>
+          <title>Tina - Ajout d'une disponibilité ou de vacances pour un employé</title>
+        </Head>
+        <Header/>
+        <main>
+          <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-lg-6">
+                  <Card className="shadow-lg p-3 bg-body rounded mt-n5">
+                    <Card.Body>
+                      <h2 className="text-center mb-4">Tina Coiffure</h2>
+                      <Card.Title className="text-center mb-4">Ajout d'une disponibilité ou de vacances pour un employé</Card.Title>
+                      <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Date</Form.Label>
+                          <Form.Control data-id="date" type="date" value={dispo.date} onChange={handleChange} required/>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Control data-id="start_hour" type="time" placeholder="Heure de début" value={dispo.start_hour} onChange={handleChange} required/>
-                    </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Heure de début</Form.Label>
+                          <Form.Control data-id="start_hour" type="time" value={dispo.start_hour} onChange={handleChange} required/>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Control data-id="end_hour" type="time" placeholder="Heure de fin" value={dispo.end_hour} onChange={handleChange} required/>
-                    </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Heure de fin</Form.Label>
+                          <Form.Control data-id="end_hour" type="time" value={dispo.end_hour} onChange={handleChange} required/>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <select className='form-select' onChange={handleChange} data-id="employee" required> 
-                        {employees.map((employee) => (
-                          <option value={employee.id} >{employee.first_name} {employee.last_name} {"(" + employee.username + ")"}</option>
-                        ))}
-                      </select>
-                    </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Employé</Form.Label>
+                          <Form.Select data-id="employee" onChange={handleChange} required>
+                            {employees.map((employee) => (
+                                <option value={employee.id}>{employee.first_name} {employee.last_name} {"(" + employee.username + ")"}</option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <p>Qu'êtes vous en train d'ajouter ?</p>
-                      <label htmlFor="vacation-oui" style={{marginRight:"8px"}}>Vacances</label>
-                      <input type='radio' data-id="vacation" name="vacation" value={1} onChange={handleChange} style={{marginRight:"8px"}}/>
-                      <label htmlFor="vacation-non" style={{marginRight:"8px"}}>Disponibilités</label>
-                      <input type='radio' data-id="vacation" name="vacation" value={0} onChange={handleChange} required/>
-                    </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Qu'êtes vous en train d'ajouter ?</Form.Label>
+                          <Form.Check type='radio' data-id="vacation" name="vacation" label="Vacances" value={1} onChange={handleChange} />
+                          <Form.Check type='radio' data-id="vacation" name="vacation" label="Disponibilités" value={0} onChange={handleChange} required/>
+                        </Form.Group>
 
-                    <Button variant="primary" type="submit" className='w-100 border-0"' style={{ backgroundColor: "black", border: 0 }}>
-                      Ajouter 
-                    </Button>
-                    <Link href='./ajout_multiple_dispo' class="nav-link">Vous voulez en ajouter plusieurs ? cliquez ici !</Link>
-                  </Form>
-                </Card.Body>
-              </Card>
+                        <Button variant="primary" type="submit" className='w-100'>
+                          Ajouter
+                        </Button>
+                        <Link href='./ajout_multiple_dispo' className="nav-link text-center mt-3">Vous voulez en ajouter plusieurs ? cliquez ici !</Link>
+                      </Form>
+                    </Card.Body>
+                  </Card>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </>
+        </main>
+        <Footer/>
+      </>
   );
 }
