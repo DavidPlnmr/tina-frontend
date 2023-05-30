@@ -527,6 +527,47 @@ export default function Encaissement() {
 
     };
 
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function exportTableToCSV
+     * @description function to export the encaissements(searchResults) in a csv file
+     * @see {@link 'gestion_encaissement.js'.amountFilter}
+     * @see {@link 'gestion_encaissement.js'.searchResults}
+     */
+    const exportTableToCSV = () => {
+        let tableId = "table_encaissements";
+        let filename = amountFilter + "_encaissements.csv";
+        const table = document.getElementById(tableId);
+        const rows = Array.from(table.getElementsByTagName("tr"));
+
+        const headers = Array.from(table.getElementsByTagName("th")).map(
+            (header) => header.textContent
+        );
+
+        const csvContent = [headers.join(",")]
+            .concat(
+                rows.map((row) => {
+                    const cells = Array.from(row.getElementsByTagName("td"));
+                    const rowData = cells
+                        .filter((cell) => cell.id !== "enc_button")
+                        .map((cell) => cell.textContent);
+                    return rowData.join(",");
+                })
+            )
+            .filter((row) => row !== "") // Filtre les lignes vides
+            .join("\n");
+
+        const csvData = "data:text/csv;charset=utf-8,\uFEFF" + encodeURIComponent(csvContent);
+
+        const encodedUri = csvData;
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     //Affichage des encaissements
     /**
      * @memberof 'gestion_encaissement.js'
@@ -571,7 +612,7 @@ export default function Encaissement() {
     useEffect(() => {
 
         let lstEncaissement = preSearchResults.current;
-        
+
         //Filter by searchTerm
         let results = lstEncaissement.filter(e =>
             e.employee.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -579,7 +620,7 @@ export default function Encaissement() {
             e.employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             e.service.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        
+
         //Order by sort
         results.sort((a, b) => {
             if (sortBy === 'time') {
@@ -686,7 +727,6 @@ export default function Encaissement() {
         setTotalLenght(totalLenght);
     }, [searchResults]);
 
-
     //UseEffect pour la gestion des boutons
     /**
      * @memberof 'gestion_encaissement.js'
@@ -771,6 +811,7 @@ export default function Encaissement() {
                             <div className="row" >
 
                                 <div className="btn-group mx-auto my-auto" >
+                                    <button type="button" className="btn btn-success" onClick={exportTableToCSV}>Télécharger</button>
                                     <button type="button" className={buttonDelete} onClick={handleClickDelete}>Supprimer</button>
                                     <button type="button" className="btn btn-primary">
                                         <Link href={pathnameAdd} className="nav-link">
@@ -809,7 +850,7 @@ export default function Encaissement() {
 
                             {/* Liste des encaissements */}
                             <div className="table-responsive">
-                                <table className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)" }}>
+                                <table id='table_encaissements' className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)" }}>
                                     <thead>
                                         <tr>
                                             <th scope="col">ID</th>
@@ -823,7 +864,7 @@ export default function Encaissement() {
                                     <tbody>
                                         {searchResults.map((encaissement) => (
                                             <tr key={encaissement.id}>
-                                                <th scope="row">{encaissement.id}</th>
+                                                <td scope="row">{encaissement.id}</td>
                                                 <td >
                                                     <div>
                                                         <b>{encaissement.employee.username}</b> {encaissement.employee.first_name} {encaissement.employee.last_name}
@@ -833,7 +874,7 @@ export default function Encaissement() {
                                                 <td>{encaissement.date}</td>
                                                 <td>{encaissement.time}</td>
                                                 <td>{encaissement.amount}</td>
-                                                <td>
+                                                <td id='enc_button'>
                                                     <Button
                                                         id={encaissement.id}
                                                         className={btnChoose}
