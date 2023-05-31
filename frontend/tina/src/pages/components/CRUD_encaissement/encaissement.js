@@ -53,7 +53,7 @@ function Encaissement_recap() {
    * @property {string} last_name - The authenticated user's last name.
    * @property {string} first_name - The authenticated user's first name.
    */
-    const [user, setUser] = useState({
+    const [, setUser] = useState({
         email: "",
         username: "",
         last_name: "",
@@ -160,11 +160,9 @@ function Encaissement_recap() {
 
 
     /**
-     * @memberof 'encaissement.js'
-     * @function handleCheck 
-     * @param {object} evt - the event object
+     * @function handleCheck
      */
-    const handleCheck = (evt) => {
+    const handleCheck = () => {
         setCheck(check => !check);
     };
 
@@ -266,7 +264,7 @@ function Encaissement_recap() {
     useEffect(() => {
         if (serviceRouter.price == null || serviceRouter.price == "") {
             setIsValid("is-invalid");
-        } else if (serviceRouter.price == 0) {
+        } else if (serviceRouter.price === 0) {
             setIsValid("");
         } else {
             setIsValid("is-valid");
