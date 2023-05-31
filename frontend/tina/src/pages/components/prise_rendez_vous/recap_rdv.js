@@ -114,7 +114,7 @@ export default function RecapRdv() {
   const cookies = parseCookies();
 
   useEffect(() => {
-    console.log(param);
+    console.log(param.employee);
     if (Object.keys(param).length !== 0) {
       console.log("param");
       console.log(param);
@@ -254,7 +254,12 @@ export default function RecapRdv() {
             <div className="card-body">
               <h4 className="card-title">Récapitulatif de réservation</h4>
               <ul className="list-group list-group-flush">
-                {cookies.role !== "customer"  && description === "" &&(
+                {cookies.role === "employee"  && description === "" &&(
+                  <li className="list-group-item">
+                    <strong>Client:</strong> {clients.first_name} {clients.last_name}
+                  </li>
+                )}
+                {cookies.role === "admin"  && description === "" &&(
                   <li className="list-group-item">
                     <strong>Client:</strong> {clients.first_name} {clients.last_name}
                   </li>
@@ -266,11 +271,9 @@ export default function RecapRdv() {
                   </li>
                 )}
 
-                {cookies.role === "customer" && (
-                  <li className="list-group-item">
-                    <strong>Coiffeur:</strong> {coiffeurs.first_name} {coiffeurs.last_name}
-                  </li>
-                )}
+                <li className="list-group-item">
+                  <strong>Coiffeur:</strong> {coiffeurs.first_name} {coiffeurs.last_name}
+                </li>
                 <li className="list-group-item">
                   <strong>Service:</strong> {services.name}
                 </li>

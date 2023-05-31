@@ -79,6 +79,13 @@ export default function Rdv_employee() {
         });
     };
 
+    const handleOnClick2 = () => {
+        router.push({
+            pathname: urlNextPage,
+            query: { service: service_json.service },
+        });
+    };
+
 
     /**
      * @memberof 'Rdv_employee.js'
@@ -117,6 +124,7 @@ export default function Rdv_employee() {
                 </Card>
             </div>
         ));
+        
     };
 
     return (
@@ -132,7 +140,23 @@ export default function Rdv_employee() {
                         <h4 className="display-4 fw-bold">Sélectionnez un coiffeur</h4>
                         <hr className="border-top border-dark w-25 mx-auto my-4"/>
                     </div>
-                    <Row>{loadEmployee()}</Row>
+                    <Row>{loadEmployee()}
+                    <div className="col-lg-3 col-md-6 col-sm-12 mb-4">
+                            <Card className="h-100 shadow bg-white rounded">
+                                <Card.Body className="d-flex flex-column align-items-center text-center">
+                                    <div className="d-flex mb-2 justify-content-center">
+                                        <FaUserAlt size={70} className="align-self-center text-primary mt-3"/>
+                                    </div>
+                                    <Card.Title className="mb-2 text-dark">
+                                        N'importe quel coiffeur
+                                    </Card.Title>
+                                    <Button variant="dark" className="mt-auto font-weight-bold w-75 align-self-center" onClick={() => handleOnClick2()}>
+                                        Choisir
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </div></Row>
+                    
                 </Container>
             </main>
             <Footer />

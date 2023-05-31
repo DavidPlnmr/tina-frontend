@@ -18,6 +18,8 @@ export default function Calendrier() {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const [timeList, setTimeList] = useState([]);
+
   /**
    * @constant calendar
    * @memberof 'calendrier.js'
@@ -75,27 +77,53 @@ export default function Calendrier() {
    * @param {string} date The selected date.
    * @returns {void}
    */
-  const handleClick = (time, date) => {
+  const handleClick = (time, date, employee) => {
     if (cookies.role === "customer") {
-      router.push({
-        pathname: "/components/prise_rendez_vous/recap_rdv",
-        query: {
-          time: time,
-          service: param.service,
-          employee: param.employee,
-          date: date,
-        },
+      if (param.employee !== undefined) {
+        router.push({
+          pathname: "/components/prise_rendez_vous/recap_rdv",
+          query: {
+            time: time,
+            service: param.service,
+            employee: param.employee,
+            date: date,
+          },
+        });
+      } else {
+        axios.get(baseUrl + "employees/" + employee + "/", {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+            },
+          })
+        .then((res) => {
+        router.push({
+          pathname: "/components/prise_rendez_vous/recap_rdv",
+          query: {
+            time: time,
+            service: param.service,
+            employee: JSON.stringify(res.data),
+            date: date,
+          },
+        });
       });
+      }
     } else {
+      axios.get(baseUrl + "employees/" + employee + "/", {
+        headers: {
+          Authorization: "Token " + cookies.csrftoken,
+          },
+        })
+      .then((res) => {
       router.push({
         pathname: "/components/prise_rendez_vous/choix_client",
         query: {
           time: time,
           service: param.service,
-          employee: param.employee,
+          employee: JSON.stringify(res.data),
           date: date,
         },
       });
+    });
     }
   };
 
@@ -109,44 +137,91 @@ export default function Calendrier() {
   useEffect(() => {
     console.log("param : ");
     console.log(param);
-    if (param.service === undefined || param.employee === undefined) {
+    if (param.service === undefined) {
       router.push("./service_rdv");
     }
     const fetchAppointments = async () => {
-      try {
-        const response = await axios.get(
-          baseUrl + "appointment_available/?service=" +
-            JSON.parse(param.service).id +
-            "&employee=" +
-            JSON.parse(param.employee).id,
-          {
-            headers: {
-              Authorization: "Token " + cookies.csrftoken,
-            },
-          }
-        );
-        const appointments = response.data;
-        const newEvents = appointments.flatMap((appointment) => {
-          return appointment.hours.map((hour) => {
-            const startTime = `${appointment.date}T${hour}`;
-            const endTime = new Date(startTime);
-            endTime.setMinutes(endTime.getMinutes() + 15);
-
-            return {
-              title: `Rendez-vous avec ${appointment.customer}`,
-              start: startTime,
-              // end 30 minutes après le début
-              end: endTime.toISOString(),
-              allDay: false,
-            };
+    if (param.employee !== undefined) {
+        try {
+          const response = await axios.get(
+            baseUrl + "appointment_available/?service=" +
+              JSON.parse(param.service).id +
+              "&employee=" +
+              JSON.parse(param.employee).id,
+            {
+              headers: {
+                Authorization: "Token " + cookies.csrftoken,
+              },
+            }
+          );
+          const appointments = response.data;
+          
+          const newEvents = appointments.flatMap((appointment) => {
+            return appointment.hours.map((hour) => {
+              const startTime = `${appointment.date}T${hour}`;
+              const endTime = new Date(startTime);
+              endTime.setMinutes(endTime.getMinutes() + 15);
+  
+              return {
+                title: `Rendez-vous avec ${appointment.customer}`,
+                start: startTime,
+                // end 30 minutes après le début
+                end: endTime.toISOString(),
+                allDay: false,
+              };
+            });
           });
-        });
-        setEvents(newEvents);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+          setEvents(newEvents);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          const response = await axios.get(
+            baseUrl + "appointment_available/?service=" +
+              JSON.parse(param.service).id,
+            {
+              headers: {
+                Authorization: "Token " + cookies.csrftoken,
+              },
+            }
+          );
+          const appointments = response.data;
+          const uniqueEventTimestamps = new Set();
+          const newEvents = appointments.flatMap((appointment) => {
+            return appointment.hours.map((hour) => {
+              const startTime = `${appointment.date}T${hour}`;
+              // Créer une empreinte digitale basée sur la date et l'heure de début.
+              const eventFingerprint = startTime;
 
+              // Si l'empreinte digitale existe déjà, ne créez pas un nouvel événement.
+              if (uniqueEventTimestamps.has(eventFingerprint)) {
+                return;
+              }
+
+              // Ajouter l'empreinte digitale à l'ensemble des empreintes digitales.
+              uniqueEventTimestamps.add(eventFingerprint);
+              
+              const endTime = new Date(startTime);
+              endTime.setMinutes(endTime.getMinutes() + 15);
+  
+              return {
+                title: `Rendez-vous avec ${appointment.customer}`,
+                employee : appointment.employee,   
+                start: startTime,
+                // end 30 minutes après le début
+                end: endTime.toISOString(),
+                allDay: false,
+              };
+            });
+          })
+          .filter(Boolean);
+          setEvents(newEvents);
+        } catch (error) {
+          console.error(error);
+        }
+    }
+  }
     fetchAppointments();
   }, []);
 
@@ -177,7 +252,8 @@ export default function Calendrier() {
             hour: "numeric",
             minute: "2-digit",
           }),
-          info.event.start.toLocaleDateString()
+          info.event.start.toLocaleDateString(),
+          info.event.extendedProps.employee
         );
       });
     }
