@@ -122,7 +122,7 @@ export default function AjoutMultipleDispo() {
           <title>Tina - Ajout d'une disponibilité ou de vacances pour un employé</title>
         </Head>
         <Header/>
-        <main style={{ marginTop: "120px", marginBottom: "200px"}}>
+        <main>
           <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
             <div className="container">
               <div className="row justify-content-center">
