@@ -77,14 +77,30 @@ export default function Inscription() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   /**
-   * @function handleChange
    * @memberof 'inscription.js'
-   * @description This function handles the registration form input changes.
-   */
+   * @const handleChange
+   * @description This function handles the change of the input fields.
+   * @param {Event} evt The event triggered by the input field.
+   * @returns {void} Nothing.
+   * @see {@link 'connexion.js'.handleChange}
+    */
   const handleChange = (evt) => {
-    setCustomers({ ...customers, [evt.target.dataset.id]: evt.target.value });
+    let value = evt.target.value;
 
-    if (evt.target.dataset.id === "tel_number" && evt.target.value.length !== 10) {
+    // Supprimer les espaces s'il s'agit du numéro de téléphone
+    if (evt.target.dataset.id === "tel_number") {
+      value = value.replace(/\s/g, '');
+
+      // Vérifie que le numéro de téléphone contient uniquement des chiffres
+      if (!/^\d+$/.test(value)) {
+        setPhoneError("Veuillez entrer uniquement des chiffres pour le numéro de téléphone.");
+        return;
+      }
+    }
+
+    setCustomers({ ...customers, [evt.target.dataset.id]: value });
+
+    if (evt.target.dataset.id === "tel_number" && value.length !== 10) {
       setPhoneError("Veuillez entrer exactement 10 chiffres pour le numéro de téléphone.");
     } else {
       setPhoneError("");
@@ -96,6 +112,9 @@ export default function Inscription() {
       setPasswordError("");
     }
   };
+
+
+
 
   /**
    * @function handleConfirmPasswordChange
@@ -178,7 +197,7 @@ export default function Inscription() {
                         <Form.Control required data-id="email" className="shadow-sm" type="email" placeholder="Email" value={customers.email} onChange={handleChange}/>
                       </Form.Group>
                       <Form.Group className="mb-3">
-                        <Form.Control required data-id="tel_number" className="shadow-sm" type="text" placeholder="076 000 00 00" pattern="^[\d]{10}$" value={customers.phone} onChange={handleChange}/>
+                        <Form.Control required data-id="tel_number" className="shadow-sm" type="text" placeholder="076 000 00 00" value={customers.phone} onChange={handleChange}/>
                         {phoneError && <Form.Text className="text-danger">{phoneError}</Form.Text>}
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="formBasicPassword">

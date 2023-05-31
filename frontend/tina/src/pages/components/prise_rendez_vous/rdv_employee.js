@@ -148,7 +148,6 @@ export default function Rdv_employee() {
                 </Card>
             </div>
         ));
-        
     };
 
     return (
