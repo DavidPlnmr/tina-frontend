@@ -5,6 +5,8 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import Footer from "../footer";
 import { de } from "date-fns/locale";
+import { ProgressBar } from './ProgressBar';
+
 
 /**
  * @namespace 'recap_rdv.js'
@@ -249,7 +251,8 @@ export default function RecapRdv() {
     <>
       <Header />
       <main>
-        <div className="container" style={{ marginTop: "10%" }}>
+        <ProgressBar currentStep={4} />
+        <div className="container">
           <div className="card">
             <div className="card-body">
               <h4 className="card-title">Récapitulatif de réservation</h4>

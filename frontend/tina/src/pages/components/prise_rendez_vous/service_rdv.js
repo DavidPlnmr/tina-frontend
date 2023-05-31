@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { Card, Button } from "react-bootstrap";
 import Footer from "@/pages/components/footer";
 import Head from "next/head";
+import { ProgressBar } from './ProgressBar';
 
 /**
  * @namespace 'service_rdv.js'
@@ -232,8 +233,8 @@ export default function ServiceRDV() {
         </Head>
         <Header /> {/* Render the Header component */}
         <main>
-          <div className="container pt-5">
-            {" "}
+          <ProgressBar currentStep={1} />
+          <div className="container">
             {/* Container for the services */}
             <div className="row">
               {typesOfService && // Check if types of service have been fetched before rendering the services

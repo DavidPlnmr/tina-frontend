@@ -8,6 +8,8 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { useRouter, Router } from "next/router";
 import Footer from "../footer";
+import { ProgressBar } from './ProgressBar';
+
 
 /**
  * @namespace 'calendrier.js'
@@ -50,7 +52,7 @@ export default function Calendrier() {
    * @constant cookies
    * @memberof 'calendrier.js'
    * @see {@link 'header.js'.cookies}
-    */
+   */
   const cookies = parseCookies();
 
   /**
@@ -115,15 +117,15 @@ export default function Calendrier() {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(
-          baseUrl + "appointment_available/?service=" +
+            baseUrl + "appointment_available/?service=" +
             JSON.parse(param.service).id +
             "&employee=" +
             JSON.parse(param.employee).id,
-          {
-            headers: {
-              Authorization: "Token " + cookies.csrftoken,
-            },
-          }
+            {
+              headers: {
+                Authorization: "Token " + cookies.csrftoken,
+              },
+            }
         );
         const appointments = response.data;
         const newEvents = appointments.flatMap((appointment) => {
@@ -156,7 +158,7 @@ export default function Calendrier() {
    * @description This effect is responsible for sending events to the calendar and calling the handleClick function. It runs when the events state changes.
    * @returns {void}
    * @async
-   */ 
+   */
   useEffect(() => {
     if (calendar !== null && events.length > 0) {
       if (event.current) return;
@@ -165,19 +167,19 @@ export default function Calendrier() {
       // Ajouter la classe 'event-passe' aux événements passés
       const maintenant = new Date();
       const eventsPasse = calendar
-        .getEvents()
-        .filter((event) => event.start < maintenant);
+          .getEvents()
+          .filter((event) => event.start < maintenant);
       eventsPasse.forEach((event) => {
         event.setProp("classNames", ["event-passe"]);
       });
 
       calendar.setOption("eventClick", (info) => {
         handleClick(
-          info.event.start.toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit",
-          }),
-          info.event.start.toLocaleDateString()
+            info.event.start.toLocaleTimeString([], {
+              hour: "numeric",
+              minute: "2-digit",
+            }),
+            info.event.start.toLocaleDateString()
         );
       });
     }
@@ -194,7 +196,7 @@ export default function Calendrier() {
     const widthThreshold = 600; // Seuil de largeur d'écran en pixels
     const sizeScreen = window.innerWidth;
     const initialView = sizeScreen < widthThreshold ? "timeGridDay" : "timeGridWeek";
-  
+
     if (calendarEl.current !== null) {
       const newCalendar = new Calendar(calendarEl.current, {
         initialView,
@@ -244,16 +246,16 @@ export default function Calendrier() {
           const textColor = available ? "white" : "white"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
             html: `<b><div style="text-align: center; cursor: pointer; background-color: ${backgroundColor}; color: ${textColor}; border: "none">${info.event.start.toLocaleTimeString(
-              [],
-              { hour: "numeric", minute: "2-digit" }
+                [],
+                { hour: "numeric", minute: "2-digit" }
             )}</div></b>`,
           };
         },
       });
-  
+
       setCalendar(newCalendar);
       newCalendar.render();
-  
+
       return () => {
         newCalendar.destroy();
       };
@@ -261,9 +263,9 @@ export default function Calendrier() {
   }, [calendarEl]);
 
   return (
-    <>
-      <style type="text/css">
-        {`
+      <>
+        <style type="text/css">
+          {`
                   .fc-event-main {
                     background-color: green; /* gris clair */ !important
                     color: white; 
@@ -273,16 +275,16 @@ export default function Calendrier() {
                 }
                 
             `}
-      </style>
-      <Header />
-      <div className="container" style={{minHeight: "100vh"}}>
-        <div
-          ref={calendarEl}
-          className="mx-auto"
-          style={{ marginTop: "100px", marginBottom: "100px" }}
-        ></div>
-      </div>
-      <Footer />
-    </>
+        </style>
+        <Header />
+        <main>
+          <ProgressBar currentStep={3} />
+          <div
+              ref={calendarEl}
+              className="container mb-5"
+          ></div>
+        </main>
+        <Footer />
+      </>
   );
 }

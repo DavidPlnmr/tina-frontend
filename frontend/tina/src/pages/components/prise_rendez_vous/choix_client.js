@@ -6,6 +6,7 @@ import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import Head from "next/head";
 import Footer from '../footer';
+import {ProgressBar} from "@/pages/components/prise_rendez_vous/ProgressBar";
 
 /**
  * @namespace 'choix_client.js'
@@ -21,7 +22,7 @@ export default function ChoixClient() {
      * @memberof 'choix_client.js'
      * @description A list of clients.
      * @default []
-     */ 
+     */
     const [clients, setClients] = useState([]);
 
     /**
@@ -43,7 +44,7 @@ export default function ChoixClient() {
      * @constant param
      * @memberof 'choix_client.js'
      * @see {@link 'calendrier.js'.param}
-     */ 
+     */
     const param = useRouter().query;
 
     /**
@@ -60,32 +61,32 @@ export default function ChoixClient() {
      */
     useEffect(() => {
         fetchCustomers();
-        }, []);
+    }, []);
 
     /**
      * @function fetchCustomers
      * @memberof 'choix_client.js'
      * @description Fetches the clients list from the database.
      * @returns {Array} A list of clients.
-     */     
+     */
     const fetchCustomers = () => {
         axios.get(baseUrl + 'customers/', {
-        headers: {
+            headers: {
                 Authorization: `Token ` + cookies.csrftoken,
             },
-            })
+        })
             .then((response) => {
-                setClients(response.data);
-                if (filteredClients.length === 0) {
-                    console.log("filteredClients is empty");
-                    setFilteredClients(response.data);
+                    setClients(response.data);
+                    if (filteredClients.length === 0) {
+                        console.log("filteredClients is empty");
+                        setFilteredClients(response.data);
+                    }
                 }
-            }
             )
             .catch((error) => {
-                console.log(error);
-            }
-        );
+                    console.log(error);
+                }
+            );
     }
 
     /**
@@ -94,7 +95,7 @@ export default function ChoixClient() {
      * @description Filters the clients list by the search bar.
      * @param {Event} evt The event that triggered the function.
      * @returns {Array} A list of clients filtered by the search bar.
-     */ 
+     */
     const handleSearch = (evt) => {
         const searchValue = evt.target.value;
         const filtered = clients.filter((client) => {
@@ -113,13 +114,13 @@ export default function ChoixClient() {
         router.push({
             pathname: "../prise_rendez_vous/no_client_rdv",
             query: {
-              time: param.time,
-              service: param.service,
-              employee: param.employee,
-              date: param.date,
-              client : null
+                time: param.time,
+                service: param.service,
+                employee: param.employee,
+                date: param.date,
+                client : null
             },
-          });
+        });
     }
 
     /**
@@ -138,47 +139,52 @@ export default function ChoixClient() {
                 date: param.date,
                 client : JSON.stringify(client)
             },
-            });
+        });
     }
 
-  return (
-    <>
-        <Header />
-        <main>
-        <div className='container my-5'>
-            <div className='row'>
-                <div className='col-md-8'>
-                <input type="text" placeholder="Rechercher un client" className="form-control-lg mb-2" onChange={handleSearch}/>
-                </div>
-                <div className='col-md-4'>
-                <button type="button" className="btn btn-primary w-100 mb-2" style={{ backgroundColor: "#C21A09", borderColor: "#C21A09" }} onClick={handleClick}>
-                    Pas de compte
-                </button>
-                </div>
-            </div>
-            <Table striped bordered hover>
-                <thead>
-                <tr>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th className='d-none d-sm-block'>Nom d'utilisateur</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody style={{cursor:"pointer"}}>
-                    {filteredClients.map((client) => (
-                        <tr key={client.id} onClick={() =>  handleClickClient(client) }>
-                            <td >{client.first_name}</td>
-                            <td>{client.last_name}</td>
-                            <td className='d-none d-sm-block'>{client.username}</td>
-                            <td>{client.email}</td>
+    return (
+        <>
+            <Head>
+                <meta charSet="utf-8" content="Tina Coiffure - choix du client" name="Tina Coiffure" />
+                <title>Tina - Choix du client</title>
+            </Head>
+            <Header />
+            <main>
+                <ProgressBar currentStep={3} />
+                <div className='container my-5'>
+                    <div className='row'>
+                        <div className='col-md-8'>
+                            <input type="text" placeholder="Rechercher un client" className="form-control-lg mb-2" onChange={handleSearch}/>
+                        </div>
+                        <div className='col-md-4'>
+                            <button type="button" className="btn btn-primary w-100 mb-2" style={{ backgroundColor: "#C21A09", borderColor: "#C21A09" }} onClick={handleClick}>
+                                Pas de compte
+                            </button>
+                        </div>
+                    </div>
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th className='d-none d-sm-block'>Nom d'utilisateur</th>
+                            <th>Email</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </div>
-        </main>
-        <Footer />
-    </>
-  );
+                        </thead>
+                        <tbody style={{cursor:"pointer"}}>
+                        {filteredClients.map((client) => (
+                            <tr key={client.id} onClick={() =>  handleClickClient(client) }>
+                                <td >{client.first_name}</td>
+                                <td>{client.last_name}</td>
+                                <td className='d-none d-sm-block'>{client.username}</td>
+                                <td>{client.email}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                </div>
+            </main>
+            <Footer />
+        </>
+    );
 }
