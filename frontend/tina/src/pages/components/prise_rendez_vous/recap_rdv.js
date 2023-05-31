@@ -159,7 +159,7 @@ export default function RecapRdv() {
       date.setSeconds(0);
       console.log(date);
       const formattedTime = date.toLocaleTimeString("fr-FR", { hour12: false });
-      console.log(formattedTime);
+      
       setHeureDepart(formattedTime);
       //const durationSplit = services.duration.toString().split(":");
       if (services.duration != null) {
@@ -178,7 +178,6 @@ export default function RecapRdv() {
           console.log(formattedEndTime);
         }
         else {
-          console.log("test");
           const hourDuration = parseInt(splitDuration[0]);
           const minuteDuration = parseInt(splitDuration[1]);
           const endDate = new Date(date.getTime() + hourDuration * 3600000 + minuteDuration * 60000);
@@ -186,10 +185,9 @@ export default function RecapRdv() {
             hour12: false,
           });
           setHeureFin(formattedEndTime);
-          console.log(formattedEndTime);
         }
         // format date from dd/mm/yyyy to yyyy-mm-dd
-        const splitDate = myDate.split("/");
+        const splitDate = myDate.split(".");
         const formattedDate =
           splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
           if (cookies.role === "customer") {
@@ -229,8 +227,6 @@ export default function RecapRdv() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    console.log(appointment.date);
-    console.log(appointment);
     axios
       .post(baseUrl + "appointments/create", appointment, {
         headers: {
@@ -242,7 +238,6 @@ export default function RecapRdv() {
         router.push("/components/prise_rendez_vous/confirmation_rdv");
       })
       .catch((error) => {
-        console.log("error");
         console.log(error);
       });
   };
