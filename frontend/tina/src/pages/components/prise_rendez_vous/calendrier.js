@@ -186,7 +186,7 @@ export default function Calendrier() {
           });
           setEvents(newEvents);
         } catch (error) {
-          console.error(error);
+          router.push("./pas_rdv");
         }
       } else {
         try {
@@ -231,7 +231,7 @@ export default function Calendrier() {
           .filter(Boolean);
           setEvents(newEvents);
         } catch (error) {
-          console.error(error);
+          router.push("./pas_rdv");
         }
     }
   }
