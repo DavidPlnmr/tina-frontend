@@ -109,6 +109,17 @@ export default function Calendrier() {
       });
       }
     } else {
+      if (param.employee !== undefined) {
+        router.push({
+          pathname: "/components/prise_rendez_vous/choix_client",
+          query: {
+            time: time,
+            service: param.service,
+            employee: param.employee,
+            date: date,
+          },
+        });
+      } else {
       axios.get(baseUrl + "employees/" + employee + "/", {
         headers: {
           Authorization: "Token " + cookies.csrftoken,
@@ -125,6 +136,7 @@ export default function Calendrier() {
         },
       });
     });
+  }
     }
   };
 
