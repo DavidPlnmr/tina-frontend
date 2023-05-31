@@ -91,12 +91,12 @@ export default function AjoutDispo() {
                 <title>Tina - Ajout d'une disponibilité ou de vacances pour un employé</title>
             </Head>
             <Header/>
-            <main>
+            <main className="mt-5" style={{ marginBottom: "100px"}}>
                 <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
                     <div className="container">
                         <div className="row justify-content-center">
-                            <div className="col-lg-6">
-                                <Card className="shadow-lg p-3 bg-body rounded mt-n5">
+                            <div className="col-12 col-md-8 col-lg-6">
+                                <Card className="shadow-lg p-3 bg-body rounded mt-5">
                                     <Card.Body>
                                         <h2 className="text-center mb-4">Tina Coiffure</h2>
                                         <Card.Title className="text-center mb-4">Ajout d'une disponibilité ou de vacances pour un employé</Card.Title>
