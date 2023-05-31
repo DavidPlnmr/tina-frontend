@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Link from 'next/link';
-import { parseCookies } from 'nookies';
+import {parseCookies} from 'nookies';
 import axios from 'axios';
-import { Button, Modal, Card } from 'react-bootstrap';
+import {Button, Modal} from 'react-bootstrap';
+
 /**
  * @namespace 'gestion_encaissement.js'
  * @description this page is used to manage the encaissements
@@ -32,7 +33,7 @@ export default function Encaissement() {
      * @constant {String} modificationMode - state to manage the message to display when the user wants to modify or delete an encaissement
      * @default ""
      */
-    const [modificationMode, setModificationMode] = useState(
+    const [, setModificationMode] = useState(
         ""
     );
 
@@ -201,16 +202,7 @@ export default function Encaissement() {
      * @default ""
      */
     const [invertFilterActive, setInvertFilterActive] = useState("");
-
-    /**
-     * @memberof 'gestion_encaissement.js'
-     * @constant {String} firstTimeInvertFilter - state to manage the first time invert filter of the encaissements filter
-     * @description the way the filter is applied the first time is different from the other times
-     * @default true
-     */
-    const [firstTimeInvertFilter, setFirstTimeInvertFilter] = useState(true);
-
-    // Handle search and sort functions for encaissements
+// Handle search and sort functions for encaissements
     /**
      * @memberof 'gestion_encaissement.js'
      * @param {object} event - event to manage the search term
@@ -237,10 +229,10 @@ export default function Encaissement() {
      * @description set the state modeModify to 'delete' if it's not the delete mode, else set the state modeModify to ''
      */
     const handleClickDelete = () => {
-        if (modeModify != 'delete') {
-            setModeModify(modeModify => 'delete');
+        if (modeModify !== 'delete') {
+            setModeModify(() => 'delete');
         } else {
-            setModeModify(modeModify => '');
+            setModeModify(() => '');
         }
     };
 
@@ -251,7 +243,7 @@ export default function Encaissement() {
      * @description set the state s to the id of the encaissement to delete and show the modal
      */
     const handleChoose = (evt) => {
-        setS(s => ({ id: evt.target.id }));
+        setS(() => ({ id: evt.target.id }));
         if (modeModify === 'delete') {
             handleShow();
         }
@@ -385,7 +377,7 @@ export default function Encaissement() {
     const getServiceName = (id) => {
         let name = "";
         services.map((s) => {
-            if (s.id == id) {
+            if (s.id === id) {
                 name = s.name;
             } else if (id == null) {
                 name = "Encaissement manuel";
@@ -404,7 +396,7 @@ export default function Encaissement() {
     const getEmployeeName = (id) => {
         let employee_info = {};
         employees.map((e) => {
-            if (e.id == id) {
+            if (e.id === id) {
                 employee_info.username = e.username;
                 employee_info.first_name = e.first_name;
                 employee_info.last_name = e.last_name;
@@ -477,7 +469,7 @@ export default function Encaissement() {
      */
     const handleClickAmount = (evt) => {
         toggleButtons(evt, false);
-        setSearchTerm(searchTerm => "");
+        setSearchTerm(() => "");
         setAmountFilter(evt.target.id);
     };
 
@@ -513,8 +505,7 @@ export default function Encaissement() {
         // Get the year of the target date
         const year = target.getFullYear();
         // Calculate the week number by taking the days between the target date and the first week of the year
-        const weekNumber = Math.ceil(((target - new Date(year, 0, 1)) / 86400000 + 1) / 7);
-        return weekNumber;
+        return Math.ceil(((target - new Date(year, 0, 1)) / 86400000 + 1) / 7);
     };
 
     /**
@@ -557,9 +548,7 @@ export default function Encaissement() {
             .filter((row) => row !== "") // Filtre les lignes vides
             .join("\n");
 
-        const csvData = "data:text/csv;charset=utf-8,\uFEFF" + encodeURIComponent(csvContent);
-
-        const encodedUri = csvData;
+        const encodedUri = "data:text/csv;charset=utf-8,\uFEFF" + encodeURIComponent(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
         link.setAttribute("download", filename);
@@ -695,7 +684,7 @@ export default function Encaissement() {
             results = encaissementsAffichage.filter(e => {
                 let e_date = e.date.split('/');
 
-                return parseInt(e_date[0]) == todayDate.day && parseInt(e_date[1]) == todayDate.month && parseInt(e_date[2]) == todayDate.year;
+                return parseInt(e_date[0]) === todayDate.day && parseInt(e_date[1]) === todayDate.month && parseInt(e_date[2]) === todayDate.year;
             });
         }
 
@@ -719,7 +708,7 @@ export default function Encaissement() {
      */
     useEffect(() => {
         let totalAmount = 0;
-        let totalLenght = 0;
+        let totalLenght;
         searchResults.map(e =>
             totalAmount += parseFloat(e.amount));
         totalLenght = searchResults.length;
@@ -738,17 +727,17 @@ export default function Encaissement() {
     useEffect(() => {
         if (modeModify === 'delete') {
             //changer le bouton
-            setButtonDelete(buttonDelete => "btn btn-danger");
+            setButtonDelete(() => "btn btn-danger");
             // setButtonModify(buttonModify => "btn btn-outline-primary");
-            setBtnChoose(btnChoose => "btn btn-danger");
+            setBtnChoose(() => "btn btn-danger");
             //changer la navbar
-            setModificationMode(modificationMode => "MODE SUPPRESSION");
+            setModificationMode(() => "MODE SUPPRESSION");
 
         } else if (modeModify === '') {
-            setModificationMode(modificationMode => "");
+            setModificationMode(() => "");
             // setButtonModify(buttonModify => "btn btn-outline-primary");
-            setButtonDelete(buttonDelete => "btn btn-outline-danger");
-            setBtnChoose(btnChoose => "btn btn-dark");
+            setButtonDelete(() => "btn btn-outline-danger");
+            setBtnChoose(() => "btn btn-dark");
         }
     }, [modeModify]);
 
@@ -867,7 +856,7 @@ export default function Encaissement() {
                                                 <td scope="row">{encaissement.id}</td>
                                                 <td >
                                                     <div>
-                                                        <b>{encaissement.employee.username}</b> {encaissement.employee.first_name} {encaissement.employee.last_name}
+                                                        {encaissement.employee.first_name} {encaissement.employee.last_name}
                                                     </div>
                                                 </td>
                                                 <td>{encaissement.service}</td>
@@ -879,7 +868,7 @@ export default function Encaissement() {
                                                         id={encaissement.id}
                                                         className={btnChoose}
                                                         onClick={handleChoose}
-                                                        disabled={modeModify === '' ? true : false}
+                                                        disabled={modeModify === ''}
                                                     >Choisir</Button>
                                                 </td>
                                             </tr>
