@@ -262,7 +262,7 @@ function Encaissement_recap() {
      * @description checks if the name of the type of service is valid or not
      */
     useEffect(() => {
-        if (serviceRouter.price == null || serviceRouter.price == "") {
+        if (serviceRouter.price == null || serviceRouter.price === "") {
             setIsValid("is-invalid");
         } else if (serviceRouter.price === 0) {
             setIsValid("");
@@ -328,7 +328,7 @@ function Encaissement_recap() {
                                                             <div className="input-group mb-3">
                                                                 <div className="form-floating">
                                                                     <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
-                                                                    <label for="service_name">Service</label>
+                                                                    <label htmlFor="service_name">Service</label>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -336,7 +336,7 @@ function Encaissement_recap() {
                                                             <div className="input-group mb-3">
                                                                 <div className="form-floating">
                                                                     <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control " + isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
-                                                                    <label for="service_price">Montant</label>
+                                                                    <label htmlFor="service_price">Montant</label>
                                                                 </div>
                                                                 <span className="input-group-text">CHF</span>
                                                             </div>
@@ -345,7 +345,7 @@ function Encaissement_recap() {
                                                             <div className="input-group mb-3">
                                                                 <div className="form-check">
                                                                     <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
-                                                                    <label for="service_discount">Rabais étudiant</label>
+                                                                    <label htmlFor="service_discount">Rabais étudiant</label>
                                                                 </div>
                                                             </div>
                                                         </td>
