@@ -5,6 +5,7 @@ import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 import Footer from "../footer";
 import Cookies from 'js-cookie';
+import {Modal, Button} from 'react-bootstrap';
 
 /**
  * @namespace 'profil_utilisateur.js'
@@ -13,6 +14,12 @@ import Cookies from 'js-cookie';
  */
 
 export default function ProfilUtilisateurs() {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => setShow(true);
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   /**
@@ -326,7 +333,6 @@ export default function ProfilUtilisateurs() {
   const handleDelete = (evt) => {
     evt.preventDefault();
     let response;
-    if (confirm("Voulez-vous vraiment supprimer votre compte ?")) {
         response = axios
           .delete(baseUrl + "customers/" + cookies.id + "/", {
             headers: {
@@ -342,6 +348,7 @@ export default function ProfilUtilisateurs() {
             Cookies.remove("first_name");
             Cookies.remove("role");
             router.push("/");
+            alert("Votre compte a bien été supprimé");
         
           setTimeout(() => {
             window.location.reload();
@@ -350,12 +357,27 @@ export default function ProfilUtilisateurs() {
           .catch((error) => {
             console.log(error);
           });
-      };
     };
 
   return (
     <>
       <Header />
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+                <Modal.Header closeButton>
+                    <Modal.Title>SUPPRESSION DE COMPTE</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Voulez-vous vraiment supprimer votre compte ?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={handleClose}>
+                        Annuler
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                        Supprimer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
       <main>
       <div
         className="container d-flex justify-content-center"
@@ -377,8 +399,7 @@ export default function ProfilUtilisateurs() {
               </div>
             </div>
             <div className="col-md-7 col-lg-8 col-xl-9 d-flex align-items-center">
-              <form
-                onSubmit={handleSubmit}
+              <div
                 style={{ margin: "15px", width: "100%" }}
               >
                 <div className="mb-3">
@@ -478,24 +499,25 @@ export default function ProfilUtilisateurs() {
                   />
                 </div>
                 <button
-                  type="submit"
+                  onClick={handleSubmit}
                   className="btn btn-primary"
                   style={{ backgroundColor: "#232627", border: 0 }}
                 >
                   Modifier
                 </button>{" "}
+              
                 <br />
                 <br />
-                {role === "customer" && (
+              {role === "customer" && (
                 <button
                   className="btn btn-primary"
-                  onClick={handleDelete}
+                  onClick={handleShow}
                   style={{ backgroundColor: "#DC3545", border: "none" }}
                 >
                   Supprimer mon compte
                 </button>
                 )}
-              </form>
+                </div>
             </div>
           </div>
         </div>

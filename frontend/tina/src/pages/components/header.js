@@ -101,7 +101,17 @@ function Header() {
                 window.location.reload();
             }, 1000);
         } else {
-            alert("ERREUR !");
+            Cookies.remove("id");
+            Cookies.remove("csrftoken");
+            Cookies.remove("email");
+            Cookies.remove("username");
+            Cookies.remove("last_name");
+            Cookies.remove("first_name");
+            Cookies.remove("role");
+            await router.push("/");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         }
     };
 

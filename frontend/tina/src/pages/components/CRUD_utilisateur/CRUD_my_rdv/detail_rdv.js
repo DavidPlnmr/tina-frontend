@@ -4,10 +4,47 @@ import Header from '../../header';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import Footer from '../../footer';
-
-
+import {Modal, Button} from 'react-bootstrap';
 
 export default function DetailRdv() {
+  /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} show 
+     * @default false
+     */
+  const [show, setShow] = useState(false);
+
+  /**
+   * @memberof 'gestion_encaissement.js'
+   * @function handleClose - function to close the modal
+   * @description set the state show to false
+   */
+  const handleClose = () => setShow(false);
+
+  /**
+   * @memberof 'gestion_encaissement.js'
+   * @function handleShow - function to show the modal
+   * @description set the state show to true
+   */
+  const handleShow = () => setShow(true);
+
+  const [show2, setShow2] = useState(false);
+
+  /**
+   * @memberof 'gestion_encaissement.js'
+   * @function handleClose - function to close the modal
+   * @description set the state show to false
+   */
+  const handleClose2 = () => setShow2(false);
+
+  /**
+   * @memberof 'gestion_encaissement.js'
+   * @function handleShow - function to show the modal
+   * @description set the state show to true
+   */
+  const handleShow2 = () => setShow2(true);
+
+
   const router = useRouter();
   const cookies = parseCookies();
   const resQuery = router.query;
@@ -165,23 +202,27 @@ export default function DetailRdv() {
 
   const handleClick = async (evt) => {
     evt.preventDefault();
-    const result = confirm("Êtes-vous sûr de vouloir annuler le rendez-vous ?");
-    if (result === true) {
-      const response = await fetch(baseUrl + "appointments/" + resQuery.id + "/cancel", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Token " + cookies.csrftoken,
-        }
-      });
-
-      if (response.ok) {
-        alert("Le rendez-vous a bien été annulé");
-        router.push("/components/CRUD_utilisateur/calendrier_utilisateur");
-      } else {
-        alert("Une erreur est survenue, le rendez-vous n'a pas été annulé. Veuillez réessayer, si cela ne fonctionne toujours pas, appelez le salon.");
+    const response = await fetch(baseUrl + "appointments/" + resQuery.id + "/cancel", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Token " + cookies.csrftoken,
       }
-    } 
+    });
+
+    if (response.ok) {
+      console.log("ok");
+      handleClose();
+      handleShow2();
+    } else {
+      alert("Une erreur est survenue, le rendez-vous n'a pas été annulé. Veuillez réessayer, si cela ne fonctionne toujours pas, appelez le salon.");
+    }
+    
+  }
+  const handleClick2 = async (evt) => {
+    evt.preventDefault();
+    handleClose2();
+    router.push("/components/CRUD_utilisateur/calendrier_utilisateur"); 
   };
 
   const handleRedirect = (evt) => {
@@ -192,6 +233,37 @@ export default function DetailRdv() {
   return (
     <>
         <Header />
+        {/* Modal pour la suppression */}
+        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+                <Modal.Header closeButton>
+                    <Modal.Title>ANNULATION</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Voulez-vous vraiment annuler ce rendez-vous ?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={handleClose}>
+                        Retour
+                    </Button>
+                    <Button variant="danger" onClick={handleClick}>
+                        Annuler le rendez-vous
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={show2} onHide={handleClose2} backdrop="static" keyboard={false} transparent>
+                <Modal.Header closeButton>
+                    <Modal.Title>ANNULATION CONFRIMÉE</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Votre annulation a bien été prise en compte.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={handleClick2}>
+                        Retourner à mon calendrier
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         <main>
           {appointment && services && customers && coiffeurs && (
         <div className="container" style={{marginTop: "10%"}}>
@@ -227,7 +299,7 @@ export default function DetailRdv() {
               </ul>
             </div>
           </div> <br /> 
-          <button className="btn btn-danger" style={{backgroundColor: "#BB2D3B", border: "none"}} onClick={handleClick}>
+          <button className="btn btn-danger" style={{backgroundColor: "#BB2D3B", border: "none"}} onClick={handleShow}>
             Annuler le rendez-vous
           </button>
         </div>

@@ -4,6 +4,7 @@ import { useRouter, Router } from "next/router";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import Footer from "../../footer";
+import { Modal, Button } from "react-bootstrap";
 
 /**
  * @namespace 'recap_rdv.js'
@@ -11,6 +12,12 @@ import Footer from "../../footer";
  * @returns {JSX.Element} A React functional component rendering the appointment's recap.
  */
 export default function DetailEmployee() {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => setShow(true);
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -51,7 +58,6 @@ export default function DetailEmployee() {
 
   const handleDelete = () => {
     console.log(coiffeurs.id);
-    if (confirm("Voulez-vous vraiment supprimer cet employé ?")) {
     axios.delete(baseUrl + "employees/" + coiffeurs.id + "/", {
       headers: {
         Authorization: "Token " + cookies.csrftoken,
@@ -65,7 +71,6 @@ export default function DetailEmployee() {
     .catch((error) => {
       console.log(error);
     });
-    }
 }
 
 const handleUpdate = () => {
@@ -78,6 +83,22 @@ const handleUpdate = () => {
   return (
     <>
       <Header />
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+                <Modal.Header closeButton>
+                    <Modal.Title>SUPPRESSION DE COMPTE</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Voulez-vous vraiment supprimer cet employé ?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={handleClose}>
+                        Annuler
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                        Supprimer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
       <main>
         {coiffeurs && (
       <div className="container" style={{ marginTop: "10%" }}>
@@ -109,7 +130,7 @@ const handleUpdate = () => {
               type="button"
               class="btn btn-primary no-border"
               style={{ backgroundColor: "#DC3545", border: "none" }}
-              onClick={handleDelete}
+              onClick={handleShow}
             >
               Supprimer l'employé
             </button>
