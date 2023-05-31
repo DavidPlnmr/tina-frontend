@@ -1,5 +1,5 @@
 import Header from "../header";
-import { useRouter, Router } from "next/router";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import Footer from "../footer";
 
