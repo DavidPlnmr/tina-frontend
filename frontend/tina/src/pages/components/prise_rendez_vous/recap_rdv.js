@@ -187,7 +187,7 @@ export default function RecapRdv() {
           setHeureFin(formattedEndTime);
         }
         // format date from dd/mm/yyyy to yyyy-mm-dd
-        const splitDate = myDate.split(".");
+        const splitDate = myDate.split("/");
         const formattedDate =
           splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
           if (cookies.role === "customer") {
