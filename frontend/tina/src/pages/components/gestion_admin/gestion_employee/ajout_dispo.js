@@ -91,8 +91,8 @@ export default function AjoutDispo() {
                 <title>Tina - Ajout d'une disponibilité ou de vacances pour un employé</title>
             </Head>
             <Header/>
-            <main>
-                <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+            <main className={"py-5 bg-light"}>
+                <div className="d-flex justify-content-center align-items-center bg-light">
                     <div className="container">
                         <div className="row justify-content-center">
                             <div className="col-12 col-md-8 col-lg-6">
