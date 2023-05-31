@@ -1,7 +1,8 @@
 import Header from "../header";
-import { useRouter, Router } from "next/router";
 import Head from "next/head";
 import Footer from "../footer";
+import Link from "next/link";
+import {Button} from "react-bootstrap";
 
 /**
  * @namespace 'confirmation_rdv.js'
@@ -10,45 +11,34 @@ import Footer from "../footer";
  */
 export default function ConfirmationRdv() {
 
-  /**
-   * @constant router
-   * @memberof 'confirmation_rdv.js'
-   * @see {@link 'header.js'.router}
-   */
-  const router = useRouter();
+    return (
+        <>
+            <Head>
+                <title>Tina - Confirmation de rendez-vous</title>
+                <meta name="description" content="Confirmation de rendez-vous" />
+            </Head>
+            <Header />
+            <main className="bg-light">
+                <div className="container py-5">
+                    <div className="jumbotron bg-white shadow rounded pb-5">
+                        <h1 className="display-4 text-center">Merci pour votre réservation !</h1>
+                        <p className="lead text-center mt-4">Votre rendez-vous a été réservé avec succès.</p>
+                        <hr className="my-4" />
+                        <div className="d-flex justify-content-around mt-5">
+                            <Link href={"/"}>
+                                <Button className="btn btn-primary btn-lg shadow">Retour à l'accueil</Button>
+                            </Link>
+                            <Link href={"/components/CRUD_utilisateur/calendrier_utilisateur"}>
+                                <Button className="btn btn-secondary btn-lg shadow">Voir mes rendez-vous</Button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <Footer />
+        </>
+    );
 
-  /**
-   * @function handleClick
-   * @memberof 'confirmation_rdv.js'
-   * @description A function that redirects to the home page.
-   * @returns {void}
-   */
-  const handleClick = () => {
-    router.push("/");
-  };
-  return (
-    <>
-      <Head>
-        <title>Tina - Confirmation de rendez-vous</title>
-        <meta name="description" content="Confirmation de rendez-vous" />
-      </Head>
-      <Header />
-      <main>
-      <div className="container py-5 jumbotron" style={{ marginTop: "200px" }}>
-        <h1 className="text-center mb-5">Merci pour votre réservation !</h1>
-        <div className="d-grid gap-3 col-6 mx-auto">
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={handleClick}
-            style={{ backgroundColor: "#232627" }}
-          >
-            Retour à l'accueil
-          </button>
-        </div>
-      </div>
-      </main>
-      <Footer />
-    </>
-  );
+
+
 }
