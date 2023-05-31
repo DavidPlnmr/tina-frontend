@@ -139,8 +139,10 @@ export default function Services() {
     serviceError.textContent = newName;
     //après 3 secondes, on cache la notification
     setTimeout(function () {
-      document.getElementById("notification_delete").setAttribute("hidden", "hidden");
-    }, 8000);
+      if (document.getElementById("notification_delete") != null) {
+        document.getElementById("notification_delete").setAttribute("hidden", "hidden");
+      }
+    }, 5000);
 
   };
 
