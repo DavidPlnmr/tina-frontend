@@ -8,8 +8,6 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { useRouter, Router } from "next/router";
 import Footer from "../footer";
-import { ProgressBar } from './ProgressBar';
-
 
 /**
  * @namespace 'calendrier.js'
@@ -19,6 +17,8 @@ import { ProgressBar } from './ProgressBar';
 export default function Calendrier() {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const [timeList, setTimeList] = useState([]);
 
   /**
    * @constant calendar
@@ -52,7 +52,7 @@ export default function Calendrier() {
    * @constant cookies
    * @memberof 'calendrier.js'
    * @see {@link 'header.js'.cookies}
-   */
+    */
   const cookies = parseCookies();
 
   /**
@@ -77,27 +77,53 @@ export default function Calendrier() {
    * @param {string} date The selected date.
    * @returns {void}
    */
-  const handleClick = (time, date) => {
+  const handleClick = (time, date, employee) => {
     if (cookies.role === "customer") {
-      router.push({
-        pathname: "/components/prise_rendez_vous/recap_rdv",
-        query: {
-          time: time,
-          service: param.service,
-          employee: param.employee,
-          date: date,
-        },
+      if (param.employee !== undefined) {
+        router.push({
+          pathname: "/components/prise_rendez_vous/recap_rdv",
+          query: {
+            time: time,
+            service: param.service,
+            employee: param.employee,
+            date: date,
+          },
+        });
+      } else {
+        axios.get(baseUrl + "employees/" + employee + "/", {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+            },
+          })
+        .then((res) => {
+        router.push({
+          pathname: "/components/prise_rendez_vous/recap_rdv",
+          query: {
+            time: time,
+            service: param.service,
+            employee: JSON.stringify(res.data),
+            date: date,
+          },
+        });
       });
+      }
     } else {
+      axios.get(baseUrl + "employees/" + employee + "/", {
+        headers: {
+          Authorization: "Token " + cookies.csrftoken,
+          },
+        })
+      .then((res) => {
       router.push({
         pathname: "/components/prise_rendez_vous/choix_client",
         query: {
           time: time,
           service: param.service,
-          employee: param.employee,
+          employee: JSON.stringify(res.data),
           date: date,
         },
       });
+    });
     }
   };
 
@@ -111,44 +137,91 @@ export default function Calendrier() {
   useEffect(() => {
     console.log("param : ");
     console.log(param);
-    if (param.service === undefined || param.employee === undefined) {
+    if (param.service === undefined) {
       router.push("./service_rdv");
     }
     const fetchAppointments = async () => {
-      try {
-        const response = await axios.get(
+    if (param.employee !== undefined) {
+        try {
+          const response = await axios.get(
             baseUrl + "appointment_available/?service=" +
-            JSON.parse(param.service).id +
-            "&employee=" +
-            JSON.parse(param.employee).id,
+              JSON.parse(param.service).id +
+              "&employee=" +
+              JSON.parse(param.employee).id,
             {
               headers: {
                 Authorization: "Token " + cookies.csrftoken,
               },
             }
-        );
-        const appointments = response.data;
-        const newEvents = appointments.flatMap((appointment) => {
-          return appointment.hours.map((hour) => {
-            const startTime = `${appointment.date}T${hour}`;
-            const endTime = new Date(startTime);
-            endTime.setMinutes(endTime.getMinutes() + 15);
-
-            return {
-              title: `Rendez-vous avec ${appointment.customer}`,
-              start: startTime,
-              // end 30 minutes après le début
-              end: endTime.toISOString(),
-              allDay: false,
-            };
+          );
+          const appointments = response.data;
+          
+          const newEvents = appointments.flatMap((appointment) => {
+            return appointment.hours.map((hour) => {
+              const startTime = `${appointment.date}T${hour}`;
+              const endTime = new Date(startTime);
+              endTime.setMinutes(endTime.getMinutes() + 15);
+  
+              return {
+                title: `Rendez-vous avec ${appointment.customer}`,
+                start: startTime,
+                // end 30 minutes après le début
+                end: endTime.toISOString(),
+                allDay: false,
+              };
+            });
           });
-        });
-        setEvents(newEvents);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+          setEvents(newEvents);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          const response = await axios.get(
+            baseUrl + "appointment_available/?service=" +
+              JSON.parse(param.service).id,
+            {
+              headers: {
+                Authorization: "Token " + cookies.csrftoken,
+              },
+            }
+          );
+          const appointments = response.data;
+          const uniqueEventTimestamps = new Set();
+          const newEvents = appointments.flatMap((appointment) => {
+            return appointment.hours.map((hour) => {
+              const startTime = `${appointment.date}T${hour}`;
+              // Créer une empreinte digitale basée sur la date et l'heure de début.
+              const eventFingerprint = startTime;
 
+              // Si l'empreinte digitale existe déjà, ne créez pas un nouvel événement.
+              if (uniqueEventTimestamps.has(eventFingerprint)) {
+                return;
+              }
+
+              // Ajouter l'empreinte digitale à l'ensemble des empreintes digitales.
+              uniqueEventTimestamps.add(eventFingerprint);
+              
+              const endTime = new Date(startTime);
+              endTime.setMinutes(endTime.getMinutes() + 15);
+  
+              return {
+                title: `Rendez-vous avec ${appointment.customer}`,
+                employee : appointment.employee,   
+                start: startTime,
+                // end 30 minutes après le début
+                end: endTime.toISOString(),
+                allDay: false,
+              };
+            });
+          })
+          .filter(Boolean);
+          setEvents(newEvents);
+        } catch (error) {
+          console.error(error);
+        }
+    }
+  }
     fetchAppointments();
   }, []);
 
@@ -158,7 +231,7 @@ export default function Calendrier() {
    * @description This effect is responsible for sending events to the calendar and calling the handleClick function. It runs when the events state changes.
    * @returns {void}
    * @async
-   */
+   */ 
   useEffect(() => {
     if (calendar !== null && events.length > 0) {
       if (event.current) return;
@@ -167,19 +240,20 @@ export default function Calendrier() {
       // Ajouter la classe 'event-passe' aux événements passés
       const maintenant = new Date();
       const eventsPasse = calendar
-          .getEvents()
-          .filter((event) => event.start < maintenant);
+        .getEvents()
+        .filter((event) => event.start < maintenant);
       eventsPasse.forEach((event) => {
         event.setProp("classNames", ["event-passe"]);
       });
 
       calendar.setOption("eventClick", (info) => {
         handleClick(
-            info.event.start.toLocaleTimeString([], {
-              hour: "numeric",
-              minute: "2-digit",
-            }),
-            info.event.start.toLocaleDateString()
+          info.event.start.toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit",
+          }),
+          info.event.start.toLocaleDateString(),
+          info.event.extendedProps.employee
         );
       });
     }
@@ -196,7 +270,7 @@ export default function Calendrier() {
     const widthThreshold = 600; // Seuil de largeur d'écran en pixels
     const sizeScreen = window.innerWidth;
     const initialView = sizeScreen < widthThreshold ? "timeGridDay" : "timeGridWeek";
-
+  
     if (calendarEl.current !== null) {
       const newCalendar = new Calendar(calendarEl.current, {
         initialView,
@@ -246,16 +320,16 @@ export default function Calendrier() {
           const textColor = available ? "white" : "white"; // Détermine la couleur du texte en fonction de la disponibilité
           return {
             html: `<b><div style="text-align: center; cursor: pointer; background-color: ${backgroundColor}; color: ${textColor}; border: "none">${info.event.start.toLocaleTimeString(
-                [],
-                { hour: "numeric", minute: "2-digit" }
+              [],
+              { hour: "numeric", minute: "2-digit" }
             )}</div></b>`,
           };
         },
       });
-
+  
       setCalendar(newCalendar);
       newCalendar.render();
-
+  
       return () => {
         newCalendar.destroy();
       };
@@ -263,9 +337,9 @@ export default function Calendrier() {
   }, [calendarEl]);
 
   return (
-      <>
-        <style type="text/css">
-          {`
+    <>
+      <style type="text/css">
+        {`
                   .fc-event-main {
                     background-color: green; /* gris clair */ !important
                     color: white; 
@@ -275,16 +349,16 @@ export default function Calendrier() {
                 }
                 
             `}
-        </style>
-        <Header />
-        <main>
-          <ProgressBar currentStep={3} />
-          <div
-              ref={calendarEl}
-              className="container mb-5"
-          ></div>
-        </main>
-        <Footer />
-      </>
+      </style>
+      <Header />
+      <div className="container" style={{minHeight: "100vh"}}>
+        <div
+          ref={calendarEl}
+          className="mx-auto"
+          style={{ marginTop: "100px", marginBottom: "100px" }}
+        ></div>
+      </div>
+      <Footer />
+    </>
   );
 }
