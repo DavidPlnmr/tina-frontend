@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../header";
 import { parseCookies } from "nookies";
 import axios from "axios";
@@ -7,6 +7,7 @@ import Footer from "../footer";
 import Head from "next/head";
 import {Button, Card, Container, Row} from "react-bootstrap";
 import { FaUserAlt } from 'react-icons/fa';
+import {ProgressBar} from "@/pages/components/prise_rendez_vous/ProgressBar";
 
 /**
  * @namespace 'Rdv_employee.js'
@@ -134,12 +135,9 @@ export default function Rdv_employee() {
                 <meta name="description" content="Page de prise de rendez-vous de l'application Tina" />
             </Head>
             <Header />
-            <main className="my-5">
+            <main>
+                <ProgressBar currentStep={2} />
                 <Container>
-                    <div className="text-center mb-5">
-                        <h4 className="display-4 fw-bold">Sélectionnez un coiffeur</h4>
-                        <hr className="border-top border-dark w-25 mx-auto my-4"/>
-                    </div>
                     <Row>{loadEmployee()}
                     <div className="col-lg-3 col-md-6 col-sm-12 mb-4">
                             <Card className="h-100 shadow bg-white rounded">
@@ -156,7 +154,6 @@ export default function Rdv_employee() {
                                 </Card.Body>
                             </Card>
                         </div></Row>
-                    
                 </Container>
             </main>
             <Footer />

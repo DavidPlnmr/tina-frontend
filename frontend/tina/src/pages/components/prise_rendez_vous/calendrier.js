@@ -8,6 +8,7 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { useRouter, Router } from "next/router";
 import Footer from "../footer";
+import {ProgressBar} from "@/pages/components/prise_rendez_vous/ProgressBar";
 
 /**
  * @namespace 'calendrier.js'
@@ -351,13 +352,13 @@ export default function Calendrier() {
             `}
       </style>
       <Header />
-      <div className="container" style={{minHeight: "100vh"}}>
+      <main>
+        <ProgressBar currentStep={3} />
         <div
-          ref={calendarEl}
-          className="mx-auto"
-          style={{ marginTop: "100px", marginBottom: "100px" }}
+            ref={calendarEl}
+            className="container mb-5"
         ></div>
-      </div>
+      </main>
       <Footer />
     </>
   );
