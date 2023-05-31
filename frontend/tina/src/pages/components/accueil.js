@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import styles from "@/styles/Accueil.module.css";
 import Carousel from 'react-bootstrap/Carousel';
-import Footer from "@/pages/components/footer";
 import { Fade } from 'react-awesome-reveal';
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 
@@ -184,7 +183,7 @@ export default function Accueil() {
                             <div className="col-lg-6 order-2 order-lg-1"><i className="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
                                 <h2 className="font-weight-light">Notre équipe</h2>
                                 <p className="font-italic text-muted mb-4">Notre équipe de professionnels expérimentés est au cœur de Tina Coiffure. Chacun de nos stylistes apporte son propre style et expertise à notre salon, créant une atmosphère dynamique et accueillante. Nous sommes fiers de notre équipe et nous savons que leur passion et leur dévouement se reflètent dans le service de qualité que nous offrons à nos clients</p>
-                                <a href="tel:+41223202222" className="btn btn-light px-5 rounded-pill shadow-sm">Contactez-nous</a>
+                                <a href="tel:+41223202222" className="btn btn-light px-5 rounded-pill shadow-sm">Appelez-nous</a>
                             </div>
                             <div className="col-lg-5 px-5 mx-auto order-1 order-lg-2">
                                 <img src="/images/home_images/qui_sommes_nous/equipe.PNG" alt="équipe" className="img-fluid mb-4 mb-lg-0 rounded-pill shadow" />
