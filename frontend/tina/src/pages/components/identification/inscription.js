@@ -18,6 +18,26 @@ export default function Inscription() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   /**
+   * @constant isChecked
+   * @memberof 'inscription.js'
+   * @description This state variable stores the checkbox status.
+   * @default {isChecked: false}
+   * @returns {boolean} The checkbox status.
+   */
+  const [isChecked, setIsChecked] = useState(false);
+
+  /**
+   * @constant isFormFilled
+   * @memberof 'inscription.js'
+   * @description This state variable stores the form status.
+   * @default {isFormFilled: false}
+   * @returns {boolean} The form status.
+   */
+  const [isFormFilled, setIsFormFilled] = useState(false);
+
+
+
+  /**
    * @constant router
    * @memberof 'inscription.js'
    * @see {@link 'header.js'.router}
@@ -125,7 +145,25 @@ export default function Inscription() {
    */
   const handleConfirmPasswordChange = (evt) => {
     setConfirmPassword(evt.target.value);
+    // Check if all fields are filled
+    if (customers.first_name && customers.last_name && customers.username && customers.email && customers.tel_number && customers.password && evt.target.value) {
+      setIsFormFilled(true);
+    } else {
+      setIsFormFilled(false);
+    }
   };
+
+  /**
+   * @const handleCheckboxChange
+   * @memberof 'inscription.js'
+   * @description This function handles the checkbox change.
+   * @returns {void}
+   * @param event
+   */
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  }
+
 
   /**
    * @function handleSubmit
@@ -207,19 +245,31 @@ export default function Inscription() {
                       <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Control required data-id="confirmPassword" className="shadow-sm" type="password" placeholder="Confirmer mot de passe" minLength="8" onChange={handleConfirmPasswordChange}/>
                       </Form.Group>
-                      <Button variant="primary" type="submit" className='w-100 border-0 shadow-sm' style={{ backgroundColor: "#232627", marginBottom: "10px" }}>
-                        S'inscrire
-                      </Button>
-                      <Form.Group className="mt-3 mb-1 text-center">
-                        <Form.Text className="text-muted">
-                          En vous inscrivant, vous acceptez les
-                          <Link href="#" className="text-decoration-none"> Conditions d'utilisation </Link>
-                          et la
-                          <Link href="#"  className="text-decoration-none"> Politique de confidentialité </Link>,
-                          notamment l'Utilisation des
-                          <Link href="#"  className="text-decoration-none"> cookies</Link>.
-                        </Form.Text>
+                      <Form.Group className="mt-3 mb-5 text-center">
+                        <Form.Check
+                            className="text-muted font-weight-bold"
+                            type="checkbox"
+                            onChange={handleCheckboxChange}
+                            label={(
+                                <>
+                                  J'ai lu et j'accepte les&nbsp;
+                                  <a
+                                      href="/pdf/CGU.pdf"
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="text-decoration-none"
+                                      style={{color: '#007BFF', transition: 'color 0.2s'}}
+                                      onMouseEnter={(e) => e.target.style.color = '#0056b3'}
+                                      onMouseLeave={(e) => e.target.style.color = '#007BFF'}
+                                  >
+                                    conditions générales d'utilisation
+                                  </a>.
+                                </>
+                            )}
+                        />
                       </Form.Group>
+                      <Button variant="primary" type="submit" className='w-100 border-0 shadow-sm' disabled={!isChecked || !isFormFilled} style={{ backgroundColor: "#232627", marginBottom: "10px" }}>                        S'inscrire
+                      </Button>
                       <Form.Group className="mb-0 text-center">
                         <Link className="nav-link p-0" href="/components/identification/connexion">Vous avez déjà un compte ?</Link>
                       </Form.Group>
