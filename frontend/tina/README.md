@@ -47,6 +47,12 @@ To create an optimized production build of your app, use the npm run build comma
 npm run build
 ```
 
+## Set the environment variables
+
+The environment variables are stored in the .env.local file. This file is not pushed to the repository for security reasons. You can find the .env.example file in the root directory of the project.
+
+To set the environment variables, you need to create a .env.local file in the root directory of the project and copy the content of the .env.example file into it. Then, you need to replace the values of the variables with the ones corresponding to your environment.
+
 ## Generate the documentation
 
 This section describes how to generate documentation for your code using JSDoc, a popular tool for creating comprehensive, structured documentation for JavaScript projects.
