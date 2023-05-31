@@ -187,9 +187,19 @@ export default function RecapRdv() {
           setHeureFin(formattedEndTime);
         }
         // format date from dd/mm/yyyy to yyyy-mm-dd
-        const splitDate = myDate.split("/");
-        const formattedDate =
+
+        let formattedDate;
+        
+        if (myDate.includes("/")) {
+          const splitDate = myDate.split("/");
+          formattedDate =
           splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
+        } else {
+          const splitDate = myDate.split(".");
+          formattedDate = splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
+        }
+
+          console.log(formattedDate);
           if (cookies.role === "customer") {
 
         setAppointment({
