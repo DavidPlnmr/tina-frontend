@@ -16,11 +16,11 @@ import {Modal, Button} from 'react-bootstrap';
 export default function ProfilUtilisateurs() {
 
   /**
-     * @memberof 'detail_rdv.js'
-     * @constant {object} show 
-     * @description state to show the modal
-     * @default false
-     */
+   * @memberof 'detail_rdv.js'
+   * @constant {object} show
+   * @description state to show the modal
+   * @default false
+   */
   const [show, setShow] = useState(false);
 
   /**
@@ -42,7 +42,7 @@ export default function ProfilUtilisateurs() {
    * @constant {String} baseUrl
    * @description variable to store the base of the url of the API
    * @default process.env.NEXT_PUBLIC_BASE_URL
-   */ 
+   */
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   /**
@@ -75,7 +75,7 @@ export default function ProfilUtilisateurs() {
    * @constant router
    * @memberof 'profil_utilisateur.js'
    * @see {@link 'header.js'.router}
-   */ 
+   */
   const router = useRouter();
 
   /**
@@ -105,12 +105,12 @@ export default function ProfilUtilisateurs() {
   const fetchCusto = async () => {
     try {
       const response = await axios.get(
-        baseUrl + "customers/" + cookies.id + "/",
-        {
-          headers: {
-            Authorization: "Token " + cookies.csrftoken,
-          },
-        }
+          baseUrl + "customers/" + cookies.id + "/",
+          {
+            headers: {
+              Authorization: "Token " + cookies.csrftoken,
+            },
+          }
       );
       setCustomer(response.data);
     } catch (error) {
@@ -128,12 +128,12 @@ export default function ProfilUtilisateurs() {
   const fetchEmp = async () => {
     try {
       const response = await axios.get(
-        baseUrl + "employees/" + cookies.id + "/",
-        {
-          headers: {
-            Authorization: "Token " + cookies.csrftoken,
-          },
-        }
+          baseUrl + "employees/" + cookies.id + "/",
+          {
+            headers: {
+              Authorization: "Token " + cookies.csrftoken,
+            },
+          }
       );
       setCustomer(response.data);
     } catch (error) {
@@ -172,18 +172,54 @@ export default function ProfilUtilisateurs() {
   const submitCusto = (evt) => {
     evt.preventDefault();
     console.log(customer);
-
     if (customer.password !== "") {
+
       if (customer.password === customer.confirm_password) {
         axios
+            .patch(
+                baseUrl + "customers/" + cookies.id + "/",
+                customer,
+                {
+                  headers: {
+                    Authorization: "Token " + cookies.csrftoken,
+                  },
+                }
+            )
+            .then((response) => {
+              setCookie(null, "username", customer.username, {
+                maxAge: 86400,
+                path: "/",
+              });
+              setCookie(null, "email", customer.email, {
+                maxAge: 86400,
+                path: "/",
+              });
+              setCookie(null, "first_name", customer.first_name, {
+                maxAge: 86400,
+                path: "/",
+              });
+              setCookie(null, "last_name", customer.last_name, {
+                maxAge: 86400,
+                path: "/",
+              });
+              router.push("/");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      } else {
+        alert("Les mots de passe ne correspondent pas");
+      }
+    } else {
+      axios
           .patch(
-            baseUrl + "customers/" + cookies.id + "/",
-            customer,
-            {
-              headers: {
-                Authorization: "Token " + cookies.csrftoken,
-              },
-            }
+              baseUrl + "customers/" + cookies.id + "/",
+              customer,
+              {
+                headers: {
+                  Authorization: "Token " + cookies.csrftoken,
+                },
+              }
           )
           .then((response) => {
             setCookie(null, "username", customer.username, {
@@ -207,42 +243,6 @@ export default function ProfilUtilisateurs() {
           .catch((error) => {
             console.log(error);
           });
-      } else {
-        alert("Les mots de passe ne correspondent pas");
-      }
-    } else {
-      axios
-        .patch(
-          baseUrl + "customers/" + cookies.id + "/",
-          customer,
-          {
-            headers: {
-              Authorization: "Token " + cookies.csrftoken,
-            },
-          }
-        )
-        .then((response) => {
-          setCookie(null, "username", customer.username, {
-            maxAge: 86400,
-            path: "/",
-          });
-          setCookie(null, "email", customer.email, {
-            maxAge: 86400,
-            path: "/",
-          });
-          setCookie(null, "first_name", customer.first_name, {
-            maxAge: 86400,
-            path: "/",
-          });
-          setCookie(null, "last_name", customer.last_name, {
-            maxAge: 86400,
-            path: "/",
-          });
-          router.push("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     }
   };
 
@@ -260,14 +260,52 @@ export default function ProfilUtilisateurs() {
     if (customer.password !== "") {
       if (customer.password === customer.confirm_password) {
         axios
+            .patch(
+                baseUrl + "employees/" + cookies.id + "/",
+                customer,
+                {
+                  headers: {
+                    Authorization: "Token " + cookies.csrftoken,
+                  },
+                }
+            )
+            .then((response) => {
+              setCookie(null, "username", customer.username, {
+                maxAge: 86400,
+                path: "/",
+              });
+              setCookie(null, "email", customer.email, {
+                maxAge: 86400,
+                path: "/",
+              });
+              setCookie(null, "first_name", customer.first_name, {
+                maxAge: 86400,
+                path: "/",
+              });
+              setCookie(null, "last_name", customer.last_name, {
+                maxAge: 86400,
+                path: "/",
+              });
+              router.push("/");
+            })
+            .catch((error) => {
+              if (error.response.data.username == "custom user with this username already exists.") {
+                alert("Ce nom d'utilisateur existe déjà");
+              }
+            });
+      } else {
+        alert("Les mots de passe ne correspondent pas");
+      }
+    } else {
+      axios
           .patch(
-            baseUrl + "employees/" + cookies.id + "/",
-            customer,
-            {
-              headers: {
-                Authorization: "Token " + cookies.csrftoken,
-              },
-            }
+              baseUrl + "employees/" + cookies.id + "/",
+              customer,
+              {
+                headers: {
+                  Authorization: "Token " + cookies.csrftoken,
+                },
+              }
           )
           .then((response) => {
             setCookie(null, "username", customer.username, {
@@ -289,44 +327,10 @@ export default function ProfilUtilisateurs() {
             router.push("/");
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.data.username == "custom user with this username already exists.") {
+              alert("Ce nom d'utilisateur existe déjà");
+            }
           });
-      } else {
-        alert("Les mots de passe ne correspondent pas");
-      }
-    } else {
-      axios
-        .patch(
-          baseUrl + "employees/" + cookies.id + "/",
-          customer,
-          {
-            headers: {
-              Authorization: "Token " + cookies.csrftoken,
-            },
-          }
-        )
-        .then((response) => {
-          setCookie(null, "username", customer.username, {
-            maxAge: 86400,
-            path: "/",
-          });
-          setCookie(null, "email", customer.email, {
-            maxAge: 86400,
-            path: "/",
-          });
-          setCookie(null, "first_name", customer.first_name, {
-            maxAge: 86400,
-            path: "/",
-          });
-          setCookie(null, "last_name", customer.last_name, {
-            maxAge: 86400,
-            path: "/",
-          });
-          router.push("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     }
   };
 
@@ -356,197 +360,197 @@ export default function ProfilUtilisateurs() {
   const handleDelete = (evt) => {
     evt.preventDefault();
     let response;
-        response = axios
-          .delete(baseUrl + "customers/" + cookies.id + "/", {
-            headers: {
-              Authorization: "Token " + cookies.csrftoken,
-            },
-          })
-          .then((response) => {
-            Cookies.remove("id");
-            Cookies.remove("csrftoken");
-            Cookies.remove("email");
-            Cookies.remove("username");
-            Cookies.remove("last_name");
-            Cookies.remove("first_name");
-            Cookies.remove("role");
-            router.push("/");
-            alert("Votre compte a bien été supprimé");
-        
+    response = axios
+        .delete(baseUrl + "customers/" + cookies.id + "/", {
+          headers: {
+            Authorization: "Token " + cookies.csrftoken,
+          },
+        })
+        .then((response) => {
+          Cookies.remove("id");
+          Cookies.remove("csrftoken");
+          Cookies.remove("email");
+          Cookies.remove("username");
+          Cookies.remove("last_name");
+          Cookies.remove("first_name");
+          Cookies.remove("role");
+          router.push("/");
+          alert("Votre compte a bien été supprimé");
+
           setTimeout(() => {
             window.location.reload();
           }, 500);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
 
   return (
-    <>
-      <Header />
-      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
-                <Modal.Header closeButton>
-                    <Modal.Title>SUPPRESSION DE COMPTE</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Voulez-vous vraiment supprimer votre compte ?
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="outline-secondary" onClick={handleClose}>
-                        Annuler
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>
-                        Supprimer
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-      <main>
-      <div
-        className="container d-flex justify-content-center"
-        style={{ marginTop: "5%" }}
-      >
-        <div className="card mb-3" style={{ width: "800px" }}>
-          <div className="row g-0">
-            <div
-              className="col-md-5 col-lg-4 col-xl-3"
-              style={{ backgroundColor: "#232627" }}
-            >
-              <div className="card-body">
-                <h2
-                  className="card-title"
-                  style={{ color: "white", textAlign: "center" }}
+      <>
+        <Header />
+        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+          <Modal.Header closeButton>
+            <Modal.Title>SUPPRESSION DE COMPTE</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Voulez-vous vraiment supprimer votre compte ?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-secondary" onClick={handleClose}>
+              Annuler
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              Supprimer
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <main>
+          <div
+              className="container d-flex justify-content-center"
+              style={{ marginTop: "5%" }}
+          >
+            <div className="card mb-3" style={{ width: "800px" }}>
+              <div className="row g-0">
+                <div
+                    className="col-md-5 col-lg-4 col-xl-3"
+                    style={{ backgroundColor: "#232627" }}
                 >
-                  Profil
-                </h2>
+                  <div className="card-body">
+                    <h2
+                        className="card-title"
+                        style={{ color: "white", textAlign: "center" }}
+                    >
+                      Profil
+                    </h2>
+                  </div>
+                </div>
+                <div className="col-md-7 col-lg-8 col-xl-9 d-flex align-items-center">
+                  <div
+                      style={{ margin: "15px", width: "100%" }}
+                  >
+                    <div className="mb-3">
+                      <label htmlFor="username" className="form-label" id="username">
+                        Nom d'utilisateur :
+                      </label>
+                      <input
+                          type="text"
+                          className="form-control"
+                          data-id="username"
+                          value={customer.username}
+                          onChange={handleChange}
+                          required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">
+                        Email :
+                      </label>
+                      <input
+                          type="email"
+                          data-id="email"
+                          className="form-control"
+                          id="email"
+                          value={customer.email}
+                          onChange={handleChange}
+                          required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="name" className="form-label">
+                        Prénom :
+                      </label>
+                      <input
+                          type="text"
+                          data-id="first_name"
+                          className="form-control"
+                          id="name"
+                          value={customer.first_name}
+                          onChange={handleChange}
+                          required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="prenom" className="form-label">
+                        Nom :
+                      </label>
+                      <input
+                          type="text"
+                          data-id="last_name"
+                          className="form-control"
+                          id="prenom"
+                          value={customer.last_name}
+                          onChange={handleChange}
+                          required
+                      />
+                    </div>
+                    {role === "customer" && (
+                        <div className="mb-3">
+                          <label htmlFor="tel_number" className="form-label">
+                            Numéro de téléphone :
+                          </label>
+                          <input
+                              type="text"
+                              data-id="tel_number"
+                              className="form-control"
+                              id="tel_number"
+                              value={customer.tel_number}
+                              onChange={handleChange}
+                              required
+                          />
+                        </div>
+                    )}
+                    <div className="mb-3">
+                      <label htmlFor="pass" className="form-label">
+                        Nouveau mot de passe :
+                      </label>
+                      <input
+                          type="password"
+                          className="form-control"
+                          data-id="password"
+                          value={customer.password}
+                          onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="confirmPas" className="form-label">
+                        Confirmer le nouveau mot de passe :
+                      </label>
+                      <input
+                          type="password"
+                          className="form-control"
+                          id="confirmPas"
+                          data-id="confirm_password"
+                          value={customer.confirm_password}
+                          onChange={handleChange}
+                      />
+                    </div>
+                    <button
+                        onClick={handleSubmit}
+                        className="btn btn-primary"
+                        style={{ backgroundColor: "#232627", border: 0 }}
+                    >
+                      Modifier
+                    </button>{" "}
+
+                    <br />
+                    <br />
+                    {role === "customer" && (
+                        <button
+                            className="btn btn-primary"
+                            onClick={handleShow}
+                            style={{ backgroundColor: "#DC3545", border: "none" }}
+                        >
+                          Supprimer mon compte
+                        </button>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9 d-flex align-items-center">
-              <div
-                style={{ margin: "15px", width: "100%" }}
-              >
-                <div className="mb-3">
-                  <label htmlFor="username" className="form-label">
-                    Nom d'utilisateur :
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    data-id="username"
-                    value={customer.username}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email :
-                  </label>
-                  <input
-                    type="email"
-                    data-id="email"
-                    className="form-control"
-                    id="email"
-                    value={customer.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Prénom :
-                  </label>
-                  <input
-                    type="text"
-                    data-id="first_name"
-                    className="form-control"
-                    id="name"
-                    value={customer.first_name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="prenom" className="form-label">
-                    Nom :
-                  </label>
-                  <input
-                    type="text"
-                    data-id="last_name"
-                    className="form-control"
-                    id="prenom"
-                    value={customer.last_name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                {role === "customer" && (
-                  <div className="mb-3">
-                    <label htmlFor="tel_number" className="form-label">
-                      Numéro de téléphone :
-                    </label>
-                    <input
-                      type="text"
-                      data-id="tel_number"
-                      className="form-control"
-                      id="tel_number"
-                      value={customer.tel_number}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                )}
-                <div className="mb-3">
-                  <label htmlFor="pass" className="form-label">
-                    Nouveau mot de passe :
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    data-id="password"
-                    value={customer.password}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="confirmPas" className="form-label">
-                    Confirmer le nouveau mot de passe :
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="confirmPas"
-                    data-id="confirm_password"
-                    value={customer.confirm_password}
-                    onChange={handleChange}
-                  />
-                </div>
-                <button
-                  onClick={handleSubmit}
-                  className="btn btn-primary"
-                  style={{ backgroundColor: "#232627", border: 0 }}
-                >
-                  Modifier
-                </button>{" "}
-              
-                <br />
-                <br />
-              {role === "customer" && (
-                <button
-                  className="btn btn-primary"
-                  onClick={handleShow}
-                  style={{ backgroundColor: "#DC3545", border: "none" }}
-                >
-                  Supprimer mon compte
-                </button>
-                )}
-                </div>
-            </div>
           </div>
-        </div>
-      </div>
-      </main>
-      <Footer />
-    </>
+        </main>
+        <Footer />
+      </>
   );
 }

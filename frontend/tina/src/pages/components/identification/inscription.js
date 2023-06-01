@@ -218,6 +218,7 @@ export default function Inscription() {
             else if (error.response.data.detail === "A user with that email already exists.") {
                 alert("L'adresse email est déjà utilisée.");
               evt.target[3].classList.add("is-invalid");
+
             } else {
                 alert("Une erreur est survenue lors de l'inscription vérifiez les informations saisies.");
             }
