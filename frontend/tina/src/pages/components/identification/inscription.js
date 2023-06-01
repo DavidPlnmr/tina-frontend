@@ -103,9 +103,17 @@ export default function Inscription() {
    * @param {Event} evt The event triggered by the input field.
    * @returns {void} Nothing.
    * @see {@link 'connexion.js'.handleChange}
-    */
+   */
   const handleChange = (evt) => {
     let value = evt.target.value;
+
+    if (evt.target.dataset.id === "username") {
+        evt.target.classList.remove("is-invalid");
+    }
+
+    if (evt.target.dataset.id === "email") {
+      evt.target.classList.remove("is-invalid");
+    }
 
     // Supprimer les espaces s'il s'agit du numéro de téléphone
     if (evt.target.dataset.id === "tel_number") {
@@ -148,9 +156,18 @@ export default function Inscription() {
     // Check if all fields are filled
     if (customers.first_name && customers.last_name && customers.username && customers.email && customers.tel_number && customers.password && evt.target.value) {
       setIsFormFilled(true);
+
     } else {
       setIsFormFilled(false);
     }
+    if (evt.target.value !== customers.password) {
+      setPasswordError("Les deux mots de passe ne sont pas identiques.");
+    } else {
+      setPasswordError("");
+    }
+
+
+
   };
 
   /**
@@ -194,7 +211,16 @@ export default function Inscription() {
           router.push('/').then(r => r);
         })
         .catch((error) => {
-          console.log(error);
+            if (error.response.data.username) {
+              alert("Le nom d'utilisateur est déjà utilisé.");
+              evt.target[2].classList.add("is-invalid");
+            }
+            else if (error.response.data.detail === "A user with that email already exists.") {
+                alert("L'adresse email est déjà utilisée.");
+              evt.target[3].classList.add("is-invalid");
+            } else {
+                alert("Une erreur est survenue lors de l'inscription vérifiez les informations saisies.");
+            }
         });
   };
 
@@ -223,26 +249,33 @@ export default function Inscription() {
                     </Card.Subtitle>
                     <Form onSubmit={handleSubmit} className="pt-3">
                       <Form.Group className="mb-3">
+                        <Form.Label className="font-weight-bold">Nom</Form.Label>
                         <Form.Control required data-id="last_name" className="shadow-sm" type="text" placeholder="Nom" value={customers.last_name} onChange={handleChange}/>
                       </Form.Group>
                       <Form.Group className="mb-3">
+                        <Form.Label className="font-weight-bold">Prénom</Form.Label>
                         <Form.Control required data-id="first_name" className="shadow-sm" type="text" placeholder="Prénom" value={customers.first_name} onChange={handleChange}/>
                       </Form.Group>
                       <Form.Group className="mb-3">
+                        <Form.Label className="font-weight-bold">Pseudo</Form.Label>
                         <Form.Control required data-id="username" className="shadow-sm" type="text" placeholder="Pseudo" value={customers.username} onChange={handleChange}/>
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label className="font-weight-bold">Email</Form.Label>
                         <Form.Control required data-id="email" className="shadow-sm" type="email" placeholder="Email" value={customers.email} onChange={handleChange}/>
                       </Form.Group>
                       <Form.Group className="mb-3">
+                        <Form.Label className="font-weight-bold">Téléphone</Form.Label>
                         <Form.Control required data-id="tel_number" className="shadow-sm" type="text" placeholder="076 000 00 00" value={customers.phone} onChange={handleChange}/>
                         {phoneError && <Form.Text className="text-danger">{phoneError}</Form.Text>}
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label className="font-weight-bold">Mot de passe</Form.Label>
                         <Form.Control required data-id="password" className="shadow-sm" type="password" placeholder="Mot de passe (8 caractères minimum)" minLength="8" value={customers.password} onChange={handleChange}/>
                         {passwordError && <Form.Text className="text-danger">{passwordError}</Form.Text>}
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label className="font-weight-bold">Confirmer mot de passe</Form.Label>
                         <Form.Control required data-id="confirmPassword" className="shadow-sm" type="password" placeholder="Confirmer mot de passe" minLength="8" onChange={handleConfirmPasswordChange}/>
                       </Form.Group>
                       <Form.Group className="mt-3 mb-5 text-center">
@@ -280,6 +313,7 @@ export default function Inscription() {
             </div>
           </div>
         </div>
+
       </>
 
   );
