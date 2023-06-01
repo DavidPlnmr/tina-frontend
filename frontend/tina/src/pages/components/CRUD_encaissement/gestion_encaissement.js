@@ -426,6 +426,11 @@ export default function Encaissement() {
     const getEmployeeName = (id) => {
         let employee_info = {};
         employees.map((e) => {
+            if (id == null) {
+                employee_info.username = "Ancien"
+                employee_info.first_name = "Ancien"
+                employee_info.last_name = "employé"
+            }
             if (e.id === id) {
                 employee_info.username = e.username;
                 employee_info.first_name = e.first_name;
@@ -635,10 +640,10 @@ export default function Encaissement() {
 
         //Filter by searchTerm
         let results = lstEncaissement.filter(e =>
-            e.employee.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            e.employee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            e.employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            e.service.toLowerCase().includes(searchTerm.toLowerCase())
+                e.employee.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.employee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.service.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
         //Order by sort
@@ -886,9 +891,11 @@ export default function Encaissement() {
                                             <tr key={encaissement.id}>
                                                 <td scope="row">{encaissement.id}</td>
                                                 <td >
+                                                    
                                                     <div>
                                                         {encaissement.employee.first_name} {encaissement.employee.last_name}
                                                     </div>
+                                                    
                                                 </td>
                                                 <td>{encaissement.service}</td>
                                                 <td>{encaissement.date}</td>
