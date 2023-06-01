@@ -30,7 +30,6 @@ yarn-error.log*
 
 # local env files
 frontend/tina/.env.local
-frontend/tina/.env.exemple
 
 # vercel
 .vercel
