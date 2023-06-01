@@ -18,12 +18,24 @@ export default function Formulaire_services_modify() {
 
     // Constantes pour les URL de l'API
     /**
-     * @constant {String} urlServices url of the API for the services
-     * @constant {String}urlTypesOfService url of the API for the types of service
-     * @constant {String}pathnameModal pathname to redirect to the services page
-     * @constant {String}router router to get the query
-     * @constant {String}values values of the query
      * @memberof 'form_services_modify.js'
+     * @constant {String} urlServices url of the API for the services
+     */
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {String}urlTypesOfService url of the API for the types of service
+     */ 
+    /**
+     * @constant {String}pathnameModal pathname to redirect to the services page
+     * @memberof 'form_services_modify.js'
+     */
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {String}router router to get the query
+     */
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {String}values values of the query
      */
     const urlServices = baseUrl + 'services/';
     const urlTypesOfService = baseUrl + 'typesofservice/';
@@ -39,10 +51,13 @@ export default function Formulaire_services_modify() {
     /**
      * @memberof 'form_services_modify.js'
      * @constant {Array} lstServices Array that contains all the services
-     * @constant {Array} lstNameServices Array that contains all the names of the services
-     * @default {Array} lstNameServices []
      * @default {Array} lstServices []
      * @see {@link 'services.js'.lstServices}
+     */
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {Array} lstNameServices Array that contains all the names of the services
+     * @default {Array} lstNameServices []
      * @see {@link 'form_services.js'.lstNameServices}
      */
     const [lstNameServices, setLstNameServices] = useState([]);
@@ -50,7 +65,8 @@ export default function Formulaire_services_modify() {
 
     /**
      * @memberof 'form_services_modify.js'
-     * @function fetchServices Function to fetch the services from the API
+     * @function fetchServices
+     * @description Function to fetch the services from the API
      * @see {@link 'header.js'.cookies}
      * @see {@link 'gestion_encaissement.js'.fetchServices}
      */
@@ -111,8 +127,8 @@ export default function Formulaire_services_modify() {
 
     /**
      * @memberof 'form_services_modify.js'
-     * @function handleChange change the value of the service
-     * @description the service is the serviceRouter with the new values, the duration is formatted
+     * @function handleChange
+     * @description change the value of the service. the service is the serviceRouter with the new values, the duration is formatted
      * @see {@link 'form_services_modify.js'.formatTime}
      * @param {object} evt event
      */
@@ -126,7 +142,8 @@ export default function Formulaire_services_modify() {
 
     /**
      * @memberof 'form_services_modify.js'
-     * @function handleSelect change the value of the service
+     * @function handleSelect
+     * @description change the value of the service
      * @param {object} evt event
      */
     const handleSelect = (evt) => {
@@ -136,7 +153,8 @@ export default function Formulaire_services_modify() {
     //Formattage des minutes pour le submit
     /**
      * @memberof 'form_services_modify.js'
-     * @function formatTime format the time
+     * @function formatTime
+     * @description format the time
      * @param {Integer} minutes minutes to format
      * @returns {String} the time formatted
      */
@@ -149,8 +167,8 @@ export default function Formulaire_services_modify() {
 
     /**
      * @memberof 'form_services_modify.js'
-     * @function selectServiceDuration select the duration of the service
-     * @description the duration is formatted and set in the select
+     * @function selectServiceDuration
+     * @description select the duration of the service the duration is formatted and set in the select
      * @param {String} t time to format
      */
     const selectServiceDuration = (t) => {
@@ -217,8 +235,8 @@ export default function Formulaire_services_modify() {
     /**
      * @memberof 'form_services_modify.js'
      * @param {String} newName name of the service having an error
-     * @function errorMessage display the error message
-     * @description the error message is displayed, the attribute hidden is removed
+     * @function errorMessage
+     * @description display the error message the error message is displayed, the attribute hidden is removed
      *
      */
     const errorMessage = (newName) => {
@@ -233,8 +251,8 @@ export default function Formulaire_services_modify() {
      *
      * @param {object} s service to modify
      * @memberof 'form_services_modify.js'
-     * @function putService modify the service
-     * @description the service is modified, the success message is displayed or the error message is displayed
+     * @function putService
+     * @description modify the service. the service is modified, the success message is displayed or the error message is displayed
      * @see {@link 'form_services_modify.js'.successMessage}
      * @see {@link 'form_services_modify.js'.errorMessage}
      * @see {@link 'form_services_modify.js'.service}
@@ -260,8 +278,8 @@ export default function Formulaire_services_modify() {
 
     /**
      * @memberof 'form_services_modify.js'
-     * @function fetchTypeOfService fetch the type of service
-     * @description the list of type of service is set
+     * @function fetchTypeOfService
+     * @description fetch the type of service. the list of type of service is set
      * @see {@link 'form_services_modify.js'.setListTypeOfService}
      * @see {@link 'form_services_modify.js'.urlTypesOfService}
      * @see {@link 'form_services_modify.js'.parseCookies}
@@ -298,7 +316,8 @@ export default function Formulaire_services_modify() {
 
     /**
      * @memberof 'form_services_modify.js'
-     * @function useEffect fetch the type of service and services at the loading of the page
+     * @function useEffect
+     * @description fetch the type of service and services at the loading of the page
      * @see {@link 'form_services_modify.js'.fetchTypeOfService}
      * @see {@link 'form_services_modify.js'.fetchServices}
      */
@@ -320,8 +339,8 @@ export default function Formulaire_services_modify() {
 
     /**
      * @memberof 'form_services_modify.js'
-     * @function useEffect set the service and the type of service at the loading of the page
-     * @description the service and the type of service are set when the router is ready, otherwise the function is called again
+     * @function useEffect
+     * @description set the service and the type of service at the loading of the page. the service and the type of service are set when the router is ready, otherwise the function is called again
      * @param {boolean} Router.isReady true if the router is ready to be used
      * @see {@link 'form_services_modify.js'.setServiceRouter}
      * @see {@link 'form_services_modify.js'.setService}

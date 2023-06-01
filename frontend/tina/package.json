@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs": "jsdoc"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.5",
@@ -28,6 +29,7 @@
     "react-icons": "^4.9.0"
   },
   "devDependencies": {
+    "jsdoc": "^4.0.2",
     "minami": "^1.2.3",
     "taffydb": "^2.7.3"
   }

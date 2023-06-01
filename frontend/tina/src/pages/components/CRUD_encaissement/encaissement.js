@@ -18,8 +18,11 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {string} urlCreate
-     * @constant {string} pathnameModal - the pathname to the link redirecting the user after the modal is shown
+     * @constant {string} urlCreate the url to create a new encaissement
+     */
+    /**
+     * @memberof 'encaissement.js'
+     * @constant {string} pathnameModal the pathname to the link redirecting the user after the modal is shown
      */
     //Constantes pour les URL de l'API
     const urlCreate = baseUrl + 'collections/create';
@@ -35,25 +38,24 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {object} router
-     * @constant {object} query
+     * @constant {object} router State variable holding the current route information.
+     * @constant {object} query State variable holding the current query string information.
      * @see {@link 'header.js'.router}
      */
     const router = useRouter();
     const query = router.query;
 
     /**
-   * @constant user
+   * @constant {Object} user State variable holding the currently logged-in user's information.
    * @memberof 'encaissement.js'
-   * @see {@link 'header.js'.user}
-   * @description State variable holding the currently logged-in user's information.
+   * @see {@link 'header.js'.user} 
    * @default {{email: "", username: "", last_name: "", first_name: ""}}
-   * @property {string} email - The authenticated user's email address.
-   * @property {string} username - The authenticated user's username.
-   * @property {string} last_name - The authenticated user's last name.
-   * @property {string} first_name - The authenticated user's first name.
+   * @property {string} email  The authenticated user's email address.
+   * @property {string} username  The authenticated user's username.
+   * @property {string} last_name  The authenticated user's last name.
+   * @property {string} first_name  The authenticated user's first name.
    */
-    const [, setUser] = useState({
+    const [user, setUser] = useState({
         email: "",
         username: "",
         last_name: "",
@@ -63,18 +65,21 @@ function Encaissement_recap() {
     /** 
      * @memberof 'encaissement.js'
      * @constant {object} serviceRouter 
+     * @description State variable holding the current service's information.
     */
     const [serviceRouter, setServiceRouter] = useState({});
 
     /**
      * @memberof 'encaissement.js'
      * @constant {boolean} refresh
+     * @description variable to refresh the page
      */
     const [refresh, setRefresh] = useState(false);
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {boolean} check 
+     * @constant {boolean} check
+     * @description variable to check if the price is student or not
      */
     const [check, setCheck] = useState(false);
 
@@ -117,8 +122,8 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
+     * @param {String} txt the text to show in the error message
      * @function errorMessage 
-     * @param {String} txt - the text to show in the error message
      * @description the function to show the error message then hide it after 3 seconds and refresh the page
      */
     const errorMessage = (txt) => {
@@ -151,8 +156,9 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @param {object} evt - the event object
+     * @param {object} evt the event object
      * @function handleChange 
+     * @description the function to handle the change of the input and set the serviceRouter state variable
      */
     const handleChange = (evt) => {
         setServiceRouter({ ...serviceRouter, [evt.target.dataset.id]: evt.target.value });
@@ -160,7 +166,9 @@ function Encaissement_recap() {
 
 
     /**
+     * @memberof 'encaissement.js'
      * @function handleCheck
+     * @description the function to handle the check of the checkbox for the student price
      */
     const handleCheck = () => {
         setCheck(check => !check);
@@ -203,8 +211,9 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @param {boolean} router.isReady - the boolean to check if the router is ready to be used
-     * @function useEffect 
+     * @param {boolean} router.isReady the boolean to check if the router is ready to be used
+     * @function useEffect
+     * @description This useEffect hook sets the serviceRouter state variable based on the query string when the component mounts or updates.
      * 
      */
     useEffect(() => {
@@ -229,8 +238,9 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @param {boolean} refresh - the boolean to refresh the page
+     * @param {boolean} refresh the boolean to refresh the page
      * @function useEffect
+     * @description This useEffect hook refreshes the page when the refresh state variable changes.
      */
     useEffect(() => {
         console.log("refresh");
