@@ -318,56 +318,34 @@ function Encaissement_recap() {
                                             <p>Il y a un problème avec l'encaissement de : <a id='enc_error'> </a></p>
                                         </div>
 
-                                        <div
-                                            className="mb-3 d-flex flex-column"
+                                            <div className='row'>
+                                                <div className="input-group mb-3">
+                                                    <div className="form-floating">
+                                                        <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
+                                                        <label htmlFor="service_name">Service</label>
+                                                    </div>
+                                                </div>
 
-                                        >
-                                            {/* Liste des encaissements */}
-                                            <table className="table mx-2 rounded text-center" style={{
-                                                width: "100vh",
-                                                height: "auto",
-                                                borderRadius: "6px",
-                                                padding: "10px",
-                                                background: "whiteSmoke",
-                                                boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                                            }}>
-                                                <thead></thead>
-                                                <tbody>
-                                                    <tr key={1}>
-                                                        <td className="align-middle" scope="col">
-                                                            <div className="input-group mb-3">
-                                                                <div className="form-floating">
-                                                                    <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
-                                                                    <label htmlFor="service_name">Service</label>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td className="align-middle" scope="col">
-                                                            <div className="input-group mb-3">
-                                                                <div className="form-floating">
-                                                                    <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control " + isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
-                                                                    <label htmlFor="service_price">Montant</label>
-                                                                </div>
-                                                                <span className="input-group-text">CHF</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="align-middle" scope="col" id='rabais_etudiant'>
-                                                            <div className="input-group mb-3">
-                                                                <div className="form-check">
-                                                                    <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
-                                                                    <label htmlFor="service_discount">Rabais étudiant</label>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                <div className="input-group mb-3">
+                                                    <div className="form-floating">
+                                                        <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control " + isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
+                                                        <label htmlFor="service_price">Montant</label>
+                                                    </div>
+                                                    <span className="input-group-text">CHF</span>
+                                                </div>
 
-                                            {/* Boutons de validation */}
+                                                <div className="input-group mb-3" id='rabais_etudiant'>
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
+                                                        <label htmlFor="service_discount">Rabais étudiant</label>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                            <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
+                                        {/* Boutons de validation */}
 
-                                        </div>
+                                        <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
+
                                     </div>
                                 </div>
                             </div>
