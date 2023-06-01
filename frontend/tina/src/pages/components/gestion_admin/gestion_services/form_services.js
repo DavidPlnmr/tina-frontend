@@ -21,10 +21,19 @@ export default function Formulaire_services() {
     /**
      * @memberof 'form_services.js'
      * @constant {String}urlServices - url to get the services
-     * @constant {String}urlTypesOfService - url to get the types of services
-     * @constant {String}pathnameModal - pathname to redirect to the services page
-     * @constant {baseUrl} baseUrl The base URL of the API
-     */
+    */
+    /**
+    * @memberof 'form_services.js'
+    * @constant {String}urlTypesOfService - url to get the types of services
+    */
+    /** 
+    * @memberof 'form_services.js'
+    * @constant {String}pathnameModal - pathname to redirect to the services page
+    */
+    /** 
+    * @memberof 'form_services.js'
+    * @constant {baseUrl} baseUrl The base URL of the API
+    */
     const urlServices = baseUrl + 'services/';
     const urlTypesOfService = baseUrl + 'typesofservice/';
     // Pathname pour la redirection de page
@@ -59,8 +68,8 @@ export default function Formulaire_services() {
 
     /**
      * @memberof 'form_services.js'
-     * @function handleChange - function to change the value of the service
-     * @description function to change the value of the service, but also to format the duration
+     * @function handleChange 
+     * @description function to change the value of the service. function to change the value of the service, but also to format the duration
      * @param {object} evt - event
      */
 
@@ -87,7 +96,7 @@ export default function Formulaire_services() {
 
     /**
      * @memberof 'form_services.js'
-     * @function handleSelect - function to change the value of the type of service
+     * @function handleSelect 
      * @description function to change the value of the type of service
      * @param {object} evt - event
      */
@@ -109,21 +118,29 @@ export default function Formulaire_services() {
     /**
      * @memberof 'form_services.js'
      * @constant {Array} lstServices Array that contains all the services
-     * @constant {Array} lstTypesOfService Array that contains all the types of service
-     * @constant {Array} lstNameServices Array that contains all the names of the services
-     * @default {Array} lstNameServices []
-     * @default {Array} lstServices []
-     * @default {Array} lstTypesOfService []
      * @see {@link 'services.js'.lstServices}
-     * @see {@link 'services.js'.lstTypesOfService}
+     * @default {Array} lstServices []
+     * 
      */
+    /**
+     * @memberof 'form_services.js'
+     * @constant {Array} lstTypesOfService Array that contains all the types of service
+     * @see {@link 'services.js'.lstTypesOfService}
+     * @default {Array} lstTypesOfService []
+    */
+    /**
+     * @memberof 'form_services.js'
+      * @constant {Array} lstNameServices Array that contains all the names of the services
+      * @default {Array} lstNameServices []
+     */
+
     const [lstNameServices, setLstNameServices] = useState([]);
     const [lstServices, setLstServices] = useState([]);
     const [listTypeOfService, setListTypeOfService] = useState([]);
 
     /**
      * @memberof 'form_services.js'
-     * @constant {boolean} dataFetchedRef - boolean to know if the data is fetched
+     * @constant {boolean} dataFetchedRef
      * @default false
      * @description boolean to know if the data is fetched, it prevents the useEffect to be called twice
      */
@@ -131,7 +148,7 @@ export default function Formulaire_services() {
 
     /**
      * @memberof 'form_services.js'
-     * @function addService - function to add a service
+     * @function addService
      * @description function to add a service by adding a new object JSON in the array service and incrementing the counter
      * @param {object} evt - event
      */
@@ -157,6 +174,8 @@ export default function Formulaire_services() {
     /**
      * @memberof 'form_services.js'
      * @param {Integer} minutes minutes to format
+     * @function formatTime
+     * @description function to format the minutes to hours and minutes
      * @see {@link 'form_services_modify.js'.formatTime}
      * @returns {String} hours and minutes formatted
      */
@@ -167,7 +186,7 @@ export default function Formulaire_services() {
     }
 
     /**
-     * @function handleSubmit - function to submit the form and call the postService function
+     * @function handleSubmit
      * @description go through the array of services and call the postService function for each service if the fields are not empty and if the type of service is selected. then if there is no error, call the successMessage function
      * @see {@link 'form_services_modify.js'.postService}
      * @see {@link 'form_services_modify.js'.successMessage}
@@ -272,7 +291,7 @@ export default function Formulaire_services() {
 
     /**
      * @memberof 'form_services.js'
-     * @function postService - function to post a service
+     * @function postService  
      * @description post a service and set the success state to true if there is no error, else set the success state to false and call the errorMessage function
      * @param {object} s - service to post
      */
@@ -302,7 +321,8 @@ export default function Formulaire_services() {
 
     /**
      * @memberof 'form_services.js'
-     * @function fetchServices Function to fetch the services from the API
+     * @function fetchServices
+     * @description Function to fetch the services from the API
      * @see {@link 'header.js'.cookies}
      * @see {@link 'gestion_encaissement.js'.fetchServices}
      */
@@ -337,7 +357,7 @@ export default function Formulaire_services() {
 
     /**
      * @memberof 'form_services.js'
-     * @function fetchTypeOfService - function to fetch the types of services
+     * @function fetchTypeOfService
      * @description fetch the types of services and set the listTypeOfService state to the response data
      * @see {@link 'form_services_modify.js'.fetchTypeOfService}
      */

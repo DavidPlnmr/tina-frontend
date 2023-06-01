@@ -20,7 +20,13 @@ export default function Formulaire_typesofservice() {
     /**
      * @memberof 'form_typesofservice.js'
      * @constant {String} urlTypesOfService URL of the API for the types of service
+     */
+    /**
+     * @memberof 'form_typesofservice.js'
      * @constant {String} pathnameModal Pathname for the redirection of page after the creation of a new type of service
+        */
+    /**
+     * @memberof 'form_typesofservice.js'
      * @constant {String} pathnameNewService Pathname for the redirection of page when the user wants to create a new service
      */
     const urlTypesOfService = baseUrl + 'typesofservice/';
@@ -28,10 +34,13 @@ export default function Formulaire_typesofservice() {
     /**
      * @memberof 'services.js'
      * @constant {Array} lstTypesOfService Array that contains all the types of service
-     * @constant {Array} lstTOSNames Array that contains all the names of the types of service
      * @default {Array} lstTypesOfService []
-     * @default {Array} lstTOSNames []
      * @see{@link 'services.js'.lstTypesOfService}
+     */
+    /**
+     * @memberof 'form_typesofservice.js'
+     * @constant {Array} lstTOSNames Array that contains all the names of the types of service
+     * @default {Array} lstTOSNames []
      */
     const [lstTOSNames, setLstTOSNames] = useState([]);
     const [lstTypesOfService, setLstTypesOfService] = useState([]);
@@ -39,8 +48,7 @@ export default function Formulaire_typesofservice() {
     /**
      * @memberof 'form_typesofservice.js'
      * @constant {Object} typeOfService Object that contains the name of the type of service
-     * @constant {String} typeOfService.name Name of the type of service
-     * @default {String} typeOfService.name ""
+     * @default {Object} typeOfService {name: ""}
      */
     const [typeOfService, setTypeOfService] = useState(
         {
@@ -50,8 +58,8 @@ export default function Formulaire_typesofservice() {
 
     /**
      * @memberof 'form_typesofservice.js'
-     * @function handleChangeType Function that allows the user to change the name of the type of service
-     * @description takes the value of the input and changes the value of the name of the type of service
+     * @function handleChangeType
+     * @description Function that allows the user to change the name of the type of service. takes the value of the input and changes the value of the name of the type of service
      * @param {object} evt - event
      */
     const handleChangeType = (evt) => {
@@ -60,8 +68,8 @@ export default function Formulaire_typesofservice() {
 
     /**
      * @memberof 'form_typesofservice.js'
-     * @function fetchTypeOfService Function that fetches the types of service from the database
-     * @description fetches the types of service from the database and sets the list of types of service to the response of the request
+     * @function fetchTypeOfService
+     * @description Function that fetches the types of service from the database. fetches the types of service from the database and sets the list of types of service to the response of the request
      * @see {@link 'services.js'.fetchTypeOfService}
      */
     const fetchTypeOfService = () => {
@@ -106,8 +114,8 @@ export default function Formulaire_typesofservice() {
 
     /**
      * @memberof 'form_typesofservice.js'
-     * @function handleSubmit Function that allows the user to create a new type of service
-     * @description posts the new type of service in the database and shows a notification if the creation is successful or not
+     * @function handleSubmit
+     * @description Function that allows the user to create a new type of service. posts the new type of service in the database and shows a notification if the creation is successful or not
      * @see {@link 'form_typesofservice.js'.urlTypesOfService}
      * @see {@link 'form_typesofservice.js'.typeOfService}
      */
