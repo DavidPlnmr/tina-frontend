@@ -19,8 +19,6 @@ export default function Calendrier() {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const [timeList, setTimeList] = useState([]);
-
   /**
    * @constant calendar
    * @memberof 'calendrier.js'

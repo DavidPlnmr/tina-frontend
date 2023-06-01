@@ -262,12 +262,7 @@ export default function RecapRdv() {
             <div className="card-body">
               <h4 className="card-title">Récapitulatif de réservation</h4>
               <ul className="list-group list-group-flush">
-                {cookies.role === "employee"  && description === "" &&(
-                  <li className="list-group-item">
-                    <strong>Client:</strong> {clients.first_name} {clients.last_name}
-                  </li>
-                )}
-                {cookies.role === "admin"  && description === "" &&(
+                {description === "" &&(
                   <li className="list-group-item">
                     <strong>Client:</strong> {clients.first_name} {clients.last_name}
                   </li>
