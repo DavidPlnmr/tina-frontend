@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 import Head from "next/head";
-import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 /**
  * @namespace 'connexion.js'
