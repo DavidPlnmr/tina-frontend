@@ -262,9 +262,9 @@ export default function DetailRdv() {
         console.log(formattedTime);
         setHeureDepart(formattedTime);
         //const durationSplit = services.duration.toString().split(":");
-        if (services.duration != null) {
-          console.log(typeof services.duration);
-          const duration = services.duration;
+        if (appointment.duration != null) {
+          console.log(typeof appointment.duration);
+          const duration = appointment.duration;
           const splitDuration = duration.split(":");
           if (splitDuration[0] == "00") {
             const minuteDuration = parseInt(splitDuration[1]);
@@ -442,17 +442,21 @@ export default function DetailRdv() {
                   <strong>Client:</strong> {customers.first_name} {customers.last_name}
                 </li>
                 )}
+                {appointment.coiffeurs && (
                 <li className="list-group-item">
                   <strong>Coiffeur :</strong> {coiffeurs.first_name} {coiffeurs.last_name}
                 </li>
+                )}
                 {appointment.informations && (
                 <li className="list-group-item">
                   <strong>information:</strong> {appointment.informations}
                 </li>
                 )}
+                {appointment.service && (
                 <li className="list-group-item">
                   <strong>Service:</strong> {services.name}
                 </li>
+                )}
                 <li className="list-group-item">
                   <strong>Date:</strong> {appointment.date}
                 </li>
@@ -462,9 +466,11 @@ export default function DetailRdv() {
                 <li className="list-group-item">
                   <strong>Heure de fin :</strong> {heureFin}
                 </li>
+                {appointment.service && (
                   <li className="list-group-item">
                       <strong>Prix total :</strong> CHF {services.price}
                   </li>
+                )}
               </ul>
             </div>
           </div> <br /> 

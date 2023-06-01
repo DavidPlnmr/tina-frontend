@@ -284,7 +284,6 @@ export default function AjoutMultipleDispo() {
                         <Button variant="primary" className='w-100' onClick={handleSubmit}>
                           Ajouter
                         </Button>
-                        <Link href='../gestion_employee/ajout_dispo' className="nav-link text-center mt-3">Vous voulez en ajouter un seul ? cliquez ici !</Link>
                       </Form>
                     </Card.Body>
                   </Card>

@@ -32,7 +32,7 @@ export default function Dash() {
                                 <div className="card-body d-flex flex-column justify-content-center align-items-center">
                                     <FaCalendarCheck size={70} className="my-3" style={{color: "green"}}/>
                                     <h5 className="card-title text-center font-weight-bold">Gestion des disponibilités</h5>
-                                    <Link href="./gestion_employee/ajout_dispo">
+                                    <Link href="./gestion_employee/ajout_multiple_dispo">
                                         <p className="btn btn-primary mt-3" style={{backgroundColor: "#232627", border: "none"}}>Choisir</p>
                                     </Link>
                                 </div>
