@@ -464,6 +464,9 @@ export default function DetailRdv() {
                 <li className="list-group-item">
                   <strong>Heure de fin :</strong> {heureFin}
                 </li>
+                  <li className="list-group-item">
+                      <strong>Prix total :</strong> CHF {services.price}
+                  </li>
               </ul>
             </div>
           </div> <br /> 

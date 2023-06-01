@@ -295,7 +295,7 @@ export default function RecapRdv() {
                   <strong>Heure de fin :</strong> {heureFin}
                 </li>
                 <li className="list-group-item">
-                  <strong>Prix total :</strong> {services.price}
+                  <strong>Prix total :</strong> CHF {services.price}
                 </li>
               </ul>
             </div>
