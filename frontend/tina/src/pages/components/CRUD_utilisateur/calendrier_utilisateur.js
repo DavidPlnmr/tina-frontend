@@ -136,17 +136,20 @@ export default function CalendrierClient() {
               })
               .map(async (appointment) => {
                 // Fetch service info for each appointment
-                const response2 = await axios.get(
-                  baseUrl + "services/" +
-                    appointment.service +
-                    "/",
-                  {
-                    headers: {
-                      Authorization: "Token " + cookies.csrftoken,
-                    },
-                  }
-                );
-                const service = response2.data;
+                let service
+                if (appointment.service !== null) {
+                  const response2 = await axios.get(
+                    baseUrl + "services/" +
+                      appointment.service +
+                      "/",
+                    {
+                      headers: {
+                        Authorization: "Token " + cookies.csrftoken,
+                      },
+                    }
+                  );
+                  service = response2.data;
+                }
 
                 const response3 = await axios.get(
                   baseUrl + "employees/" +
@@ -182,21 +185,32 @@ export default function CalendrierClient() {
                 const start = new Date(
                   `${appointment.date}T${appointment.time}`
                 );
-                console.log(service.duration.slice(0, 2) * 60 + service.duration.slice(3, 5));
                 
-                let end = addMinutes(start, service.duration.slice(3, 5));
+                let end = addMinutes(start, appointment.duration.slice(3, 5));
 
-                if (service.duration.slice(0, 2) !== "00") {
-                  end = addMinutes(start, Number(service.duration.slice(0, 2)) * 60 + Number(service.duration.slice(3, 5)));
+                if (appointment.duration.slice(0, 2) !== "00") {
+                  end = addMinutes(start, Number(appointment.duration.slice(0, 2)) * 60 + Number(appointment.duration.slice(3, 5)));
                 }
 
                 if (cookies.role === "customer") {
+                  if (service !== undefined) {
                   myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
+                } else {
+                  myTitle = `Service : Inconnu avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
+                }
                 } else if (cookies.role === "employee" || cookies.role === "admin") {
                   if (appointment.customer != null) {
-                    myTitle = `Service : ${service.name} / avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
+                    if (service !== undefined) {
+                      myTitle = `Service : ${service.name} / avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
+                    } else {
+                      myTitle = `Service : Inconnu / avec le client ${customer.first_name} ${customer.last_name} (cliquez pour gérer le rendez-vous)`;
+                    }
                   } else {
+                    if (service !== undefined) {
                     myTitle = `Service : ${service.name} / informations : ${information} (cliquez pour gérer le rendez-vous)`;
+                  } else {
+                    myTitle = `Service : Inconnu / informations : ${information} (cliquez pour gérer le rendez-vous)`;
+                  }
                   }
                 }
 
@@ -233,6 +247,7 @@ export default function CalendrierClient() {
     if (calendar !== null && events.length > 0) {
       if (event.current) return;
       event.current = true;
+      console.log(events);
       calendar.addEventSource(events);
       // Ajouter la classe 'event-passe' aux événements passés
       const maintenant = new Date();

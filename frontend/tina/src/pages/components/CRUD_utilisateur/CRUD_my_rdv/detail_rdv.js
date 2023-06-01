@@ -262,9 +262,9 @@ export default function DetailRdv() {
         console.log(formattedTime);
         setHeureDepart(formattedTime);
         //const durationSplit = services.duration.toString().split(":");
-        if (services.duration != null) {
-          console.log(typeof services.duration);
-          const duration = services.duration;
+        if (appointment.duration != null) {
+          console.log(typeof appointment.duration);
+          const duration = appointment.duration;
           const splitDuration = duration.split(":");
           if (splitDuration[0] == "00") {
             const minuteDuration = parseInt(splitDuration[1]);
@@ -450,9 +450,11 @@ export default function DetailRdv() {
                   <strong>information:</strong> {appointment.informations}
                 </li>
                 )}
+                {appointment.service && (
                 <li className="list-group-item">
                   <strong>Service:</strong> {services.name}
                 </li>
+                )}
                 <li className="list-group-item">
                   <strong>Date:</strong> {appointment.date}
                 </li>
