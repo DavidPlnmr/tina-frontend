@@ -20,11 +20,23 @@ export default function Creation_encaissement() {
 
   /**
    * @memberof 'creation_encaissement.js'
-   * @constant {string} urlServices The URL to fetch the Services from the API
-   * @constant {string} urlTypesOfService The URL to fetch the TypesOfService from the API
-   * @constant {string} pathname The pathname to redirect to the page to create a new payment (encaissement)
-   * @constant {string} pathnameChooseService The pathname to redirect after the service selection, to create a new payment (encaissement)
-   * @constant {baseUrl} baseUrl The base URL of the API
+   * @constant {string} urlServices  The URL to fetch the Services from the API
+   */
+  /**
+   * @memberof 'creation_encaissement.js'
+   * @constant {string} urlTypesOfService  The URL to fetch the TypesOfService from the API
+   */
+  /**
+   * @memberof 'creation_encaissement.js'
+   * @constant {string} pathname  The pathname to redirect to the page to create a new payment (encaissement)
+   */
+  /** 
+   * @memberof 'creation_encaissement.js'
+   * @constant {string} pathnameChooseService  The pathname to redirect after the service selection, to create a new payment (encaissement)
+   */
+  /**
+   * @memberof 'creation_encaissement.js'
+   * @constant {baseUrl} baseUrl  The base URL of the API
    */
   // Constantes pour les URL de l'API
   const urlServices = baseUrl + 'services/';
@@ -36,7 +48,8 @@ export default function Creation_encaissement() {
 
   /**
    * @memberof 'creation_encaissement.js'
-   * @constant {object} router The router object to redirect to another page after the service selection. It is from the Next.js library
+   * @constant {object} router 
+   * @description The router object to redirect to another page after the service selection. It is from the Next.js library
    * @see {@link 'header.js'.router}
    */
   //Partie pour la redirection de page
@@ -45,9 +58,10 @@ export default function Creation_encaissement() {
 
   /**
    * @memberof 'creation_encaissement.js'
-   * @constant {object} query The query object to get the service selected from the previous page. It is from the Next.js library 
+   * @constant {object} query  The query object to get the service selected from the previous page. It is from the Next.js library 
+   * @function handleClick
    * @description the parameter 'service' is stringified then sent to the next page through the query object
-   * @function handleClick Function to redirect to the next page with the service selected  
+   * Redirect to the next page with the service selected
    * @param {JSON} service 
    */
   const handleClick = (service) => {
@@ -60,8 +74,9 @@ export default function Creation_encaissement() {
   /**
    * @memberof 'creation_encaissement.js'
    * @property {object} encaissement_manuel variable to store the service selected from the previous page into a JSON object
-   * @description the parameter 'encaissement' is a premade service with the id 0, it is then stringified then sent to the next page through the query object
-   * @function handleClickEncManuel Function to redirect to the next page with the encaissement_manuel object
+   * @function handleClickEncManuel 
+   * @description Function to redirect to the next page with the encaissement_manuel object
+   * the parameter 'encaissement' is a premade service with the id 0, it is then stringified then sent to the next page through the query object
    * 
    */
   const handleClickEncManuel = () => {
@@ -76,7 +91,8 @@ export default function Creation_encaissement() {
 
   /**
    * @memberof 'creation_encaissement.js'
-   * @constant {object} lstServices The list of services fetched from the API
+   * @constant {object} lstServices
+   * @description The list of services fetched from the API
    * @default {object} [] An empty list
    */
   //Partie pour les services et affichage etc
@@ -84,7 +100,8 @@ export default function Creation_encaissement() {
 
   /**
    * @memberof 'creation_encaissement.js'
-   * @constant {object} lstTypesOfService The list of types of services fetched from the API
+   * @constant {object} lstTypesOfService
+   * @description The list of types of services fetched from the API
    * @default {object} [] An empty list
    */
   const [lstTypesOfService, setLstTypesOfService] = useState([]);
@@ -102,9 +119,10 @@ export default function Creation_encaissement() {
 
   /**
    * @memberof 'creation_encaissement.js'
-   * @function fetchTypeOfService Function to fetch the types of services from the API
+   * @function fetchTypeOfService
+   * @description Function to fetch the types of services from the API
    * @param {String} duration string of the duration of a service
-   * @returns {Integer} the duration of a service in minutes
+   * @returns {Integer}
    */
   // Function to format the duration
   const formatDuration = (duration) => {
@@ -117,8 +135,9 @@ export default function Creation_encaissement() {
   /**
    * @memberof 'creation_encaissement.js'
    * @param {object} price it is the price of a service
+   * @function priceWithoutCent
    * @description if the parameter 'price' is a string, it is then split into an array of 2 elements, the first element is the price without the cents. otherwise, it returns the price
-   * @returns {object} the price of a service without the cents 
+   * @returns {object} the price of a service without the cents
    * 
    */
   // Function to get price without cents
@@ -136,9 +155,10 @@ export default function Creation_encaissement() {
   /**
    * 
    * @param {object} lstTypeOfService a list of types of services
-   * @description this function returns the minimum price for a type of service
+   
    * @memberof 'creation_encaissement.js'
    * @function minPriceForATypeOfService
+   * @description this function returns the minimum price for a type of service
    * @returns {object} the minimum price for a type of service
    */
   // Function to get the minimum price for a type of service
@@ -153,7 +173,8 @@ export default function Creation_encaissement() {
   /**
    * @memberof 'creation_encaissement.js'
    * @param {String} urlTypesOfService the url to fetch the types of services from the API
-   * @function fetchTypeOfService Function to fetch the types of services from the API
+   * @function fetchTypeOfService
+   * @description Function to fetch the types of services from the API
    * @constant {object} cookies The cookies object to get the csrftoken
    * @see {@link 'header.js'.cookies}
    * 
@@ -177,10 +198,10 @@ export default function Creation_encaissement() {
   /**
    * @memberof 'creation_encaissement.js'
    * @param {String} urlServices the url to fetch the services from the API
-   * @function fetchServices Function to fetch the services from the API
+   * @function fetchServices
+   * @description Function to fetch the services from the API
    * @constant {object} cookies The cookies object to get the csrftoken
    * @see {@link 'header.js'.cookies}
-   * @see {@link 'gestion_encaissement.js'.fetchServices}
    */
   const fetchServices = () => {
     const cookies = parseCookies();
@@ -203,7 +224,8 @@ export default function Creation_encaissement() {
   /**
    * @memberof 'creation_encaissement.js'
    * @param {object} lstServices the list of services
-   * @function useEffect Function to refresh the page when the list of services is updated
+   * @function useEffect
+   * @description Function to refresh the page when the list of services is updated
    */
   useEffect(() => {
     console.log("refresh");
@@ -211,8 +233,8 @@ export default function Creation_encaissement() {
 
   /**
    * @memberof 'creation_encaissement.js'
-   * @function useEffect Function to fetch the services and the types of services from the API when the page is loaded
-   * @description It calls the functions fetchServices and fetchTypeOfService
+   * @function useEffect
+   * @description Function to fetch the services and the types of services from the API when the page is loaded. It calls the functions fetchServices and fetchTypeOfService
    */
   useEffect(() => {
     fetchServices();

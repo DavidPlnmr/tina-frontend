@@ -18,8 +18,11 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {string} urlCreate
-     * @constant {string} pathnameModal - the pathname to the link redirecting the user after the modal is shown
+     * @constant {string} urlCreate the url to create a new encaissement
+     */
+    /**
+     * @memberof 'encaissement.js'
+     * @constant {string} pathnameModal the pathname to the link redirecting the user after the modal is shown
      */
     //Constantes pour les URL de l'API
     const urlCreate = baseUrl + 'collections/create';
@@ -35,25 +38,24 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {object} router
-     * @constant {object} query
+     * @constant {object} router State variable holding the current route information.
+     * @constant {object} query State variable holding the current query string information.
      * @see {@link 'header.js'.router}
      */
     const router = useRouter();
     const query = router.query;
 
     /**
-   * @constant user
+   * @constant {Object} user State variable holding the currently logged-in user's information.
    * @memberof 'encaissement.js'
-   * @see {@link 'header.js'.user}
-   * @description State variable holding the currently logged-in user's information.
+   * @see {@link 'header.js'.user} 
    * @default {{email: "", username: "", last_name: "", first_name: ""}}
-   * @property {string} email - The authenticated user's email address.
-   * @property {string} username - The authenticated user's username.
-   * @property {string} last_name - The authenticated user's last name.
-   * @property {string} first_name - The authenticated user's first name.
+   * @property {string} email  The authenticated user's email address.
+   * @property {string} username  The authenticated user's username.
+   * @property {string} last_name  The authenticated user's last name.
+   * @property {string} first_name  The authenticated user's first name.
    */
-    const [, setUser] = useState({
+    const [user, setUser] = useState({
         email: "",
         username: "",
         last_name: "",
@@ -63,18 +65,21 @@ function Encaissement_recap() {
     /** 
      * @memberof 'encaissement.js'
      * @constant {object} serviceRouter 
+     * @description State variable holding the current service's information.
     */
     const [serviceRouter, setServiceRouter] = useState({});
 
     /**
      * @memberof 'encaissement.js'
      * @constant {boolean} refresh
+     * @description variable to refresh the page
      */
     const [refresh, setRefresh] = useState(false);
 
     /**
      * @memberof 'encaissement.js'
-     * @constant {boolean} check 
+     * @constant {boolean} check
+     * @description variable to check if the price is student or not
      */
     const [check, setCheck] = useState(false);
 
@@ -117,8 +122,8 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
+     * @param {String} txt the text to show in the error message
      * @function errorMessage 
-     * @param {String} txt - the text to show in the error message
      * @description the function to show the error message then hide it after 3 seconds and refresh the page
      */
     const errorMessage = (txt) => {
@@ -151,8 +156,9 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @param {object} evt - the event object
+     * @param {object} evt the event object
      * @function handleChange 
+     * @description the function to handle the change of the input and set the serviceRouter state variable
      */
     const handleChange = (evt) => {
         setServiceRouter({ ...serviceRouter, [evt.target.dataset.id]: evt.target.value });
@@ -160,7 +166,9 @@ function Encaissement_recap() {
 
 
     /**
+     * @memberof 'encaissement.js'
      * @function handleCheck
+     * @description the function to handle the check of the checkbox for the student price
      */
     const handleCheck = () => {
         setCheck(check => !check);
@@ -203,8 +211,9 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @param {boolean} router.isReady - the boolean to check if the router is ready to be used
-     * @function useEffect 
+     * @param {boolean} router.isReady the boolean to check if the router is ready to be used
+     * @function useEffect
+     * @description This useEffect hook sets the serviceRouter state variable based on the query string when the component mounts or updates.
      * 
      */
     useEffect(() => {
@@ -229,8 +238,9 @@ function Encaissement_recap() {
 
     /**
      * @memberof 'encaissement.js'
-     * @param {boolean} refresh - the boolean to refresh the page
+     * @param {boolean} refresh the boolean to refresh the page
      * @function useEffect
+     * @description This useEffect hook refreshes the page when the refresh state variable changes.
      */
     useEffect(() => {
         console.log("refresh");
@@ -308,56 +318,34 @@ function Encaissement_recap() {
                                             <p>Il y a un problème avec l'encaissement de : <a id='enc_error'> </a></p>
                                         </div>
 
-                                        <div
-                                            className="mb-3 d-flex flex-column"
+                                            <div className='row'>
+                                                <div className="input-group mb-3">
+                                                    <div className="form-floating">
+                                                        <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
+                                                        <label htmlFor="service_name">Service</label>
+                                                    </div>
+                                                </div>
 
-                                        >
-                                            {/* Liste des encaissements */}
-                                            <table className="table mx-2 rounded text-center" style={{
-                                                width: "100vh",
-                                                height: "auto",
-                                                borderRadius: "6px",
-                                                padding: "10px",
-                                                background: "whiteSmoke",
-                                                boxShadow: "0 2px 4px rgba(0,0,0,.2)",
-                                            }}>
-                                                <thead></thead>
-                                                <tbody>
-                                                    <tr key={1}>
-                                                        <td className="align-middle" scope="col">
-                                                            <div className="input-group mb-3">
-                                                                <div className="form-floating">
-                                                                    <input type="text" defaultValue={serviceRouter.name} className="form-control" id="service_name" disabled />
-                                                                    <label htmlFor="service_name">Service</label>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td className="align-middle" scope="col">
-                                                            <div className="input-group mb-3">
-                                                                <div className="form-floating">
-                                                                    <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control " + isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
-                                                                    <label htmlFor="service_price">Montant</label>
-                                                                </div>
-                                                                <span className="input-group-text">CHF</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="align-middle" scope="col" id='rabais_etudiant'>
-                                                            <div className="input-group mb-3">
-                                                                <div className="form-check">
-                                                                    <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
-                                                                    <label htmlFor="service_discount">Rabais étudiant</label>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                <div className="input-group mb-3">
+                                                    <div className="form-floating">
+                                                        <input type="number" defaultValue={!check ? serviceRouter.price : serviceRouter.price_student} className={"form-control " + isValid} id="service_price" data-id='price' placeholder="0" onChange={handleChange} />
+                                                        <label htmlFor="service_price">Montant</label>
+                                                    </div>
+                                                    <span className="input-group-text">CHF</span>
+                                                </div>
 
-                                            {/* Boutons de validation */}
+                                                <div className="input-group mb-3" id='rabais_etudiant'>
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="checkbox" value="" id="service_discount" onClick={handleCheck} />
+                                                        <label htmlFor="service_discount">Rabais étudiant</label>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                            <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
+                                        {/* Boutons de validation */}
 
-                                        </div>
+                                        <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Enregistrer</button>
+
                                     </div>
                                 </div>
                             </div>

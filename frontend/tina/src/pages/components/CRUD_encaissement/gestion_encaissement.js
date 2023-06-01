@@ -15,10 +15,19 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} urlEncaissements - url to get the encaissements
-     * @constant {String} urlServices - url to get the services
-     * @constant {String} urlEmployees - url to get the employees
-     * @constant {String} pathnameAdd - pathname to redirect to the page to add an encaissement
+     * @constant {String} urlEncaissements   url to get the encaissements
+     */
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} urlServices   url to get the services
+     */
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} urlEmployees  url to get the employees
+     */
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} pathnameAdd   pathname to redirect to the page to add an encaissement
      */
     // Constantes pour les URL de l'API
     const urlEncaissements = baseUrl + 'collections/';
@@ -30,16 +39,18 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} modificationMode - state to manage the message to display when the user wants to modify or delete an encaissement
+     * @constant {String} modificationMode 
+     * @description  state to manage the message to display when the user wants to modify or delete an encaissement
      * @default ""
      */
-    const [, setModificationMode] = useState(
+    const [modificationMode, setModificationMode] = useState(
         ""
     );
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} buttonDelete - state to manage the className of the delete button
+     * @constant {String} buttonDelete 
+     * @description  state to manage the className of the delete button
      * @default "btn btn-outline-danger"
      */
     const [buttonDelete, setButtonDelete] = useState(
@@ -48,14 +59,16 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} modeModify - state to manage the modification mode(modify or delete)
+     * @constant {String} modeModify 
+     * @description state to manage the modification mode(modify or delete)
      * @default ""
      */
     const [modeModify, setModeModify] = useState('');
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} btnChoose - state to manage the className of the choose button
+     * @constant {String} btnChoose 
+     * @description state to manage the className of the choose button
      * @default "btn btn-dark"
      */
     const [btnChoose, setBtnChoose] = useState(
@@ -64,7 +77,8 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} encaissement - state to manage the list of encaissements
+     * @constant {object} encaissement
+     * @description state to manage the list of encaissements
      * @default []
      */
     //variables pour la gestion des encaissements
@@ -73,21 +87,24 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} encaissementsAffichage - state to manage the list of encaissements to display
+     * @constant {object} encaissementsAffichage 
+     * @description state to manage the list of encaissements to display
      * @default []
      */
     const [encaissementsAffichage, setEncaissementsAffichage] = useState([]);
     //Service
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} services - state to manage the list of services
+     * @constant {object} services 
+     * @description state to manage the list of services
      * @default []
      */
     const [services, setServices] = useState([]);
     //Employee
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} employees - state to manage the list of employees
+     * @constant {object} employees 
+     * @description state to manage the list of employees
      * @default []
      */
     const [employees, setEmployees] = useState([]);
@@ -95,42 +112,46 @@ export default function Encaissement() {
     //partie de la modal
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} show - state to manage if the modal is shown or not
+     * @constant {object} show 
+     * @description state to manage if the modal is shown or not
      * @default false
      */
     const [show, setShow] = useState(false);
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} s - state to manage the id of the encaissement to delete
+     * @constant {object} s 
+     * @description state to manage the id of the encaissement to delete
      * @default {id:0}
      */
     const [s, setS] = useState({ id: 0 });
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function handleClose - function to close the modal
-     * @description set the state show to false
+     * @function handleClose
+     * @description function to close the modal. Set the state show to false
      */
     const handleClose = () => setShow(false);
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function handleShow - function to show the modal
-     * @description set the state show to true
+     * @function handleShow
+     * @description function to show the modal. Set the state show to true
      */
     const handleShow = () => setShow(true);
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {boolean} refresh - state to manage the refresh of the page
+     * @constant {boolean} refresh 
+     * @description State to manage the refresh of the page
      * @default false
      */
     const [refresh, setRefresh] = useState(false);
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {Integer} totalAmount - state to manage the total amount of the encaissements
+     * @constant {Integer} totalAmount 
+     * @description state to manage the total amount of the encaissements
      * @default 0
      */
     //total amount
@@ -138,7 +159,8 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {Integer} totalLenght - state to manage the total lenght of the encaissements
+     * @constant {Integer} totalLenght 
+     * @description state to manage the total lenght of the encaissements
      * @default 0
      */
     //total amount
@@ -147,14 +169,16 @@ export default function Encaissement() {
     // Const pour la recherche et le tri
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} searchTerm - state to manage the search term of the encaissements filter
+     * @constant {String} searchTerm 
+     * @description state to manage the search term of the encaissements filter
      * @default ""
      */
     const [searchTerm, setSearchTerm] = useState("");
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} searchResults - state to manage the list of encaissements searched
+     * @constant {object} searchResults
+     * @description state to manage the list of encaissements searched
      * @default []
      */
     const [searchResults, setSearchResults] = useState([]);
@@ -169,45 +193,49 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {object} preSearchResults - state to manage the previous list of encaissements searched
-     * @description used to manage the list of encaissements searched
+     * @constant {object} preSearchResults 
+     * @description state to manage the previous list of encaissements searched. Used to manage the list of encaissements searched
      * @default []
      */
     const preSearchResults = useRef([]);
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} sortBy - state to manage the sort term of the encaissements filter
+     * @constant {String} sortBy 
+     * @description state to manage the sort term of the encaissements filter
      * @default ""
      */
     const [sortBy, setSortBy] = useState("");
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} amountFilter - state to manage the amount filter of the encaissements filter
+     * @constant {String} amountFilter 
+     * @description state to manage the amount filter of the encaissements filter
      * @default ""
      */
     const [amountFilter, setAmountFilter] = useState("amount_total");
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} invertFilter - state to manage the invert filter of the encaissements filter
+     * @constant {String} invertFilter 
+     * @description state to manage the invert filter of the encaissements filter
      * @default false
      */
     const [invertFilter, setInvertFilter] = useState(false);
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @constant {String} invertFilterActive - state to manage the invert filter button of the encaissements filter
+     * @constant {String} invertFilterActive 
+     * @description state to manage the invert filter button of the encaissements filter
      * @default ""
      */
     const [invertFilterActive, setInvertFilterActive] = useState("");
 // Handle search and sort functions for encaissements
     /**
      * @memberof 'gestion_encaissement.js'
-     * @param {object} event - event to manage the search term
-     * @function handleSearch - function to manage the search term
-     * @description set the state searchTerm to the value of the search input
+     * @param {object} event   event to manage the search term
+     * @function handleSearch 
+     * @description function to manage the search term. Set the state searchTerm to the value of the search input
      */
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -215,9 +243,9 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function handleSort - function to manage the sort term
-     * @param {object} event - event to manage the sort term
-     * @description set the state sortBy to the value of the sort input
+     * @function handleSort 
+     * @description function to manage the sort term
+     * @param {object} event  event to manage the sort term. Set the state sortBy to the value of the sort input
      */
     const handleSort = (event) => {
         setSortBy(event.target.value);
@@ -225,8 +253,8 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function handleClickDelete - function to manage the delete mode
-     * @description set the state modeModify to 'delete' if it's not the delete mode, else set the state modeModify to ''
+     * @function handleClickDelete 
+     * @description function to manage the delete mode. Set the state modeModify to 'delete' if it's not the delete mode, else set the state modeModify to ''
      */
     const handleClickDelete = () => {
         if (modeModify !== 'delete') {
@@ -238,9 +266,9 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function handleChoose - function to manage the choose mode
-     * @param {object} evt - event to manage the choose mode 
-     * @description set the state s to the id of the encaissement to delete and show the modal
+     * @function handleChoose
+     * @description function to manage the choose mode. set the state s to the id of the encaissement to delete and show the modal
+     * @param {object} evt event to manage the choose mode
      */
     const handleChoose = (evt) => {
         setS(() => ({ id: evt.target.id }));
@@ -251,11 +279,11 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function handleConfirmDelete - function to manage the delete of the encaissement
+     * @function handleConfirmDelete 
+     * @description function to manage the delete of the encaissement. delete the encaissement through the API, then delete the encaissement in the list of encaissements and show a notification
      * @see {@link 'gestion_encaissement.js'.handleClose}
      * @see {@link 'gestion_encaissement.js'.errorMessage}
      * @see {@link 'gestion_encaissement.js'.urlEncaissements}
-     * @description delete the encaissement through the API, then delete the encaissement in the list of encaissements and show a notification
      */
     const handleConfirmDelete = () => {
 
@@ -278,9 +306,9 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function errorMessage - function to show a notification when an error occured
-     * @param {Integer} id - id of the encaissement to delete
-     * @description modify the text of the notification and show it, then hide it after 3 seconds, and refresh the page
+     * @function errorMessage 
+     * @description function to show a notification when an error occured. modify the text of the notification and show it, then hide it after 3 seconds, and refresh the page
+     * @param {Integer} id  id of the encaissement to delete
      */
     const errorMessage = (id) => {
         document.getElementById("notification_delete").removeAttribute("hidden");
@@ -288,18 +316,20 @@ export default function Encaissement() {
         serviceError.textContent = id;
         //après 3 secondes, on cache la notification
         setTimeout(function () {
-            document.getElementById("notification_delete").setAttribute("hidden", "hidden");
-        }, 8000);
+            if (document.getElementById("notification_delete") != null) {
+                document.getElementById("notification_delete").setAttribute("hidden", "hidden");
+            }
+        }, 10000);
         setRefresh(!refresh);
     };
 
     //Récupération des encaissements
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function fetchEncaissements - function to get the encaissements through the API
+     * @function fetchEncaissements 
+     * @description function to get the encaissements through the API. get the encaissements through the API and set the state encaissements with the response data    
      * @see {@link 'gestion_encaissement.js'.urlEncaissements}
      * @see {@link 'gestion_encaissement.js'.parseCookies}
-     * @description get the encaissements through the API and set the state encaissements with the response data    
      */
     const fetchEncaissements = () => {
         const cookies = parseCookies();
@@ -320,10 +350,10 @@ export default function Encaissement() {
     //Récupération des services
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function fetchServices - function to get the services through the API
+     * @function fetchServices 
+     * @description function to get the services through the API. get the services through the API and set the state services with the response data
      * @see {@link 'gestion_encaissement.js'.urlServices}
      * @see {@link 'gestion_encaissement.js'.parseCookies}
-     * @description get the services through the API and set the state services with the response data
      */
     const fetchServices = () => {
         const cookies = parseCookies();
@@ -344,10 +374,10 @@ export default function Encaissement() {
     //Récupération des employees
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function fetchEmployees - function to get the employees through the API
+     * @function fetchEmployees 
+     * @description function to get the employees through the API. get the employees through the API and set the state employees with the response data
      * @see {@link 'gestion_encaissement.js'.urlEmployees}
      * @see {@link 'gestion_encaissement.js'.parseCookies}
-     * @description get the employees through the API and set the state employees with the response data
      */
     const fetchEmployees = () => {
         const cookies = parseCookies();
@@ -369,10 +399,10 @@ export default function Encaissement() {
     //Récupération du nom du service
     /**
      * @memberof 'gestion_encaissement.js'
-     * @param {Integer} id - id of the service
-     * @function getServiceName - function to get the name of the service
-     * @description go through the list of services and return the name of the service with the id passed in parameter
-     * @returns {String} name - name of the service
+     * @param {Integer} id   id of the service
+     * @function getServiceName
+     * @description function to get the name of the service go through the list of services and return the name of the service with the id passed in parameter
+     * @returns {String}
      */
     const getServiceName = (id) => {
         let name = "";
@@ -389,9 +419,9 @@ export default function Encaissement() {
     /**
      * @memberof 'gestion_encaissement.js'
      * @function getEmployeeName
-     * @param {Integer} id - id of the employee
+     * @param {Integer} id  id of the employee.
      * @description go through the list of employees and return the username, firstname and lastname of the employee with the id passed in parameter
-     * @returns {Object} employee_info - username, firstname and lastname of the employee
+     * @returns {Object}
      */
     const getEmployeeName = (id) => {
         let employee_info = {};
@@ -407,10 +437,10 @@ export default function Encaissement() {
     //Formatage de la date
     /**
      * @memberof 'gestion_encaissement.js'
-     * @param {String} date - date of the encaissement
-     * @function formatDate - function to format the date of the encaissement
-     * @description format the date of the encaissement from YYYY-MM-DD to DD/MM/YYYY
-     * @returns {String} newDate - date of the encaissement formatted
+     * @param {String} date date of the encaissement
+     * @function formatDate 
+     * @description function to format the date of the encaissement. format the date of the encaissement from YYYY-MM-DD to DD/MM/YYYY
+     * @returns {String}
      */
     const formatDate = (date) => {
         let newDate = date.split('-');
@@ -419,11 +449,11 @@ export default function Encaissement() {
     //Formatage de l'heure
     /**
      * 
-     * @param {String} time - time of the encaissement
+     * @param {String} time time of the encaissement
      * @memberof 'gestion_encaissement.js'
-     * @function formatTime - function to format the time of the encaissement
-     * @description format the time of the encaissement from HH:MM:SS to HHhMM
-     * @returns {String} newTime - time of the encaissement formatted
+     * @function formatTime 
+     * @description function to format the time of the encaissement. format the time of the encaissement from HH:MM:SS to HHhMM
+     * @returns {String}
      */
     const formatTime = (time) => {
         let newTime = time.split(':');
@@ -433,11 +463,11 @@ export default function Encaissement() {
     //Formatage des encaissements pour l'affichage
     /**
      * 
-     * @param {object} encaissements - list of the encaissements
+     * @param {object} encaissements  list of the encaissements
      * @memberof 'gestion_encaissement.js'
-     * @function formatEncaissements - function to format the encaissements for the display
-     * @description go through the list of encaissements and format them for the display
-     * @returns {object} newEncaissements - list of the encaissements formatted
+     * @function formatEncaissements 
+     * @description function to format the encaissements for the display. go through the list of encaissements and format them for the display
+     * @returns {object}
      * @see {@link 'gestion_encaissement.js'.formatDate}
      * @see {@link 'gestion_encaissement.js'.formatTime}
      */
@@ -477,7 +507,7 @@ export default function Encaissement() {
      * @memberof 'gestion_encaissement.js'
      * @function toggleButtons
      * @description function to toggle the active class on the amount's filters
-     * @param {object} evt
+     * @param {object} evt event to manage the click on the amount's filters
      * @param {boolean} reset - boolean to know if we have to reset the active class
      */
     const toggleButtons = (evt, reset) => {
@@ -495,7 +525,7 @@ export default function Encaissement() {
      * @memberof 'gestion_encaissement.js'
      * @function getWeekNumber
      * @param {Date} date we want to get the week number
-     * @returns {number} week number of the date
+     * @returns {number}
      */
     const getWeekNumber = (date) => {
         // Copy date so it doesn't modify the original
@@ -560,8 +590,8 @@ export default function Encaissement() {
     //Affichage des encaissements
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function useEffect - sets the state encaissementsAffichage and searchResults with the formatted encaissements
-     * and sets the state totalAmount with the total amount of the encaissements. It is called when the state encaissements is updated
+     * @function useEffect
+     * @description sets the state encaissementsAffichage and searchResults with the formatted encaissements and sets the state totalAmount with the total amount of the encaissements. It is called when the state encaissements is updated
      * @see {@link 'gestion_encaissement.js'.formatEncaissements}
      * @param {object} encaissements - list of the encaissements
      */
@@ -573,7 +603,8 @@ export default function Encaissement() {
     //UseEffect pour la récupération
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function useEffect - calls the functions to get the services, the employees and the encaissements
+     * @function useEffect 
+     * @description calls the functions to get the services, the employees and the encaissements
      * @see {@link 'gestion_encaissement.js'.fetchServices}
      * @see {@link 'gestion_encaissement.js'.fetchEmployees}
      * @see {@link 'gestion_encaissement.js'.fetchEncaissements}
@@ -643,7 +674,7 @@ export default function Encaissement() {
 
     /**
      * @memberof 'gestion_encaissement.js'
-     * @functionn useEffect
+     * @function useEffect
      * @description filter the encaissements by the amountFilter and set the totalAmount and totalLenght 
      * @param {string} amountFilter - filter to apply on the encaissements
      */
@@ -719,9 +750,9 @@ export default function Encaissement() {
     //UseEffect pour la gestion des boutons
     /**
      * @memberof 'gestion_encaissement.js'
-     * @function useEffect - sets the state buttonDelete, buttonModify, btnChoose and modificationMode
-     * It is called when the state modeModify is updated
-     * @description changes the buttons and the navbar depending on the modeModify
+     * @function useEffect
+     * @description sets the state buttonDelete, buttonModify, btnChoose and modificationMode
+     * It is called when the state modeModify is updated. changes the buttons and the navbar depending on the modeModify
      * @param {string} modeModify - mode of the modification
      */
     useEffect(() => {
