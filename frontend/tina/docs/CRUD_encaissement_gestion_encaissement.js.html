@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CRUD_encaissement/gestion_encaissement.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_Rdv_employee.js_.html">'Rdv_employee.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_Rdv_employee.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_accueil.js_.html">'accueil.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_accueil.js_.html#.scrollToTop">scrollToTop</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_accueil.js_.html#.toggleVisibility">toggleVisibility</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_accueil.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html">'ajout_dispo.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.fetchEmployees">fetchEmployees</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html">'ajout_multiple_dispo.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.fetchEmployees">fetchEmployees</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChangeDays">handleChangeDays</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChangeDispo">handleChangeDispo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChangeEmployee">handleChangeEmployee</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleSubmitDispo">handleSubmitDispo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_calendrier.js_.html">'calendrier.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.useEffect1">useEffect1</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.useEffect2">useEffect2</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.useEffect3">useEffect3</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html">'calendrier_utilisateur.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.useEffect1">useEffect1</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.useEffect2">useEffect2</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.useEffect3">useEffect3</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_choix_client.js_.html">'choix_client.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.fetchCustomers">fetchCustomers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.handleClickClient">handleClickClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.handleSearch">handleSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_confirmation_rdv.js_.html">'confirmation_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_confirmation_rdv.js_.html#.handleClick">handleClick</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_connexion.js_.html">'connexion.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_connexion.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html">'creation_encaissement.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.fetchTypeOfServiceFunctiontofetchthetypesofservicesfromtheAPI">fetchTypeOfService Function to fetch the types of services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.handleClickFunctiontoredirecttothenextpagewiththeserviceselected">handleClick Function to redirect to the next page with the service selected</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.handleClickEncManuelFunctiontoredirecttothenextpagewiththeencaissement_manuelobject">handleClickEncManuel Function to redirect to the next page with the encaissement_manuel object</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.minPriceForATypeOfService">minPriceForATypeOfService</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.priceWithoutCent">priceWithoutCent</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.useEffectFunctiontofetchtheservicesandthetypesofservicesfromtheAPIwhenthepageisloaded">useEffect Function to fetch the services and the types of services from the API when the page is loaded</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.useEffectFunctiontorefreshthepagewhenthelistofservicesisupdated">useEffect Function to refresh the page when the list of services is updated</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_detail_employee.js_.html">'detail_employee.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_employee.js_.html#.handleDelete">handleDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_employee.js_.html#.handleUpdate">handleUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_employee.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html">'detail_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClick2">handleClick2</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClose">handleClose</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClose">handleClose</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClose">handleClose</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleRedirect">handleRedirect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleShow">handleShow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleShow">handleShow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleShow">handleShow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_display_employee.js_.html">'display_employee.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.fetchCustomers">fetchCustomers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.handleClickClient">handleClickClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.handleSearch">handleSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_employe.js_.html">'employe.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_employe.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_employe.js_.html#.handleConfirmPassword">handleConfirmPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_employe.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_encaissement.js_.html">'encaissement.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.checkEncManuel">checkEncManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.errorMessage">errorMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.successMessage">successMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_form_services.js_.html">'form_services.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.addService-functiontoaddaservice">addService - function to add a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.errorMessage">errorMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.fetchServicesFunctiontofetchtheservicesfromtheAPI">fetchServices Function to fetch the services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.fetchTypeOfService-functiontofetchthetypesofservices">fetchTypeOfService - function to fetch the types of services</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.formatTime">formatTime</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.handleChange-functiontochangethevalueoftheservice">handleChange - function to change the value of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.handleSelect-functiontochangethevalueofthetypeofservice">handleSelect - function to change the value of the type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.loadNameServices">loadNameServices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.loadServices-functiontoloadtheformsoftheservices">loadServices - function to load the forms of the services</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.postService-functiontopostaservice">postService - function to post a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.successMessage">successMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html">'form_services_modify.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.errorMessagedisplaytheerrormessage">errorMessage display the error message</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.fetchServicesFunctiontofetchtheservicesfromtheAPI">fetchServices Function to fetch the services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.fetchTypeOfServicefetchthetypeofservice">fetchTypeOfService fetch the type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.formatTimeformatthetime">formatTime format the time</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.handleChangechangethevalueoftheservice">handleChange change the value of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.handleSelectchangethevalueoftheservice">handleSelect change the value of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.loadNameServices">loadNameServices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.putServicemodifytheservice">putService modify the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.selectServiceDurationselectthedurationoftheservice">selectServiceDuration select the duration of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.successMessage">successMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.useEffectfetchthetypeofserviceandservicesattheloadingofthepage">useEffect fetch the type of service and services at the loading of the page</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.useEffectsettheserviceandthetypeofserviceattheloadingofthepage">useEffect set the service and the type of service at the loading of the page</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html">'form_typesofservice.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.fetchTypeOfServiceFunctionthatfetchesthetypesofservicefromthedatabase">fetchTypeOfService Function that fetches the types of service from the database</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.handleChangeTypeFunctionthatallowstheusertochangethenameofthetypeofservice">handleChangeType Function that allows the user to change the name of the type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.handleSubmitFunctionthatallowstheusertocreateanewtypeofservice">handleSubmit Function that allows the user to create a new type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.loadTOSNames">loadTOSNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.loadTOSNames">loadTOSNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html">'gestion_encaissement.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.errorMessage-functiontoshowanotificationwhenanerroroccured">errorMessage - function to show a notification when an error occured</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.exportTableToCSV">exportTableToCSV</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.fetchEmployees-functiontogettheemployeesthroughtheAPI">fetchEmployees - function to get the employees through the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.fetchEncaissements-functiontogettheencaissementsthroughtheAPI">fetchEncaissements - function to get the encaissements through the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.fetchServices-functiontogettheservicesthroughtheAPI">fetchServices - function to get the services through the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.formatDate-functiontoformatthedateoftheencaissement">formatDate - function to format the date of the encaissement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.formatEncaissements-functiontoformattheencaissementsforthedisplay">formatEncaissements - function to format the encaissements for the display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.formatTime-functiontoformatthetimeoftheencaissement">formatTime - function to format the time of the encaissement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.getEmployeeName">getEmployeeName</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.getServiceName-functiontogetthenameoftheservice">getServiceName - function to get the name of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.getWeekNumber">getWeekNumber</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleChoose-functiontomanagethechoosemode">handleChoose - function to manage the choose mode</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClickAmount">handleClickAmount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClickDelete-functiontomanagethedeletemode">handleClickDelete - function to manage the delete mode</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClickInvertFilter">handleClickInvertFilter</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClose-functiontoclosethemodal">handleClose - function to close the modal</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleConfirmDelete-functiontomanagethedeleteoftheencaissement">handleConfirmDelete - function to manage the delete of the encaissement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleSearch-functiontomanagethesearchterm">handleSearch - function to manage the search term</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleShow-functiontoshowthemodal">handleShow - function to show the modal</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleSort-functiontomanagethesortterm">handleSort - function to manage the sort term</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.toggleButtons">toggleButtons</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect-setsthestatebuttonDelete,buttonModify,btnChooseandmodificationModeItiscalledwhenthestatemodeModifyisupdated">useEffect - sets the state buttonDelete, buttonModify, btnChoose and modificationModeIt is called when the state modeModify is updated</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect-setsthestateencaissementsAffichageandsearchResultswiththeformattedencaissementsandsetsthestatetotalAmountwiththetotalamountoftheencaissements.Itiscalledwhenthestateencaissementsisupdated">useEffect - sets the state encaissementsAffichage and searchResults with the formatted encaissementsand sets the state totalAmount with the total amount of the encaissements. It is called when the state encaissements is updated</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_header.js_.html">'header.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_header.js_.html#.handleLogout">handleLogout</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_header.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_inscription.js_.html">'inscription.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_inscription.js_.html#.handleConfirmPasswordChange">handleConfirmPasswordChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_inscription.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_menu_encaissement.js_.html">'menu_encaissement.js'</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_menu_services.js_.html">'menu_services.js'</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_no_client_rdv.js_.html">'no_client_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_no_client_rdv.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_no_client_rdv.js_.html#.handleClick">handleClick</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html">'profil_utilisateur.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.fetchCusto">fetchCusto</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.fetchEmp">fetchEmp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.handleDelete">handleDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.submitCusto">submitCusto</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.submitEmp">submitEmp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.submitEmp">submitEmp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_recap_rdv.js_.html">'recap_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_recap_rdv.js_.html#.useEffect1">useEffect1</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_service_rdv.js_.html">'service_rdv.js'</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_services.js_.html">'services.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.deleteMessageFunctionthatshowsanotificationwhenaservicehasbeendeleted">deleteMessage Function that shows a notification when a service has been deleted</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.fetchServicesFunctiontofetchtheservicesfromtheAPI">fetchServices Function to fetch the services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.fetchTypeOfServiceFunctionthatfetchesthetypesofservicefromthedatabase">fetchTypeOfService Function that fetches the types of service from the database</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.formatDurationFunctionthatformatsthedurationoftheservice">formatDuration Function that formats the duration of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleChooseServiceFunctionthathandlethechoiceofaservicetobemodifiedordeleted">handleChooseService Function that handle the choice of a service to be modified or deleted</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleClickDeleteFunctionthatchangesthemodeofthepagetodeleteaservice">handleClickDelete Function that changes the mode of the page to delete a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleClickModifyFunctionthatchangesthemodeofthepagetomodifyaservice">handleClickModify Function that changes the mode of the page to modify a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleCloseFunctionthatclosesthemodalbysettingthebooleanshowtofalse">handleClose Function that closes the modal by setting the boolean show to false</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleDeleteTypeOfServicefunctionthatdeletesatypeofservice">handleDeleteTypeOfService function that deletes a type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleShowFunctionthatshowsthemodalbysettingthebooleanshowtotrue">handleShow Function that shows the modal by setting the boolean show to true</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.minPriceForATypeOfService">minPriceForATypeOfService</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.priceWithoutCentFunctionthatgetsthepriceoftheservicewithoutcents">priceWithoutCent Function that gets the price of the service without cents</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.useEffectfunctionthatchangesthemodeofmodificationandthebuttonswhenthemodeofmodificationischanged">useEffect function that changes the mode of modification and the buttons when the mode of modification is changed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.useEffectfunctionthatfetchestheservicesandthetypesofservicewhenthepageisloaded">useEffect function that fetches the services and the types of service when the page is loaded</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.useEffectfunctionthatrefreshesthepagewhenthelistofservicesisupdated">useEffect function that refreshes the page when the list of services is updated</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleCheck">handleCheck</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleSubmit-functiontosubmittheformandcallthepostServicefunction">handleSubmit - function to submit the form and call the postService function</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">CRUD_encaissement/gestion_encaissement.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {useEffect, useRef, useState} from 'react';
+import Link from 'next/link';
+import {parseCookies} from 'nookies';
+import axios from 'axios';
+import {Button, Modal} from 'react-bootstrap';
+
+/**
+ * @namespace 'gestion_encaissement.js'
+ * @description this page is used to manage the encaissements
+ * @returns {JSX.Element}
+ */
+export default function Encaissement() {
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} urlEncaissements - url to get the encaissements
+     * @constant {String} urlServices - url to get the services
+     * @constant {String} urlEmployees - url to get the employees
+     * @constant {String} pathnameAdd - pathname to redirect to the page to add an encaissement
+     */
+    // Constantes pour les URL de l'API
+    const urlEncaissements = baseUrl + 'collections/';
+    const urlServices = baseUrl + 'services/';
+    const urlEmployees = baseUrl + 'employees/';
+
+    // Pathname pour la redirection de page
+    const pathnameAdd = "./creation_encaissement";
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} modificationMode - state to manage the message to display when the user wants to modify or delete an encaissement
+     * @default ""
+     */
+    const [, setModificationMode] = useState(
+        ""
+    );
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} buttonDelete - state to manage the className of the delete button
+     * @default "btn btn-outline-danger"
+     */
+    const [buttonDelete, setButtonDelete] = useState(
+        "btn btn-outline-danger"
+    );
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} modeModify - state to manage the modification mode(modify or delete)
+     * @default ""
+     */
+    const [modeModify, setModeModify] = useState('');
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} btnChoose - state to manage the className of the choose button
+     * @default "btn btn-dark"
+     */
+    const [btnChoose, setBtnChoose] = useState(
+        "btn btn-dark"
+    );
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} encaissement - state to manage the list of encaissements
+     * @default []
+     */
+    //variables pour la gestion des encaissements
+    //Encaissements
+    const [encaissements, setEncaissements] = useState([]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} encaissementsAffichage - state to manage the list of encaissements to display
+     * @default []
+     */
+    const [encaissementsAffichage, setEncaissementsAffichage] = useState([]);
+    //Service
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} services - state to manage the list of services
+     * @default []
+     */
+    const [services, setServices] = useState([]);
+    //Employee
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} employees - state to manage the list of employees
+     * @default []
+     */
+    const [employees, setEmployees] = useState([]);
+
+    //partie de la modal
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} show - state to manage if the modal is shown or not
+     * @default false
+     */
+    const [show, setShow] = useState(false);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} s - state to manage the id of the encaissement to delete
+     * @default {id:0}
+     */
+    const [s, setS] = useState({ id: 0 });
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClose - function to close the modal
+     * @description set the state show to false
+     */
+    const handleClose = () => setShow(false);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleShow - function to show the modal
+     * @description set the state show to true
+     */
+    const handleShow = () => setShow(true);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {boolean} refresh - state to manage the refresh of the page
+     * @default false
+     */
+    const [refresh, setRefresh] = useState(false);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {Integer} totalAmount - state to manage the total amount of the encaissements
+     * @default 0
+     */
+    //total amount
+    const [totalAmount, setTotalAmount] = useState(0);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {Integer} totalLenght - state to manage the total lenght of the encaissements
+     * @default 0
+     */
+    //total amount
+    const [totalLenght, setTotalLenght] = useState(0);
+
+    // Const pour la recherche et le tri
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} searchTerm - state to manage the search term of the encaissements filter
+     * @default ""
+     */
+    const [searchTerm, setSearchTerm] = useState("");
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} searchResults - state to manage the list of encaissements searched
+     * @default []
+     */
+    const [searchResults, setSearchResults] = useState([]);
+
+    // /**
+    //  * @memberof 'gestion_encaissement.js'
+    //  * @constant {object} prevSearchTerm - state to manage the previous search term of the encaissements filter
+    //  * @description used to manage the search term of the encaissements filter
+    //  * @default null
+    //  */
+    // const prevSearchTerm = useRef();
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {object} preSearchResults - state to manage the previous list of encaissements searched
+     * @description used to manage the list of encaissements searched
+     * @default []
+     */
+    const preSearchResults = useRef([]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} sortBy - state to manage the sort term of the encaissements filter
+     * @default ""
+     */
+    const [sortBy, setSortBy] = useState("");
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} amountFilter - state to manage the amount filter of the encaissements filter
+     * @default ""
+     */
+    const [amountFilter, setAmountFilter] = useState("amount_total");
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} invertFilter - state to manage the invert filter of the encaissements filter
+     * @default false
+     */
+    const [invertFilter, setInvertFilter] = useState(false);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @constant {String} invertFilterActive - state to manage the invert filter button of the encaissements filter
+     * @default ""
+     */
+    const [invertFilterActive, setInvertFilterActive] = useState("");
+// Handle search and sort functions for encaissements
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @param {object} event - event to manage the search term
+     * @function handleSearch - function to manage the search term
+     * @description set the state searchTerm to the value of the search input
+     */
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleSort - function to manage the sort term
+     * @param {object} event - event to manage the sort term
+     * @description set the state sortBy to the value of the sort input
+     */
+    const handleSort = (event) => {
+        setSortBy(event.target.value);
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClickDelete - function to manage the delete mode
+     * @description set the state modeModify to 'delete' if it's not the delete mode, else set the state modeModify to ''
+     */
+    const handleClickDelete = () => {
+        if (modeModify !== 'delete') {
+            setModeModify(() => 'delete');
+        } else {
+            setModeModify(() => '');
+        }
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleChoose - function to manage the choose mode
+     * @param {object} evt - event to manage the choose mode 
+     * @description set the state s to the id of the encaissement to delete and show the modal
+     */
+    const handleChoose = (evt) => {
+        setS(() => ({ id: evt.target.id }));
+        if (modeModify === 'delete') {
+            handleShow();
+        }
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleConfirmDelete - function to manage the delete of the encaissement
+     * @see {@link 'gestion_encaissement.js'.handleClose}
+     * @see {@link 'gestion_encaissement.js'.errorMessage}
+     * @see {@link 'gestion_encaissement.js'.urlEncaissements}
+     * @description delete the encaissement through the API, then delete the encaissement in the list of encaissements and show a notification
+     */
+    const handleConfirmDelete = () => {
+
+        handleClose();
+        encaissements.splice(encaissements.indexOf(s.id), 1);
+        const cookies = parseCookies();
+        axios.delete(urlEncaissements + s.id + '/', {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                console.log(response.data);
+                errorMessage(s.id);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function errorMessage - function to show a notification when an error occured
+     * @param {Integer} id - id of the encaissement to delete
+     * @description modify the text of the notification and show it, then hide it after 3 seconds, and refresh the page
+     */
+    const errorMessage = (id) => {
+        document.getElementById("notification_delete").removeAttribute("hidden");
+        const serviceError = document.getElementById("service_error");
+        serviceError.textContent = id;
+        //après 3 secondes, on cache la notification
+        setTimeout(function () {
+            document.getElementById("notification_delete").setAttribute("hidden", "hidden");
+        }, 8000);
+        setRefresh(!refresh);
+    };
+
+    //Récupération des encaissements
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function fetchEncaissements - function to get the encaissements through the API
+     * @see {@link 'gestion_encaissement.js'.urlEncaissements}
+     * @see {@link 'gestion_encaissement.js'.parseCookies}
+     * @description get the encaissements through the API and set the state encaissements with the response data    
+     */
+    const fetchEncaissements = () => {
+        const cookies = parseCookies();
+        axios.get(urlEncaissements, {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                setEncaissements(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    //Récupération des services
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function fetchServices - function to get the services through the API
+     * @see {@link 'gestion_encaissement.js'.urlServices}
+     * @see {@link 'gestion_encaissement.js'.parseCookies}
+     * @description get the services through the API and set the state services with the response data
+     */
+    const fetchServices = () => {
+        const cookies = parseCookies();
+        axios.get(urlServices, {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                setServices(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    //Récupération des employees
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function fetchEmployees - function to get the employees through the API
+     * @see {@link 'gestion_encaissement.js'.urlEmployees}
+     * @see {@link 'gestion_encaissement.js'.parseCookies}
+     * @description get the employees through the API and set the state employees with the response data
+     */
+    const fetchEmployees = () => {
+        const cookies = parseCookies();
+        axios.get(urlEmployees, {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                setEmployees(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    //Fonctions pour l'affichage
+    //Récupération du nom du service
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @param {Integer} id - id of the service
+     * @function getServiceName - function to get the name of the service
+     * @description go through the list of services and return the name of the service with the id passed in parameter
+     * @returns {String} name - name of the service
+     */
+    const getServiceName = (id) => {
+        let name = "";
+        services.map((s) => {
+            if (s.id === id) {
+                name = s.name;
+            } else if (id == null) {
+                name = "Encaissement manuel";
+            }
+        });
+        return name;
+    };
+    //Récupération du nom de l'employee
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function getEmployeeName
+     * @param {Integer} id - id of the employee
+     * @description go through the list of employees and return the username, firstname and lastname of the employee with the id passed in parameter
+     * @returns {Object} employee_info - username, firstname and lastname of the employee
+     */
+    const getEmployeeName = (id) => {
+        let employee_info = {};
+        employees.map((e) => {
+            if (e.id === id) {
+                employee_info.username = e.username;
+                employee_info.first_name = e.first_name;
+                employee_info.last_name = e.last_name;
+            }
+        });
+        return employee_info;
+    };
+    //Formatage de la date
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @param {String} date - date of the encaissement
+     * @function formatDate - function to format the date of the encaissement
+     * @description format the date of the encaissement from YYYY-MM-DD to DD/MM/YYYY
+     * @returns {String} newDate - date of the encaissement formatted
+     */
+    const formatDate = (date) => {
+        let newDate = date.split('-');
+        return newDate[2] + "/" + newDate[1] + "/" + newDate[0];
+    };
+    //Formatage de l'heure
+    /**
+     * 
+     * @param {String} time - time of the encaissement
+     * @memberof 'gestion_encaissement.js'
+     * @function formatTime - function to format the time of the encaissement
+     * @description format the time of the encaissement from HH:MM:SS to HHhMM
+     * @returns {String} newTime - time of the encaissement formatted
+     */
+    const formatTime = (time) => {
+        let newTime = time.split(':');
+        return newTime[0] + "h" + newTime[1];
+    };
+
+    //Formatage des encaissements pour l'affichage
+    /**
+     * 
+     * @param {object} encaissements - list of the encaissements
+     * @memberof 'gestion_encaissement.js'
+     * @function formatEncaissements - function to format the encaissements for the display
+     * @description go through the list of encaissements and format them for the display
+     * @returns {object} newEncaissements - list of the encaissements formatted
+     * @see {@link 'gestion_encaissement.js'.formatDate}
+     * @see {@link 'gestion_encaissement.js'.formatTime}
+     */
+    const formatEncaissements = (encaissements) => {
+        let newEncaissements = [];
+        let lstEncDate = encaissements.sort((a, b) => {
+            return a.date.localeCompare(b.date)
+        });
+        lstEncDate = lstEncDate.reverse();
+        lstEncDate.map((e) => {
+            let newEncaissement = {
+                id: e.id,
+                date: formatDate(e.date),
+                time: formatTime(e.time),
+                service: getServiceName(e.service),
+                employee: getEmployeeName(e.employee),
+                amount: e.amount,
+            };
+            newEncaissements.push(newEncaissement);
+        });
+        return newEncaissements;
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClickAmount
+     * @description function to handle the click on the amount's filters
+     * @param {object} evt 
+     */
+    const handleClickAmount = (evt) => {
+        toggleButtons(evt, false);
+        setSearchTerm(() => "");
+        setAmountFilter(evt.target.id);
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function toggleButtons
+     * @description function to toggle the active class on the amount's filters
+     * @param {object} evt
+     * @param {boolean} reset - boolean to know if we have to reset the active class
+     */
+    const toggleButtons = (evt, reset) => {
+        let filter_to_activate = !reset ? evt.target.id : "amount_total";
+        document.getElementById('amount_total').classList.remove('active');
+        document.getElementById('amount_annee').classList.remove('active');
+        document.getElementById('amount_mois').classList.remove('active');
+        document.getElementById('amount_semaine').classList.remove('active');
+        document.getElementById('amount_jour').classList.remove('active');
+
+        document.getElementById(filter_to_activate).classList.toggle("active");
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function getWeekNumber
+     * @param {Date} date we want to get the week number
+     * @returns {number} week number of the date
+     */
+    const getWeekNumber = (date) => {
+        // Copy date so it doesn't modify the original
+        const target = new Date(date.getTime());
+        // Set to nearest Thursday: current date + 4 - current day number
+        target.setDate(target.getDate() + 4 - (target.getDay() || 7));
+        // Get the year of the target date
+        const year = target.getFullYear();
+        // Calculate the week number by taking the days between the target date and the first week of the year
+        return Math.ceil(((target - new Date(year, 0, 1)) / 86400000 + 1) / 7);
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function handleClickInvertFilter
+     * @description function to handle the click on the invert filter button
+     */
+    const handleClickInvertFilter = () => {
+        setInvertFilter(!invertFilter);
+
+    };
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function exportTableToCSV
+     * @description function to export the encaissements(searchResults) in a csv file
+     * @see {@link 'gestion_encaissement.js'.amountFilter}
+     * @see {@link 'gestion_encaissement.js'.searchResults}
+     */
+    const exportTableToCSV = () => {
+        let tableId = "table_encaissements";
+        let filename = amountFilter + "_encaissements.csv";
+        const table = document.getElementById(tableId);
+        const rows = Array.from(table.getElementsByTagName("tr"));
+
+        const headers = Array.from(table.getElementsByTagName("th")).map(
+            (header) => header.textContent
+        );
+
+        const csvContent = [headers.join(",")]
+            .concat(
+                rows.map((row) => {
+                    const cells = Array.from(row.getElementsByTagName("td"));
+                    const rowData = cells
+                        .filter((cell) => cell.id !== "enc_button")
+                        .map((cell) => cell.textContent);
+                    return rowData.join(",");
+                })
+            )
+            .filter((row) => row !== "") // Filtre les lignes vides
+            .join("\n");
+
+        const encodedUri = "data:text/csv;charset=utf-8,\uFEFF" + encodeURIComponent(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    //Affichage des encaissements
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect - sets the state encaissementsAffichage and searchResults with the formatted encaissements
+     * and sets the state totalAmount with the total amount of the encaissements. It is called when the state encaissements is updated
+     * @see {@link 'gestion_encaissement.js'.formatEncaissements}
+     * @param {object} encaissements - list of the encaissements
+     */
+    useEffect(() => {
+        setEncaissementsAffichage(formatEncaissements(encaissements));
+        setSearchResults(formatEncaissements(encaissements));
+    }, [encaissements]);
+
+    //UseEffect pour la récupération
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect - calls the functions to get the services, the employees and the encaissements
+     * @see {@link 'gestion_encaissement.js'.fetchServices}
+     * @see {@link 'gestion_encaissement.js'.fetchEmployees}
+     * @see {@link 'gestion_encaissement.js'.fetchEncaissements}
+     * @param {boolean} refresh - boolean to refresh the page
+     */
+    useEffect(() => {
+        fetchServices();
+        fetchEmployees();
+        fetchEncaissements();
+    }, [refresh]);
+
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect
+     * @description
+     * on change of searchTerm and sortBy filter the SearchResults.
+     * if invertFilter is true, invert the order of the searchResults
+     * @see {@link 'gestion_encaissement.js'.searchTerm}
+     * @see {@link 'gestion_encaissement.js'.sortBy}
+     * @see {@link 'gestion_encaissement.js'.invertFilter}
+     * @see {@link 'gestion_encaissement.js'.formatEncaissements}
+     * @param {object} encaissementsAffichage - list of the encaissements formatted
+     */
+    useEffect(() => {
+
+        let lstEncaissement = preSearchResults.current;
+
+        //Filter by searchTerm
+        let results = lstEncaissement.filter(e =>
+            e.employee.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.employee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            e.service.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        //Order by sort
+        results.sort((a, b) => {
+            if (sortBy === 'time') {
+                return a.time.localeCompare(b.time);
+            } else if (sortBy === 'service') {
+                return a.service.localeCompare(b.service);
+            } else if (sortBy === 'employee') {
+                return a.employee.username.localeCompare(b.employee.username);
+            } else if (sortBy === 'amount') {
+                return a.amount - b.amount;
+            } else if (sortBy === 'id') {
+                return a.id - b.id;
+            } else {
+                return a.date.localeCompare(b.date);
+            }
+        });
+        setSearchResults(invertFilter ? results.reverse() : results);
+
+    }, [searchTerm, sortBy]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect
+     * @description sets the state invertFilterActive with the active class if the invertFilter is true and reverse the searchResults
+     * @param {boolean} invertFilter - boolean to know if the filter is inverted
+     */
+    useEffect(() => {
+        invertFilter ? setInvertFilterActive("active") : setInvertFilterActive("");
+        setSearchResults(searchResults.reverse());
+    }, [invertFilter]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @functionn useEffect
+     * @description filter the encaissements by the amountFilter and set the totalAmount and totalLenght 
+     * @param {string} amountFilter - filter to apply on the encaissements
+     */
+    useEffect(() => {
+        let today = new Date();
+        let todayDate = { day: today.getDate(), month: today.getMonth() + 1, year: today.getFullYear() };
+        let results = [];
+
+
+        if (amountFilter === 'amount_total') {
+            results = encaissementsAffichage;
+        } else if (amountFilter === 'amount_annee') {
+            results = encaissementsAffichage.filter(e => {
+                let e_year = parseInt(e.date.split('/')[2]);
+                let today_year = today.getFullYear();
+                return e_year === today_year;
+            });
+        } else if (amountFilter === 'amount_mois') {
+            results = encaissementsAffichage.filter(e => {
+                let e_month = parseInt(e.date.split('/')[1]);
+                let today_month = (today.getMonth() + 1);
+                return e_month === today_month;
+            });
+
+        } else if (amountFilter === 'amount_semaine') {
+            results = encaissementsAffichage.filter(e => {
+
+                let e_week = new Date(
+                    parseInt(e.date.split('/')[2]),
+                    parseInt(e.date.split('/')[1]) - 1,
+                    parseInt(e.date.split('/')[0])
+                );
+                e_week = getWeekNumber(e_week);
+                let today_week = getWeekNumber(today);
+                return e_week === today_week;
+            });
+        } else if (amountFilter === 'amount_jour') {
+            results = encaissementsAffichage.filter(e => {
+                let e_date = e.date.split('/');
+
+                return parseInt(e_date[0]) === todayDate.day &amp;&amp; parseInt(e_date[1]) === todayDate.month &amp;&amp; parseInt(e_date[2]) === todayDate.year;
+            });
+        }
+
+        setSearchResults(results);
+        preSearchResults.current = results;
+
+        //reset the search bar when we change the amount filter
+        //couldn't find a better way to do it
+        document.getElementById('Rechercher').value = "";
+        document.getElementById('filter').selectedIndex = -1;
+        setSortBy("");
+        setInvertFilter(false);
+
+    }, [amountFilter, encaissementsAffichage]);
+
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect
+     * @description set the totalAmount and totalLenght when the searchResults is updated
+     * @param {object} searchResults - list of the encaissements searched
+     */
+    useEffect(() => {
+        let totalAmount = 0;
+        let totalLenght;
+        searchResults.map(e =>
+            totalAmount += parseFloat(e.amount));
+        totalLenght = searchResults.length;
+        setTotalAmount(totalAmount);
+        setTotalLenght(totalLenght);
+    }, [searchResults]);
+
+    //UseEffect pour la gestion des boutons
+    /**
+     * @memberof 'gestion_encaissement.js'
+     * @function useEffect - sets the state buttonDelete, buttonModify, btnChoose and modificationMode
+     * It is called when the state modeModify is updated
+     * @description changes the buttons and the navbar depending on the modeModify
+     * @param {string} modeModify - mode of the modification
+     */
+    useEffect(() => {
+        if (modeModify === 'delete') {
+            //changer le bouton
+            setButtonDelete(() => "btn btn-danger");
+            // setButtonModify(buttonModify => "btn btn-outline-primary");
+            setBtnChoose(() => "btn btn-danger");
+            //changer la navbar
+            setModificationMode(() => "MODE SUPPRESSION");
+
+        } else if (modeModify === '') {
+            setModificationMode(() => "");
+            // setButtonModify(buttonModify => "btn btn-outline-primary");
+            setButtonDelete(() => "btn btn-outline-danger");
+            setBtnChoose(() => "btn btn-dark");
+        }
+    }, [modeModify]);
+
+    return (
+        &lt;>
+            {/* Modal pour la suppression */}
+            &lt;Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} transparent>
+                &lt;Modal.Header closeButton>
+                    &lt;Modal.Title>SUPPRESSION&lt;/Modal.Title>
+                &lt;/Modal.Header>
+                &lt;Modal.Body>
+                    Voulez-vous vraiment supprimer cet encaissement ?
+                &lt;/Modal.Body>
+                &lt;Modal.Footer>
+                    &lt;Button variant="outline-secondary" onClick={handleClose}>
+                        Annuler
+                    &lt;/Button>
+                    &lt;Button variant="danger" onClick={handleConfirmDelete}>
+                        Supprimer
+                    &lt;/Button>
+                &lt;/Modal.Footer>
+            &lt;/Modal>
+
+            &lt;ul>&lt;/ul>
+
+            {/* Notification de suppression */}
+            &lt;div id="notification_delete" className="alert alert-warning" role="alert" hidden>
+                &lt;h4 className="alert-heading">Encaissement supprimé&lt;/h4>
+                &lt;p>L'encaissement &lt;a id='service_error'>&lt;/a> a été supprimé&lt;/p>
+
+            &lt;/div>
+
+
+            &lt;div className="container py-5">
+                &lt;div className="row justify-content-center text-center align-items-center">
+                    &lt;div className="col-lg-10"> {/* Remplacez ceci par la taille de colonne que vous préférez */}
+                        &lt;div className="card border-0 shadow-lg mb-3 d-flex flex-column rounded p-3 bg-light shadow-sm">
+                            &lt;div className="card-body text-center align-items-center">
+                                &lt;h1 className="card-title text-center">Gestion des encaissements&lt;/h1>
+
+                                {/* Barre de recherche */}
+                                &lt;div className="container py-5 justify-content-center mt-1 mb-1">
+                                    &lt;div className="col mx-1 mt-1 mb-1 d-flex align-items-center justify-content-center">
+                                        &lt;button className={'btn btn-outline-dark ' + invertFilterActive} type="button" id="btnFilter" onClick={handleClickInvertFilter}>↑↓&lt;/button>
+                                        &lt;select className="form-select" value={sortBy} aria-label="Default select example" id='filter' data-id="filter" style={{ maxWidth: "20vh" }} onChange={handleSort}>
+                                            &lt;option key='0' value='0'>Filtrer...&lt;/option>
+                                            &lt;option key='1' value='id'>ID&lt;/option>
+                                            &lt;option key='2' value='employee'>Employé&lt;/option>
+                                            &lt;option key='3' value='service'>Service&lt;/option>
+                                            &lt;option key='4' value='date'>Date&lt;/option>
+                                            &lt;option key='5' value='time'>Heure&lt;/option>
+                                            &lt;option key='6' value='amount'>Montant&lt;/option>
+                                        &lt;/select>
+                                        &lt;input className="form-control me-2" type="search" placeholder="Employé/Service" id="Rechercher" style={{ maxWidth: "20vh", minWidth: "15vh" }} onChange={handleSearch}>&lt;/input>
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+
+                            {/* Boutons Retour aux services et Ajouter un service */}
+                            &lt;div className="row" >
+
+                                &lt;div className="btn-group mx-auto my-auto" >
+                                    &lt;button type="button" className="btn btn-success" onClick={exportTableToCSV}>Télécharger&lt;/button>
+                                    &lt;button type="button" className={buttonDelete} onClick={handleClickDelete}>Supprimer&lt;/button>
+                                    &lt;button type="button" className="btn btn-primary">
+                                        &lt;Link href={pathnameAdd} className="nav-link">
+                                            Ajouter
+                                        &lt;/Link>
+                                    &lt;/button>
+                                &lt;/div>
+                            &lt;/div>
+
+                            {/* Boutons de tri */}
+                            &lt;div className="row justify-content-center mt-3 mb-4" >
+                                &lt;div className="btn-group" role="group" aria-label="amount_filters">
+                                    &lt;button id='amount_total' onClick={handleClickAmount} type="button" className={"btn btn-secondary active"} >Total&lt;/button>
+                                    &lt;button id='amount_annee' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Année&lt;/button>
+                                    &lt;button id='amount_mois' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Mois&lt;/button>
+                                    &lt;button id='amount_semaine' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Semaine&lt;/button>
+                                    &lt;button id='amount_jour' onClick={handleClickAmount} type="button" className={"btn btn-secondary"} >Jour&lt;/button>
+                                &lt;/div>
+                            &lt;/div>
+
+                            {/* Total des encaissements */}
+                            &lt;table className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)" }}>
+                                &lt;thead>
+                                    &lt;tr>
+                                        &lt;th scope="col">Nombre d'encaissements&lt;/th>
+                                        &lt;th scope="col">Montant total&lt;/th>
+                                    &lt;/tr>
+                                &lt;/thead>
+                                &lt;tbody>
+                                    &lt;tr>
+                                        &lt;td>{totalLenght}&lt;/td>
+                                        &lt;td>{totalAmount}&lt;/td>
+                                    &lt;/tr>
+                                &lt;/tbody>
+                            &lt;/table>
+
+                            {/* Liste des encaissements */}
+                            &lt;div className="table-responsive">
+                                &lt;table id='table_encaissements' className="table table-striped text-center mx-auto rounded" style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)" }}>
+                                    &lt;thead>
+                                        &lt;tr>
+                                            &lt;th scope="col">ID&lt;/th>
+                                            &lt;th scope="col">Employé&lt;/th>
+                                            &lt;th scope="col">Service&lt;/th>
+                                            &lt;th scope="col">Date&lt;/th>
+                                            &lt;th scope="col">Heure&lt;/th>
+                                            &lt;th scope="col">Montant&lt;/th>
+                                        &lt;/tr>
+                                    &lt;/thead>
+                                    &lt;tbody>
+                                        {searchResults.map((encaissement) => (
+                                            &lt;tr key={encaissement.id}>
+                                                &lt;td scope="row">{encaissement.id}&lt;/td>
+                                                &lt;td >
+                                                    &lt;div>
+                                                        {encaissement.employee.first_name} {encaissement.employee.last_name}
+                                                    &lt;/div>
+                                                &lt;/td>
+                                                &lt;td>{encaissement.service}&lt;/td>
+                                                &lt;td>{encaissement.date}&lt;/td>
+                                                &lt;td>{encaissement.time}&lt;/td>
+                                                &lt;td>{encaissement.amount}&lt;/td>
+                                                &lt;td id='enc_button'>
+                                                    &lt;Button
+                                                        id={encaissement.id}
+                                                        className={btnChoose}
+                                                        onClick={handleChoose}
+                                                        disabled={modeModify === ''}
+                                                    >Choisir&lt;/Button>
+                                                &lt;/td>
+                                            &lt;/tr>
+                                        ))}
+                                    &lt;/tbody>
+                                &lt;/table>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/>
+    );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Jun 01 2023 12:17:22 GMT+0200 (heure d’été d’Europe centrale) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -15,7 +15,6 @@ export default function Accueil() {
      * @constant products
      * @memberof 'accueil.js'
      * @description An array containing the products to be displayed on the home page.
-     * @type {[{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},{backgroundColor: string, title: string, textColor: string},null]}
      * @see {@link 'accueil.js'.products}
      */
     const products = [

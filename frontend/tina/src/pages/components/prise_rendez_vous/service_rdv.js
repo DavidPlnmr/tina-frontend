@@ -55,7 +55,6 @@ export default function ServiceRDV() {
    * @see {@link 'header.js'.cookies}
    * @description To store cookies
    * @summary This state variable is used to store the cookies fetched from the browser.
-   * @type {{[p: string]: string}}
    * @default null
    * @see {@link 'https://www.npmjs.com/package/nookies'.parseCookies}
    */
@@ -69,7 +68,6 @@ export default function ServiceRDV() {
    * @summary This state variable is used to store the router object.
    * @summary The router object is used to redirect the user to the login page if the user is not logged in.
    * @summary The router object is used to redirect the user to the dashboard if the user is logged in.
-   * @type {NextRouter}
    */
   const router = useRouter();
 

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>gestion_admin/gestion_services/form_services_modify.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_Rdv_employee.js_.html">'Rdv_employee.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_Rdv_employee.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_accueil.js_.html">'accueil.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_accueil.js_.html#.scrollToTop">scrollToTop</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_accueil.js_.html#.toggleVisibility">toggleVisibility</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_accueil.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html">'ajout_dispo.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.fetchEmployees">fetchEmployees</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_dispo.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html">'ajout_multiple_dispo.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.fetchEmployees">fetchEmployees</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChangeDays">handleChangeDays</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChangeDispo">handleChangeDispo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleChangeEmployee">handleChangeEmployee</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.handleSubmitDispo">handleSubmitDispo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_ajout_multiple_dispo.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_calendrier.js_.html">'calendrier.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.useEffect1">useEffect1</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.useEffect2">useEffect2</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier.js_.html#.useEffect3">useEffect3</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html">'calendrier_utilisateur.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.useEffect1">useEffect1</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.useEffect2">useEffect2</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_calendrier_utilisateur.js_.html#.useEffect3">useEffect3</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_choix_client.js_.html">'choix_client.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.fetchCustomers">fetchCustomers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.handleClickClient">handleClickClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.handleSearch">handleSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_choix_client.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_confirmation_rdv.js_.html">'confirmation_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_confirmation_rdv.js_.html#.handleClick">handleClick</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_connexion.js_.html">'connexion.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_connexion.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html">'creation_encaissement.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.fetchTypeOfServiceFunctiontofetchthetypesofservicesfromtheAPI">fetchTypeOfService Function to fetch the types of services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.handleClickFunctiontoredirecttothenextpagewiththeserviceselected">handleClick Function to redirect to the next page with the service selected</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.handleClickEncManuelFunctiontoredirecttothenextpagewiththeencaissement_manuelobject">handleClickEncManuel Function to redirect to the next page with the encaissement_manuel object</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.minPriceForATypeOfService">minPriceForATypeOfService</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.priceWithoutCent">priceWithoutCent</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.useEffectFunctiontofetchtheservicesandthetypesofservicesfromtheAPIwhenthepageisloaded">useEffect Function to fetch the services and the types of services from the API when the page is loaded</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_creation_encaissement.js_.html#.useEffectFunctiontorefreshthepagewhenthelistofservicesisupdated">useEffect Function to refresh the page when the list of services is updated</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_detail_employee.js_.html">'detail_employee.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_employee.js_.html#.handleDelete">handleDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_employee.js_.html#.handleUpdate">handleUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_employee.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html">'detail_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClick">handleClick</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClick2">handleClick2</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClose">handleClose</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClose">handleClose</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleClose">handleClose</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleRedirect">handleRedirect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleShow">handleShow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleShow">handleShow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.handleShow">handleShow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_detail_rdv.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_display_employee.js_.html">'display_employee.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.fetchCustomers">fetchCustomers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.handleClickClient">handleClickClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.handleSearch">handleSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_display_employee.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_employe.js_.html">'employe.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_employe.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_employe.js_.html#.handleConfirmPassword">handleConfirmPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_employe.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_encaissement.js_.html">'encaissement.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.checkEncManuel">checkEncManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.errorMessage">errorMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.successMessage">successMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_form_services.js_.html">'form_services.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.addService-functiontoaddaservice">addService - function to add a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.errorMessage">errorMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.fetchServicesFunctiontofetchtheservicesfromtheAPI">fetchServices Function to fetch the services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.fetchTypeOfService-functiontofetchthetypesofservices">fetchTypeOfService - function to fetch the types of services</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.formatTime">formatTime</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.handleChange-functiontochangethevalueoftheservice">handleChange - function to change the value of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.handleSelect-functiontochangethevalueofthetypeofservice">handleSelect - function to change the value of the type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.loadNameServices">loadNameServices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.loadServices-functiontoloadtheformsoftheservices">loadServices - function to load the forms of the services</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.postService-functiontopostaservice">postService - function to post a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.successMessage">successMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html">'form_services_modify.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.errorMessagedisplaytheerrormessage">errorMessage display the error message</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.fetchServicesFunctiontofetchtheservicesfromtheAPI">fetchServices Function to fetch the services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.fetchTypeOfServicefetchthetypeofservice">fetchTypeOfService fetch the type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.formatTimeformatthetime">formatTime format the time</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.handleChangechangethevalueoftheservice">handleChange change the value of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.handleSelectchangethevalueoftheservice">handleSelect change the value of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.loadNameServices">loadNameServices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.putServicemodifytheservice">putService modify the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.selectServiceDurationselectthedurationoftheservice">selectServiceDuration select the duration of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.successMessage">successMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.useEffectfetchthetypeofserviceandservicesattheloadingofthepage">useEffect fetch the type of service and services at the loading of the page</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_services_modify.js_.html#.useEffectsettheserviceandthetypeofserviceattheloadingofthepage">useEffect set the service and the type of service at the loading of the page</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html">'form_typesofservice.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.fetchTypeOfServiceFunctionthatfetchesthetypesofservicefromthedatabase">fetchTypeOfService Function that fetches the types of service from the database</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.handleChangeTypeFunctionthatallowstheusertochangethenameofthetypeofservice">handleChangeType Function that allows the user to change the name of the type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.handleSubmitFunctionthatallowstheusertocreateanewtypeofservice">handleSubmit Function that allows the user to create a new type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.loadTOSNames">loadTOSNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.loadTOSNames">loadTOSNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_form_typesofservice.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html">'gestion_encaissement.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.errorMessage-functiontoshowanotificationwhenanerroroccured">errorMessage - function to show a notification when an error occured</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.exportTableToCSV">exportTableToCSV</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.fetchEmployees-functiontogettheemployeesthroughtheAPI">fetchEmployees - function to get the employees through the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.fetchEncaissements-functiontogettheencaissementsthroughtheAPI">fetchEncaissements - function to get the encaissements through the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.fetchServices-functiontogettheservicesthroughtheAPI">fetchServices - function to get the services through the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.formatDate-functiontoformatthedateoftheencaissement">formatDate - function to format the date of the encaissement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.formatEncaissements-functiontoformattheencaissementsforthedisplay">formatEncaissements - function to format the encaissements for the display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.formatTime-functiontoformatthetimeoftheencaissement">formatTime - function to format the time of the encaissement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.getEmployeeName">getEmployeeName</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.getServiceName-functiontogetthenameoftheservice">getServiceName - function to get the name of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.getWeekNumber">getWeekNumber</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleChoose-functiontomanagethechoosemode">handleChoose - function to manage the choose mode</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClickAmount">handleClickAmount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClickDelete-functiontomanagethedeletemode">handleClickDelete - function to manage the delete mode</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClickInvertFilter">handleClickInvertFilter</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleClose-functiontoclosethemodal">handleClose - function to close the modal</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleConfirmDelete-functiontomanagethedeleteoftheencaissement">handleConfirmDelete - function to manage the delete of the encaissement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleSearch-functiontomanagethesearchterm">handleSearch - function to manage the search term</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleShow-functiontoshowthemodal">handleShow - function to show the modal</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.handleSort-functiontomanagethesortterm">handleSort - function to manage the sort term</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.toggleButtons">toggleButtons</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect-setsthestatebuttonDelete,buttonModify,btnChooseandmodificationModeItiscalledwhenthestatemodeModifyisupdated">useEffect - sets the state buttonDelete, buttonModify, btnChoose and modificationModeIt is called when the state modeModify is updated</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_gestion_encaissement.js_.html#.useEffect-setsthestateencaissementsAffichageandsearchResultswiththeformattedencaissementsandsetsthestatetotalAmountwiththetotalamountoftheencaissements.Itiscalledwhenthestateencaissementsisupdated">useEffect - sets the state encaissementsAffichage and searchResults with the formatted encaissementsand sets the state totalAmount with the total amount of the encaissements. It is called when the state encaissements is updated</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_header.js_.html">'header.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_header.js_.html#.handleLogout">handleLogout</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_header.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_inscription.js_.html">'inscription.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_inscription.js_.html#.handleConfirmPasswordChange">handleConfirmPasswordChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_inscription.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_menu_encaissement.js_.html">'menu_encaissement.js'</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_menu_services.js_.html">'menu_services.js'</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_no_client_rdv.js_.html">'no_client_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_no_client_rdv.js_.html#.handleChange">handleChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_no_client_rdv.js_.html#.handleClick">handleClick</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html">'profil_utilisateur.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.fetchCusto">fetchCusto</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.fetchEmp">fetchEmp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.handleDelete">handleDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.handleSubmit">handleSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.submitCusto">submitCusto</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.submitEmp">submitEmp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.submitEmp">submitEmp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.useEffect">useEffect</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_profil_utilisateur.js_.html#.useEffect">useEffect</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_recap_rdv.js_.html">'recap_rdv.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_recap_rdv.js_.html#.useEffect1">useEffect1</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_service_rdv.js_.html">'service_rdv.js'</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="-_services.js_.html">'services.js'</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.deleteMessageFunctionthatshowsanotificationwhenaservicehasbeendeleted">deleteMessage Function that shows a notification when a service has been deleted</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.fetchServicesFunctiontofetchtheservicesfromtheAPI">fetchServices Function to fetch the services from the API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.fetchTypeOfServiceFunctionthatfetchesthetypesofservicefromthedatabase">fetchTypeOfService Function that fetches the types of service from the database</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.formatDurationFunctionthatformatsthedurationoftheservice">formatDuration Function that formats the duration of the service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleChooseServiceFunctionthathandlethechoiceofaservicetobemodifiedordeleted">handleChooseService Function that handle the choice of a service to be modified or deleted</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleClickDeleteFunctionthatchangesthemodeofthepagetodeleteaservice">handleClickDelete Function that changes the mode of the page to delete a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleClickModifyFunctionthatchangesthemodeofthepagetomodifyaservice">handleClickModify Function that changes the mode of the page to modify a service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleCloseFunctionthatclosesthemodalbysettingthebooleanshowtofalse">handleClose Function that closes the modal by setting the boolean show to false</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleDeleteTypeOfServicefunctionthatdeletesatypeofservice">handleDeleteTypeOfService function that deletes a type of service</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.handleShowFunctionthatshowsthemodalbysettingthebooleanshowtotrue">handleShow Function that shows the modal by setting the boolean show to true</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.minPriceForATypeOfService">minPriceForATypeOfService</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.priceWithoutCentFunctionthatgetsthepriceoftheservicewithoutcents">priceWithoutCent Function that gets the price of the service without cents</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.useEffectfunctionthatchangesthemodeofmodificationandthebuttonswhenthemodeofmodificationischanged">useEffect function that changes the mode of modification and the buttons when the mode of modification is changed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.useEffectfunctionthatfetchestheservicesandthetypesofservicewhenthepageisloaded">useEffect function that fetches the services and the types of service when the page is loaded</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="-_services.js_.html#.useEffectfunctionthatrefreshesthepagewhenthelistofservicesisupdated">useEffect function that refreshes the page when the list of services is updated</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleCheck">handleCheck</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#handleSubmit-functiontosubmittheformandcallthepostServicefunction">handleSubmit - function to submit the form and call the postService function</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">gestion_admin/gestion_services/form_services_modify.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { parseCookies } from 'nookies';
+import Header from '../../header';
+import { useRouter } from 'next/router';
+import Head from "next/head";
+import Footer from "@/pages/components/footer";
+
+/**
+ * @namespace 'form_services_modify.js'
+ * @description page to modify a service through a form
+ * @returns {JSX.Element}
+ */
+export default function Formulaire_services_modify() {
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+    // Constantes pour les URL de l'API
+    /**
+     * @constant {String} urlServices url of the API for the services
+     * @constant {String}urlTypesOfService url of the API for the types of service
+     * @constant {String}pathnameModal pathname to redirect to the services page
+     * @constant {String}router router to get the query
+     * @constant {String}values values of the query
+     * @memberof 'form_services_modify.js'
+     */
+    const urlServices = baseUrl + 'services/';
+    const urlTypesOfService = baseUrl + 'typesofservice/';
+
+    //Partie pour la redirection de page
+    const pathnameModal = "./menu_services";
+
+    //Partie pour le formulaire de modification des services
+    const router = useRouter();
+    const values = router.query;
+
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {Array} lstServices Array that contains all the services
+     * @constant {Array} lstNameServices Array that contains all the names of the services
+     * @default {Array} lstNameServices []
+     * @default {Array} lstServices []
+     * @see {@link 'services.js'.lstServices}
+     * @see {@link 'form_services.js'.lstNameServices}
+     */
+    const [lstNameServices, setLstNameServices] = useState([]);
+    const [lstServices, setLstServices] = useState([]);
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function fetchServices Function to fetch the services from the API
+     * @see {@link 'header.js'.cookies}
+     * @see {@link 'gestion_encaissement.js'.fetchServices}
+     */
+    const fetchServices = () => {
+        const cookies = parseCookies();
+        axios.get(urlServices, {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                setLstServices(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {String}listTypeOfService list of the types of service
+     * @default []
+     */
+    const [listTypeOfService, setListTypeOfService] = useState([]);
+
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {String}typeOfServiceRouter type of service to modify
+     * @default {}
+     */
+    const [typeOfServiceRouter, setTypeOfServiceRouter] = useState({});
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {String}serviceRouter service to modify
+     * @default {}
+     */
+    const [serviceRouter, setServiceRouter] = useState({});
+
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @constant {String}service service to modify
+     * @description the service is the serviceRouter with the new values
+     * @default {}
+     */
+    const [service, setService] = useState({
+        id: serviceRouter.id,
+        name: serviceRouter.name,
+        price: serviceRouter.price,
+        price_student: serviceRouter.price_student,
+        duration: serviceRouter.duration,
+        type_of_service: typeOfServiceRouter.id,
+    });
+
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function handleChange change the value of the service
+     * @description the service is the serviceRouter with the new values, the duration is formatted
+     * @see {@link 'form_services_modify.js'.formatTime}
+     * @param {object} evt event
+     */
+    const handleChange = (evt) => {
+        let val = evt.target.value;
+        if (evt.target.dataset.id === 'duration') {
+            val = formatTime(val);
+        }
+        setService({ ...service, [evt.target.dataset.id]: val });
+    };
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function handleSelect change the value of the service
+     * @param {object} evt event
+     */
+    const handleSelect = (evt) => {
+        setService({ ...service, [evt.target.dataset.id]: evt.target.value });
+    };
+
+    //Formattage des minutes pour le submit
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function formatTime format the time
+     * @param {Integer} minutes minutes to format
+     * @returns {String} the time formatted
+     */
+    const formatTime = (minutes) => {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+    }
+
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function selectServiceDuration select the duration of the service
+     * @description the duration is formatted and set in the select
+     * @param {String} t time to format
+     */
+    const selectServiceDuration = (t) => {
+        let durationToSelect;
+        const [hours, minutes, seconds] = t.split(':').map(Number);
+        const totalMinutes = hours * 60 + minutes + seconds / 60;
+
+        durationToSelect = totalMinutes.toString();
+
+        document.getElementById("service_temps").value = durationToSelect;
+    }
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function handleSubmit
+     * @description go through the array of services and call the postService function for each service if the fields are not empty and if the type of service is selected. then if there is no error, call the successMessage function
+     * @see {@link 'form_services_modify.js'.putService}
+     */
+    const handleSubmit = () => {
+
+        const s = service;
+        let statusOK = true;
+
+        if (s.name.toLowerCase() === serviceRouter.name.toLowerCase()) {
+            document.getElementById('service_titre').setAttribute('className', 'form-control is-valid');
+        }
+        else if (lstNameServices.includes(s.name.toLowerCase())) {
+            document.getElementById('service_titre').setAttribute('className', 'form-control is-invalid');
+            document.getElementById('service_titre_error').innerHTML = "Ce nom de service existe déjà";
+            statusOK = false;
+        }
+        else if (s.name === "") {
+            document.getElementById('service_titre').setAttribute('className', 'form-control is-invalid');
+            document.getElementById('service_titre_error').innerHTML = 'Le titre ne peut pas être vide.';
+            statusOK = false;
+        }
+
+        document.getElementById('service_prix').setAttribute('className', 'form-control is-valid');
+        document.getElementById('service_studentprice').setAttribute('className', 'form-control is-valid');
+        document.getElementById('service_temps').setAttribute('className', 'form-control is-valid');
+        if (statusOK) {
+            putService(s);
+        }
+    };
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function successMessage
+     * @description the function to show the success message then hide it after 5 seconds and refresh the page
+     * @see {@link 'encaissement.js'.successMessage}
+     */
+
+    const successMessage = () => {
+        document.getElementById("notification_success").removeAttribute("hidden");
+        //après 3 secondes, on cache la notification
+        setTimeout(function () {
+            if (document.getElementById("notification_success") != null) {
+                document.getElementById("notification_success").setAttribute("hidden", "hidden");
+            }
+        }, 10000);
+    };
+
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @param {String} newName name of the service having an error
+     * @function errorMessage display the error message
+     * @description the error message is displayed, the attribute hidden is removed
+     *
+     */
+    const errorMessage = (newName) => {
+        document.getElementById("notification_success").removeAttribute("hidden");
+        const serviceError = document.getElementById("service_error");
+        serviceError.textContent = newName;
+
+    };
+
+
+    /**
+     *
+     * @param {object} s service to modify
+     * @memberof 'form_services_modify.js'
+     * @function putService modify the service
+     * @description the service is modified, the success message is displayed or the error message is displayed
+     * @see {@link 'form_services_modify.js'.successMessage}
+     * @see {@link 'form_services_modify.js'.errorMessage}
+     * @see {@link 'form_services_modify.js'.service}
+     */
+    const putService = (s) => {
+        const cookies = parseCookies();
+
+        axios.put(urlServices + s.id + '/', s, {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                console.log(response.data);
+                successMessage();
+            })
+            .catch((error) => {
+                errorMessage(s.name);
+                console.log(error);
+            });
+
+    };
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function fetchTypeOfService fetch the type of service
+     * @description the list of type of service is set
+     * @see {@link 'form_services_modify.js'.setListTypeOfService}
+     * @see {@link 'form_services_modify.js'.urlTypesOfService}
+     * @see {@link 'form_services_modify.js'.parseCookies}
+     * @see {@link 'creation_encaissement.js'.fetchTypeOfService}
+     */
+    const fetchTypeOfService = () => {
+        const cookies = parseCookies();
+        axios.get(urlTypesOfService, {
+            headers: {
+                Authorization: 'Token ' + cookies.csrftoken,
+            },
+        })
+            .then((response) => {
+                setListTypeOfService(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function loadNameServices
+     * @description loads the names of the service in an array
+     * @see {@link 'form_services.js'.loadNameServices}
+     */
+    const loadNameServices = () => {
+        let lstServ = [];
+        lstServices.map((s) => {
+            lstServ.push(s.name.toLowerCase());
+        });
+        setLstNameServices(lstServ);
+    };
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function useEffect fetch the type of service and services at the loading of the page
+     * @see {@link 'form_services_modify.js'.fetchTypeOfService}
+     * @see {@link 'form_services_modify.js'.fetchServices}
+     */
+    useEffect(() => {
+        fetchTypeOfService();
+        fetchServices();
+    }, []);
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function useEffect
+     * @description when services are fetched, load the names of the services
+     * @see {@link 'form_services.js'.loadServices}
+     */
+    useEffect(() => {
+        loadNameServices();
+    }, [lstServices]);
+
+
+    /**
+     * @memberof 'form_services_modify.js'
+     * @function useEffect set the service and the type of service at the loading of the page
+     * @description the service and the type of service are set when the router is ready, otherwise the function is called again
+     * @param {boolean} Router.isReady true if the router is ready to be used
+     * @see {@link 'form_services_modify.js'.setServiceRouter}
+     * @see {@link 'form_services_modify.js'.setService}
+     * @see {@link 'form_services_modify.js'.setTypeOfServiceRouter}
+     * @see {@link 'form_services_modify.js'.selectServiceDuration}
+     * @see {@link 'form_services_modify.js'.router}
+     * @see {@link 'form_services_modify.js'.values}
+     *
+     */
+    useEffect(() => {
+        if (!router.isReady) return;
+
+        setServiceRouter(JSON.parse(values.service));
+        setService(JSON.parse(values.service));
+        setTypeOfServiceRouter(JSON.parse(values.typeOfService));
+        selectServiceDuration(JSON.parse(values.service).duration);
+
+    }, [router.isReady]);
+
+    return (
+        &lt;>
+            &lt;Head>
+                &lt;title>Tina - Modification de service&lt;/title>
+                &lt;meta name="description" content="Page pour la modification de service de l'application Tina" />
+            &lt;/Head>
+            &lt;Header />
+
+            &lt;main className="d-flex justify-content-center align-items-center">
+                &lt;div className="container mt-5 bg-light p-4 rounded shadow" style={{ maxWidth: "800px" }}>
+                    &lt;h2 className="text-center mb-4">Modification de service&lt;/h2>
+
+                    {/* Notifications success*/}
+                    &lt;div id="notification_success" className="alert alert-success w-100" role="alert" hidden>
+                        &lt;h4 className="alert-heading">Modification réussie&lt;/h4>
+                        &lt;p>Le service a été modifié&lt;/p>
+                        &lt;hr />
+                        &lt;p className="mb-0">Vous pouvez consulter tous les services en cliquant : &lt;Link href={pathnameModal} className="alert-link">ICI&lt;/Link>&lt;/p>
+                    &lt;/div>
+
+                    {/* Notifications error */}
+                    &lt;div id="notification_error" className="alert alert-danger w-100" role="alert" hidden>
+                        &lt;h4 className="alert-heading">Création Echouée&lt;/h4>
+                        &lt;p>Il y a un problème avec le service : &lt;a id='service_error'>&lt;/a>&lt;/p>
+                    &lt;/div>
+
+                    
+                    &lt;div className="form-floating mb-3 w-100">
+                        &lt;select className="form-select" id='select_type_of_service' data-id="type_of_service" onChange={handleSelect}>
+                            {listTypeOfService.map(item => (
+                                &lt;option key={item.id} value={item.id} selected={item.id === typeOfServiceRouter.id}>{item.name}&lt;/option>
+                            ))}
+                        &lt;/select>
+                        &lt;label htmlFor="select_type_of_service">Type de service&lt;/label>
+                    &lt;/div>
+
+                    &lt;div className="bg-white p-3 rounded shadow-sm mb-3 w-100">
+                        &lt;div className="form-floating mb-3">
+                            &lt;input type="text" className="form-control" id="service_titre" data-id="name" placeholder="Le titre du service" defaultValue={serviceRouter.name} onKeyUp={handleChange} onChange={handleChange} />
+                            &lt;label htmlFor="service_titre">Titre du service&lt;/label>
+                            &lt;div className="invalid-feedback" id="service_titre_error">&lt;/div>
+                        &lt;/div>
+
+                        &lt;div className="input-group mb-3">
+                            &lt;form className="form-floating">
+                                &lt;input type="number" className="form-control" id="service_prix" data-id="price" placeholder="0" defaultValue={serviceRouter.price} onKeyUp={handleChange} onChange={handleChange} />
+                                &lt;label htmlFor="service_prix">Prix normal&lt;/label>
+                                &lt;div className="invalid-feedback" id="service_prix_error">
+                                    Le prix ne peut pas être vide.
+                                &lt;/div>
+                            &lt;/form>
+                            &lt;span className="input-group-text">CHF&lt;/span>
+                        &lt;/div>
+
+                        &lt;div className="input-group mb-3">
+                            &lt;form className="form-floating">
+                                &lt;input type="number" className="form-control" id="service_studentprice" data-id="price_student" placeholder="0" defaultValue={serviceRouter.price_student} onKeyUp={handleChange} onChange={handleChange} />
+                                &lt;label htmlFor="service_studentprice">Prix etudiant&lt;/label>
+                                &lt;div className="invalid-feedback" id="service_studentprice_error">
+                                    Le prix ne peut pas être vide.
+                                &lt;/div>
+                            &lt;/form>
+                            &lt;span className="input-group-text">CHF&lt;/span>
+                        &lt;/div>
+
+                        &lt;div className="input-group mb-3">
+                            &lt;form className="form-floating">
+                                &lt;select className="form-select" id="service_temps" data-id="duration" onKeyUp={handleChange} onChange={handleChange}>
+                                    &lt;option value="0">0&lt;/option>
+                                    &lt;option value="15">15&lt;/option>
+                                    &lt;option value="30">30&lt;/option>
+                                    &lt;option value="45">45&lt;/option>
+                                    &lt;option value="60">60&lt;/option>
+                                    &lt;option value="75">75&lt;/option>
+                                    &lt;option value="90">90&lt;/option>
+                                    &lt;option value="105">105&lt;/option>
+                                    &lt;option value="120">120&lt;/option>
+                                &lt;/select>
+                                &lt;label htmlFor="service_temps">Duree&lt;/label>
+                                &lt;div className="invalid-feedback">La durée doit être supérieure à 0.&lt;/div>
+                            &lt;/form>
+                            &lt;span className="input-group-text">MIN&lt;/span>
+                        &lt;/div>
+                    &lt;/div>
+
+                    &lt;div className="d-grid gap-2 col-6 mx-auto mb-3">
+                        &lt;button type="button" className="btn btn-primary" onClick={handleSubmit}>Sauvegarder les modifications&lt;/button>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/main>
+            &lt;Footer />
+        &lt;/>
+
+
+
+    );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Jun 01 2023 12:17:22 GMT+0200 (heure d’été d’Europe centrale) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
