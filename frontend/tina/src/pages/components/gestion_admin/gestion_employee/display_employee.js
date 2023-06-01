@@ -8,8 +8,8 @@ import Head from "next/head";
 import Footer from '../../footer';
 
 /**
- * @namespace 'choix_client.js'
- * @description This component provides the functionality to choose a client from a list.
+ * @namespace 'display_employee.js'
+ * @description This component provides the functionality to choose a employee.
  * @returns {JSX.Element} A React functional component rendering the client list.
  */
 export default function DisplayAndDeleteEmployee() {
@@ -18,38 +18,38 @@ export default function DisplayAndDeleteEmployee() {
 
     /**
      * @constant clients
-     * @memberof 'choix_client.js'
-     * @description A list of clients.
+     * @memberof 'display_employee.js'
+     * @description A list of employee.
      * @default []
      */ 
     const [employees, setEmployees] = useState([]);
 
     /**
      * @constant filteredClients
-     * @memberof 'choix_client.js'
-     * @description A list of clients filtered by the search bar.
+     * @memberof 'display_employee.js'
+     * @description A list of employee filtered by the search bar.
      * @default []
      */
     const [filteredEmployees, setFilteredEmployees] = useState([]);
 
     /**
      * @constant cookies
-     * @memberof 'choix_client.js'
+     * @memberof 'display_employee.js'
      * @see {@link 'header.js'.cookies}
      */
     const cookies = parseCookies();
 
     /**
      * @constant router
-     * @memberof 'choix_client.js'
+     * @memberof 'display_employee.js'
      * @see {@link 'header.js'.router}
      */
     const router = useRouter();
 
     /**
      * @function useEffect
-     * @memberof 'choix_client.js'
-     * @description A React hook that fetches the clients list from the database.
+     * @memberof 'display_employee.js'
+     * @description A React hook that fetches the employee list from the database.
      */
     useEffect(() => {
         fetchCustomers();
@@ -57,9 +57,9 @@ export default function DisplayAndDeleteEmployee() {
 
     /**
      * @function fetchCustomers
-     * @memberof 'choix_client.js'
-     * @description Fetches the clients list from the database.
-     * @returns {Array} A list of clients.
+     * @memberof 'display_employee.js'
+     * @description Fetches the employee list from the database.
+     * @returns {Array} A list of employee.
      */     
     const fetchCustomers = () => {
         axios.get(baseUrl + 'employees/', {
@@ -83,10 +83,10 @@ export default function DisplayAndDeleteEmployee() {
 
     /**
      * @function handleSearch
-     * @memberof 'choix_client.js'
-     * @description Filters the clients list by the search bar.
+     * @memberof 'display_employee.js'
+     * @description Filters the employee list by the search bar.
      * @param {Event} evt The event that triggered the function.
-     * @returns {Array} A list of clients filtered by the search bar.
+     * @returns {Array} A list of employee filtered by the search bar.
      */ 
     const handleSearch = (evt) => {
         const searchValue = evt.target.value;
@@ -98,9 +98,9 @@ export default function DisplayAndDeleteEmployee() {
 
     /**
      * @function handleClickClient
-     * @memberof 'choix_client.js'
-     * @description Redirects to the 'recap_rdv' page.
-     * @param employee The employee to be redirected to the 'recap_rdv' page.
+     * @memberof 'display_employee.js'
+     * @description Redirects to the 'detail_employee' page.
+     * @param employee
      */
     const handleClickClient = (employee) => {
         router.push({

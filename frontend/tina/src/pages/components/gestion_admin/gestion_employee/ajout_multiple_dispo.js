@@ -10,25 +10,83 @@ import Head from "next/head";
 import Header from "@/pages/components/header";
 import Footer from "@/pages/components/footer";
 
-
+/**
+ * @namespace 'ajout_multiple_dispo.js'
+ * @description this component manage the disponibilities of the employee
+ * @returns {JSX.Element} The JSX code for the user profile component.
+ */
 export default function AjoutMultipleDispo() {
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} baseUrl
+   * @description variable to store the base of the url of the API
+   * @default process.env.NEXT_PUBLIC_BASE_URL
+   */ 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} dispo
+   * @description variable to store the disponibility of the employee
+   * @default useState
+   */ 
   const [dispo, setDispo] = useState({start_date: "", end_date: "", disponibilities: {}});
 
-
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} disponibilities
+   * @description variable to store the disponibilities of the employee
+   * @default useState
+   */
   const [disponibilities, setDisponibilities] = useState({start_hour: "", end_hour: ""});
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} employees
+   * @description variable to store the list of employees
+   * @default useState
+   */ 
   const [employees, setEmployees] = useState([]);
+
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} employee
+   * @description variable to store the employee
+   * @default useState
+   */ 
   const [employee, setEmployee] = useState("1");
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} days
+   * @description variable to store the days
+   * @default useState
+   */ 
   const [days, setDays] = useState("monday");
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} listDispo
+   * @description variable to store the list of disponibilities
+   * @default useState
+   */
   const [listDispo, setListDispo] = useState([]);
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} router
+   * @description variable to store the router
+   * @default useRouter
+   */
   const router = useRouter();
   useRef(false);
+
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function fetchEmployees
+   * @description function to fetch the list of employees
+   */
   const fetchEmployees = () => {
     axios.get(baseUrl + 'employees/', {
       headers: {
@@ -45,33 +103,72 @@ export default function AjoutMultipleDispo() {
         );
   }
 
-
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function useEffect
+   * @description function to fetch the list of employees
+   * @param {String} fetchEmployees
+   */ 
   useEffect(() => {
     fetchEmployees();
   } , []);
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function handleChangeDispo
+   * @description function to handle the change of disponibilities
+   * @param {String} evt
+   */ 
   const handleChangeDispo = (evt) => {
     setDispo({ ...dispo, [evt.target.dataset.id]: evt.target.value});
   }
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @constant {String} cookies
+   * @description variable to store the cookies
+   * @default parseCookies
+   */ 
   const cookies = parseCookies();
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function handleChange
+   * @description function to handle the change of disponibilities
+   * @param {String} evt
+   */ 
   const handleChange = (evt) => {
 
     setDisponibilities({ ...disponibilities, [evt.target.dataset.id]: evt.target.value});
     console.log(disponibilities);
   }
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function handleChangeEmployee
+   * @description function to handle the change of employee
+   * @param {String} evt
+   */
   const handleChangeEmployee = (evt) => {
     setEmployee(evt.target.value);
   }
 
-
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function handleChangeDays
+   * @description function to handle the change of days
+   * @param {String} evt
+   */
   const handleChangeDays = (evt) => {
     console.log(evt.target.value);
     setDays(evt.target.value);
   }
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function handleSubmit
+   * @description function to handle the submit of disponibilities
+   */ 
   const handleSubmit =  (evt) => {
     evt.preventDefault();
     const myObj = { [days]: disponibilities };
@@ -89,6 +186,11 @@ export default function AjoutMultipleDispo() {
     }
   }
 
+  /**
+   * @memberof 'ajout_multiple_dispo.js'
+   * @function handleSubmitDispo
+   * @description function to handle the submit of disponibilities
+   */ 
   useEffect(() => {
     if (listDispo.length > 0) {
       const id = employee;

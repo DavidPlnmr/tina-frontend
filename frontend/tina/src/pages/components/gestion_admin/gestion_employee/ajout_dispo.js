@@ -10,10 +10,27 @@ import Head from "next/head";
 import Header from "@/pages/components/header";
 import Footer from "@/pages/components/footer";
 
+/**
+ * @namespace 'ajout_dispo.js'
+ * @description this component manage the disponibilities of the employee
+ * @returns {JSX.Element} The JSX code for the user profile component.
+ */
 export default function AjoutDispo() {
 
+    /**
+   * @memberof 'ajout_dispo.js'
+   * @constant {String} baseUrl
+   * @description variable to store the base of the url of the API
+   * @default process.env.NEXT_PUBLIC_BASE_URL
+   */ 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+    /**
+     * @memberof 'ajout_dispo.js'
+     * @constant {String} dispo
+     * @description variable to store the disponibility of the employee
+     * @default useState
+     */
     const [dispo, setDispo] = useState([
         {
             date: "",
@@ -24,9 +41,27 @@ export default function AjoutDispo() {
         }
     ]);
 
+    /**
+     * @memberof 'ajout_dispo.js'
+     * @constant {String} employees
+     * @description variable to store the list of employees
+     * @default useState
+     */ 
     const  [employees, setEmployees] = useState([]);
+
+    /**
+     * @memberof 'ajout_dispo.js'
+     * @constant {String} router
+     * @description variable to store the router
+     * @default useRouter
+     */ 
     const router = useRouter();
 
+    /**
+     * @memberof 'ajout_dispo.js'
+     * @function fetchEmployees
+     * @description function to fetch the list of employees
+     */ 
     const fetchEmployees = () => {
         const cookies = parseCookies();
         axios.get(baseUrl + 'employees/', {
@@ -47,11 +82,21 @@ export default function AjoutDispo() {
             );
     }
 
-
+    /**
+     * @memberof 'ajout_dispo.js'
+     * @function useEffect
+     * @description function to fetch the list of employees
+     */ 
     useEffect(() => {
         fetchEmployees();
     } , []);
 
+    /**
+     * @memberof 'ajout_dispo.js'
+     * @function handleSubmit
+     * @description function to handle the submit of the form
+     * @param {Object} evt 
+     */
     const handleSubmit =  (evt) => {
         const cookies = parseCookies();
 
@@ -80,6 +125,13 @@ export default function AjoutDispo() {
 
     }
 
+    /**
+     * @memberof 'ajout_dispo.js'
+     * @function handleChange
+     * @description function to handle the change of the form
+     * @param {Object} evt
+     * @returns {Object} the disponibility of the employee
+     */
     const handleChange = (evt) => {
         setDispo({ ...dispo, [evt.target.dataset.id]: evt.target.value});
     };

@@ -15,13 +15,36 @@ import {Modal, Button} from 'react-bootstrap';
 
 export default function ProfilUtilisateurs() {
 
+  /**
+     * @memberof 'detail_rdv.js'
+     * @constant {object} show 
+     * @description state to show the modal
+     * @default false
+     */
   const [show, setShow] = useState(false);
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function handleClose
+   * @description set the state show to false
+   */
   const handleClose = () => setShow(false);
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function handleShow
+   * @description set the state show to true
+   */
   const handleShow = () => setShow(true);
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {String} baseUrl
+   * @description variable to store the base of the url of the API
+   * @default process.env.NEXT_PUBLIC_BASE_URL
+   */ 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   /**
    * @constant customer
    * @default

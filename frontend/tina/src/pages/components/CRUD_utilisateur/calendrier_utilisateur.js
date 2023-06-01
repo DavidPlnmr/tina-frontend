@@ -16,6 +16,12 @@ import Footer from "../footer";
 
 export default function CalendrierClient() {
 
+  /**
+   * @memberof 'calendrier_utilisateur.js'
+   * @constant {String} baseUrl
+   * @description variable to store the base of the url of the API
+   * @default process.env.NEXT_PUBLIC_BASE_URL
+   */ 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   /**

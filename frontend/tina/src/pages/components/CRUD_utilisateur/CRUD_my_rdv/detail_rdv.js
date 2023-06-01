@@ -6,57 +6,152 @@ import { parseCookies } from 'nookies';
 import Footer from '../../footer';
 import {Modal, Button} from 'react-bootstrap';
 
+/**
+ * @namespace 'detail_rdv.js'
+ * @description A page to display the details of an appointment
+ * @returns {JSX.Element} - Return the html code of the detail_rdv page
+ */
+
 export default function DetailRdv() {
   /**
-     * @memberof 'gestion_encaissement.js'
+     * @memberof 'detail_rdv.js'
      * @constant {object} show 
+     * @description state to show the modal
      * @default false
      */
   const [show, setShow] = useState(false);
 
   /**
-   * @memberof 'gestion_encaissement.js'
-   * @function handleClose - function to close the modal
+   * @memberof 'detail_rdv.js'
+   * @function handleClose
    * @description set the state show to false
    */
   const handleClose = () => setShow(false);
 
   /**
-   * @memberof 'gestion_encaissement.js'
-   * @function handleShow - function to show the modal
+   * @memberof 'detail_rdv.js'
+   * @function handleShow
    * @description set the state show to true
    */
   const handleShow = () => setShow(true);
 
+   /**
+     * @memberof 'detail_rdv.js'
+     * @constant {object} show2 
+     * @description state to show the modal
+     * @default false
+     */
   const [show2, setShow2] = useState(false);
 
   /**
-   * @memberof 'gestion_encaissement.js'
-   * @function handleClose - function to close the modal
+   * @memberof 'detail_rdv.js'
+   * @function handleClose
    * @description set the state show to false
    */
   const handleClose2 = () => setShow2(false);
 
   /**
-   * @memberof 'gestion_encaissement.js'
-   * @function handleShow - function to show the modal
+   * @memberof 'detail_rdv.js'
+   * @function handleShow
    * @description set the state show to true
    */
   const handleShow2 = () => setShow2(true);
 
-
+/**
+ * @memberof 'detail_rdv.js'
+ * @constant {object} router
+ * @description variable to use the router functions
+ * @default useRouter()
   const router = useRouter();
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} cookies
+   * @description variable to use the cookies functions
+   * @default parseCookies()
   const cookies = parseCookies();
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} resQuery
+   * @description variable to use the router query functions
+   * @default router.query
   const resQuery = router.query;
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} [services, setServices]
+   * @description state to store the services
+   * @default useState({})
   const [services, setServices] = useState({});
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} [coiffeurs, setCoiffeurs]
+   * @description state to store the employees
+   * @default useState({})
+   * @example useState({}) = {id: 1, name: "Jean", surname: "Dupont", ...}
+   */
   const [coiffeurs, setCoiffeurs] = useState({});
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} [heureDepart, setHeureDepart]
+   * @description state to store the start time of the appointment
+   * @default useState({})
+   * @example useState({}) = "10:00"
+   */ 
   const [heureDepart, setHeureDepart] = useState();
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} [customers, setCustomers]
+   * @description state to store the customers
+   * @default useState({})
+   * @example useState({}) = {id: 1, name: "Jean", surname: "Dupont", ...}
+   */ 
   const [customers, setCustomers] = useState({});
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} [heureFin, setHeureFin]
+   * @description state to store the end time of the appointment
+   * @default useState({})
+   * @example useState({}) = "11:00"
+   */ 
   const [heureFin, setHeureFin] = useState();
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} [date, setDate]
+   * @description state to store the date of the appointment
+   * @default useState({})
+   * @example useState({}) = "2021-06-01"
+   */ 
   const [appointments, setAppointments] = useState([]);
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {object} [appointment, setAppointment]
+   * @description state to store the appointment
+   * @default useState({})
+   * @example useState({}) = {id: 1, date: "2021-06-01", heureDepart: "10:00", heureFin: "11:00", ...}
+   */
   const [appointment, setAppointment] = useState({});
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @constant {String} baseUrl
+   * @description variable to store the base of the url of the API
+   * @default process.env.NEXT_PUBLIC_BASE_URL
+   */  
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description function to fetch the appointment
+   */
   const fetchAppointment = async () => {
     try {
       const response = await axios.get(
@@ -74,6 +169,13 @@ export default function DetailRdv() {
     }
   };
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description function to fetch the customers
+   * @param {number} id
+   * @example id = 1
+   */
   const fetchCustomers = async (id) => {
     try {
     const response = await axios.get(
@@ -91,6 +193,13 @@ export default function DetailRdv() {
   }
   };
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description function to fetch the employees
+   * @param {number} id
+   * @example id = 1
+   */ 
   const fetchEmployees = async (id) => {
     const cookies = parseCookies();
         axios.get(baseUrl + 'employees/' + id + "/", {
@@ -107,6 +216,13 @@ export default function DetailRdv() {
             });
     };
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description function to fetch the services
+   * @param {number} id
+   * @example id = 1
+   */ 
   const fetchServices = async (id) => {
     axios
       .get(baseUrl + "services/" + id + "/", {
@@ -123,6 +239,11 @@ export default function DetailRdv() {
       });
     };
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description function to create the end time of the appointment
+   */
     const createHeureFin = () => {
       if (appointment) {
       if (appointment.time != null) {
@@ -170,10 +291,20 @@ export default function DetailRdv() {
     }
     };
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description useEffect to fetch the appointment
+   */
   useEffect(() => {
     fetchAppointment();
   }, []);
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description useEffect to find the appointment
+   */ 
   useEffect(() => {
     if (appointments.length > 0) {
       console.log(appointments);
@@ -185,6 +316,11 @@ export default function DetailRdv() {
     }
   }, [appointments]);
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description useEffect to fetch the services, employees and customers
+   */ 
   useEffect(() => {
     if (appointment) {
       console.log(appointment);
@@ -195,11 +331,22 @@ export default function DetailRdv() {
     }
   }, [appointment]);
 
-   useEffect(() => {
-    
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function useEffect
+   * @description useEffect to create the end time of the appointment
+   */
+  useEffect(() => {
     createHeureFin();
   }, [appointment, services]);
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function handleClick
+   * @description function to cancel the appointment
+   * @param {Object} evt
+   * @example evt = {id: 1, date: "2021-06-01", time: "10:00:00", customer: 1, service: 1, …}
+   */ 
   const handleClick = async (evt) => {
     evt.preventDefault();
     const response = await fetch(baseUrl + "appointments/" + resQuery.id + "/cancel", {
@@ -219,12 +366,27 @@ export default function DetailRdv() {
     }
     
   }
+
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function handleClick2
+   * @description function to redirect to the calendar
+   * @param {Object} evt
+   * @example evt = {id: 1, date: "2021-06-01", time: "10:00:00", customer: 1, service: 1, …}
+   */ 
   const handleClick2 = async (evt) => {
     evt.preventDefault();
     handleClose2();
     router.push("/components/CRUD_utilisateur/calendrier_utilisateur"); 
   };
 
+  /**
+   * @memberof 'detail_rdv.js'
+   * @function handleRedirect
+   * @description function to redirect to the calendar
+   * @param {Object} evt
+   * @example evt = {id: 1, date: "2021-06-01", time: "10:00:00", customer: 1, service: 1, …}
+   */ 
   const handleRedirect = (evt) => {
     evt.preventDefault();
     router.push("/components/CRUD_utilisateur/calendrier_utilisateur");
