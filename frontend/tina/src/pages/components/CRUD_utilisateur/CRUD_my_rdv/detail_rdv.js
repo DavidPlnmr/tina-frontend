@@ -62,6 +62,7 @@ export default function DetailRdv() {
  * @constant {object} router
  * @description variable to use the router functions
  * @default useRouter()
+ */
   const router = useRouter();
 
   /**
@@ -69,6 +70,7 @@ export default function DetailRdv() {
    * @constant {object} cookies
    * @description variable to use the cookies functions
    * @default parseCookies()
+   */
   const cookies = parseCookies();
 
   /**
@@ -76,6 +78,7 @@ export default function DetailRdv() {
    * @constant {object} resQuery
    * @description variable to use the router query functions
    * @default router.query
+   */
   const resQuery = router.query;
 
   /**
@@ -83,6 +86,7 @@ export default function DetailRdv() {
    * @constant {object} [services, setServices]
    * @description state to store the services
    * @default useState({})
+   */
   const [services, setServices] = useState({});
 
   /**
