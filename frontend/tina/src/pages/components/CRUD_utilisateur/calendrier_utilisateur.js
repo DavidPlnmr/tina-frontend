@@ -150,7 +150,8 @@ export default function CalendrierClient() {
                   );
                   service = response2.data;
                 }
-
+                let employee;
+                if (appointment.employee !== null) {
                 const response3 = await axios.get(
                   baseUrl + "employees/" +
                     appointment.employee +
@@ -161,6 +162,9 @@ export default function CalendrierClient() {
                     },
                   }
                 );
+                  employee = response3.data;
+                }
+
                 console.log(appointment.customer);
                 let response4 = null;
                 if (appointment.customer != null) {
@@ -180,7 +184,7 @@ export default function CalendrierClient() {
                   information = response4;
                 }
 
-                const employee = response3.data;
+                
                 let myTitle = "";
                 const start = new Date(
                   `${appointment.date}T${appointment.time}`
@@ -194,9 +198,17 @@ export default function CalendrierClient() {
 
                 if (cookies.role === "customer") {
                   if (service !== undefined) {
-                  myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
+                    if (employee !== undefined) {
+                      myTitle = `Service : ${service.name} avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
+                    } else {
+                      myTitle = `Service : ${service.name} avec un coiffeur à determiner / (cliquez pour gérer le rendez-vous)`;
+                    }
                 } else {
-                  myTitle = `Service : Inconnu avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
+                  if (employee !== undefined) {
+                    myTitle = `Service : Inconnu avec ${employee.first_name} ${employee.last_name} / (cliquez pour gérer le rendez-vous)`;
+                  } else {
+                    myTitle = `Service : Inconnu avec un coiffeur à determiner / (cliquez pour gérer le rendez-vous)`;
+                  }
                 }
                 } else if (cookies.role === "employee" || cookies.role === "admin") {
                   if (appointment.customer != null) {

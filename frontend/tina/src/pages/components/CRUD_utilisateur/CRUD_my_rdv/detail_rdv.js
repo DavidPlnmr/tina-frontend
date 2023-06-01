@@ -442,9 +442,11 @@ export default function DetailRdv() {
                   <strong>Client:</strong> {customers.first_name} {customers.last_name}
                 </li>
                 )}
+                {appointment.coiffeurs && (
                 <li className="list-group-item">
                   <strong>Coiffeur :</strong> {coiffeurs.first_name} {coiffeurs.last_name}
                 </li>
+                )}
                 {appointment.informations && (
                 <li className="list-group-item">
                   <strong>information:</strong> {appointment.informations}
@@ -464,9 +466,11 @@ export default function DetailRdv() {
                 <li className="list-group-item">
                   <strong>Heure de fin :</strong> {heureFin}
                 </li>
+                {appointment.service && (
                   <li className="list-group-item">
                       <strong>Prix total :</strong> CHF {services.price}
                   </li>
+                )}
               </ul>
             </div>
           </div> <br /> 
