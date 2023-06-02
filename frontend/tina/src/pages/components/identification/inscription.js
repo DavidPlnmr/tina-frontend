@@ -115,6 +115,10 @@ export default function Inscription() {
       evt.target.classList.remove("is-invalid");
     }
 
+    if (evt.target.dataset.id === "tel_number") {
+        evt.target.classList.remove("is-invalid");
+    }
+
     // Supprimer les espaces s'il s'agit du numéro de téléphone
     if (evt.target.dataset.id === "tel_number") {
       value = value.replace(/\s/g, '');
@@ -218,8 +222,13 @@ export default function Inscription() {
             else if (error.response.data.detail === "A user with that email already exists.") {
                 alert("L'adresse email est déjà utilisée.");
               evt.target[3].classList.add("is-invalid");
+            }
+            else if (error.response.data.tel_number) {
+                alert("Le numéro de téléphone doit commencé par 0.");
+              evt.target[4].classList.add("is-invalid");
+            }
 
-            } else {
+            else {
                 alert("Une erreur est survenue lors de l'inscription vérifiez les informations saisies.");
             }
         });

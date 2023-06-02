@@ -327,7 +327,7 @@ export default function ProfilUtilisateurs() {
             router.push("/");
           })
           .catch((error) => {
-            if (error.response.data.username == "custom user with this username already exists.") {
+            if (error.response.data.username) {
               alert("Ce nom d'utilisateur existe déjà");
             }
           });
