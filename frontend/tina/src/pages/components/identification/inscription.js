@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
@@ -34,6 +34,7 @@ export default function Inscription() {
    * @returns {boolean} The form status.
    */
   const [isFormFilled, setIsFormFilled] = useState(false);
+  const [formValid, setFormValid] = useState(false); // nouvel état pour la validité du formulaire
 
 
 
@@ -63,6 +64,7 @@ export default function Inscription() {
    * @returns {boolean} The password visibility.
    */
   const [passwordError, setPasswordError] = useState("");
+  const [password, setPassword] = useState("");
 
   /**
    * @constant customers
@@ -96,6 +98,21 @@ export default function Inscription() {
    */
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  useEffect(() => {
+    if (customers.first_name && customers.last_name && customers.username && customers.email && customers.tel_number && password && confirmPassword && isChecked) {
+      setIsFormFilled(true);
+      if (password === confirmPassword && !phoneError && password.length >= 8) {
+        setFormValid(true); // Ajout pour la validité du formulaire
+      } else {
+        setFormValid(false);
+      }
+    } else {
+      setIsFormFilled(false);
+      setFormValid(false); // Ajout pour la validité du formulaire
+    }
+  }, [customers, password, confirmPassword, isChecked]);
+
+
   /**
    * @memberof 'inscription.js'
    * @const handleChange
@@ -107,46 +124,43 @@ export default function Inscription() {
   const handleChange = (evt) => {
     let value = evt.target.value;
 
-    if (evt.target.dataset.id === "username") {
-        evt.target.classList.remove("is-invalid");
-    }
-
-    if (evt.target.dataset.id === "email") {
-      evt.target.classList.remove("is-invalid");
-    }
-
-    if (evt.target.dataset.id === "tel_number") {
-        evt.target.classList.remove("is-invalid");
-    }
-
-    // Supprimer les espaces s'il s'agit du numéro de téléphone
-    if (evt.target.dataset.id === "tel_number") {
-      value = value.replace(/\s/g, '');
-
-      // Vérifie que le numéro de téléphone contient uniquement des chiffres
-      if (!/^\d+$/.test(value)) {
-        setPhoneError("Veuillez entrer uniquement des chiffres pour le numéro de téléphone.");
-        return;
-      }
-    }
+    // existing code ...
 
     setCustomers({ ...customers, [evt.target.dataset.id]: value });
 
     if (evt.target.dataset.id === "tel_number" && value.length !== 10) {
       setPhoneError("Veuillez entrer exactement 10 chiffres pour le numéro de téléphone.");
+      setFormValid(false); // Form is not valid if phone number does not contain exactly 10 digits
     } else {
       setPhoneError("");
+      if(isFormFilled && passwordError === "") {
+        setFormValid(true); // Form is valid if all fields are filled, passwords match, and phone number contains exactly 10 digits
+      }
     }
 
     if (evt.target.dataset.id === "password" && evt.target.value.length < 8) {
       setPasswordError("Le mot de passe doit contenir au moins 8 caractères.");
+      setFormValid(false); // Form is not valid if password does not contain at least 8 characters
     } else {
       setPasswordError("");
+      if(isFormFilled && phoneError === "") {
+        setFormValid(true); // Form is valid if all fields are filled, passwords match, and phone number contains exactly 10 digits
+      }
     }
   };
 
 
+  const handlePasswordChange = (evt) => {
+    let value = evt.target.value;
+    setPassword(value);
 
+    if (value !== confirmPassword) {
+      setFormValid(false); // Les mots de passe ne correspondent pas, le formulaire n'est pas valide
+      setPasswordError("Les deux mots de passe ne sont pas identiques.");
+    } else {
+      setPasswordError("");
+    }
+  };
 
   /**
    * @function handleConfirmPasswordChange
@@ -157,21 +171,13 @@ export default function Inscription() {
    */
   const handleConfirmPasswordChange = (evt) => {
     setConfirmPassword(evt.target.value);
-    // Check if all fields are filled
-    if (customers.first_name && customers.last_name && customers.username && customers.email && customers.tel_number && customers.password && evt.target.value) {
-      setIsFormFilled(true);
 
-    } else {
-      setIsFormFilled(false);
-    }
-    if (evt.target.value !== customers.password) {
+    if (evt.target.value !== password) {
+      setFormValid(false); // Les mots de passe ne correspondent pas, le formulaire n'est pas valide
       setPasswordError("Les deux mots de passe ne sont pas identiques.");
     } else {
       setPasswordError("");
     }
-
-
-
   };
 
   /**
@@ -194,15 +200,18 @@ export default function Inscription() {
    * @returns {void}
    * @async
    */
-  const handleSubmit =  (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    if (customers.password !== confirmPassword) {
+    if (password !== confirmPassword) {
       alert("Les deux mots de passe ne sont pas identiques !");
       return;
     }
 
-    axios.post(baseUrl + 'customers/create', customers)
+    // Create a new customer object with the password from the state
+    const newCustomer = { ...customers, password: password };
+
+    axios.post(baseUrl + 'customers/create', newCustomer)
         .then((response) => {
           console.log(response.data);
           setCookie(null, "id", response.data.id, { maxAge: 86400, path: "/" });
@@ -215,22 +224,22 @@ export default function Inscription() {
           router.push('/').then(r => r);
         })
         .catch((error) => {
-            if (error.response.data.username) {
-              alert("Le nom d'utilisateur est déjà utilisé.");
-              evt.target[2].classList.add("is-invalid");
-            }
-            else if (error.response.data.detail === "A user with that email already exists.") {
-                alert("L'adresse email est déjà utilisée.");
-              evt.target[3].classList.add("is-invalid");
-            }
-            else if (error.response.data.tel_number) {
-                alert("Le numéro de téléphone doit commencé par 0.");
-              evt.target[4].classList.add("is-invalid");
-            }
+          if (error.response.data.username) {
+            alert("Le nom d'utilisateur est déjà utilisé.");
+            evt.target[2].classList.add("is-invalid");
+          }
+          else if (error.response.data.detail === "A user with that email already exists.") {
+            alert("L'adresse email est déjà utilisée.");
+            evt.target[3].classList.add("is-invalid");
+          }
+          else if (error.response.data.tel_number) {
+            alert("Le numéro de téléphone doit commencé par 0.");
+            evt.target[4].classList.add("is-invalid");
+          }
 
-            else {
-                alert("Une erreur est survenue lors de l'inscription vérifiez les informations saisies.");
-            }
+          else {
+            alert("Une erreur est survenue lors de l'inscription vérifiez les informations saisies.");
+          }
         });
   };
 
@@ -281,13 +290,11 @@ export default function Inscription() {
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label className="font-weight-bold">Mot de passe</Form.Label>
-                        <Form.Control required data-id="password" className="shadow-sm" type="password" placeholder="Mot de passe (8 caractères minimum)" minLength="8" value={customers.password} onChange={handleChange}/>
-                        {passwordError && <Form.Text className="text-danger">{passwordError}</Form.Text>}
+                        <Form.Control required data-id="password" className="shadow-sm" type="password" placeholder="Mot de passe (8 caractères minimum)" minLength="8" value={password} onChange={handlePasswordChange}/>                        {passwordError && <Form.Text className="text-danger">{passwordError}</Form.Text>}
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label className="font-weight-bold">Confirmer mot de passe</Form.Label>
-                        <Form.Control required data-id="confirmPassword" className="shadow-sm" type="password" placeholder="Confirmer mot de passe" minLength="8" onChange={handleConfirmPasswordChange}/>
-                      </Form.Group>
+                        <Form.Control required data-id="confirmPassword" className="shadow-sm" type="password" placeholder="Confirmer mot de passe" minLength="8" onChange={handleConfirmPasswordChange}/>                      </Form.Group>
                       <Form.Group className="mt-3 mb-5 text-center">
                         <Form.Check
                             className="text-muted font-weight-bold"
@@ -311,7 +318,7 @@ export default function Inscription() {
                             )}
                         />
                       </Form.Group>
-                      <Button variant="primary" type="submit" className='w-100 border-0 shadow-sm' disabled={!isChecked || !isFormFilled} style={{ backgroundColor: "#232627", marginBottom: "10px" }}>                        S'inscrire
+                      <Button variant="primary" type="submit" className='w-100 border-0 shadow-sm' disabled={!formValid} style={{ backgroundColor: "#232627", marginBottom: "10px" }}>S'inscrire
                       </Button>
                       <Form.Group className="mb-0 text-center">
                         <Link className="nav-link p-0" href="/components/identification/connexion">Vous avez déjà un compte ?</Link>
